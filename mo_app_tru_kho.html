@@ -1,0 +1,1497 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Công Cụ Tính Định Mức Trữ Kho 3 Ngày & Đặt Hàng</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- SheetJS for Excel Reading/Writing -->
+    <script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
+    <style>
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background-color: #f4f6f9; }
+        .tab-active { border-bottom: 3px solid #0F172A; color: #0F172A; font-weight: bold; background-color: #ffffff; }
+        .alert-row { background-color: #FEE2E2 !important; color: #991B1B; }
+        table th { font-size: 12px; font-weight: 700; letter-spacing: 0.02em; }
+        table td { font-size: 12px; }
+        .stock-input-box {
+            background-color: #FFFFFF !important;
+            color: #0F172A !important;
+            font-weight: 800 !important;
+            border: 2px solid #64748B !important;
+            box-shadow: inset 0 1px 2px rgba(0,0,0,0.1);
+        }
+        .stock-input-box:focus {
+            border-color: #2563EB !important;
+            outline: none !important;
+            box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.2) !important;
+        }
+        .highlight-avg-header {
+            background-color: #064E3B !important;
+            color: #6EE7B7 !important;
+            border-left: 2px solid #34D399 !important;
+            border-right: 2px solid #34D399 !important;
+            font-weight: 900 !important;
+        }
+        .highlight-avg-cell {
+            background-color: #ECFDF5 !important;
+            color: #065F46 !important;
+            font-weight: 800 !important;
+            border-left: 1px solid #A7F3D0 !important;
+            border-right: 1px solid #A7F3D0 !important;
+        }
+    </style>
+</head>
+<body class="bg-gray-100 min-h-screen text-gray-800" onload="checkAndRestoreSession()">
+
+    <!-- Header -->
+    <header class="bg-slate-900 text-white py-4 px-8 shadow-md">
+        <div class="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center">
+            <div>
+                <h1 class="text-xl font-bold flex items-center gap-3 text-white">
+                    <i class="fa-solid fa-calculator text-emerald-400"></i> CÔNG CỤ TÍNH ĐỊNH MỨC TRỮ KHO & ĐẶT HÀNG (PHÒNG KẾ HOẠCH)
+                </h1>
+                <p class="text-xs text-slate-300 mt-1">Tự động tính định mức trữ kho 3 ngày, điểm ROP và xuất đơn mua hàng PO Excel</p>
+            </div>
+            <div class="mt-3 md:mt-0 text-right text-xs text-emerald-300 font-semibold">
+                <i class="fa-solid fa-shield-check"></i> Chạy Offline 100% - Bảo Mật & Tự Động Lưu Dữ Liệu
+            </div>
+        </div>
+    </header>
+
+    <div class="max-w-7xl mx-auto p-6">
+
+        <!-- Restoration Notification Banner -->
+        <div id="restoredBanner" class="bg-blue-900 text-white p-3 rounded-xl mb-4 shadow flex justify-between items-center hidden text-xs">
+            <span class="font-bold flex items-center gap-2">
+                <i class="fa-solid fa-clock-rotate-left text-emerald-400 text-sm"></i> HỆ THỐNG ĐÃ TỰ ĐỘNG KHÔI PHỤC DỮ LIỆU KẾ HOẠCH GẦN NHẤT!
+            </span>
+            <button onclick="clearSavedSession()" class="bg-red-600 hover:bg-red-700 text-white font-bold py-1 px-3 rounded text-[11px]">
+                🗑️ Xóa Dữ Liệu Cũ Để Nạp File Mới
+            </button>
+        </div>
+
+        <!-- Controls & Dual File Drop Zone -->
+        <div class="bg-white rounded-xl shadow-sm p-5 mb-6 border border-gray-200">
+            <div class="grid grid-cols-1 md:grid-cols-12 gap-4 items-center">
+                <!-- File 1: Export Transactions -->
+                <div class="md:col-span-4">
+                    <label class="block text-xs font-bold text-slate-900 mb-1">
+                        1. 📁 Nạp File Nhật Ký Nhập Xuất Tồn (Tính Demand):
+                    </label>
+                    <input type="file" id="excelFileTx" accept=".xlsx, .xls" class="block w-full text-xs text-gray-700 file:mr-3 file:py-1.5 file:px-3 file:rounded-lg file:border-0 file:text-xs file:font-bold file:bg-slate-900 file:text-white hover:file:bg-slate-800 cursor-pointer"/>
+                    <span class="text-[10px] text-gray-500 font-semibold">Tự động nhận diện kỳ 15, 30 hay 60+ ngày</span>
+                </div>
+
+                <!-- File 2: Actual Stock File (Optional) -->
+                <div class="md:col-span-4">
+                    <div class="flex justify-between items-center mb-1">
+                        <label class="block text-xs font-bold text-blue-900">
+                            2. 📦 Nạp File Tồn Kho Thực Tế (Tùy chọn):
+                        </label>
+                        <button onclick="downloadSampleStockTemplate()" class="text-[10px] text-blue-700 hover:text-blue-900 underline font-bold">
+                            <i class="fa-solid fa-file-arrow-down"></i> Tải File Mẫu (.xlsx)
+                        </button>
+                    </div>
+                    <input type="file" id="excelFileStock" accept=".xlsx, .xls" class="block w-full text-xs text-gray-700 file:mr-3 file:py-1.5 file:px-3 file:rounded-lg file:border-0 file:text-xs file:font-bold file:bg-blue-800 file:text-white hover:file:bg-blue-900 cursor-pointer"/>
+                    <span class="text-[10px] text-gray-400">Nhận diện linh hoạt cột: Mã Hàng & Tồn Kho Thực Tế</span>
+                </div>
+
+                <!-- Parameters -->
+                <div class="md:col-span-2 flex items-center gap-2">
+                    <div>
+                        <label class="block text-[11px] font-bold text-slate-700">🎯 Trữ Target:</label>
+                        <input type="number" id="targetDays" value="3" min="1" max="30" onchange="analyzeData()" class="w-16 border-2 border-slate-400 rounded-lg p-1.5 text-center font-bold text-slate-900 text-xs bg-white">
+                    </div>
+                    <div>
+                        <label class="block text-[11px] font-bold text-slate-700">🚚 Lead Time:</label>
+                        <input type="number" id="leadTime" value="2" min="1" max="14" onchange="analyzeData()" class="w-16 border-2 border-slate-400 rounded-lg p-1.5 text-center font-bold text-slate-900 text-xs bg-white">
+                    </div>
+                </div>
+
+                <!-- Action Button -->
+                <div class="md:col-span-2 text-right">
+                    <button id="btnAnalyze" onclick="processExcelData()" class="bg-emerald-600 hover:bg-emerald-700 text-white font-bold py-2.5 px-4 rounded-lg shadow transition flex items-center justify-center gap-2 w-full text-xs">
+                        <i class="fa-solid fa-bolt"></i> TÍNH ĐỊNH MỨC
+                    </button>
+                </div>
+            </div>
+            <div id="statusMessage" class="mt-2 text-xs font-bold text-slate-700"></div>
+        </div>
+
+        <!-- Explanation Accordion -->
+        <div class="bg-emerald-50 border border-emerald-300 rounded-xl p-4 mb-6 text-xs text-emerald-950">
+            <h4 class="font-bold flex items-center gap-2 text-xs mb-1 text-emerald-900">
+                <i class="fa-solid fa-file-excel text-emerald-600"></i> XUẤT FILE EXCEL MUA HÀNG & BÁO CÁO TỔNG HỢP:
+            </h4>
+            <p class="leading-relaxed font-medium">
+                • Bạn có thể tải file Đơn mua hàng PO ở <b>Tab 2</b> hoặc Báo cáo tổng hợp ở <b>Tab 5</b>. Cả 2 file Excel đều được định dạng cột số rõ ràng, tự động tính tổng và có sẵn chỗ ký duyệt.
+            </p>
+        </div>
+
+        <!-- KPI Cards -->
+        <div id="kpiContainer" class="grid grid-cols-1 md:grid-cols-4 gap-4 mb-6 hidden">
+            <div class="bg-white p-4 rounded-xl shadow-sm border-l-4 border-slate-800">
+                <p class="text-[11px] text-gray-600 font-bold uppercase">Tổng Số Mã Xuất</p>
+                <h3 id="kpiTotalSKUs" class="text-2xl font-extrabold text-slate-900 mt-1">0</h3>
+            </div>
+            <div class="bg-white p-4 rounded-xl shadow-sm border-l-4 border-blue-600">
+                <p class="text-[11px] text-blue-800 font-bold uppercase" id="lblKpiTotalExport">Tổng Sản Lượng Xuất</p>
+                <h3 id="kpiTotalExport" class="text-2xl font-extrabold text-blue-700 mt-1">0</h3>
+            </div>
+            <div class="bg-white p-4 rounded-xl shadow-sm border-l-4 border-red-500">
+                <p class="text-[11px] text-red-800 font-bold uppercase">Mã Thiếu Trữ Kho (Cần Mua)</p>
+                <h3 id="kpiNeedPurchase" class="text-2xl font-extrabold text-red-600 mt-1">0</h3>
+            </div>
+            <div class="bg-white p-4 rounded-xl shadow-sm border-l-4 border-amber-500">
+                <p class="text-[11px] text-amber-800 font-bold uppercase">Mã Dưới Ngưỡng ROP (Báo Động)</p>
+                <h3 id="kpiUnderROP" class="text-2xl font-extrabold text-amber-600 mt-1">0</h3>
+            </div>
+        </div>
+
+        <!-- Navigation Tabs -->
+        <div class="bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden mb-6 hidden" id="mainAppSection">
+            <div class="flex border-b border-gray-200 bg-gray-50 px-2 overflow-x-auto">
+                <button onclick="switchTab('tabOverview')" id="btnTabOverview" class="py-3 px-4 text-xs font-bold text-gray-700 hover:text-slate-900 tab-active">
+                    <i class="fa-solid fa-list-check mr-1.5"></i> 1. Chỉ Số & Bảng So Sánh Linh Hoạt
+                </button>
+                <button onclick="switchTab('tabMasterPlan')" id="btnTabMasterPlan" class="py-3 px-4 text-xs font-bold text-gray-700 hover:text-slate-900">
+                    <i class="fa-solid fa-table-list mr-1.5"></i> 2. Kế Hoạch Trữ Kho & Mua Hàng PO
+                </button>
+                <button onclick="switchTab('tabForecasting')" id="btnTabForecasting" class="py-3 px-4 text-xs font-bold text-gray-700 hover:text-slate-900">
+                    <i class="fa-solid fa-calendar-days mr-1.5"></i> 3. Bảng Sản Lượng Xuất Theo Ngày
+                </button>
+                <button onclick="switchTab('tabFIFO')" id="btnTabFIFO" class="py-3 px-4 text-xs font-bold text-gray-700 hover:text-slate-900">
+                    <i class="fa-solid fa-boxes-packing mr-1.5"></i> 4. Pick List Xuất Kho FIFO
+                </button>
+                <button onclick="switchTab('tabPresentation')" id="btnTabPresentation" class="py-3 px-4 text-xs font-bold text-blue-900 hover:text-slate-900">
+                    <i class="fa-solid fa-chart-pie mr-1.5"></i> 5. Báo Cáo Thuyết Trình Tổng Hợp
+                </button>
+                <button onclick="switchTab('tabGuide')" id="btnTabGuide" class="py-3 px-4 text-xs font-bold text-amber-800 hover:text-slate-900">
+                    <i class="fa-solid fa-book-bookmark mr-1.5"></i> 6. Hướng Dẫn Sử Dụng
+                </button>
+            </div>
+
+            <div class="p-5">
+                <!-- TAB 1: Numerical Summary & Comparison -->
+                <div id="tabOverview" class="tab-content">
+                    <div class="mb-6">
+                        <h4 class="text-xs font-bold text-slate-900 uppercase tracking-wider mb-3">📊 BẢNG SO SÁNH CHỈ SỐ THEO PHÂN NHÓM TẦN SUẤT FSN:</h4>
+                        <div class="overflow-x-auto">
+                            <table class="min-w-full border border-gray-300 text-left">
+                                <thead class="bg-slate-900 text-white">
+                                    <tr>
+                                        <th class="p-2.5 text-white font-bold">Phân Nhóm FSN</th>
+                                        <th class="p-2.5 text-center text-white font-bold">Tiêu Chí Tần Suất</th>
+                                        <th class="p-2.5 text-right text-white font-bold">Số Mã Hàng</th>
+                                        <th class="p-2.5 text-right text-white font-bold">Tỷ Lệ SKUs (%)</th>
+                                        <th class="p-2.5 text-right text-white font-bold">Tổng Sản Lượng Xuất</th>
+                                        <th class="p-2.5 text-right highlight-avg-header">TB 1 NGÀY (BASELINE)</th>
+                                        <th class="p-2.5 text-right text-white font-bold">Tổng Trữ Kho Target</th>
+                                        <th class="p-2.5 text-right text-white font-bold">Tổng Tồn Thực Tế</th>
+                                        <th class="p-2.5 text-right text-yellow-300 font-bold">Tổng Cần Mua Thêm (PO)</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="fsnSummaryBody" class="divide-y divide-gray-200 font-medium">
+                                    <!-- Dynamic rows -->
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                    <div>
+                        <div class="flex flex-col md:flex-row justify-between items-center mb-3 gap-3">
+                            <h4 class="text-xs font-bold text-slate-900 uppercase tracking-wider">🏆 BẢNG SO SÁNH DANH SÁCH MÃ HÀNG (TÙY CHỌN SỐ LƯỢNG MÃ):</h4>
+                            <div class="flex items-center gap-3 w-full md:w-auto">
+                                <span class="text-xs font-bold text-gray-700">Hiển thị:</span>
+                                <select id="topCountSelect" onchange="renderTopSummaryTable()" class="border-2 border-slate-400 rounded-lg p-1.5 text-xs font-bold bg-white text-slate-900">
+                                    <option value="15">Top 15 Mã xuất lớn nhất</option>
+                                    <option value="25">Top 25 Mã xuất lớn nhất</option>
+                                    <option value="50">Top 50 Mã xuất lớn nhất</option>
+                                    <option value="100">Top 100 Mã xuất lớn nhất</option>
+                                    <option value="ALL">Tất cả mã hàng (Full List)</option>
+                                </select>
+                                <input type="text" id="topSearchInput" onkeyup="renderTopSummaryTable()" placeholder="🔍 Tìm mã bất kỳ..." class="border-2 border-slate-400 rounded-lg p-1.5 text-xs w-48 font-bold focus:ring-2 focus:ring-blue-500 bg-white">
+                            </div>
+                        </div>
+
+                        <div class="overflow-x-auto max-h-[450px]">
+                            <table class="min-w-full border border-gray-300 text-left">
+                                <thead class="bg-slate-900 text-white sticky top-0">
+                                    <tr>
+                                        <th class="p-2.5 text-center text-white font-bold">STT</th>
+                                        <th class="p-2.5 text-white font-bold">Mã Hàng</th>
+                                        <th class="p-2.5 text-white font-bold">Tên Mã Hàng</th>
+                                        <th class="p-2.5 text-center text-white font-bold">ĐVT</th>
+                                        <th class="p-2.5 text-right text-white font-bold" id="lblHeaderSumExp">Tổng Xuất</th>
+                                        <th class="p-2.5 text-right text-white font-bold">Số Ngày Xuất</th>
+                                        <th class="p-2.5 text-right text-white font-bold">Tần Suất (%)</th>
+                                        <th class="p-2.5 text-right highlight-avg-header">⚡ TB 1 NGÀY</th>
+                                        <th class="p-2.5 text-right text-white font-bold">Định Mức 3D Target</th>
+                                        <th class="p-2.5 text-right text-yellow-300 font-bold">Tồn Thực Tế</th>
+                                        <th class="p-2.5 text-right text-red-300 font-bold">Cần Mua Thêm (PO)</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="top15SummaryBody" class="divide-y divide-gray-200 font-medium">
+                                    <!-- Dynamic rows -->
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- TAB 2: Master Plan & PO Table -->
+                <div id="tabMasterPlan" class="tab-content hidden">
+                    <div class="flex flex-col md:flex-row justify-between items-center mb-4 gap-4">
+                        <div class="flex items-center gap-3 w-full md:w-auto">
+                            <input type="text" id="searchInput" onkeyup="filterTable()" placeholder="🔍 Tìm Mã Hàng hoặc Tên Mã..." class="border-2 border-slate-400 rounded-lg p-2 text-xs w-64 font-bold focus:ring-2 focus:ring-blue-500 bg-white">
+                            <select id="statusFilter" onchange="filterTable()" class="border-2 border-slate-400 rounded-lg p-2 text-xs font-bold bg-white text-slate-900">
+                                <option value="ALL">Tất cả mã hàng</option>
+                                <option value="NEED_PURCHASE">Chỉ mã CẦN MUA THÊM</option>
+                                <option value="ROP_ALERT">Chỉ mã BÁO ĐỘNG ROP</option>
+                            </select>
+                        </div>
+                        <button onclick="exportPOExcel()" class="bg-red-600 hover:bg-red-700 text-white font-bold py-2.5 px-5 rounded-lg text-xs shadow flex items-center gap-2">
+                            <i class="fa-solid fa-file-excel text-sm"></i> TẢI FILE ĐƠN MUA HÀNG PO EXCEL (.XLSX)
+                        </button>
+                    </div>
+
+                    <div class="overflow-x-auto max-h-[520px]">
+                        <table class="min-w-full text-left text-xs border-collapse" id="masterTable">
+                            <thead class="bg-slate-900 text-white sticky top-0">
+                                <tr>
+                                    <th class="p-2.5 text-center text-white font-bold">STT</th>
+                                    <th class="p-2.5 text-white font-bold">Mã Hàng</th>
+                                    <th class="p-2.5 text-white font-bold">Tên Mã Hàng</th>
+                                    <th class="p-2.5 text-center text-white font-bold">ĐVT</th>
+                                    <th class="p-2.5 text-center text-white font-bold">Phân Nhóm</th>
+                                    <th class="p-2.5 text-right text-white font-bold">Tổng Xuất</th>
+                                    <th class="p-2.5 text-right text-white font-bold">Tần Suất (%)</th>
+                                    <th class="p-2.5 text-right highlight-avg-header">⚡ TB 1 NGÀY</th>
+                                    <th class="p-2.5 text-right text-white font-bold">Trữ Kho 3D Target</th>
+                                    <th class="p-2.5 text-right text-white font-bold">Safety Stock</th>
+                                    <th class="p-2.5 text-right text-white font-bold">Điểm ROP</th>
+                                    <th class="p-2.5 text-right text-yellow-300 font-bold bg-slate-950 border-x border-slate-700">Tồn Thực Tế (Nhập/Nạp)</th>
+                                    <th class="p-2.5 text-right text-red-300 font-bold">CẦN MUA THÊM (PO)</th>
+                                </tr>
+                            </thead>
+                            <tbody id="masterTableBody" class="divide-y divide-gray-200 font-medium">
+                                <!-- Dynamic rows -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- TAB 3: Daily Demand Table -->
+                <div id="tabForecasting" class="tab-content hidden">
+                    <div class="mb-4">
+                        <label class="block text-xs font-bold text-slate-800 mb-1">Chọn Mã Hàng Để Xem Chi Tiết Lượng Xuất Từng Ngày (Numerical Daily Table):</label>
+                        <select id="itemForecastSelect" onchange="renderDailyDemandTable()" class="border-2 border-slate-400 rounded-lg p-2 text-xs w-full md:w-1/2 font-bold bg-white text-slate-900">
+                            <!-- Dynamic options -->
+                        </select>
+                    </div>
+                    <div id="dailyDemandInfo" class="mb-3 text-xs font-bold text-blue-900 bg-blue-50 p-3 rounded-lg border border-blue-200"></div>
+                    <div class="overflow-x-auto max-h-[400px]">
+                        <table class="min-w-full border border-gray-300 text-left text-xs">
+                            <thead class="bg-slate-900 text-white sticky top-0">
+                                <tr>
+                                    <th class="p-2.5 text-center text-white font-bold">Ngày Lịch</th>
+                                    <th class="p-2.5 text-right text-white font-bold">Sản Lượng Xuất (Kg/Thùng)</th>
+                                    <th class="p-2.5 text-center text-white font-bold">Trạng Thái Xuất</th>
+                                </tr>
+                            </thead>
+                            <tbody id="dailyDemandTableBody" class="divide-y divide-gray-200 font-medium">
+                                <!-- Dynamic rows -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- TAB 4: FIFO Pick List -->
+                <div id="tabFIFO" class="tab-content hidden">
+                    <div class="bg-slate-50 p-4 rounded-lg border border-slate-200 mb-6">
+                        <h4 class="text-xs font-bold text-slate-900 mb-3 uppercase tracking-wider"><i class="fa-solid fa-boxes-packing"></i> Tự Động Lập Lệnh Lấy Hàng Pick List FIFO Cho Sản Xuất</h4>
+                        <div class="grid grid-cols-1 md:grid-cols-3 gap-4 items-center">
+                            <div>
+                                <label class="block text-xs font-semibold text-gray-700">Mã Hàng Cần Xuất:</label>
+                                <select id="fifoItemSelect" class="border-2 border-slate-400 rounded-lg p-2 text-xs w-full font-bold bg-white"></select>
+                            </div>
+                            <div>
+                                <label class="block text-xs font-semibold text-gray-700">Số Lượng Sản Xuất Cần Lấy:</label>
+                                <input type="number" id="fifoQtyNeeded" value="100" min="1" class="border-2 border-slate-400 rounded-lg p-2 text-xs w-full font-bold bg-white">
+                            </div>
+                            <div class="md:self-end">
+                                <button onclick="generateFIFOPickList()" class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-lg text-xs shadow w-full">
+                                    🚀 Lập Pick List Lô Cũ Nhất (FIFO)
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div id="fifoResultContainer" class="hidden">
+                        <h5 class="text-xs font-bold uppercase text-gray-600 mb-2">BẢNG VỊ TRÍ LÔ HÀNG CŨ NHẤT CẦN LẤY THEO NGUYÊN TẮC FIFO:</h5>
+                        <table class="min-w-full text-left text-xs border border-gray-300" id="fifoTable">
+                            <thead class="bg-slate-900 text-white">
+                                <tr>
+                                    <th class="p-2 text-center text-white font-bold">STT</th>
+                                    <th class="p-2 text-white font-bold">Mã Hàng</th>
+                                    <th class="p-2 text-white font-bold">Tên Mã Hàng</th>
+                                    <th class="p-2 text-white font-bold">Kho</th>
+                                    <th class="p-2 text-white font-bold">Vị Trí (Location)</th>
+                                    <th class="p-2 text-white font-bold">Mã Pallet</th>
+                                    <th class="p-2 text-white font-bold">Batch No</th>
+                                    <th class="p-2 text-white font-bold">Ngày Sản Xuất (Nsx)</th>
+                                    <th class="p-2 text-right text-white font-bold">Tồn Khả Dụng</th>
+                                    <th class="p-2 text-right text-yellow-300 font-bold">LƯỢNG LẤY (FIFO)</th>
+                                </tr>
+                            </thead>
+                            <tbody id="fifoTableBody" class="divide-y divide-gray-200 font-medium"></tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- TAB 5: Executive Presentation Dashboard (Báo Cáo Thuyết Trình Tổng Hợp Số Liệu) -->
+                <div id="tabPresentation" class="tab-content hidden">
+                    <div class="bg-slate-900 text-white rounded-xl p-5 mb-6 flex flex-col md:flex-row justify-between items-center gap-4">
+                        <div>
+                            <h3 class="text-base font-extrabold text-emerald-400 flex items-center gap-2">
+                                <i class="fa-solid fa-chart-pie text-white"></i> BÁO CÁO TỔNG HỢP NẠP PO & TRỮ KHO 3 NGÀY
+                            </h3>
+                            <p class="text-xs text-slate-300 mt-1">Tổng hợp số liệu xuất kho, tồn thực tế và lượng hàng cần mua thêm PO</p>
+                        </div>
+                        <div>
+                            <button onclick="exportPresentationExcel()" class="bg-emerald-600 hover:bg-emerald-700 text-white font-bold py-2.5 px-5 rounded-lg text-xs shadow flex items-center gap-2 whitespace-nowrap">
+                                <i class="fa-solid fa-file-excel text-sm"></i> TẢI FILE BÁO CÁO THUYẾT TRÌNH EXCEL (.XLSX)
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Executive Key Metrics Grid -->
+                    <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-6">
+                        <div class="bg-white p-4 rounded-xl shadow-sm border border-gray-200">
+                            <span class="text-[11px] font-bold text-gray-500 uppercase">KỲ BÁO CÁO SỐ LIỆU</span>
+                            <div class="text-lg font-extrabold text-slate-900 mt-1" id="presPeriod">0 Ngày</div>
+                            <span class="text-[10px] text-gray-500" id="presDateRange">Tất cả lịch giao dịch</span>
+                        </div>
+                        <div class="bg-white p-4 rounded-xl shadow-sm border border-gray-200">
+                            <span class="text-[11px] font-bold text-gray-500 uppercase">TỔNG XUẤT TOÀN KỲ</span>
+                            <div class="text-lg font-extrabold text-blue-700 mt-1" id="presTotalExport">0</div>
+                            <span class="text-[10px] text-blue-900 font-semibold" id="presAvgDailyTotal">TB: 0 / ngày</span>
+                        </div>
+                        <div class="bg-white p-4 rounded-xl shadow-sm border border-gray-200">
+                            <span class="text-[11px] font-bold text-gray-500 uppercase">ĐỊNH MỨC TRỮ KHO 3D TARGET</span>
+                            <div class="text-lg font-extrabold text-slate-900 mt-1" id="presTargetSafety">0</div>
+                            <span class="text-[10px] text-gray-600" id="presSafetyStockOnly">Safety Stock: 0</span>
+                        </div>
+                        <div class="bg-white p-4 rounded-xl shadow-sm border border-gray-200">
+                            <span class="text-[11px] font-bold text-gray-500 uppercase">TỒN KHO THỰC TẾ</span>
+                            <div class="text-lg font-extrabold text-slate-900 mt-1" id="presCurrStock">0</div>
+                            <span class="text-[10px] font-bold" id="presFulfillmentRate">Đáp ứng: 0%</span>
+                        </div>
+                    </div>
+
+                    <!-- Executive Summary Box -->
+                    <div class="bg-blue-50 border-l-4 border-blue-800 p-5 rounded-r-xl mb-6 text-xs text-blue-950">
+                        <h4 class="font-extrabold text-slate-900 uppercase tracking-wider mb-2 text-xs flex items-center gap-2">
+                            <i class="fa-solid fa-list-ol text-blue-800"></i> TÓM TẮT SỐ LIỆU BÁO CÁO THUYẾT TRÌNH:
+                        </h4>
+                        <div class="space-y-2 font-medium leading-relaxed" id="presStatementContainer">
+                            <!-- Dynamic Bullet points filled by JS -->
+                        </div>
+                    </div>
+
+                    <!-- Presentation Table 1: FSN Structural Breakdown -->
+                    <div class="mb-6">
+                        <h4 class="text-xs font-bold text-slate-900 uppercase tracking-wider mb-3">1. BẢNG CÂN ĐỐI NGUYÊN VẬT LIỆU THEO PHÂN NHÓM TẦN SUẤT FSN:</h4>
+                        <div class="overflow-x-auto">
+                            <table class="min-w-full border border-gray-300 text-left">
+                                <thead class="bg-slate-900 text-white">
+                                    <tr>
+                                        <th class="p-2.5 text-white font-bold">Phân Nhóm FSN</th>
+                                        <th class="p-2.5 text-right text-white font-bold">Số SKU</th>
+                                        <th class="p-2.5 text-right text-white font-bold">Tỷ Lệ SKU (%)</th>
+                                        <th class="p-2.5 text-right text-white font-bold">Tổng Xuất (Kỳ)</th>
+                                        <th class="p-2.5 text-right text-white font-bold">Tỷ Lệ Xuất (%)</th>
+                                        <th class="p-2.5 text-right highlight-avg-header">TB 1 NGÀY</th>
+                                        <th class="p-2.5 text-right text-white font-bold">Trữ Kho 3D Target</th>
+                                        <th class="p-2.5 text-right text-white font-bold">Tồn Thực Tế</th>
+                                        <th class="p-2.5 text-right text-white font-bold">Đáp Ứng (%)</th>
+                                        <th class="p-2.5 text-right text-yellow-300 font-bold">Nhu Cầu Mua (PO)</th>
+                                        <th class="p-2.5 text-right text-yellow-300 font-bold">Tỷ Lệ PO (%)</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="presFsnTableBody" class="divide-y divide-gray-200 font-medium">
+                                    <!-- Dynamic rows -->
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                    <!-- Presentation Table 2: Top 10 PO Allocation -->
+                    <div>
+                        <h4 class="text-xs font-bold text-slate-900 uppercase tracking-wider mb-3">2. DANH SÁCH TOP 10 MÃ HÀNG CẦN MUA PO LỚN NHẤT (ƯU TIÊN MUA TRƯỚC):</h4>
+                        <div class="overflow-x-auto">
+                            <table class="min-w-full border border-gray-300 text-left">
+                                <thead class="bg-slate-800 text-white">
+                                    <tr>
+                                        <th class="p-2.5 text-center text-white font-bold">STT</th>
+                                        <th class="p-2.5 text-white font-bold">Mã Hàng</th>
+                                        <th class="p-2.5 text-white font-bold">Tên Mã Hàng</th>
+                                        <th class="p-2.5 text-center text-white font-bold">ĐVT</th>
+                                        <th class="p-2.5 text-right text-white font-bold">Phân Nhóm</th>
+                                        <th class="p-2.5 text-right highlight-avg-header">TB 1 NGÀY</th>
+                                        <th class="p-2.5 text-right text-white font-bold">Định Mức 3D Target</th>
+                                        <th class="p-2.5 text-right text-white font-bold">Tồn Thực Tế</th>
+                                        <th class="p-2.5 text-right text-red-300 font-bold">CẦN MUA THÊM (PO)</th>
+                                        <th class="p-2.5 text-right text-red-300 font-bold">Tỷ Lệ Thiếu (%)</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="presTopPOTableBody" class="divide-y divide-gray-200 font-medium">
+                                    <!-- Dynamic rows -->
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                </div>
+
+                <!-- TAB 6: Technology Transfer & Formula Documentation Manual -->
+                <div id="tabGuide" class="tab-content hidden">
+                    <div class="bg-amber-50 border border-amber-300 rounded-xl p-6 mb-6">
+                        <h3 class="text-base font-bold text-amber-950 flex items-center gap-2 mb-2">
+                            <i class="fa-solid fa-book-bookmark text-amber-600"></i> CẨM NANG HƯỚNG DẪN SỬ DỤNG PHẦN MỀM
+                        </h3>
+                        <p class="text-xs text-amber-900 font-medium">Hướng dẫn quy trình lập kế hoạch trữ kho 3 ngày & mua hàng dành cho nhân sự Kế Hoạch & Mua Hàng.</p>
+                    </div>
+
+                    <div class="space-y-6 text-xs text-gray-800">
+
+                        <!-- Chapter 1 -->
+                        <div class="bg-white p-5 rounded-lg border border-gray-200 shadow-sm">
+                            <h4 class="text-sm font-bold text-slate-900 border-b pb-2 mb-3 flex items-center gap-2">
+                                <span class="bg-slate-900 text-white px-2 py-0.5 rounded text-xs">CHƯƠNG 1</span> TỔNG QUAN MỤC TIÊU VẬN HÀNH
+                            </h4>
+                            <p class="text-gray-700 leading-relaxed font-medium mb-2">Mục tiêu tối thượng của công tác Kế hoạch Sản xuất & Mua hàng bao gồm 3 trụ cột:</p>
+                            <ol class="list-decimal list-inside space-y-1.5 text-gray-700 font-medium pl-2">
+                                <li><b>Đảm bảo tính liên tục của sản xuất</b>: Không bao giờ để dây chuyền sản xuất phải dừng hoạt động vì lý do đứt gãy nguyên liệu (Stockout).</li>
+                                <li><b>Tối ưu hóa vốn lưu động (Working Capital)</b>: Chỉ trữ đệm đúng **3 ngày sản xuất** (hoặc số ngày target quy định), không mua quá dư thừa gây giam vốn và tăng chi phí lưu kho.</li>
+                                <li><b>Phát tín hiệu đặt hàng kịp thời (Reorder Point - ROP)</b>: Báo động chính xác thời điểm Mua hàng cần phát đơn PO trước khi hết kho.</li>
+                            </ol>
+                        </div>
+
+                        <!-- Chapter 2 -->
+                        <div class="bg-white p-5 rounded-lg border border-gray-200 shadow-sm">
+                            <h4 class="text-sm font-bold text-slate-900 border-b pb-2 mb-3 flex items-center gap-2">
+                                <span class="bg-slate-900 text-white px-2 py-0.5 rounded text-xs">CHƯƠNG 2</span> HỆ THỐNG CÔNG THỨC TÍNH TOÁN CHUẨN CUNG ỨNG
+                            </h4>
+                            <div class="space-y-4">
+                                <div class="p-3 bg-slate-50 border rounded-lg">
+                                    <h5 class="font-bold text-blue-900 mb-1">1. Tần Suất Xuất Kho (% Active Days & Phân Nhóm FSN):</h5>
+                                    <div class="bg-white p-2 rounded border font-mono text-slate-900 text-xs mb-2">
+                                        Tần suất xuất (%) = (Số ngày phát sinh xuất / Tổng số ngày lịch N) × 100%
+                                    </div>
+                                    <ul class="list-disc list-inside text-gray-700 space-y-1 pl-2">
+                                        <li><b>Fast-Moving (Xuất liên tục - F ≥ 50%)</b>: Hàng xuất ≥ 50% số ngày. Cần duy trì trữ kho 3 ngày ổn định liên tục.</li>
+                                        <li><b>Medium-Moving (Xuất trung bình - 20% ≤ F < 50%)</b>: Hàng xuất từ 20% đến 50% số ngày. Đặt mua theo kỳ/batch sản xuất.</li>
+                                        <li><b>Slow-Moving (Xuất ngắt quãng - F < 20%)</b>: Hàng xuất ít dưới 20% số ngày. Đặt mua theo Lệnh Sản Xuất (MTO/JIT), tránh giam vốn.</li>
+                                    </ul>
+                                </div>
+
+                                <div class="p-3 bg-slate-50 border rounded-lg">
+                                    <h5 class="font-bold text-emerald-900 mb-1">2. Sản Lượng Xuất Trung Bình 1 Ngày (Average Daily Demand - D̄):</h5>
+                                    <div class="bg-white p-2 rounded border font-mono text-slate-900 text-xs mb-1">
+                                        D̄ = (Tổng sản lượng xuất trong kỳ) / (Tổng số ngày lịch N trong file)
+                                    </div>
+                                    <p class="text-gray-700">Đây là **Sản lượng tiêu thụ nền tảng (Baseline)** để tính số lượng trữ kho target cho 3 ngày sản xuất.</p>
+                                </div>
+
+                                <div class="p-3 bg-slate-50 border rounded-lg">
+                                    <h5 class="font-bold text-purple-900 mb-1">3. Độ Lệch Chuẩn Nhu Cầu (σ) & Tồn Kho An Toàn (Safety Stock - SS):</h5>
+                                    <div class="bg-white p-2 rounded border font-mono text-slate-900 text-xs mb-1">
+                                        Safety Stock (SS) = Z × σ × √3  (với Z = 1.65 tương ứng 95% độ tin cậy không bị đứt hàng)
+                                    </div>
+                                    <p class="text-gray-700"><b>Ý nghĩa</b>: Độ lệch chuẩn σ đo lường mức độ biến động nhu cầu xuất hàng ngày. Nhu cầu biến động càng mạnh (đỉnh xuất Max lớn) thì Safety Stock càng cao để chống rủi ro đứt chuyền.</p>
+                                </div>
+
+                                <div class="p-3 bg-slate-50 border rounded-lg">
+                                    <h5 class="font-bold text-amber-900 mb-1">4. Định Mức Trữ Kho 3 Ngày Cơ Bản & An Toàn:</h5>
+                                    <div class="bg-white p-2 rounded border font-mono text-slate-900 text-xs mb-1">
+                                        • Target 3D Cơ Bản = D̄ × 3 ngày<br>
+                                        • Target 3D An Toàn = Target 3D Cơ Bản + Safety Stock
+                                    </div>
+                                </div>
+
+                                <div class="p-3 bg-slate-50 border rounded-lg">
+                                    <h5 class="font-bold text-red-900 mb-1">5. Điểm Đặt Hàng Lại (Reorder Point - ROP):</h5>
+                                    <div class="bg-white p-2 rounded border font-mono text-slate-900 text-xs mb-1">
+                                        ROP = (D̄ × Lead Time Mua Hàng) + Safety Stock
+                                    </div>
+                                    <p class="text-gray-700"><b>Ý nghĩa vận hành</b>: ROP là **Mức Tồn Kho Báo Động**. Khi tồn hiện tại giảm xuống tới ngưỡng ROP, Cán bộ Mua hàng **PHẢI BẤM NÚT ĐẶT HÀNG PO NGAY LẬP TỨC** để hàng về kịp trước khi hết kho.</p>
+                                </div>
+
+                                <div class="p-3 bg-slate-50 border rounded-lg">
+                                    <h5 class="font-bold text-red-900 mb-1">6. Lượng Cần Mua Thêm (Net Purchase Requirement - PO):</h5>
+                                    <div class="bg-white p-2 rounded border font-mono text-slate-900 text-xs mb-1">
+                                        Lượng Cần Mua Thêm (PO) = MAX(0, Target 3D An Toàn - Tồn Kho Thực Tế)
+                                    </div>
+                                </div>
+
+                                <div class="p-3 bg-slate-50 border rounded-lg">
+                                    <h5 class="font-bold text-blue-900 mb-1">7. Nguyên Tắc Lập Pick List Xuất Kho FIFO:</h5>
+                                    <p class="text-gray-700">Tự động chọn các lô hàng có **Ngày Sản Xuất (Nsx) cũ nhất trước** để giải phóng tồn kho, tránh nguyên liệu bị quá hạn hay cận date trong kho.</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Chapter 3 -->
+                        <div class="bg-white p-5 rounded-lg border border-gray-200 shadow-sm">
+                            <h4 class="text-sm font-bold text-slate-900 border-b pb-2 mb-3 flex items-center gap-2">
+                                <span class="bg-slate-900 text-white px-2 py-0.5 rounded text-xs">CHƯƠNG 3</span> QUY TRÌNH THAO TÁC 3 BƯỚC DÀNH CHO NHÂN VIÊN KẾ HOẠCH
+                            </h4>
+                            <div class="space-y-2 font-medium text-gray-700">
+                                <p><b>Bước 1</b>: Mở phần mềm bằng cách nhấp đúp file <code>Mo_App_Tru_Kho.html</code> trên màn hình Desktop.</p>
+                                <p><b>Bước 2</b>: Nạp File 1 (File nhật ký Nhập Xuất Tồn). Nếu có sẵn file kiểm kê tồn thực tế thì chọn thêm File 2 (hoặc gõ tay trực tiếp ở Bảng 2). Sau đó bấm <code>⚡ TÍNH ĐỊNH MỨC</code>.</p>
+                                <p><b>Bước 3</b>: Vào Tab 2 kiểm tra các mã màu đỏ cần mua thêm và nhấp nút <code>Tải Ngay File Đơn Mua Hàng PO (.xlsx)</code> để gửi cho Bộ phận Mua Hàng.</p>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+    </div>
+
+    <script>
+        let rawTxData = [];
+        let rawStockData = [];
+        let processedData = [];
+        let dailyPivot = {};
+        let actualStockMap = {};
+        let dateCols = [];
+
+        // Parse any Excel date input (Date object or string "M/D/YYYY", "YYYY-MM-DD", etc.) into ISO "YYYY-MM-DD"
+        function parseToISOStandardDate(rawInput) {
+            if (!rawInput) return null;
+            
+            if (rawInput instanceof Date) {
+                if (isNaN(rawInput.getTime())) return null;
+                const y = rawInput.getFullYear();
+                const m = String(rawInput.getMonth() + 1).padStart(2, '0');
+                const d = String(rawInput.getDate()).padStart(2, '0');
+                return `${y}-${m}-${d}`;
+            }
+            
+            if (typeof rawInput === 'string') {
+                const cleanStr = rawInput.trim().split(' ')[0];
+                if (!cleanStr) return null;
+
+                // YYYY-MM-DD or YYYY/MM/DD
+                if (/^\d{4}[-\/]\d{1,2}[-\/]\d{1,2}$/.test(cleanStr)) {
+                    const parts = cleanStr.split(/[-\/]/);
+                    const y = parts[0];
+                    const m = parts[1].padStart(2, '0');
+                    const d = parts[2].padStart(2, '0');
+                    return `${y}-${m}-${d}`;
+                }
+
+                // M/D/YYYY or MM/DD/YYYY or D/M/YYYY
+                if (/^\d{1,2}[-\/]\d{1,2}[-\/]\d{4}$/.test(cleanStr)) {
+                    const parts = cleanStr.split(/[-\/]/);
+                    const p1 = parseInt(parts[0], 10);
+                    const p2 = parseInt(parts[1], 10);
+                    const y = parts[2];
+
+                    let m, d;
+                    // If p1 > 12 -> p1 is Day, p2 is Month (DD/MM/YYYY)
+                    if (p1 > 12) {
+                        d = String(p1).padStart(2, '0');
+                        m = String(p2).padStart(2, '0');
+                    }
+                    // If p2 > 12 -> p2 is Day, p1 is Month (MM/DD/YYYY)
+                    else if (p2 > 12) {
+                        m = String(p1).padStart(2, '0');
+                        d = String(p2).padStart(2, '0');
+                    }
+                    // Default for US Excel export strings like "7/1/2026" or "7/21/2026": p1 is Month (July), p2 is Day
+                    else {
+                        m = String(p1).padStart(2, '0');
+                        d = String(p2).padStart(2, '0');
+                    }
+                    return `${y}-${m}-${d}`;
+                }
+            }
+            return null;
+        }
+
+        // Format ISO "YYYY-MM-DD" into Vietnamese "DD/MM/YYYY"
+        function formatDateVN(isoStr) {
+            if (!isoStr) return 'N/A';
+            const parts = isoStr.split('-');
+            if (parts.length === 3) {
+                return `${parts[2]}/${parts[1]}/${parts[0]}`;
+            }
+            return isoStr;
+        }
+
+        function switchTab(tabId) {
+            document.querySelectorAll('.tab-content').forEach(el => el.classList.add('hidden'));
+            document.querySelectorAll('[id^="btnTab"]').forEach(el => el.classList.remove('tab-active'));
+            
+            document.getElementById(tabId).classList.remove('hidden');
+            document.getElementById('btn' + tabId.charAt(0).toUpperCase() + tabId.slice(1)).classList.add('tab-active');
+        }
+
+        function findValByKeys(rowObj, keysList) {
+            const rowKeys = Object.keys(rowObj);
+            for (let k of keysList) {
+                const matchKey = rowKeys.find(rk => rk.trim().toLowerCase() === k.trim().toLowerCase());
+                if (matchKey !== undefined && rowObj[matchKey] !== undefined && rowObj[matchKey] !== null) {
+                    return rowObj[matchKey];
+                }
+            }
+            return null;
+        }
+
+        // --- SESSION SAVE & RESTORE ---
+        function checkAndRestoreSession() {
+            try {
+                const savedJson = localStorage.getItem('tru_kho_saved_session');
+                if (savedJson) {
+                    const sessionData = JSON.parse(savedJson);
+                    if (sessionData && sessionData.rawTxData && sessionData.rawTxData.length > 0) {
+                        rawTxData = sessionData.rawTxData;
+                        actualStockMap = sessionData.actualStockMap || {};
+                        if (sessionData.targetDays) document.getElementById('targetDays').value = sessionData.targetDays;
+                        if (sessionData.leadTime) document.getElementById('leadTime').value = sessionData.leadTime;
+
+                        analyzeData();
+                        document.getElementById('restoredBanner').classList.remove('hidden');
+                        document.getElementById('statusMessage').innerHTML = "✅ Tự động khôi phục dữ liệu kế hoạch gần nhất (" + rawTxData.length.toLocaleString() + " dòng)!";
+                    }
+                }
+            } catch (err) {
+                console.log("No saved session or error restoring:", err);
+            }
+        }
+
+        function saveSessionToLocalStorage() {
+            try {
+                const sessionData = {
+                    rawTxData: rawTxData,
+                    actualStockMap: actualStockMap,
+                    targetDays: document.getElementById('targetDays').value,
+                    leadTime: document.getElementById('leadTime').value,
+                    timestamp: new Date().toISOString()
+                };
+                localStorage.setItem('tru_kho_saved_session', JSON.stringify(sessionData));
+            } catch (err) {
+                console.log("Could not save to LocalStorage:", err);
+            }
+        }
+
+        function clearSavedSession() {
+            localStorage.removeItem('tru_kho_saved_session');
+            location.reload();
+        }
+
+        function downloadSampleStockTemplate() {
+            if (processedData.length === 0) {
+                alert("Anh/chị vui lòng nạp File 1 trước để tạo File mẫu chứa đúng danh sách Mã Hàng!");
+                return;
+            }
+            const sampleRows = processedData.map(r => ({
+                "Mã Hàng": r.code,
+                "Tên Mã Hàng": r.name,
+                "Đơn Vị Tính": r.unit,
+                "Tồn Kho Thực Tế": 0.0
+            }));
+            const ws = XLSX.utils.json_to_sheet(sampleRows);
+            const wb = XLSX.utils.book_new();
+            XLSX.utils.book_append_sheet(wb, ws, "Ton_Kho_Thuc_Te");
+            XLSX.writeFile(wb, "File_Mau_Ton_Kho_Thuc_Te.xlsx");
+        }
+
+        function processExcelData() {
+            const fileTxInput = document.getElementById('excelFileTx');
+            const fileStockInput = document.getElementById('excelFileStock');
+            const statusMsg = document.getElementById('statusMessage');
+
+            if (!fileTxInput.files || fileTxInput.files.length === 0) {
+                alert("Vui lòng chọn File 1 (File Nhật Ký Nhập Xuất Tồn)!");
+                return;
+            }
+
+            statusMsg.innerHTML = "⏳ Đang đọc & phân tích dữ liệu Excel... Vui lòng chờ vài giây.";
+
+            const readerTx = new FileReader();
+            readerTx.onload = function(e) {
+                try {
+                    const data = new Uint8Array(e.target.result);
+                    const workbook = XLSX.read(data, { type: 'array', cellDates: true });
+                    const firstSheetName = workbook.SheetNames[0];
+                    rawTxData = XLSX.utils.sheet_to_json(workbook.Sheets[firstSheetName]);
+                    
+                    if (fileStockInput.files && fileStockInput.files.length > 0) {
+                        const readerStock = new FileReader();
+                        readerStock.onload = function(e2) {
+                            try {
+                                const data2 = new Uint8Array(e2.target.result);
+                                const wb2 = XLSX.read(data2, { type: 'array' });
+                                rawStockData = XLSX.utils.sheet_to_json(wb2.Sheets[wb2.SheetNames[0]]);
+                                
+                                actualStockMap = {};
+                                const codeKeys = ["Mã Hàng", "Mã", "MA_HANG", "MA", "Mã_Hàng", "Item Code", "Code", "Material"];
+                                const stockKeys = ["Tồn Kho Thực Tế", "Tồn Thực Tế", "Tồn Kho", "Tồn", "Tồn Cuối", "Số Lượng", "Số Tồn", "SOLUONG", "TON", "Stock", "Qty", "On Hand"];
+
+                                rawStockData.forEach(r => {
+                                    const code = findValByKeys(r, codeKeys);
+                                    const qtyRaw = findValByKeys(r, stockKeys);
+                                    const qty = parseFloat(qtyRaw) || 0;
+                                    if (code) {
+                                        const cleanCode = String(code).trim();
+                                        actualStockMap[cleanCode] = (actualStockMap[cleanCode] || 0) + qty;
+                                    }
+                                });
+
+                                analyzeData();
+                                saveSessionToLocalStorage();
+                                statusMsg.innerHTML = "✅ Đã nạp thành công " + rawTxData.length.toLocaleString() + " dòng giao dịch (" + dateCols.length + " ngày lịch) & " + Object.keys(actualStockMap).length + " mã tồn kho thực tế!";
+                            } catch (errStock) {
+                                alert("Lỗi khi đọc File 2 (Tồn Thực Tế): " + errStock.message);
+                                analyzeData();
+                                saveSessionToLocalStorage();
+                            }
+                        };
+                        readerStock.readAsArrayBuffer(fileStockInput.files[0]);
+                    } else {
+                        actualStockMap = {};
+                        analyzeData();
+                        saveSessionToLocalStorage();
+                        statusMsg.innerHTML = "✅ Đã tính toán xong " + rawTxData.length.toLocaleString() + " dòng giao dịch (" + dateCols.length + " ngày lịch)!";
+                    }
+                } catch (err) {
+                    alert("Lỗi khi đọc File 1: " + err.message);
+                    statusMsg.innerHTML = "❌ Lỗi đọc file.";
+                }
+            };
+            readerTx.readAsArrayBuffer(fileTxInput.files[0]);
+        }
+
+        function analyzeData() {
+            const targetDays = parseFloat(document.getElementById('targetDays').value) || 3;
+            const leadTime = parseFloat(document.getElementById('leadTime').value) || 2;
+            const zScore = 1.65; // 95% confidence
+
+            const txRows = rawTxData.filter(r => r['Ngày giờ nhập/xuất'] !== undefined && r['Ngày giờ nhập/xuất'] !== null);
+
+            const datesSet = new Set();
+            txRows.forEach(r => {
+                let isoD = parseToISOStandardDate(r['Ngày giờ nhập/xuất']);
+                if (isoD) datesSet.add(isoD);
+            });
+            dateCols = Array.from(datesSet).sort();
+            const totalCalDays = dateCols.length || 21;
+
+            document.getElementById('lblKpiTotalExport').innerText = `Tổng Sản Lượng Xuất (${totalCalDays} Ngày)`;
+            document.getElementById('lblHeaderSumExp').innerText = `Tổng Xuất (${totalCalDays}D)`;
+
+            dailyPivot = {};
+            const itemMap = {};
+
+            txRows.forEach(r => {
+                const code = r['Mã'];
+                const name = r['Tên Mã'] || code;
+                const unit = r['Đơn vị'] || 'Kg';
+                const numExport = parseFloat(r['Số xuất']) || 0;
+
+                if (numExport < 0) {
+                    const absExp = Math.abs(numExport);
+                    if (!dailyPivot[code]) {
+                        dailyPivot[code] = {};
+                        itemMap[code] = { name: name, unit: unit };
+                    }
+                    
+                    let isoD = parseToISOStandardDate(r['Ngày giờ nhập/xuất']);
+                    if (isoD) {
+                        dailyPivot[code][isoD] = (dailyPivot[code][isoD] || 0) + absExp;
+                    }
+                }
+            });
+
+            processedData = [];
+            let totalExpAll = 0;
+            let countNeedPurchase = 0;
+            let countUnderROP = 0;
+
+            Object.keys(dailyPivot).forEach(code => {
+                const itemInfo = itemMap[code];
+                const dateObj = dailyPivot[code];
+                let sumExp = 0;
+                let activeDays = 0;
+                const valsList = [];
+
+                dateCols.forEach(d => {
+                    const q = dateObj[d] || 0;
+                    sumExp += q;
+                    if (q > 0) activeDays++;
+                    valsList.push(q);
+                });
+
+                totalExpAll += sumExp;
+                const freqPct = (activeDays / totalCalDays) * 100.0;
+                const fsn = freqPct >= 50 ? "Fast-Moving" : (freqPct >= 20 ? "Medium-Moving" : "Slow-Moving");
+
+                const avgDaily = sumExp / totalCalDays;
+                
+                let stdDev = 0;
+                if (valsList.length > 1) {
+                    const mean = avgDaily;
+                    const variance = valsList.reduce((a, b) => a + Math.pow(b - mean, 2), 0) / (valsList.length - 1);
+                    stdDev = Math.sqrt(variance);
+                }
+
+                const targetBuf = avgDaily * targetDays;
+                const safetyStock = activeDays > 1 ? (zScore * stdDev * Math.sqrt(targetDays)) : 0;
+                const targetBufSafety = targetBuf + safetyStock;
+                const rop = (avgDaily * leadTime) + safetyStock;
+
+                const cleanCodeKey = String(code).trim();
+                const currStock = actualStockMap[cleanCodeKey] !== undefined ? actualStockMap[cleanCodeKey] : 0.0;
+                const purchaseQty = Math.max(0, targetBufSafety - currStock);
+
+                if (purchaseQty > 0) countNeedPurchase++;
+                if (currStock <= rop) countUnderROP++;
+
+                processedData.push({
+                    code: code,
+                    name: itemInfo.name,
+                    unit: itemInfo.unit,
+                    fsn: fsn,
+                    sumExp: sumExp,
+                    activeDays: activeDays,
+                    freqPct: freqPct,
+                    avgDaily: avgDaily,
+                    stdDev: stdDev,
+                    targetBuf: targetBuf,
+                    safetyStock: safetyStock,
+                    targetBufSafety: targetBufSafety,
+                    rop: rop,
+                    currStock: currStock,
+                    purchaseQty: purchaseQty,
+                    valsList: valsList
+                });
+            });
+
+            processedData.sort((a, b) => b.sumExp - a.sumExp);
+
+            document.getElementById('kpiTotalSKUs').innerText = processedData.length;
+            document.getElementById('kpiTotalExport').innerText = totalExpAll.toLocaleString('en-US', {maximumFractionDigits: 0});
+            document.getElementById('kpiNeedPurchase').innerText = countNeedPurchase;
+            document.getElementById('kpiUnderROP').innerText = countUnderROP;
+
+            document.getElementById('kpiContainer').classList.remove('hidden');
+            document.getElementById('mainAppSection').classList.remove('hidden');
+
+            renderFSNSummaryTable();
+            renderTopSummaryTable();
+            renderTable();
+            populateForecastSelect();
+            populateFIFOSelect();
+            renderPresentationTab();
+        }
+
+        function updateItemStock(code, valStr) {
+            const newStock = parseFloat(valStr) || 0.0;
+            const cleanCodeKey = String(code).trim();
+            actualStockMap[cleanCodeKey] = newStock;
+            
+            const item = processedData.find(r => r.code === code);
+            if (item) {
+                item.currStock = newStock;
+                item.purchaseQty = Math.max(0, item.targetBufSafety - newStock);
+            }
+
+            let countNeed = 0, countROP = 0;
+            processedData.forEach(r => {
+                if (r.purchaseQty > 0) countNeed++;
+                if (r.currStock <= r.rop) countROP++;
+            });
+            document.getElementById('kpiNeedPurchase').innerText = countNeed;
+            document.getElementById('kpiUnderROP').innerText = countROP;
+
+            renderFSNSummaryTable();
+            renderTopSummaryTable();
+            renderTable();
+            renderPresentationTab();
+            saveSessionToLocalStorage();
+        }
+
+        function renderFSNSummaryTable() {
+            const tbody = document.getElementById('fsnSummaryBody');
+            tbody.innerHTML = "";
+
+            const categories = [
+                { fsn: 'Fast-Moving', desc: 'Xuất liên tục (≥ 50% số ngày)' },
+                { fsn: 'Medium-Moving', desc: 'Xuất trung bình (20% - 50% số ngày)' },
+                { fsn: 'Slow-Moving', desc: 'Xuất ngắt quãng (< 20% số ngày)' }
+            ];
+
+            const totalSKUs = processedData.length || 1;
+
+            categories.forEach(cat => {
+                const items = processedData.filter(r => r.fsn === cat.fsn);
+                const count = items.length;
+                const pctSKU = (count / totalSKUs) * 100.0;
+                const sumExp = items.reduce((a, b) => a + b.sumExp, 0);
+                const avgDaily = items.reduce((a, b) => a + b.avgDaily, 0);
+                const targetBuf = items.reduce((a, b) => a + b.targetBufSafety, 0);
+                const currStock = items.reduce((a, b) => a + b.currStock, 0);
+                const purchaseQty = items.reduce((a, b) => a + b.purchaseQty, 0);
+
+                const tr = document.createElement('tr');
+                tr.innerHTML = `
+                    <td class="p-2.5 font-bold text-blue-900">${cat.fsn}</td>
+                    <td class="p-2.5 text-center text-gray-600 font-medium">${cat.desc}</td>
+                    <td class="p-2.5 text-right font-bold text-slate-900">${count}</td>
+                    <td class="p-2.5 text-right font-bold text-slate-800">${pctSKU.toFixed(1)}%</td>
+                    <td class="p-2.5 text-right font-bold text-blue-900">${sumExp.toLocaleString('en-US', {maximumFractionDigits: 1})}</td>
+                    <td class="p-2.5 text-right highlight-avg-cell">${avgDaily.toLocaleString('en-US', {maximumFractionDigits: 1})}</td>
+                    <td class="p-2.5 text-right font-semibold text-slate-900">${targetBuf.toLocaleString('en-US', {maximumFractionDigits: 1})}</td>
+                    <td class="p-2.5 text-right font-bold text-slate-900">${currStock.toLocaleString('en-US', {maximumFractionDigits: 1})}</td>
+                    <td class="p-2.5 text-right font-bold text-red-600">${purchaseQty > 0 ? purchaseQty.toLocaleString('en-US', {maximumFractionDigits: 1}) : '-'}</td>
+                `;
+                tbody.appendChild(tr);
+            });
+        }
+
+        function renderTopSummaryTable() {
+            const tbody = document.getElementById('top15SummaryBody');
+            tbody.innerHTML = "";
+
+            const topCountVal = document.getElementById('topCountSelect').value;
+            const kw = document.getElementById('topSearchInput').value.toLowerCase();
+
+            let displayList = processedData;
+
+            if (kw) {
+                displayList = displayList.filter(r => r.code.toLowerCase().includes(kw) || r.name.toLowerCase().includes(kw));
+            }
+
+            if (topCountVal !== "ALL") {
+                const limit = parseInt(topCountVal) || 15;
+                displayList = displayList.slice(0, limit);
+            }
+
+            displayList.forEach((r, idx) => {
+                const tr = document.createElement('tr');
+                tr.classList.add('hover:bg-gray-50');
+                tr.innerHTML = `
+                    <td class="p-2 text-center font-bold text-slate-700">${idx + 1}</td>
+                    <td class="p-2 font-bold text-slate-900">${r.code}</td>
+                    <td class="p-2 font-medium">${r.name}</td>
+                    <td class="p-2 text-center font-medium">${r.unit}</td>
+                    <td class="p-2 text-right font-bold text-blue-900">${r.sumExp.toLocaleString('en-US', {maximumFractionDigits: 1})}</td>
+                    <td class="p-2 text-right font-semibold">${r.activeDays}</td>
+                    <td class="p-2 text-right font-semibold">${r.freqPct.toFixed(1)}%</td>
+                    <td class="p-2 text-right highlight-avg-cell">${r.avgDaily.toLocaleString('en-US', {maximumFractionDigits: 1})}</td>
+                    <td class="p-2 text-right font-bold text-slate-900">${r.targetBuf.toLocaleString('en-US', {maximumFractionDigits: 1})}</td>
+                    <td class="p-2 text-right font-bold text-slate-900">${r.currStock.toLocaleString('en-US', {maximumFractionDigits: 1})}</td>
+                    <td class="p-2 text-right font-bold ${r.purchaseQty > 0 ? 'text-red-600' : 'text-gray-400'}">${r.purchaseQty > 0 ? r.purchaseQty.toLocaleString('en-US', {maximumFractionDigits: 1}) : '-'}</td>
+                `;
+                tbody.appendChild(tr);
+            });
+        }
+
+        function renderTable() {
+            const tbody = document.getElementById('masterTableBody');
+            tbody.innerHTML = "";
+
+            processedData.forEach((r, idx) => {
+                const tr = document.createElement('tr');
+                if (r.purchaseQty > 0) tr.classList.add('alert-row');
+                else tr.classList.add('hover:bg-gray-50');
+
+                tr.innerHTML = `
+                    <td class="p-2.5 text-center font-bold">${idx + 1}</td>
+                    <td class="p-2.5 font-bold text-slate-900">${r.code}</td>
+                    <td class="p-2.5 font-medium">${r.name}</td>
+                    <td class="p-2.5 text-center font-medium">${r.unit}</td>
+                    <td class="p-2.5 text-center"><span class="px-2 py-0.5 rounded text-[10px] font-bold ${r.fsn==='Fast-Moving'?'bg-emerald-100 text-emerald-800':'bg-blue-100 text-blue-800'}">${r.fsn}</span></td>
+                    <td class="p-2.5 text-right font-bold text-blue-900">${r.sumExp.toLocaleString('en-US', {maximumFractionDigits: 1})}</td>
+                    <td class="p-2.5 text-right font-semibold">${r.freqPct.toFixed(1)}%</td>
+                    <td class="p-2.5 text-right highlight-avg-cell">${r.avgDaily.toLocaleString('en-US', {maximumFractionDigits: 1})}</td>
+                    <td class="p-2.5 text-right font-bold text-slate-900">${r.targetBuf.toLocaleString('en-US', {maximumFractionDigits: 1})}</td>
+                    <td class="p-2.5 text-right font-semibold text-gray-600">${r.safetyStock.toLocaleString('en-US', {maximumFractionDigits: 1})}</td>
+                    <td class="p-2.5 text-right text-amber-800 font-bold">${r.rop.toLocaleString('en-US', {maximumFractionDigits: 1})}</td>
+                    <td class="p-2.5 text-right">
+                        <input type="number" value="${r.currStock}" onchange="updateItemStock('${r.code}', this.value)" class="w-24 stock-input-box rounded p-1 text-right text-xs">
+                    </td>
+                    <td class="p-2.5 text-right text-red-700 font-bold text-sm">${r.purchaseQty > 0 ? r.purchaseQty.toLocaleString('en-US', {maximumFractionDigits: 1}) : '-'}</td>
+                `;
+                tbody.appendChild(tr);
+            });
+        }
+
+        function filterTable() {
+            const kw = document.getElementById('searchInput').value.toLowerCase();
+            const status = document.getElementById('statusFilter').value;
+            const rows = document.getElementById('masterTableBody').getElementsByTagName('tr');
+
+            processedData.forEach((r, idx) => {
+                const rowEl = rows[idx];
+                const matchKw = r.code.toLowerCase().includes(kw) || r.name.toLowerCase().includes(kw);
+                let matchStatus = true;
+
+                if (status === "NEED_PURCHASE") matchStatus = r.purchaseQty > 0;
+                else if (status === "ROP_ALERT") matchStatus = r.currStock <= r.rop;
+
+                if (matchKw && matchStatus) rowEl.style.display = "";
+                else rowEl.style.display = "none";
+            });
+        }
+
+        function populateForecastSelect() {
+            const sel = document.getElementById('itemForecastSelect');
+            sel.innerHTML = "";
+            processedData.forEach(r => {
+                const opt = document.createElement('option');
+                opt.value = r.code;
+                opt.text = `${r.code} - ${r.name}`;
+                sel.appendChild(opt);
+            });
+            renderDailyDemandTable();
+        }
+
+        function renderDailyDemandTable() {
+            const code = document.getElementById('itemForecastSelect').value;
+            const item = processedData.find(r => r.code === code);
+            if (!item) return;
+
+            document.getElementById('dailyDemandInfo').innerHTML = `📌 <b>Mã Hàng:</b> ${item.code} | <b>Tên Mã:</b> ${item.name} | <b>ĐVT:</b> ${item.unit} | <b>Tổng xuất ${dateCols.length} ngày:</b> ${item.sumExp.toLocaleString()} | <b>Trung bình 1 ngày:</b> ${item.avgDaily.toFixed(1)} ${item.unit} | <b>Đỉnh xuất (Max):</b> ${Math.max(...item.valsList).toLocaleString()}`;
+
+            const tbody = document.getElementById('dailyDemandTableBody');
+            tbody.innerHTML = "";
+
+            dateCols.forEach((d, idx) => {
+                const qty = item.valsList[idx] || 0;
+                const tr = document.createElement('tr');
+                if (qty > 0) tr.classList.add('bg-blue-50/50');
+
+                tr.innerHTML = `
+                    <td class="p-2.5 text-center font-bold text-slate-800">${formatDateVN(d)}</td>
+                    <td class="p-2.5 text-right font-bold ${qty > 0 ? 'text-blue-900' : 'text-gray-400'}">${qty > 0 ? qty.toLocaleString('en-US', {maximumFractionDigits: 1}) : '-'}</td>
+                    <td class="p-2.5 text-center"><span class="px-2 py-0.5 rounded text-[10px] font-bold ${qty > 0 ? 'bg-emerald-100 text-emerald-800' : 'bg-gray-100 text-gray-500'}">${qty > 0 ? 'Có phát sinh xuất' : 'Không xuất'}</span></td>
+                `;
+                tbody.appendChild(tr);
+            });
+        }
+
+        function populateFIFOSelect() {
+            const sel = document.getElementById('fifoItemSelect');
+            sel.innerHTML = "";
+            processedData.forEach(r => {
+                const opt = document.createElement('option');
+                opt.value = r.code;
+                opt.text = `${r.code} - ${r.name}`;
+                sel.appendChild(opt);
+            });
+        }
+
+        function generateFIFOPickList() {
+            const code = document.getElementById('fifoItemSelect').value;
+            let qtyNeeded = parseFloat(document.getElementById('fifoQtyNeeded').value) || 0;
+            
+            const rawSnap = rawTxData.filter(r => (r['Ngày giờ nhập/xuất'] === undefined || r['Ngày giờ nhập/xuất'] === null) && r['Mã'] === code && parseFloat(r['Tồn cuối']) > 0);
+            
+            if (rawSnap.length === 0) {
+                alert("Không có dữ liệu tồn kho vị trí chi tiết cho mã này!");
+                return;
+            }
+
+            rawSnap.sort((a, b) => new Date(a['Nsx'] || 0) - new Date(b['Nsx'] || 0));
+
+            const tbody = document.getElementById('fifoTableBody');
+            tbody.innerHTML = "";
+            let remaining = qtyNeeded;
+
+            rawSnap.forEach((r, idx) => {
+                if (remaining <= 0) return;
+                const avail = parseFloat(r['Tồn cuối']) || 0;
+                const take = Math.min(avail, remaining);
+                remaining -= take;
+
+                const tr = document.createElement('tr');
+                tr.innerHTML = `
+                    <td class="p-2 text-center font-bold">${idx + 1}</td>
+                    <td class="p-2 font-bold">${r['Mã']}</td>
+                    <td class="p-2">${r['Tên Mã']}</td>
+                    <td class="p-2 font-semibold">${r['Kho'] || ''}</td>
+                    <td class="p-2 font-bold text-blue-900">${r['Vị trí'] || ''}</td>
+                    <td class="p-2 font-semibold">${r['pallet_no'] || ''}</td>
+                    <td class="p-2">${r['batch_no'] || ''}</td>
+                    <td class="p-2 text-amber-900 font-bold">${formatDateVN(parseToISOStandardDate(r['Nsx']))}</td>
+                    <td class="p-2 text-right font-semibold">${avail.toLocaleString()}</td>
+                    <td class="p-2 text-right font-bold text-emerald-700 text-sm">${take.toLocaleString()}</td>
+                `;
+                tbody.appendChild(tr);
+            });
+
+            document.getElementById('fifoResultContainer').classList.remove('hidden');
+        }
+
+        // --- RENDER EXECUTIVE PRESENTATION TAB (TAB 5) ---
+        function renderPresentationTab() {
+            if (processedData.length === 0) return;
+
+            const nDays = dateCols.length || 21;
+            const dMin = dateCols[0] || 'N/A';
+            const dMax = dateCols[dateCols.length - 1] || 'N/A';
+
+            const dMinVN = formatDateVN(dMin);
+            const dMaxVN = formatDateVN(dMax);
+
+            const totalSKUs = processedData.length;
+            const totalExport = processedData.reduce((a, b) => a + b.sumExp, 0);
+            const totalAvgDaily = processedData.reduce((a, b) => a + b.avgDaily, 0);
+            const totalTargetSafety = processedData.reduce((a, b) => a + b.targetBufSafety, 0);
+            const totalSafetyStockOnly = processedData.reduce((a, b) => a + b.safetyStock, 0);
+            const totalCurrStock = processedData.reduce((a, b) => a + b.currStock, 0);
+            const totalPO = processedData.reduce((a, b) => a + b.purchaseQty, 0);
+
+            const needPOCount = processedData.filter(r => r.purchaseQty > 0).length;
+            const ropAlertCount = processedData.filter(r => r.currStock <= r.rop).length;
+
+            const fulfillmentRate = totalTargetSafety > 0 ? (totalCurrStock / totalTargetSafety) * 100.0 : 0;
+
+            // Render Cards
+            document.getElementById('presPeriod').innerText = `${nDays} Ngày Lịch`;
+            document.getElementById('presDateRange').innerText = `Từ ${dMinVN} đến ${dMaxVN}`;
+            document.getElementById('presTotalExport').innerText = totalExport.toLocaleString('en-US', {maximumFractionDigits: 0});
+            document.getElementById('presAvgDailyTotal').innerText = `TB: ${totalAvgDaily.toLocaleString('en-US', {maximumFractionDigits: 1})} / ngày`;
+            document.getElementById('presTargetSafety').innerText = totalTargetSafety.toLocaleString('en-US', {maximumFractionDigits: 0});
+            document.getElementById('presSafetyStockOnly').innerText = `Safety Stock: ${totalSafetyStockOnly.toLocaleString('en-US', {maximumFractionDigits: 0})}`;
+            document.getElementById('presCurrStock').innerText = totalCurrStock.toLocaleString('en-US', {maximumFractionDigits: 0});
+
+            const fulEl = document.getElementById('presFulfillmentRate');
+            fulEl.innerText = `Đáp ứng: ${fulfillmentRate.toFixed(1)}% target`;
+            if (fulfillmentRate < 100) fulEl.className = "text-[10px] font-bold text-red-600";
+            else fulEl.className = "text-[10px] font-bold text-emerald-600";
+
+            // FSN Categories Data
+            const categories = ['Fast-Moving', 'Medium-Moving', 'Slow-Moving'];
+            const fsnTableBody = document.getElementById('presFsnTableBody');
+            fsnTableBody.innerHTML = "";
+
+            let fastPO = 0, fastExp = 0;
+
+            categories.forEach(catName => {
+                const items = processedData.filter(r => r.fsn === catName);
+                const count = items.length;
+                const pctSKU = (count / totalSKUs) * 100.0;
+                const sumExp = items.reduce((a, b) => a + b.sumExp, 0);
+                const pctExp = totalExport > 0 ? (sumExp / totalExport) * 100.0 : 0;
+                const avgDaily = items.reduce((a, b) => a + b.avgDaily, 0);
+                const targetBuf = items.reduce((a, b) => a + b.targetBufSafety, 0);
+                const currStock = items.reduce((a, b) => a + b.currStock, 0);
+                const fulPct = targetBuf > 0 ? (currStock / targetBuf) * 100.0 : 0;
+                const purchaseQty = items.reduce((a, b) => a + b.purchaseQty, 0);
+                const pctPO = totalPO > 0 ? (purchaseQty / totalPO) * 100.0 : 0;
+
+                if (catName === 'Fast-Moving') {
+                    fastPO = purchaseQty;
+                    fastExp = sumExp;
+                }
+
+                const tr = document.createElement('tr');
+                tr.innerHTML = `
+                    <td class="p-2.5 font-bold text-blue-900">${catName}</td>
+                    <td class="p-2.5 text-right font-bold">${count}</td>
+                    <td class="p-2.5 text-right">${pctSKU.toFixed(1)}%</td>
+                    <td class="p-2.5 text-right font-bold text-blue-900">${sumExp.toLocaleString('en-US', {maximumFractionDigits: 1})}</td>
+                    <td class="p-2.5 text-right font-semibold">${pctExp.toFixed(1)}%</td>
+                    <td class="p-2.5 text-right highlight-avg-cell">${avgDaily.toLocaleString('en-US', {maximumFractionDigits: 1})}</td>
+                    <td class="p-2.5 text-right font-semibold">${targetBuf.toLocaleString('en-US', {maximumFractionDigits: 1})}</td>
+                    <td class="p-2.5 text-right font-bold">${currStock.toLocaleString('en-US', {maximumFractionDigits: 1})}</td>
+                    <td class="p-2.5 text-right font-bold ${fulPct < 100 ? 'text-amber-700' : 'text-emerald-700'}">${fulPct.toFixed(1)}%</td>
+                    <td class="p-2.5 text-right font-bold text-red-600">${purchaseQty > 0 ? purchaseQty.toLocaleString('en-US', {maximumFractionDigits: 1}) : '-'}</td>
+                    <td class="p-2.5 text-right font-bold ${pctPO > 0 ? 'text-red-700' : 'text-gray-400'}">${pctPO > 0 ? pctPO.toFixed(1) + '%' : '-'}</td>
+                `;
+                fsnTableBody.appendChild(tr);
+            });
+
+            // Total FSN Row
+            const trTotal = document.createElement('tr');
+            trTotal.className = "bg-slate-900 text-white font-extrabold";
+            trTotal.innerHTML = `
+                <td class="p-2.5 text-yellow-300">TỔNG CỘNG TOÀN HỆ THỐNG</td>
+                <td class="p-2.5 text-right">${totalSKUs}</td>
+                <td class="p-2.5 text-right">100.0%</td>
+                <td class="p-2.5 text-right text-blue-300">${totalExport.toLocaleString('en-US', {maximumFractionDigits: 1})}</td>
+                <td class="p-2.5 text-right">100.0%</td>
+                <td class="p-2.5 text-right text-emerald-300">${totalAvgDaily.toLocaleString('en-US', {maximumFractionDigits: 1})}</td>
+                <td class="p-2.5 text-right">${totalTargetSafety.toLocaleString('en-US', {maximumFractionDigits: 1})}</td>
+                <td class="p-2.5 text-right">${totalCurrStock.toLocaleString('en-US', {maximumFractionDigits: 1})}</td>
+                <td class="p-2.5 text-right text-yellow-300">${fulfillmentRate.toFixed(1)}%</td>
+                <td class="p-2.5 text-right text-red-300">${totalPO.toLocaleString('en-US', {maximumFractionDigits: 1})}</td>
+                <td class="p-2.5 text-right text-yellow-300">100.0%</td>
+            `;
+            fsnTableBody.appendChild(trTotal);
+
+            // Render Top 10 PO List
+            const topPOTableBody = document.getElementById('presTopPOTableBody');
+            topPOTableBody.innerHTML = "";
+
+            const topPOItems = processedData.filter(r => r.purchaseQty > 0).sort((a, b) => b.purchaseQty - a.purchaseQty).slice(0, 10);
+
+            if (topPOItems.length === 0) {
+                const trEmpty = document.createElement('tr');
+                trEmpty.innerHTML = `<td colspan="10" class="p-4 text-center text-emerald-700 font-bold">✅ Tất cả mã hàng đã đủ định mức trữ kho 3D, không có mã hàng nào cần nạp PO!</td>`;
+                topPOTableBody.appendChild(trEmpty);
+            } else {
+                topPOItems.forEach((r, idx) => {
+                    const shortagePct = r.targetBufSafety > 0 ? (r.purchaseQty / r.targetBufSafety) * 100.0 : 0;
+                    const tr = document.createElement('tr');
+                    tr.classList.add('hover:bg-red-50');
+                    tr.innerHTML = `
+                        <td class="p-2.5 text-center font-bold text-slate-700">${idx + 1}</td>
+                        <td class="p-2.5 font-bold text-slate-900">${r.code}</td>
+                        <td class="p-2.5 font-medium">${r.name}</td>
+                        <td class="p-2.5 text-center font-medium">${r.unit}</td>
+                        <td class="p-2.5 text-right font-semibold text-blue-900">${r.fsn}</td>
+                        <td class="p-2.5 text-right highlight-avg-cell">${r.avgDaily.toLocaleString('en-US', {maximumFractionDigits: 1})}</td>
+                        <td class="p-2.5 text-right font-semibold">${r.targetBufSafety.toLocaleString('en-US', {maximumFractionDigits: 1})}</td>
+                        <td class="p-2.5 text-right font-bold text-slate-900">${r.currStock.toLocaleString('en-US', {maximumFractionDigits: 1})}</td>
+                        <td class="p-2.5 text-right font-bold text-red-700 text-sm">${r.purchaseQty.toLocaleString('en-US', {maximumFractionDigits: 1})}</td>
+                        <td class="p-2.5 text-right font-bold text-red-800">${shortagePct.toFixed(1)}%</td>
+                    `;
+                    topPOTableBody.appendChild(tr);
+                });
+            }
+
+            // Render Executive Statement Bullets (Plain, practical language with DD/MM/YYYY dates)
+            const fastExpPct = totalExport > 0 ? (fastExp / totalExport) * 100.0 : 0;
+            const fastPOPct = totalPO > 0 ? (fastPO / totalPO) * 100.0 : 0;
+
+            const statementHtml = `
+                <div class="flex items-start gap-2">
+                    <span class="bg-blue-900 text-white px-2 py-0.5 rounded text-[11px] font-bold">1</span>
+                    <p><b>Sản lượng xuất kho</b>: Trong <b>${nDays} ngày lịch</b> (từ ngày ${dMinVN} đến ${dMaxVN}), có <b>${totalSKUs} mã hàng</b> xuất với tổng lượng <b>${totalExport.toLocaleString('en-US', {maximumFractionDigits: 0})} unit</b>. Trung bình mỗi ngày xuất <b>${totalAvgDaily.toLocaleString('en-US', {maximumFractionDigits: 1})} unit/ngày</b>.</p>
+                </div>
+                <div class="flex items-start gap-2">
+                    <span class="bg-blue-900 text-white px-2 py-0.5 rounded text-[11px] font-bold">2</span>
+                    <p><b>Cân đối lượng trữ kho</b>: Định mức trữ 3 ngày an toàn là <b>${totalTargetSafety.toLocaleString('en-US', {maximumFractionDigits: 0})} unit</b>. Tồn kho thực tế hiện tại có <b>${totalCurrStock.toLocaleString('en-US', {maximumFractionDigits: 0})} unit</b>, mới đạt <b>${fulfillmentRate.toFixed(1)}%</b> nhu cầu trữ đệm.</p>
+                </div>
+                <div class="flex items-start gap-2">
+                    <span class="bg-red-800 text-white px-2 py-0.5 rounded text-[11px] font-bold">3</span>
+                    <p><b>Lượng hàng thiếu cần mua (PO)</b>: Có <b>${needPOCount} mã hàng</b> thiếu trữ kho và <b>${ropAlertCount} mã hàng</b> đến ngưỡng phải đặt hàng ngay. Tổng lượng cần mua bổ sung là <b>${totalPO.toLocaleString('en-US', {maximumFractionDigits: 0})} unit</b>.</p>
+                </div>
+                <div class="flex items-start gap-2">
+                    <span class="bg-blue-900 text-white px-2 py-0.5 rounded text-[11px] font-bold">4</span>
+                    <p><b>Mã hàng xuất nhiều (Fast-Moving)</b>: Nhóm hàng xuất liên tục chiếm <b>${fastExpPct.toFixed(1)}%</b> tổng xuất và <b>${fastPOPct.toFixed(1)}%</b> lượng hàng cần mua thêm, cần ưu tiên đặt mua hàng trước.</p>
+                </div>
+            `;
+
+            document.getElementById('presStatementContainer').innerHTML = statementHtml;
+        }
+
+        // --- FORM EXCEL EXPORTS ---
+        function exportPOExcel() {
+            const needPO = processedData.filter(r => r.purchaseQty > 0);
+            if (needPO.length === 0) {
+                alert("Tất cả mã hàng đã đủ trữ kho, không có đơn mua hàng PO cần lập!");
+                return;
+            }
+
+            const todayStr = new Date().toLocaleDateString('vi-VN');
+            const targetDays = document.getElementById('targetDays').value || 3;
+            const leadTime = document.getElementById('leadTime').value || 2;
+
+            const aoa = [
+                ["PHIẾU ĐỀ NGHỊ MUA HÀNG BỔ SUNG TRỮ KHO (PURCHASE ORDER REQUISITION)"],
+                [`Ngày lập báo cáo: ${todayStr} | Target Trữ Kho: ${targetDays} Ngày | Lead Time Giao Hàng: ${leadTime} Ngày`],
+                [],
+                ["STT", "Mã Hàng", "Tên Mã Hàng", "ĐVT", "Phân Nhóm FSN", "Tần Suất (%)", "Sản Lượng TB 1 Ngày", "Tồn Kho Thực Tế", "Định Mức 3D Target", "LƯỢNG CẦN MUA THÊM (PO)"]
+            ];
+
+            let sumAvg = 0, sumStock = 0, sumTarget = 0, sumPO = 0;
+
+            needPO.forEach((r, idx) => {
+                sumAvg += r.avgDaily;
+                sumStock += r.currStock;
+                sumTarget += r.targetBufSafety;
+                sumPO += r.purchaseQty;
+
+                aoa.push([
+                    idx + 1,
+                    r.code,
+                    r.name,
+                    r.unit,
+                    r.fsn,
+                    (r.freqPct / 100.0),
+                    r.avgDaily,
+                    r.currStock,
+                    r.targetBufSafety,
+                    r.purchaseQty
+                ]);
+            });
+
+            // Total row
+            aoa.push(["TỔNG CỘNG LƯỢNG MUA PO", "", "", "", "", "", sumAvg, sumStock, sumTarget, sumPO]);
+            aoa.push([]);
+            aoa.push([]);
+            aoa.push(["", "Người Lập Báo Cáo", "", "", "Phòng Mua Hàng (Procurement)", "", "", "", "Trưởng Phòng Kế Hoạch"]);
+            aoa.push(["", "(Ký & ghi rõ họ tên)", "", "", "(Ký & ghi rõ họ tên)", "", "", "", "(Ký & đóng dấu)"]);
+
+            const ws = XLSX.utils.aoa_to_sheet(aoa);
+
+            // Column Widths
+            ws['!cols'] = [
+                { wch: 6 },  // STT
+                { wch: 16 }, // Mã Hàng
+                { wch: 38 }, // Tên Mã Hàng
+                { wch: 10 }, // ĐVT
+                { wch: 16 }, // FSN
+                { wch: 14 }, // Tần Suất %
+                { wch: 20 }, // TB 1 Ngày
+                { wch: 18 }, // Tồn Kho Thực Tế
+                { wch: 22 }, // Định Mức 3D Target
+                { wch: 26 }  // LƯỢNG CẦN MUA THÊM (PO)
+            ];
+
+            // Cell Merges for Header
+            ws['!merges'] = [
+                { s: { r: 0, c: 0 }, e: { r: 0, c: 9 } },
+                { s: { r: 1, c: 0 }, e: { r: 1, c: 9 } }
+            ];
+
+            const wb = XLSX.utils.book_new();
+            XLSX.utils.book_append_sheet(wb, ws, "Don_Mua_Hang_PO");
+            XLSX.writeFile(wb, `Don_Mua_Hang_PO_Tru_Kho_${targetDays}D.xlsx`);
+        }
+
+        function exportPresentationExcel() {
+            if (processedData.length === 0) {
+                alert("Vui lòng nạp dữ liệu trước khi xuất báo cáo!");
+                return;
+            }
+
+            const todayStr = new Date().toLocaleDateString('vi-VN');
+            const targetDays = document.getElementById('targetDays').value || 3;
+            const nDays = dateCols.length || 21;
+            const totalSKUs = processedData.length;
+            const totalExport = processedData.reduce((a, b) => a + b.sumExp, 0);
+            const totalPO = processedData.reduce((a, b) => a + b.purchaseQty, 0);
+
+            // Sheet 1: FSN Breakdown
+            const aoaFSN = [
+                ["BÁO CÁO TỔNG HỢP CÂN ĐỐI TRỮ KHO & ĐƠN MUA PO"],
+                [`Ngày lập: ${todayStr} | Kỳ báo cáo: ${nDays} Ngày Lịch | Target Trữ Kho: ${targetDays} Ngày`],
+                [],
+                ["Phân Nhóm FSN", "Số SKU", "Tỷ Lệ SKUs (%)", "Tổng Sản Lượng Xuất", "Tỷ Lệ Xuất (%)", "Sản Lượng TB 1 Ngày", "Trữ Kho 3D Target", "Tồn Kho Thực Tế", "Tỷ Lệ Đáp Ứng (%)", "LƯỢNG CẦN MUA THÊM (PO)", "Tỷ Lệ PO (%)"]
+            ];
+
+            const categories = ['Fast-Moving', 'Medium-Moving', 'Slow-Moving'];
+            let totAvg = 0, totTarget = 0, totStock = 0;
+
+            categories.forEach(cat => {
+                const items = processedData.filter(r => r.fsn === cat);
+                const skus = items.length;
+                const sumExp = items.reduce((a, b) => a + b.sumExp, 0);
+                const avgDaily = items.reduce((a, b) => a + b.avgDaily, 0);
+                const targetBuf = items.reduce((a, b) => a + b.targetBufSafety, 0);
+                const currStock = items.reduce((a, b) => a + b.currStock, 0);
+                const poQty = items.reduce((a, b) => a + b.purchaseQty, 0);
+
+                totAvg += avgDaily;
+                totTarget += targetBuf;
+                totStock += currStock;
+
+                aoaFSN.push([
+                    cat,
+                    skus,
+                    (skus / totalSKUs),
+                    sumExp,
+                    totalExport > 0 ? (sumExp / totalExport) : 0,
+                    avgDaily,
+                    targetBuf,
+                    currStock,
+                    targetBuf > 0 ? (currStock / targetBuf) : 0,
+                    poQty,
+                    totalPO > 0 ? (poQty / totalPO) : 0
+                ]);
+            });
+
+            // Total row FSN
+            aoaFSN.push([
+                "TỔNG CỘNG TOÀN HỆ THỐNG",
+                totalSKUs,
+                1.0,
+                totalExport,
+                1.0,
+                totAvg,
+                totTarget,
+                totStock,
+                totTarget > 0 ? (totStock / totTarget) : 0,
+                totalPO,
+                1.0
+            ]);
+
+            aoaFSN.push([]);
+            aoaFSN.push([]);
+            aoaFSN.push(["", "Cán Bộ Lập Báo Cáo", "", "", "Trưởng Phòng Kế Hoạch", "", "", "", "Ban Giám Đốc Phê Duyệt"]);
+            aoaFSN.push(["", "(Ký & ghi rõ họ tên)", "", "", "(Ký & ghi rõ họ tên)", "", "", "", "(Ký & đóng dấu)"]);
+
+            const wsFSN = XLSX.utils.aoa_to_sheet(aoaFSN);
+            wsFSN['!cols'] = [
+                { wch: 18 }, { wch: 10 }, { wch: 14 }, { wch: 22 }, { wch: 14 }, { wch: 20 }, { wch: 20 }, { wch: 18 }, { wch: 16 }, { wch: 24 }, { wch: 14 }
+            ];
+            wsFSN['!merges'] = [
+                { s: { r: 0, c: 0 }, e: { r: 0, c: 10 } },
+                { s: { r: 1, c: 0 }, e: { r: 1, c: 10 } }
+            ];
+
+            // Sheet 2: Top PO Items
+            const aoaTopPO = [
+                ["DANH SÁCH TOP MÃ HÀNG CẦN MUA PO LỚN NHẤT (ƯU TIÊN MUA TRƯỚC)"],
+                [`Ngày lập: ${todayStr} | Ưu tiên mua trước`],
+                [],
+                ["STT", "Mã Hàng", "Tên Mã Hàng", "ĐVT", "Phân Nhóm FSN", "Sản Lượng TB 1 Ngày", "Định Mức 3D Target", "Tồn Kho Thực Tế", "LƯỢNG CẦN MUA THÊM (PO)", "Tỷ Lệ Thiếu Hụt (%)"]
+            ];
+
+            const topPOItems = processedData.filter(r => r.purchaseQty > 0).sort((a, b) => b.purchaseQty - a.purchaseQty).slice(0, 15);
+            topPOItems.forEach((r, idx) => {
+                aoaTopPO.push([
+                    idx + 1,
+                    r.code,
+                    r.name,
+                    r.unit,
+                    r.fsn,
+                    r.avgDaily,
+                    r.targetBufSafety,
+                    r.currStock,
+                    r.purchaseQty,
+                    r.targetBufSafety > 0 ? (r.purchaseQty / r.targetBufSafety) : 0
+                ]);
+            });
+
+            const wsTopPO = XLSX.utils.aoa_to_sheet(aoaTopPO);
+            wsTopPO['!cols'] = [
+                { wch: 6 }, { wch: 16 }, { wch: 38 }, { wch: 10 }, { wch: 16 }, { wch: 20 }, { wch: 20 }, { wch: 18 }, { wch: 24 }, { wch: 16 }
+            ];
+            wsTopPO['!merges'] = [
+                { s: { r: 0, c: 0 }, e: { r: 0, c: 9 } }
+            ];
+
+            const wb = XLSX.utils.book_new();
+            XLSX.utils.book_append_sheet(wb, wsFSN, "1_Tong_Hop_FSN");
+            XLSX.utils.book_append_sheet(wb, wsTopPO, "2_Top_Ma_Can_Mua_PO");
+
+            XLSX.writeFile(wb, "Bao_Cao_Thuyet_Trinh_Tong_Hop_Tru_Kho.xlsx");
+        }
+    </script>
+</body>
+</html>
