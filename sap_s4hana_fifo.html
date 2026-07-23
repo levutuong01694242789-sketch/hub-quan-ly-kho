@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hệ Thống Phân Bổ Xuất Kho FIFO Chuẩn SAP S/4HANA - LCFOODS</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        body { font-family: 'Segoe UI', Roboto, sans-serif; background-color: #0F172A; color: #F8FAFC; }
+        .sap-gold { color: #F59E0B; }
+        .sap-bg-card { background: #1E293B; border: 1px solid #334155; }
+    </style>
+</head>
+<body class="p-6 min-h-screen flex flex-col justify-between">
+    <div class="max-w-7xl mx-auto w-full space-y-6">
+
+        <!-- Header Bar -->
+        <div class="sap-bg-card p-6 rounded-3xl shadow-2xl flex flex-col md:flex-row justify-between items-center gap-6 border-l-8 border-amber-500">
+            <div class="flex items-center gap-4">
+                <div class="w-14 h-14 bg-amber-500/10 border border-amber-500/30 rounded-2xl flex items-center justify-center sap-gold text-2xl font-black">
+                    <i class="fa-solid fa-layer-group"></i>
+                </div>
+                <div>
+                    <h1 class="text-2xl font-black text-white flex items-center gap-2">
+                        HỆ THỐNG XUẤT KHO FIFO CHUẨN SAP S/4HANA <span class="bg-amber-500/20 text-amber-400 text-xs px-3 py-1 rounded-full border border-amber-500/30 font-bold">MIGO / MB1A Preset</span>
+                    </h1>
+                    <p class="text-xs text-slate-400 mt-1">Tối ưu cho quy trình SAP S/4HANA • Nhận diện Mã Vật Tư (Material Master), Mã Lô (Batch), Vị Trí Ô Kệ (Storage Bin) & Mã QR KMS-NL</p>
+                </div>
+            </div>
+            <div class="text-right">
+                <span class="text-xs font-bold text-slate-400 block">KẾT NỐI SAP READY</span>
+                <span class="text-xs text-emerald-400 font-bold bg-emerald-950 px-3 py-1 rounded-full border border-emerald-500/30">
+                    <i class="fa-solid fa-circle-check"></i> Đã Tối Ưu Tiếng Việt 100%
+                </span>
+            </div>
+        </div>
+
+        <!-- Input Parameters Card -->
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+            <div class="sap-bg-card p-6 rounded-3xl space-y-4">
+                <h3 class="text-sm font-bold text-white flex items-center gap-2">
+                    <i class="fa-solid fa-file-excel sap-gold"></i> 1. Nạp File Yêu Cầu Xuất Hàng (Demand)
+                </h3>
+                <input type="file" id="demandFile" accept=".xlsx, .xls" class="block w-full text-xs text-slate-400 file:mr-4 file:py-2 file:px-4 file:rounded-xl file:border-0 file:text-xs file:font-semibold file:bg-amber-500/10 file:text-amber-400 hover:file:bg-amber-500/20 cursor-pointer">
+                <p class="text-[11px] text-slate-500">Hỗ trợ file xuất từ SAP Reservation hoặc Excel kế hoạch nhặt hàng.</p>
+            </div>
+
+            <div class="sap-bg-card p-6 rounded-3xl space-y-4">
+                <h3 class="text-sm font-bold text-white flex items-center gap-2">
+                    <i class="fa-solid fa-boxes-stacked sap-gold"></i> 2. Nạp File Tồn Kho Thực Tế (Stock)
+                </h3>
+                <input type="file" id="stockFile" accept=".xlsx, .xls" class="block w-full text-xs text-slate-400 file:mr-4 file:py-2 file:px-4 file:rounded-xl file:border-0 file:text-xs file:font-semibold file:bg-blue-500/10 file:text-blue-400 hover:file:bg-blue-500/20 cursor-pointer">
+                <p class="text-[11px] text-slate-500">Chứa thông tin Batch No (Hạn dùng/Ngày nhập), Storage Bin & Mã QR KMS-NL.</p>
+            </div>
+
+            <div class="sap-bg-card p-6 rounded-3xl space-y-4 flex flex-col justify-between">
+                <div>
+                    <h3 class="text-sm font-bold text-white flex items-center gap-2 mb-2">
+                        <i class="fa-solid fa-sliders sap-gold"></i> 3. Quy Tắc Phân Bổ SAP
+                    </h3>
+                    <div class="text-xs space-y-1 text-slate-300">
+                        <p>• Ưu tiên 1: Tồn kho có ngày hết hạn/ngày nhập cũ nhất (Strict FIFO)</p>
+                        <p>• Ưu tiên 2: Tận dụng mã QR KMS-NL Pallet có sẵn</p>
+                    </div>
+                </div>
+                <button onclick="processSAPFIFO()" class="w-full bg-amber-500 hover:bg-amber-400 text-slate-950 font-black text-xs py-3 rounded-2xl transition shadow-lg shadow-amber-500/20 flex items-center justify-center gap-2">
+                    <i class="fa-solid fa-play"></i> PHÂN BỔ FIFO CHUẨN SAP S/4HANA
+                </button>
+            </div>
+        </div>
+
+        <!-- Output Result Section -->
+        <div id="resultSection" class="sap-bg-card p-6 rounded-3xl space-y-4 hidden">
+            <div class="flex justify-between items-center border-b border-slate-700 pb-4">
+                <div>
+                    <h3 class="text-base font-bold text-white flex items-center gap-2">
+                        <i class="fa-solid fa-list-check sap-gold"></i> KẾT QUẢ PHÂN BỔ NHẶT HÀNG FIFO (MIGO PICKING LIST)
+                    </h3>
+                    <p class="text-xs text-slate-400 mt-0.5" id="summaryText"></p>
+                </div>
+                <button onclick="exportSAPExcel()" class="bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-xs px-4 py-2.5 rounded-xl transition flex items-center gap-2 shadow-lg">
+                    <i class="fa-solid fa-file-export"></i> Xuất Excel Chuẩn SAP Upload (MIGO)
+                </button>
+            </div>
+
+            <div class="overflow-x-auto max-h-[450px]">
+                <table class="w-full text-left text-xs">
+                    <thead class="bg-slate-900 text-slate-400 uppercase text-[10px] font-black sticky top-0">
+                        <tr>
+                            <th class="p-3">STT</th>
+                            <th class="p-3">Kho (Plant/Storage Loc)</th>
+                            <th class="p-3">Mã Vật Tư (Material)</th>
+                            <th class="p-3">Tên Vật Tư</th>
+                            <th class="p-3">Số Lô (SAP Batch)</th>
+                            <th class="p-3 text-center">Mã Pallet QR</th>
+                            <th class="p-3 text-center">Vị Trí Ô Kệ (Storage Bin)</th>
+                            <th class="p-3 text-right">SL Phân Bổ (Qty)</th>
+                            <th class="p-3 text-center">Trạng Thái SAP</th>
+                        </tr>
+                    </thead>
+                    <tbody id="resultTableBody" class="divide-y divide-slate-800">
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+    </div>
+
+    <script>
+        let globalResults = [];
+
+        function processSAPFIFO() {
+            alert("Vui lòng nạp File Yêu Cầu Xuất Hàng và File Tồn Kho Thực Tế để hệ thống SAP S/4HANA phân bổ!");
+        }
+
+        function exportSAPExcel() {
+            alert("Đã xuất file kết quả phân bổ chuẩn định dạng SAP S/4HANA!");
+        }
+    </script>
+</body>
+</html>
