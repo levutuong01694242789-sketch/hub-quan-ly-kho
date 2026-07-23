@@ -1,0 +1,783 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IT Asset QR Manager - Hệ thống Quản lý Tài sản & Mã QR</title>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <!-- Vanilla CSS -->
+    <link rel="stylesheet" href="styles.css">
+    <!-- QR Code Generator: QRious -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrious/4.0.2/qrious.min.js"></script>
+    <!-- QR Code Scanner: Html5-QRCode -->
+    <script src="https://unpkg.com/html5-qrcode"></script>
+    <!-- Charts: Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <!-- Icons: Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+</head>
+<body class="dark-theme">
+    <!-- Layout Wrapper -->
+    <div class="app-container">
+        <!-- Sidebar Navigation -->
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <div class="logo-box">
+                    <i data-lucide="qr-code" class="logo-icon"></i>
+                    <span class="logo-text">IT QR<span class="highlight">Asset</span></span>
+                </div>
+            </div>
+            <nav class="sidebar-menu">
+                <a href="#dashboard" class="menu-item active" data-tab="dashboard">
+                    <i data-lucide="layout-dashboard"></i>
+                    <span>Tổng quan</span>
+                </a>
+                <a href="#assets" class="menu-item" data-tab="assets">
+                    <i data-lucide="laptop"></i>
+                    <span>Tài sản công ty</span>
+                </a>
+                <a href="#employees" class="menu-item" data-tab="employees">
+                    <i data-lucide="users"></i>
+                    <span>Quản lý nhân sự</span>
+                </a>
+                <a href="#scanner" class="menu-item" data-tab="scanner">
+                    <i data-lucide="scan-line"></i>
+                    <span>Quét mã QR</span>
+                </a>
+                <a href="#print-shop" class="menu-item" data-tab="print-shop">
+                    <i data-lucide="printer"></i>
+                    <span>Tạo nhãn in</span>
+                </a>
+                <a href="#data-exchange" class="menu-item" data-tab="data-exchange">
+                    <i data-lucide="database"></i>
+                    <span>Nhập / Xuất file</span>
+                </a>
+            </nav>
+            <div class="sidebar-footer">
+                <button id="theme-toggle" class="btn-theme">
+                    <i data-lucide="sun" class="sun-icon"></i>
+                    <i data-lucide="moon" class="moon-icon"></i>
+                    <span id="theme-text">Giao diện Sáng</span>
+                </button>
+            </div>
+        </aside>
+
+        <!-- Main Content Area -->
+        <main class="main-content">
+            <!-- Header -->
+            <header class="main-header">
+                <div class="header-left">
+                    <h1 id="page-title">Tổng quan hệ thống</h1>
+                    <p class="subtitle" id="page-subtitle">Thống kê hiện trạng tài sản IT của công ty</p>
+                </div>
+                <div class="header-right">
+                    <div class="quick-stats-badge">
+                        <i data-lucide="calendar"></i>
+                        <span id="current-date">--/--/----</span>
+                    </div>
+                    <div class="profile-box">
+                        <div class="avatar">IT</div>
+                        <div class="profile-info">
+                            <span class="name">IT Administrator</span>
+                            <span class="role">Quản trị viên</span>
+                        </div>
+                    </div>
+                </div>
+            </header>
+
+            <!-- Views container -->
+            <div class="view-content">
+                <!-- VIEW 1: DASHBOARD -->
+                <section id="tab-dashboard" class="tab-view active">
+                    <div class="stats-grid">
+                        <div class="stat-card blue">
+                            <div class="stat-icon"><i data-lucide="archive"></i></div>
+                            <div class="stat-info">
+                                <h3>Tổng tài sản</h3>
+                                <p class="stat-val" id="stat-total">0</p>
+                            </div>
+                        </div>
+                        <div class="stat-card green">
+                            <div class="stat-icon"><i data-lucide="user-check"></i></div>
+                            <div class="stat-info">
+                                <h3>Đang cấp phát</h3>
+                                <p class="stat-val" id="stat-assigned">0</p>
+                            </div>
+                        </div>
+                        <div class="stat-card yellow">
+                            <div class="stat-icon"><i data-lucide="check-circle"></i></div>
+                            <div class="stat-info">
+                                <h3>Sẵn có</h3>
+                                <p class="stat-val" id="stat-available">0</p>
+                            </div>
+                        </div>
+                        <div class="stat-card red">
+                            <div class="stat-icon"><i data-lucide="wrench"></i></div>
+                            <div class="stat-info">
+                                <h3>Bảo trì / Hỏng</h3>
+                                <p class="stat-val" id="stat-repair">0</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="dashboard-charts">
+                        <div class="chart-card">
+                            <h3>Phân bổ trạng thái tài sản</h3>
+                            <div class="chart-container">
+                                <canvas id="statusChart"></canvas>
+                            </div>
+                        </div>
+                        <div class="chart-card">
+                            <h3>Cơ cấu loại tài sản</h3>
+                            <div class="chart-container">
+                                <canvas id="typeChart"></canvas>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="recent-activities-box">
+                        <div class="box-header">
+                            <h3>Lịch sử hoạt động gần đây</h3>
+                            <button id="clear-logs" class="btn btn-sm btn-link">Xóa nhật ký</button>
+                        </div>
+                        <div class="activity-timeline" id="recent-activities">
+                            <!-- Populated by JS -->
+                        </div>
+                    </div>
+                </section>
+
+                <!-- VIEW 2: ASSETS DIRECTORY -->
+                <section id="tab-assets" class="tab-view">
+                    <div class="filter-bar">
+                        <div class="search-box">
+                            <i data-lucide="search"></i>
+                            <input type="text" id="asset-search" placeholder="Tìm tên tài sản, mã, serial hoặc người dùng...">
+                        </div>
+                        <div class="filters-group">
+                            <select id="filter-type" class="form-select">
+                                <option value="">Tất cả loại tài sản</option>
+                                <option value="Laptop">Laptop / Máy tính xách tay</option>
+                                <option value="Desktop">Desktop / Máy tính bàn</option>
+                                <option value="Camera">Camera / Thiết bị ghi hình</option>
+                                <option value="Printer">Printer / Máy in - Scan</option>
+                                <option value="Network">Network / Thiết bị mạng</option>
+                                <option value="Other">Khác (Bàn ghế, Thiết bị phụ trợ...)</option>
+                            </select>
+                            <select id="filter-status" class="form-select">
+                                <option value="">Tất cả trạng thái</option>
+                                <option value="Sẵn có">Sẵn có trong kho</option>
+                                <option value="Đang cấp phát">Đang cấp phát</option>
+                                <option value="Đang sửa chữa">Đang bảo trì/sửa chữa</option>
+                                <option value="Thanh lý">Đã thanh lý</option>
+                            </select>
+                            <button id="btn-add-asset" class="btn btn-primary">
+                                <i data-lucide="plus"></i> Thêm tài sản mới
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="table-container">
+                        <table class="data-table" id="assets-table">
+                            <thead>
+                                <tr>
+                                    <th>Mã tài sản</th>
+                                    <th>Tên tài sản</th>
+                                    <th>Loại</th>
+                                    <th>Trạng thái</th>
+                                    <th>Người sử dụng</th>
+                                    <th>Ngày cấp</th>
+                                    <th>Thao tác</th>
+                                </tr>
+                            </thead>
+                            <tbody id="assets-list">
+                                <!-- Populated by JS -->
+                            </tbody>
+                        </table>
+                        <div class="empty-state" id="assets-empty" style="display: none;">
+                            <i data-lucide="package-open"></i>
+                            <p>Không tìm thấy tài sản nào phù hợp với bộ lọc.</p>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- VIEW 3: QR CODE SCANNER -->
+                <section id="tab-scanner" class="tab-view">
+                    <div class="scanner-layout">
+                        <div class="scanner-box">
+                            <div class="scanner-card">
+                                <h3>Trình quét mã QR Camera</h3>
+                                <p class="scanner-info">Cho phép quyền truy cập camera để quét trực tiếp mã tài sản.</p>
+                                
+                                <div class="scanner-viewport-wrapper">
+                                    <div id="qr-reader" class="scanner-viewport"></div>
+                                    <div class="scanner-overlay" id="qr-scanner-overlay">
+                                        <div class="scan-target-box">
+                                            <div class="corner top-left"></div>
+                                            <div class="corner top-right"></div>
+                                            <div class="corner bottom-left"></div>
+                                            <div class="corner bottom-right"></div>
+                                            <div class="laser-beam"></div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="scanner-controls">
+                                    <button id="btn-start-camera" class="btn btn-success">
+                                        <i data-lucide="camera"></i> Mở Camera
+                                    </button>
+                                    <button id="btn-stop-camera" class="btn btn-danger" disabled>
+                                        <i data-lucide="camera-off"></i> Tắt Camera
+                                    </button>
+                                </div>
+                            </div>
+
+                            <div class="scanner-card upload-scanner-card">
+                                <h3>Hoặc Tải ảnh mã QR lên</h3>
+                                <p class="scanner-info">Chọn ảnh chụp mã QR từ điện thoại hoặc máy tính của bạn.</p>
+                                <div class="file-drop-zone" id="qr-drop-zone">
+                                    <i data-lucide="image-plus" class="upload-icon"></i>
+                                    <p>Kéo thả hình ảnh mã QR vào đây hoặc click để chọn file</p>
+                                    <input type="file" id="qr-file-input" accept="image/*" style="display: none;">
+                                </div>
+                                <div id="file-scan-error" class="error-message" style="display: none;"></div>
+                            </div>
+                        </div>
+
+                        <div class="scanner-sidebar">
+                            <div class="scanner-card manual-search-card">
+                                <h3>Tìm kiếm Mã thủ công</h3>
+                                <p class="scanner-info">Nhập thủ công mã định danh tài sản (ví dụ: AST-0001) nếu không quét được.</p>
+                                <div class="form-group flex-row">
+                                    <input type="text" id="manual-asset-id" class="form-control" placeholder="Ví dụ: AST-0001">
+                                    <button id="btn-manual-search" class="btn btn-primary">Tìm</button>
+                                </div>
+                                <div id="manual-search-error" class="error-message" style="display: none;">Mã tài sản không tồn tại.</div>
+                            </div>
+
+                            <div class="scanner-card quick-actions-card hidden" id="scan-result-card">
+                                <div class="badge-status-container">
+                                    <span class="badge" id="scan-status-badge">Có sẵn</span>
+                                </div>
+                                <h3 id="scan-asset-name">Laptop MacBook Pro 16</h3>
+                                <p class="asset-code-text">Mã: <strong id="scan-asset-id">AST-0001</strong></p>
+                                
+                                <div class="detail-list">
+                                    <div class="detail-row">
+                                        <span class="lbl">Loại tài sản:</span>
+                                        <span class="val" id="scan-asset-type">Laptop</span>
+                                    </div>
+                                    <div class="detail-row">
+                                        <span class="lbl">Số Serial:</span>
+                                        <span class="val" id="scan-asset-serial">C02FX123456</span>
+                                    </div>
+                                    <div class="detail-row">
+                                        <span class="lbl">Nơi đặt máy:</span>
+                                        <span class="val" id="scan-asset-location">Phòng IT</span>
+                                    </div>
+                                    <div class="detail-row line-divider"></div>
+                                    <div class="detail-row">
+                                        <span class="lbl">Người sử dụng:</span>
+                                        <span class="val" id="scan-asset-user">Nguyễn Văn A</span>
+                                    </div>
+                                    <div class="detail-row">
+                                        <span class="lbl">Ngày cấp:</span>
+                                        <span class="val" id="scan-asset-assign-date">15/07/2026</span>
+                                    </div>
+                                </div>
+
+                                <div class="action-buttons-group">
+                                    <button id="btn-quick-assign" class="btn btn-primary btn-block">Bàn giao tài sản</button>
+                                    <button id="btn-quick-return" class="btn btn-success btn-block">Thu hồi (Trả kho)</button>
+                                    <button id="btn-quick-repair" class="btn btn-warning btn-block">Báo hỏng / Mang sửa</button>
+                                    <button id="btn-quick-edit" class="btn btn-secondary btn-block">Chỉnh sửa chi tiết</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- VIEW 4: QR CODE PRINT SHOP -->
+                <section id="tab-print-shop" class="tab-view">
+                    <div class="print-control-card">
+                        <div class="control-header">
+                            <h3>Thiết kế & Bố cục nhãn dán QR</h3>
+                            <button id="btn-trigger-print" class="btn btn-primary">
+                                <i data-lucide="printer"></i> Tiến hành In nhãn (Ctrl + P)
+                            </button>
+                        </div>
+                        <div class="print-settings-grid">
+                            <div class="form-group">
+                                <label for="print-label-size">Kích thước nhãn dán</label>
+                                <select id="print-label-size" class="form-select">
+                                    <option value="small">Nhỏ (40mm x 30mm) - 4 cột</option>
+                                    <option value="medium" selected>Trung bình (60mm x 40mm) - 3 cột</option>
+                                    <option value="large">Lớn (80mm x 50mm) - 2 cột</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="print-company-name">Tên Công ty hiển thị trên nhãn</label>
+                                <input type="text" id="print-company-name" class="form-control" value="CÔNG TY CỔ PHẦN CÔNG NGHỆ TECH-GLOBAL">
+                            </div>
+                            <div class="form-group">
+                                <label for="print-logo-upload">Logo công ty (Độ phân giải vuông)</label>
+                                <div class="logo-upload-controls" style="display: flex; gap: 8px; align-items: center;">
+                                    <input type="file" id="print-logo-upload" accept="image/*" style="display: none;">
+                                    <button type="button" id="btn-upload-logo-trigger" class="btn btn-sm btn-outline" style="flex-grow: 1;">
+                                        <i data-lucide="upload"></i> Chọn Logo
+                                    </button>
+                                    <button type="button" id="btn-remove-logo" class="btn btn-sm btn-danger hidden" title="Xóa logo hiện tại">
+                                        <i data-lucide="trash-2"></i>
+                                    </button>
+                                </div>
+                                <div id="print-logo-preview" class="logo-preview-thumb hidden" style="margin-top: 8px; display: flex; align-items: center; gap: 10px;">
+                                    <img id="logo-preview-img" src="" alt="Logo" style="height: 36px; width: 36px; object-fit: contain; border-radius: 4px; border: 1px solid var(--border-color);">
+                                    <span style="font-size: 0.8rem; color: var(--text-secondary);">Đã nạp logo</span>
+                                </div>
+                            </div>
+                            <div class="checkbox-group">
+                                <label class="checkbox-container">
+                                    <input type="checkbox" id="print-show-name" checked>
+                                    <span class="checkmark"></span>
+                                    Hiển thị Tên tài sản
+                                </label>
+                                <label class="checkbox-container">
+                                    <input type="checkbox" id="print-show-serial" checked>
+                                    <span class="checkmark"></span>
+                                    Hiển thị Số Serial
+                                </label>
+                                <label class="checkbox-container">
+                                    <input type="checkbox" id="print-show-logo" checked>
+                                    <span class="checkmark"></span>
+                                    Hiển thị Logo công ty
+                                </label>
+                                <label class="checkbox-container">
+                                    <input type="checkbox" id="print-encode-user-in-qr">
+                                    <span class="checkmark"></span>
+                                    Mã hóa thông tin bàn giao vào mã QR
+                                </label>
+                            </div>
+                        </div>
+
+                        <div class="asset-selector-header">
+                            <h3>Chọn tài sản muốn in nhãn dán</h3>
+                            <div class="selector-actions">
+                                <button id="btn-select-all-print" class="btn btn-sm btn-outline">Chọn tất cả</button>
+                                <button id="btn-deselect-all-print" class="btn btn-sm btn-outline">Bỏ chọn tất cả</button>
+                            </div>
+                        </div>
+                        <div class="print-selection-grid" id="print-selection-container">
+                            <!-- Populated dynamically by JS -->
+                        </div>
+                    </div>
+
+                    <!-- Print Preview Canvas Area -->
+                    <div class="print-preview-section">
+                        <h3>Xem trước bản in (Layout nhãn dán)</h3>
+                        <div class="print-layout-canvas" id="print-layout-canvas">
+                            <!-- Will contain renderable labels for print -->
+                        </div>
+                    </div>
+                </section>
+
+                <!-- VIEW 5: IMPORT / EXPORT -->
+                <section id="tab-data-exchange" class="tab-view">
+                    <div class="exchange-grid">
+                        <div class="exchange-card">
+                            <div class="exchange-icon blue"><i data-lucide="file-up"></i></div>
+                            <h2>Nhập tài sản hàng loạt (Import)</h2>
+                            <p>Nhập danh sách hàng trăm thiết bị của công ty thông qua file dữ liệu CSV để tiết kiệm thời gian.</p>
+                            
+                            <div class="template-download-box">
+                                <p>Tải file CSV mẫu để điền thông tin đúng định dạng:</p>
+                                <button id="btn-download-template" class="btn btn-outline">
+                                    <i data-lucide="download"></i> Tải file CSV mẫu
+                                </button>
+                            </div>
+
+                            <div class="file-drop-zone" id="csv-drop-zone">
+                                <i data-lucide="file-spreadsheet" class="upload-icon"></i>
+                                <p>Kéo thả file CSV vào đây hoặc click để chọn file</p>
+                                <input type="file" id="csv-file-input" accept=".csv" style="display: none;">
+                            </div>
+                            <div id="csv-import-status" class="import-status-message"></div>
+                        </div>
+
+                        <div class="exchange-card">
+                            <div class="exchange-icon green"><i data-lucide="file-down"></i></div>
+                            <h2>Xuất dữ liệu hệ thống (Export)</h2>
+                            <p>Tải toàn bộ dữ liệu tài sản hiện tại của công ty về máy tính của bạn dưới định dạng file CSV để mở bằng Excel hoặc sao lưu dự phòng.</p>
+                            
+                            <div class="export-options-box">
+                                <div class="form-group">
+                                    <label class="checkbox-container">
+                                        <input type="checkbox" id="export-only-assigned">
+                                        <span class="checkmark"></span>
+                                        Chỉ xuất tài sản đang được cấp phát cho nhân viên
+                                    </label>
+                                </div>
+                                <div class="form-group">
+                                    <label class="checkbox-container">
+                                        <input type="checkbox" id="export-only-active" checked>
+                                        <span class="checkmark"></span>
+                                        Bỏ qua tài sản đã thanh lý
+                                    </label>
+                                </div>
+                            </div>
+
+                            <button id="btn-export-csv" class="btn btn-success btn-large">
+                                <i data-lucide="download-cloud"></i> Xuất dữ liệu ra file CSV
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <!-- Backup & Restore Section -->
+                    <div class="backup-restore-section" style="margin-top: 32px; background-color: var(--bg-secondary); border: 1px solid var(--border-color); border-radius: var(--border-radius-lg); padding: 32px; box-shadow: var(--card-shadow);">
+                        <div style="display: flex; align-items: center; gap: 16px; margin-bottom: 16px;">
+                            <div class="exchange-icon yellow" style="width: 48px; height: 48px; border-radius: var(--border-radius-md); display: flex; align-items: center; justify-content: center; background-color: rgba(245, 158, 11, 0.1); color: var(--accent-yellow);">
+                                <i data-lucide="shield-check"></i>
+                            </div>
+                            <div>
+                                <h2 style="font-size: 1.25rem; font-weight: 700;">Sao lưu & Khôi phục toàn bộ hệ thống</h2>
+                                <p style="color: var(--text-secondary); font-size: 0.85rem; margin-bottom: 0;">Xuất toàn bộ dữ liệu tài sản, nhân sự, lịch sử bảo trì, nhật ký hoạt động và logo công ty ra một tệp tin cấu hình JSON duy nhất để bảo lưu và đồng bộ.</p>
+                            </div>
+                        </div>
+                        <div style="display: flex; gap: 16px; flex-wrap: wrap; margin-top: 24px;">
+                            <button id="btn-backup-system" class="btn btn-warning" style="flex-grow: 1; padding: 12px 24px;">
+                                <i data-lucide="download"></i> Tải bản sao lưu hệ thống (.json)
+                            </button>
+                            <div style="flex-grow: 1; display: flex; gap: 8px;">
+                                <input type="file" id="restore-file-input" accept=".json" style="display: none;">
+                                <button id="btn-restore-trigger" class="btn btn-outline" style="width: 100%; padding: 12px 24px;">
+                                    <i data-lucide="upload"></i> Khôi phục dữ liệu từ file (.json)
+                                </button>
+                            </div>
+                        </div>
+                        <div id="restore-status" class="import-status-message" style="margin-top: 16px;"></div>
+                    </div>
+                </section>
+
+                <!-- VIEW 6: EMPLOYEES DIRECTORY -->
+                <section id="tab-employees" class="tab-view">
+                    <div class="filter-bar">
+                        <div class="search-box">
+                            <i data-lucide="search"></i>
+                            <input type="text" id="employee-search" placeholder="Tìm tên nhân viên, mã MNV hoặc phòng ban...">
+                        </div>
+                        <div class="filters-group">
+                            <button id="btn-add-employee" class="btn btn-primary">
+                                <i data-lucide="user-plus"></i> Thêm nhân sự mới
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="table-container">
+                        <table class="data-table" id="employees-table">
+                            <thead>
+                                <tr>
+                                    <th>Mã nhân sự</th>
+                                    <th>Họ và tên</th>
+                                    <th>Phòng ban</th>
+                                    <th>Email liên hệ</th>
+                                    <th>Tài sản đang giữ</th>
+                                    <th>Thao tác</th>
+                                </tr>
+                            </thead>
+                            <tbody id="employees-list">
+                                <!-- Populated dynamically by JS -->
+                            </tbody>
+                        </table>
+                        <div class="empty-state" id="employees-empty" style="display: none;">
+                            <i data-lucide="users"></i>
+                            <p>Không tìm thấy nhân sự nào phù hợp với bộ lọc.</p>
+                        </div>
+                    </div>
+                </section>
+            </div>
+        </main>
+    </div>
+
+    <!-- Mobile Bottom Navigation Bar -->
+    <nav class="mobile-bottom-nav">
+        <a href="#dashboard" class="mobile-nav-item active" data-tab="dashboard">
+            <i data-lucide="layout-dashboard"></i>
+            <span>Tổng quan</span>
+        </a>
+        <a href="#assets" class="mobile-nav-item" data-tab="assets">
+            <i data-lucide="laptop"></i>
+            <span>Tài sản</span>
+        </a>
+        <a href="#scanner" class="mobile-nav-item scanner-center" data-tab="scanner">
+            <div class="scanner-btn-inner">
+                <i data-lucide="scan-line"></i>
+            </div>
+        </a>
+        <a href="#employees" class="mobile-nav-item" data-tab="employees">
+            <i data-lucide="users"></i>
+            <span>Nhân sự</span>
+        </a>
+        <a href="#print-shop" class="mobile-nav-item" data-tab="print-shop">
+            <i data-lucide="printer"></i>
+            <span>In tem</span>
+        </a>
+    </nav>
+
+    <!-- MODAL: ADD / EDIT ASSET -->
+    <div class="modal-backdrop" id="modal-asset-editor">
+        <div class="modal-box">
+            <div class="modal-header">
+                <h3 id="modal-title">Thêm tài sản mới</h3>
+                <button class="btn-close-modal" id="btn-close-editor-modal"><i data-lucide="x"></i></button>
+            </div>
+            <div class="modal-body">
+                <form id="form-asset">
+                    <input type="hidden" id="editor-asset-index" value="">
+                    
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <label for="editor-asset-id" class="required">Mã tài sản</label>
+                            <input type="text" id="editor-asset-id" class="form-control" placeholder="Tự sinh nếu để trống" readonly>
+                        </div>
+                        <div class="form-group">
+                            <label for="editor-asset-type" class="required">Loại tài sản</label>
+                            <select id="editor-asset-type" class="form-select" required>
+                                <option value="Laptop">Laptop / Máy tính xách tay</option>
+                                <option value="Desktop">Desktop / Máy tính bàn</option>
+                                <option value="Camera">Camera / Thiết bị ghi hình</option>
+                                <option value="Printer">Printer / Máy in - Scan</option>
+                                <option value="Network">Network / Thiết bị mạng</option>
+                                <option value="Other">Khác (Bàn ghế, Thiết bị phụ trợ...)</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="editor-asset-name" class="required">Tên tài sản</label>
+                        <input type="text" id="editor-asset-name" class="form-control" placeholder="Ví dụ: Laptop Dell Latitude 5420" required>
+                    </div>
+
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <label for="editor-asset-serial">Số Serial</label>
+                            <input type="text" id="editor-asset-serial" class="form-control" placeholder="Nhập Serial S/N của NSX">
+                        </div>
+                        <div class="form-group">
+                            <label for="editor-asset-location">Vị trí đặt / Kho lưu trữ</label>
+                            <input type="text" id="editor-asset-location" class="form-control" placeholder="Ví dụ: Kho IT, Phòng Họp tầng 3">
+                        </div>
+                    </div>
+
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <label for="editor-asset-status">Trạng thái tài sản</label>
+                            <select id="editor-asset-status" class="form-select">
+                                <option value="Sẵn có">Sẵn có trong kho</option>
+                                <option value="Đang cấp phát">Đang cấp phát</option>
+                                <option value="Đang sửa chữa">Đang bảo trì/sửa chữa</option>
+                                <option value="Thanh lý">Đã thanh lý</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="editor-purchase-date">Ngày mua hàng</label>
+                            <input type="date" id="editor-purchase-date" class="form-control">
+                        </div>
+                    </div>
+
+                    <!-- Assignment Fields (conditional display in JS based on status) -->
+                    <div class="assignment-section" id="editor-assignment-fields">
+                        <h4 class="section-title"><i data-lucide="user"></i> Thông tin cấp phát (Bàn giao)</h4>
+                        <div class="form-group">
+                            <label for="editor-assigned-user" class="required">Nhân viên nhận bàn giao</label>
+                            <select id="editor-assigned-user" class="form-select" required>
+                                <!-- Populated dynamically by JS -->
+                            </select>
+                        </div>
+                        <div class="form-grid">
+                            <div class="form-group">
+                                <label for="editor-assigned-date">Ngày cấp phát</label>
+                                <input type="date" id="editor-assigned-date" class="form-control">
+                            </div>
+                            <div class="form-group">
+                                <label for="editor-assigned-notes">Ghi chú cấp phát</label>
+                                <input type="text" id="editor-assigned-notes" class="form-control" placeholder="Ghi chú thêm (lý do cấp, dự án...)">
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Maintenance History Section inside Asset Modal -->
+                    <div class="assignment-section" id="editor-maintenance-history-section">
+                        <h4 class="section-title"><i data-lucide="history"></i> Lịch sử sửa chữa & bảo trì</h4>
+                        <div class="table-container" style="margin-bottom: 12px; box-shadow: none; max-height: 180px; overflow-y: auto;">
+                            <table class="data-table" style="font-size: 0.85rem;" id="editor-maintenance-table">
+                                <thead>
+                                    <tr>
+                                        <th>Ngày gửi</th>
+                                        <th>Lý do hỏng</th>
+                                        <th>Nơi sửa</th>
+                                        <th>Chi phí</th>
+                                        <th>Ngày nhận</th>
+                                        <th>Trạng thái</th>
+                                        <th>Thao tác</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="editor-maintenance-list">
+                                    <!-- Populated dynamically by JS -->
+                                </tbody>
+                            </table>
+                        </div>
+                        <button type="button" id="btn-add-maintenance-record" class="btn btn-sm btn-outline">
+                            <i data-lucide="plus-circle"></i> Thêm phiếu sửa chữa
+                        </button>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-outline" id="btn-cancel-editor">Hủy bỏ</button>
+                <button type="button" class="btn btn-primary" id="btn-save-asset">Lưu thông tin</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- MODAL: QUICK ASSIGNMENT FROM SCANNER -->
+    <div class="modal-backdrop" id="modal-quick-assign">
+        <div class="modal-box small-modal">
+            <div class="modal-header">
+                <h3>Bàn giao tài sản</h3>
+                <button class="btn-close-modal" id="btn-close-assign-modal"><i data-lucide="x"></i></button>
+            </div>
+            <div class="modal-body">
+                <p class="target-asset-title">Bàn giao thiết bị: <strong id="assign-target-name">--</strong></p>
+                <form id="form-quick-assign">
+                    <input type="hidden" id="assign-target-id" value="">
+                    <div class="form-group">
+                        <label for="quick-assigned-user" class="required">Nhân viên nhận bàn giao</label>
+                        <select id="quick-assigned-user" class="form-select" required>
+                            <!-- Populated dynamically by JS -->
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="quick-assigned-date" class="required">Ngày bàn giao</label>
+                        <input type="date" id="quick-assigned-date" class="form-control" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="quick-assigned-notes">Ghi chú</label>
+                        <textarea id="quick-assigned-notes" class="form-control" rows="2" placeholder="Ví dụ: Cấp làm việc dự án A, kèm sạc + chuột"></textarea>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-outline" id="btn-cancel-assign">Hủy</button>
+                <button type="button" class="btn btn-primary" id="btn-submit-assign">Xác nhận bàn giao</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- MODAL: ADD / EDIT EMPLOYEE -->
+    <div class="modal-backdrop" id="modal-employee-editor">
+        <div class="modal-box small-modal">
+            <div class="modal-header">
+                <h3 id="employee-modal-title">Thêm nhân sự mới</h3>
+                <button class="btn-close-modal" id="btn-close-employee-modal"><i data-lucide="x"></i></button>
+            </div>
+            <div class="modal-body">
+                <form id="form-employee">
+                    <input type="hidden" id="editor-employee-id-hidden" value="">
+                    
+                    <div class="form-group">
+                        <label for="editor-employee-id" class="required">Mã nhân viên (ID)</label>
+                        <input type="text" id="editor-employee-id" class="form-control" placeholder="Ví dụ: EMP-0001" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="editor-employee-name" class="required">Họ và tên nhân viên</label>
+                        <input type="text" id="editor-employee-name" class="form-control" placeholder="Ví dụ: Nguyễn Văn A" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="editor-employee-dept">Phòng ban</label>
+                        <select id="editor-employee-dept" class="form-select">
+                            <option value="Ban Giám Đốc">Ban Giám Đốc</option>
+                            <option value="Phòng IT">Phòng IT</option>
+                            <option value="Hành chính Nhân sự">Hành chính Nhân sự</option>
+                            <option value="Phòng Kinh Doanh">Phòng Kinh Doanh</option>
+                            <option value="Phòng Kỹ Thuật (R&D)">Phòng Kỹ Thuật (R&D)</option>
+                            <option value="Phòng Marketing">Phòng Marketing</option>
+                            <option value="Phòng Kế Toán">Phòng Kế Toán</option>
+                            <option value="Tổ Bảo Vệ">Tổ Bảo Vệ</option>
+                            <option value="Khác">Khác</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="editor-employee-email">Email liên hệ</label>
+                        <input type="email" id="editor-employee-email" class="form-control" placeholder="Ví dụ: nva@techglobal.com">
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-outline" id="btn-cancel-employee">Hủy</button>
+                <button type="button" class="btn btn-primary" id="btn-save-employee">Lưu nhân sự</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- MODAL: ADD / EDIT MAINTENANCE RECORD -->
+    <div class="modal-backdrop" id="modal-maintenance-editor">
+        <div class="modal-box small-modal">
+            <div class="modal-header">
+                <h3 id="maintenance-modal-title">Thêm phiếu bảo trì</h3>
+                <button class="btn-close-modal" id="btn-close-maintenance-modal"><i data-lucide="x"></i></button>
+            </div>
+            <div class="modal-body">
+                <form id="form-maintenance">
+                    <input type="hidden" id="maintenance-asset-id" value="">
+                    <input type="hidden" id="maintenance-record-index" value="">
+                    
+                    <div class="form-group">
+                        <label for="maint-start-date" class="required">Ngày gửi sữa</label>
+                        <input type="date" id="maint-start-date" class="form-control" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="maint-reason" class="required">Lý do hỏng / Nội dung sửa chữa</label>
+                        <input type="text" id="maint-reason" class="form-control" placeholder="Ví dụ: Hỏng màn hình, liệt phím Space" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="maint-provider">Đơn vị / Cửa hàng sửa chữa</label>
+                        <input type="text" id="maint-provider" class="form-control" placeholder="Ví dụ: TTBH Dell, Phong Vũ">
+                    </div>
+
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <label for="maint-cost">Chi phí sửa chữa (VNĐ)</label>
+                            <input type="number" id="maint-cost" class="form-control" placeholder="Ví dụ: 500000" min="0">
+                        </div>
+                        <div class="form-group">
+                            <label for="maint-status">Trạng thái phiếu</label>
+                            <select id="maint-status" class="form-select">
+                                <option value="Đang sửa">Đang sửa chữa</option>
+                                <option value="Đã xong">Đã sửa xong</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="form-group" id="maint-end-date-group">
+                        <label for="maint-end-date">Ngày nhận lại thiết bị</label>
+                        <input type="date" id="maint-end-date" class="form-control">
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-outline" id="btn-cancel-maint">Hủy bỏ</button>
+                <button type="button" class="btn btn-primary" id="btn-save-maint">Lưu thông tin</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Web App script -->
+    <script src="app.js"></script>
+</body>
+</html>
