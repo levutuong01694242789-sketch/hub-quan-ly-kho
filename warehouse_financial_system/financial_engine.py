@@ -17,7 +17,7 @@ TEMPLATE_EXCEL_PATH = os.path.join(OUTPUT_DIR, 'FILE_MAU_NHAP_CHI_PHI_TAI_CHINH_
 DEFAULT_PARAMS = {
     'warehouse_rent_monthly': 180000000.0, # Tiền thuê mặt bằng kho / tháng (VND)
     'total_labor_monthly': 220000000.0,     # Quỹ lương nhân sự kho hàng tháng (VND)
-    'staff_count': 18,                       # Số lượng nhân sự kho vận (Người)
+    'staff_count': 29,                       # Số lượng nhân sự kho vận thực tế (29 Người)
     'utilities_monthly': 35000000.0,        # Điện nước & viễn thông kho / tháng (VND)
     'forklift_operating_monthly': 25000000.0,# Nhiên liệu sạc điện & bảo trì xe nâng / tháng (VND)
     'assets_count': 22,                      # Số lượng Xe nâng & Thiết bị IT/Barcode (Cái)
@@ -34,7 +34,7 @@ DEFAULT_PARAMS = {
 }
 
 def calculate_warehouse_financials(params=None):
-    """Calculate 100% Dynamic Warehouse Operational & Financial Metrics with Asset & Inventory Cross-Linking."""
+    """Calculate 100% Dynamic Warehouse Operational & Financial Metrics with 29 Staff Members."""
     p = dict(DEFAULT_PARAMS)
     if params:
         p.update(params)
@@ -65,14 +65,14 @@ def calculate_warehouse_financials(params=None):
     # Multi-UoM Unit Cost Estimations
     uom_cost_breakdown = {
         'Kg': cost_per_kg_handled,
-        'Thùng': round(cost_per_kg_handled * 15, 0),    # Quy đổi 1 Thùng ~ 15kg
-        'Cái': round(cost_per_kg_handled * 0.5, 0),     # Quy đổi 1 Cái ~ 0.5kg
-        'Cuộn': round(cost_per_kg_handled * 25, 0),    # Quy đổi 1 Cuộn ~ 25kg
-        'Met': round(cost_per_kg_handled * 1.2, 0),     # Quy đổi 1 Mét ~ 1.2kg
-        'Bộ': round(cost_per_kg_handled * 2.0, 0),      # Quy đổi 1 Bộ ~ 2.0kg
-        'Đôi': round(cost_per_kg_handled * 0.8, 0),     # Quy đổi 1 Đôi ~ 0.8kg
-        'Chai': round(cost_per_kg_handled * 1.0, 0),    # Quy đổi 1 Chai ~ 1.0kg
-        'Vắt': round(cost_per_kg_handled * 0.05, 0)     # Quy đổi 1 Vắt ~ 0.05kg
+        'Thùng': round(cost_per_kg_handled * 15, 0),
+        'Cái': round(cost_per_kg_handled * 0.5, 0),
+        'Cuộn': round(cost_per_kg_handled * 25, 0),
+        'Met': round(cost_per_kg_handled * 1.2, 0),
+        'Bộ': round(cost_per_kg_handled * 2.0, 0),
+        'Đôi': round(cost_per_kg_handled * 0.8, 0),
+        'Chai': round(cost_per_kg_handled * 1.0, 0),
+        'Vắt': round(cost_per_kg_handled * 0.05, 0)
     }
 
     # 4. Inventory Carrying Costs
@@ -173,7 +173,7 @@ def generate_excel_template_file(output_path):
     sample_row = [
         180000000,
         220000000,
-        18,
+        29,
         35000000,
         25000000,
         22,
@@ -185,7 +185,6 @@ def generate_excel_template_file(output_path):
     ws.append(sample_row)
 
     wb.save(output_path)
-    print(f"✅ Đã tạo file Excel mẫu chuẩn: {output_path}")
 
 def generate_excel_financial_report(data, output_path):
     """Generate Excel Financial Report for CFO & Executive Management."""
@@ -213,7 +212,7 @@ def generate_excel_financial_report(data, output_path):
     ws_pl.append(["TỔNG CHI PHÍ OPEX KHO NĂM (DỰ TOÁN)", kpi['total_annual_opex'], "-", "Dự toán chi phí kho cả năm"])
     ws_pl.append([])
     ws_pl.append(["CHI PHÍ TRÊN 1 Ô KỆ / THÁNG (4,038 Ô KỆ)", kpi['cost_per_bin_monthly'], "VND/Ô Kệ", f"Đơn giá ngày: {kpi['cost_per_bin_daily']:,.0f} VND/ngày"])
-    ws_pl.append(["CHI PHÍ BÌNH QUÂN / 1 NHÂN SỰ KHO / THÁNG", kpi['cost_per_staff_member'], "VND/Người", f"Quỹ lương chia cho {data['parameters']['staff_count']} nhân sự"])
+    ws_pl.append(["CHI PHÍ BÌNH QUÂN / 1 NHÂN SỰ KHO / THÁNG (29 NGƯỜI)", kpi['cost_per_staff_member'], "VND/Người", f"Quỹ lương chia cho 29 nhân sự kho thực tế"])
     ws_pl.append(["CHI PHÍ BÌNH QUÂN / 1 THIẾT BỊ IT & XE NÂNG", kpi['cost_per_asset_device'], "VND/Thiết bị", f"Chi phí bảo trì trên {data['parameters']['assets_count']} thiết bị"])
     ws_pl.append(["CHI PHÍ LƯU KHO & XỬ LÝ TRÊN 1 KG", kpi['cost_per_kg_handled'], "VND/Kg", "Đơn giá bóc tách theo Kg"])
 

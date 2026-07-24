@@ -38,11 +38,11 @@ document.addEventListener('DOMContentLoaded', () => {
         mainApp.style.display = 'block';
     }
 
-    // Default Dynamic Financial Parameters
+    // Default Dynamic Financial Parameters (Updated: 29 Staff Members)
     let currentParams = {
         rent: 180000000,
         labor: 220000000,
-        staffCount: 18,
+        staffCount: 29,
         utilities: 35000000,
         forklift: 25000000,
         assetsCount: 22,
@@ -131,21 +131,20 @@ document.addEventListener('DOMContentLoaded', () => {
     // 2. REALTIME SYSTEM CROSS-LINKING TOOL
     // --------------------------------------------------------------------------
     btnCrosslinkData.addEventListener('click', () => {
-        // Cross-link with WMS SAP 2D data & IT Asset devices
         currentParams.occupiedBins = 3798;
-        currentParams.staffCount = 18;
+        currentParams.staffCount = 29;
         currentParams.assetsCount = 22;
         currentParams.inventoryValue = 35000000000;
         currentParams.monthlyKg = 450000;
 
-        sldStaffCount.value = 18;
+        sldStaffCount.value = 29;
         sldAssetsCount.value = 22;
 
         recalculateFinancials();
 
         alert('⚡ ĐÃ LIÊN KẾT THÀNH CÔNG DỮ LIỆU REALTIME:\n' +
               '• Tồn kho WMS SAP: 3,798 Ô Kệ đang lấp đầy (94.2%), Trị giá 35 Tỷ VND\n' +
-              '• Nhân sự Kho: 18 Người\n' +
+              '• Nhân sự Kho Thực Tế: 29 Người\n' +
               '• Thiết bị IT & Xe nâng: 22 Thiết bị\n' +
               'Bảng chỉ số tài chính đã được cập nhật chuẩn xác 100%!');
     });
@@ -301,7 +300,7 @@ document.addEventListener('DOMContentLoaded', () => {
     btnResetSliders.addEventListener('click', () => {
         sldRent.value = 180000000;
         sldLabor.value = 220000000;
-        sldStaffCount.value = 18;
+        sldStaffCount.value = 29;
         sldUtilities.value = 35000000;
         sldForklift.value = 25000000;
         sldAssetsCount.value = 22;
