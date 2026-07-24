@@ -1,8 +1,8 @@
 {
-  "timestamp": "24/07/2026 17:58:17",
+  "timestamp": "24/07/2026 17:59:53",
   "parameters": {
     "warehouse_rent_monthly": 180000000.0,
-    "total_labor_monthly": 220000000.0,
+    "total_labor_monthly": 333500000.0,
     "staff_count": 29,
     "utilities_monthly": 35000000.0,
     "forklift_operating_monthly": 25000000.0,
@@ -17,15 +17,15 @@
     "inventory_total_value": 35000000000.0
   },
   "kpi_summary": {
-    "total_monthly_opex": 478000000.0,
-    "total_annual_opex": 5736000000.0,
+    "total_monthly_opex": 591500000.0,
+    "total_annual_opex": 7098000000.0,
     "cost_per_bin_monthly": 49777.0,
     "cost_per_occupied_bin_monthly": 52923.0,
     "cost_per_bin_daily": 1659.0,
-    "cost_per_kg_handled": 1062.22,
-    "cost_per_staff_member": 7586207.0,
+    "cost_per_kg_handled": 1314.44,
+    "cost_per_staff_member": 11500000.0,
     "cost_per_asset_device": 1772727.0,
-    "cost_per_pick_line": 19040.0,
+    "cost_per_pick_line": 28120.0,
     "annual_carrying_cost": 5250000000.0,
     "monthly_carrying_cost": 437500000.0,
     "storage_cost_ratio_pct": 0.57,
@@ -37,43 +37,43 @@
     "group_1_storage": {
       "title": "🏗️ 1. Chi Phí Lưu Kho & Hạ Tầng",
       "amount_monthly": 201000000.0,
-      "pct_of_total": 42.1,
+      "pct_of_total": 34.0,
       "details": "Mặt bằng kho & điện nước hạ tầng. Tính trên 4,038 vị trí (lấp đầy 94.1%)."
     },
     "group_2_labor": {
-      "title": "⚡ 2. Chi Phí Nhân Công & Nhặt Hàng",
-      "amount_monthly": 220000000.0,
-      "pct_of_total": 46.0,
-      "details": "Quỹ lương 29 nhân sự kho (Bình quân 7,586,207 VND/người/tháng)."
+      "title": "⚡ 2. Chi Phí Nhân Công (Ca 12 Tiếng)",
+      "amount_monthly": 333500000.0,
+      "pct_of_total": 56.4,
+      "details": "Quỹ lương 29 nhân sự kho ca 12 tiếng (Bình quân 11,500,000 VND/người/tháng)."
     },
     "group_3_consumables": {
       "title": "📦 3. Chi Phí Vật Tư & PE Quấn Pallet",
       "amount_monthly": 18000000.0,
-      "pct_of_total": 3.8,
+      "pct_of_total": 3.0,
       "details": "Bao gồm màng PE quấn Pallet, băng keo, đai niềng, tem nhãn Barcode/QR."
     },
     "group_4_equipment": {
       "title": "🚜 4. Chi Phí Thiết Bị & Xe Nâng",
       "amount_monthly": 39000000.0,
-      "pct_of_total": 8.2,
+      "pct_of_total": 6.6,
       "details": "Khấu hao & bảo trì 22 thiết bị IT, máy quét & 4 Xe nâng hàng."
     },
     "group_5_carrying": {
       "title": "📉 5. Chi Phí Giam Vốn Tồn Kho (Carrying Cost)",
       "amount_monthly": 437500000.0,
-      "pct_of_total": 47.8,
+      "pct_of_total": 42.5,
       "details": "Chi phí cơ hội giam vốn (15.0%/năm trên 35.0 tỷ tồn kho)."
     }
   },
   "uom_cost_breakdown": {
-    "Kg": 1062.22,
-    "Thùng": 15933.0,
-    "Cái": 531.0,
-    "Cuộn": 26556.0,
-    "Met": 1275.0,
-    "Bộ": 2124.0,
-    "Đôi": 850.0,
-    "Chai": 1062.0,
-    "Vắt": 53.0
+    "Kg": 1314.44,
+    "Thùng": 19717.0,
+    "Cái": 657.0,
+    "Cuộn": 32861.0,
+    "Met": 1577.0,
+    "Bộ": 2629.0,
+    "Đôi": 1052.0,
+    "Chai": 1314.0,
+    "Vắt": 66.0
   }
 }

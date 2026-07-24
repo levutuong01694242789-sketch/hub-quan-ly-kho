@@ -38,10 +38,10 @@ document.addEventListener('DOMContentLoaded', () => {
         mainApp.style.display = 'block';
     }
 
-    // Default Dynamic Financial Parameters (Updated: 29 Staff Members)
+    // Default Dynamic Financial Parameters (Updated: 29 Staff Members @ 12h Shift Salary ~11.5M VND/person)
     let currentParams = {
         rent: 180000000,
-        labor: 220000000,
+        labor: 333500000,
         staffCount: 29,
         utilities: 35000000,
         forklift: 25000000,
@@ -102,6 +102,9 @@ document.addEventListener('DOMContentLoaded', () => {
     const dragDropArea = document.getElementById('drag-drop-area');
     const fileExcelInput = document.getElementById('file-excel-input');
 
+    // Set slider initial values
+    if (sldLabor) sldLabor.value = 333500000;
+
     // --------------------------------------------------------------------------
     // 1. THEME SWITCHER
     // --------------------------------------------------------------------------
@@ -133,10 +136,12 @@ document.addEventListener('DOMContentLoaded', () => {
     btnCrosslinkData.addEventListener('click', () => {
         currentParams.occupiedBins = 3798;
         currentParams.staffCount = 29;
+        currentParams.labor = 333500000;
         currentParams.assetsCount = 22;
         currentParams.inventoryValue = 35000000000;
         currentParams.monthlyKg = 450000;
 
+        sldLabor.value = 333500000;
         sldStaffCount.value = 29;
         sldAssetsCount.value = 22;
 
@@ -144,7 +149,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         alert('⚡ ĐÃ LIÊN KẾT THÀNH CÔNG DỮ LIỆU REALTIME:\n' +
               '• Tồn kho WMS SAP: 3,798 Ô Kệ đang lấp đầy (94.2%), Trị giá 35 Tỷ VND\n' +
-              '• Nhân sự Kho Thực Tế: 29 Người\n' +
+              '• Nhân sự Kho Ca 12H: 29 Người (Bình quân 11.5 Tr VND/người)\n' +
               '• Thiết bị IT & Xe nâng: 22 Thiết bị\n' +
               'Bảng chỉ số tài chính đã được cập nhật chuẩn xác 100%!');
     });
@@ -202,7 +207,7 @@ document.addEventListener('DOMContentLoaded', () => {
         kpiOccupancyRate.textContent = `${occupancyRate}%`;
 
         kpiCostPerStaff.textContent = `${costPerStaff.toLocaleString()} VND`;
-        kpiStaffCount.textContent = `${currentParams.staffCount} Người`;
+        kpiStaffCount.textContent = `${currentParams.staffCount} Người (Ca 12H)`;
         kpiCostPerAsset.textContent = `${costPerAsset.toLocaleString()} VND`;
         kpiAssetsCount.textContent = `${currentParams.assetsCount} Thiết Bị`;
 
@@ -217,12 +222,12 @@ document.addEventListener('DOMContentLoaded', () => {
                 details: `Bao gồm mặt bằng kho & điện nước. Tính trên ${totalBins.toLocaleString()} ô kệ (lấp đầy ${occupancyRate}%).`
             },
             {
-                title: '⚡ 2. Chi Phí Nhân Công & Nhặt Hàng',
+                title: '⚡ 2. Chi Phí Nhân Công (Ca 12 Tiếng)',
                 amount: laborCost,
                 pct: ((laborCost / totalMonthlyOpex) * 100).toFixed(1),
                 perBin: Math.round(laborCost / totalBins),
                 perKg: (laborCost / currentParams.monthlyKg).toFixed(2),
-                details: `Quỹ lương ${currentParams.staffCount} nhân sự kho (Bình quân ${costPerStaff.toLocaleString()} VND/người/tháng).`
+                details: `Quỹ lương ${currentParams.staffCount} nhân sự kho ca 12H (Bình quân ${costPerStaff.toLocaleString()} VND/người/tháng).`
             },
             {
                 title: '📦 3. Chi Phí Vật Tư & PE Quấn Pallet',
@@ -299,7 +304,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     btnResetSliders.addEventListener('click', () => {
         sldRent.value = 180000000;
-        sldLabor.value = 220000000;
+        sldLabor.value = 333500000;
         sldStaffCount.value = 29;
         sldUtilities.value = 35000000;
         sldForklift.value = 25000000;
