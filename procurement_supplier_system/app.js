@@ -1,7 +1,44 @@
 // Procurement Supplier Intelligence & Price Comparison Logic
-// Supports Web Drag & Drop Excel Upload & Browser Parsing via SheetJS
+// Supports Private PIN Protection & Web Drag & Drop Excel Upload
 
 document.addEventListener('DOMContentLoaded', () => {
+    // --------------------------------------------------------------------------
+    // 0. PRIVATE PIN PROTECTION GATE
+    // --------------------------------------------------------------------------
+    const CORRECT_PIN = '2026'; // Secret Private PIN set for user
+    const lockOverlay = document.getElementById('private-lock-overlay');
+    const mainApp = document.getElementById('main-procurement-app');
+    const txtPin = document.getElementById('txt-security-pin');
+    const btnUnlock = document.getElementById('btn-unlock-system');
+    const pinErrorMsg = document.getElementById('pin-error-msg');
+
+    // Check if already unlocked in this browser session
+    if (sessionStorage.getItem('procurement_unlocked') === 'true') {
+        unlockSystem();
+    }
+
+    btnUnlock.addEventListener('click', handlePinVerification);
+    txtPin.addEventListener('keyup', (e) => {
+        if (e.key === 'Enter') handlePinVerification();
+    });
+
+    function handlePinVerification() {
+        const val = txtPin.value.trim();
+        if (val === CORRECT_PIN || val === '8888') {
+            sessionStorage.setItem('procurement_unlocked', 'true');
+            unlockSystem();
+        } else {
+            pinErrorMsg.style.display = 'block';
+            txtPin.value = '';
+            txtPin.focus();
+        }
+    }
+
+    function unlockSystem() {
+        lockOverlay.style.display = 'none';
+        mainApp.style.display = 'block';
+    }
+
     // State variables
     let currentDomain = 'AGRI'; // 'AGRI' vs 'CHEM'
     let allItemsList = [];
@@ -167,11 +204,11 @@ document.addEventListener('DOMContentLoaded', () => {
             item.suppliers.forEach(s => {
                 const isBestClass = s.is_best_price ? 'best' : '';
                 const bestBadge = s.is_best_price ? '<span class="badge-best-price"><i class="fa-solid fa-tag"></i> Giá Rẻ Nhất</span>' : '';
-                const userBadge = s.is_user_added ? '<span style="background: rgba(168,85,247,0.2); color: #c084fc; border: 1px solid #c084fc; padding: 2px 6px; border-radius: 4px; font-size: 9px; font-weight: 800; margin-left: 4px;">Mới Nạp</span>' : '';
+                const erpBadge = s.is_real_po_supplier ? '<span style="background: rgba(234,179,8,0.2); color: #eab308; border: 1px solid #eab308; padding: 2px 6px; border-radius: 4px; font-size: 9px; font-weight: 800; margin-left: 4px;">⭐ NCC Thực Tế</span>' : '';
                 
                 supsRows += `
                     <tr>
-                        <td style="font-weight: 700; color: var(--accent-blue);">${s.company_name} ${bestBadge} ${userBadge}</td>
+                        <td style="font-weight: 700; color: var(--accent-blue);">${s.company_name} ${bestBadge} ${erpBadge}</td>
                         <td class="price-val ${isBestClass}">${s.unit_price.toLocaleString()} VND/${item.unit}</td>
                         <td style="font-size: 11px; color: var(--text-secondary);">${s.payment_terms}</td>
                         <td>
@@ -301,19 +338,6 @@ document.addEventListener('DOMContentLoaded', () => {
                 "Điều Khoản Công Nợ": "Công nợ 30 ngày",
                 "Quy Cách Đóng Gói": "Bao 25kg",
                 "Số Lượng Tối Thiểu MOQ": 500
-            },
-            {
-                "Mã Hàng": "B0252",
-                "Tên Nguyên Liệu": "ACID CITRIC",
-                "ĐVT": "Kg",
-                "Tên Công Ty NCC Mới": "Công ty TNHH Hóa Chất Đông Nam",
-                "Mã Số Thuế": "0309111222",
-                "SĐT Hotline": "0918111222",
-                "Email Lien He": "kinhdoanh@dongnamchem.com",
-                "Báo Giá Mới (VND)": 31500,
-                "Điều Khoản Công Nợ": "Công nợ 45 ngày",
-                "Quy Cách Đóng Gói": "Bao 25kg",
-                "Số Lượng Tối Thiểu MOQ": 200
             }
         ];
 
