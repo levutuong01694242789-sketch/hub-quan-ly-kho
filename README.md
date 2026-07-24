@@ -142,11 +142,11 @@ hub-quan-ly-kho/
 
 ## 👨‍💻 TÁC GIẢ & THÔNG TIN BẢO HÀNH (AUTHOR & CREDITS)
 
-- **Chủ Quản Dự Án**: **Lê Vũ Tường** (Supply Chain & Logistics Specialist)
+- **Chủ Quản Dự Án**: **SUPPLY CHAIN & LOGISTICS ARCHITECT** (Supply Chain & Logistics Specialist)
 - **Công Nghệ Phát Triển**: Antigravity AI Engine (Advanced Agentic Systems)
 - **Phiên Bản**: `v2.5.0-Enterprise` (Cập nhật 2026)
 
 ---
 <div align="center">
-  <i>© 2026 Le Vu Tuong - Enterprise Supply Chain & Warehouse Command Center. All rights reserved.</i>
+  <i>© 2026 Supply Chain & Logistics Architect - Enterprise Supply Chain & Warehouse Command Center. All rights reserved.</i>
 </div>

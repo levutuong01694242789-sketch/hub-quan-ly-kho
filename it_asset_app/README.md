@@ -9,4 +9,4 @@
 - **Quét Mã QR Trực Tiếp**: Sử dụng Camera laptop/điện thoại quét mã QR để tra cứu thông tin tài sản tức thì.
 - **Nhập / Xuất File Excel**: Sao lưu dữ liệu, xuất báo cáo danh mục tài sản chuyên nghiệp.
 
-Designed & Developed by Le Vu Tuong & Antigravity AI Engine.
+Designed & Developed by Supply Chain & Logistics Architect & Antigravity AI Engine.
