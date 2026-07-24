@@ -1,5 +1,5 @@
 // Dynamic Warehouse Financial Command Center Logic
-// 100% Dynamic Financial Calculations, Asset/Inventory Cross-Linking, Pallet Loss Rate, Savings Masterclass & Monthly Tracking Ledger
+// 100% Dynamic Financial Calculations, Asset/Inventory Cross-Linking, Pallet Loss Rate, Savings Masterclass & Itemized Audit Ledger
 
 document.addEventListener('DOMContentLoaded', () => {
     // --------------------------------------------------------------------------
@@ -109,14 +109,21 @@ document.addEventListener('DOMContentLoaded', () => {
     const tblCostGroupsBody = document.getElementById('tbl-cost-groups-body');
     const uomCardsContainer = document.getElementById('uom-cards-container');
 
-    // DOM Elements - Tracking & Form
+    // DOM Elements - Tracking & Audit Form (Itemized 5 Cost Groups)
     const inputPeriodMonth = document.getElementById('input-period-month');
-    const inputActualOpex = document.getElementById('input-actual-opex');
+    const inputActualFacility = document.getElementById('input-actual-facility');
+    const inputActualLabor = document.getElementById('input-actual-labor');
+    const inputActualConsumables = document.getElementById('input-actual-consumables');
+    const inputActualEquipment = document.getElementById('input-actual-equipment');
+    const inputActualCarrying = document.getElementById('input-actual-carrying');
     const inputActualKg = document.getElementById('input-actual-kg');
     const inputActualPalletLoss = document.getElementById('input-actual-pallet-loss');
     const inputKaizenNotes = document.getElementById('input-kaizen-notes');
+
     const btnSaveMonthlyRecord = document.getElementById('btn-save-monthly-record');
+    const btnExportLedgerExcel = document.getElementById('btn-export-ledger-excel');
     const tblTrackingLedgerBody = document.getElementById('tbl-tracking-ledger-body');
+    const lblStorageStatusTag = document.getElementById('lbl-storage-status-tag');
 
     // DOM Elements - Upload Modal
     const btnOpenUploadModal = document.getElementById('btn-open-upload-modal');
@@ -377,85 +384,159 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     // --------------------------------------------------------------------------
-    // 5. MONTHLY TRACKING & VARIANCE ANALYSIS LEDGER LOGIC
+    // 5. ITEMIZED MONTHLY AUDIT LEDGER LOGIC (FULL AUDIT PROVENANCE & PERSISTENCE)
     // --------------------------------------------------------------------------
-    const DEFAULT_MONTHLY_RECORDS = [
+    const INITIAL_AUDIT_RECORDS = [
         {
             period: '2026-05',
             periodLabel: 'Tháng 05/2026',
-            actualOpex: 720000000,
+            sourceTag: 'manual',
+            sourceName: '✍️ Nhập tay Kế Toán',
+            facilityCost: 201000000,
+            laborCost: 367500000,
+            consumablesCost: 22000000,
+            equipmentCost: 112000000,
+            carryingCost: 450000000,
+            actualOpex: 702500000, // Facility + Labor + Consumables + Equipment
             actualKg: 440000,
             palletLoss: 3.2,
-            notes: 'Giai đoạn trước khi áp dụng các giải pháp Kaizen'
+            timestamp: '31/05/2026 17:30',
+            notes: 'Giai đoạn chuẩn chưa áp dụng máy quấn PE Pre-stretch'
         },
         {
             period: '2026-06',
             periodLabel: 'Tháng 06/2026',
-            actualOpex: 680000000,
+            sourceTag: 'excel',
+            sourceName: '📁 Upload File Excel',
+            facilityCost: 201000000,
+            laborCost: 367500000,
+            consumablesCost: 18000000,
+            equipmentCost: 102395000,
+            carryingCost: 437500000,
+            actualOpex: 688895000,
             actualKg: 455000,
             palletLoss: 2.1,
+            timestamp: '30/06/2026 18:00',
             notes: 'Áp dụng sạc xe nâng giờ thấp điểm & quy hoạch đường nhặt hàng Rank A'
         },
         {
             period: '2026-07',
             periodLabel: 'Tháng 07/2026 (Kỳ Hiện Tại)',
-            actualOpex: 645000000,
+            sourceTag: 'sap',
+            sourceName: '🏢 Kết Nối SAP WMS',
+            facilityCost: 201000000,
+            laborCost: 367500000,
+            consumablesCost: 18000000,
+            equipmentCost: 102395000,
+            carryingCost: 437500000,
+            actualOpex: 688895000,
             actualKg: 465000,
             palletLoss: 1.2,
+            timestamp: '24/07/2026 18:35',
             notes: 'Gắn càng bọc cao su xe nâng & máy quấn PE Pre-stretch kéo căng 300%'
         }
     ];
 
-    let trackingRecords = JSON.parse(localStorage.getItem('financial_tracking_records')) || DEFAULT_MONTHLY_RECORDS;
+    let auditRecords = JSON.parse(localStorage.getItem('financial_audit_records_v2')) || INITIAL_AUDIT_RECORDS;
 
     btnSaveMonthlyRecord.addEventListener('click', () => {
         const periodVal = inputPeriodMonth.value;
-        const actualOpexVal = parseFloat(inputActualOpex.value);
-        const actualKgVal = parseFloat(inputActualKg.value);
-        const palletLossVal = parseFloat(inputActualPalletLoss.value);
+        const facilityVal = parseFloat(inputActualFacility.value) || 0;
+        const laborVal = parseFloat(inputActualLabor.value) || 0;
+        const consumablesVal = parseFloat(inputActualConsumables.value) || 0;
+        const equipmentVal = parseFloat(inputActualEquipment.value) || 0;
+        const carryingVal = parseFloat(inputActualCarrying.value) || 0;
+
+        const actualKgVal = parseFloat(inputActualKg.value) || 450000;
+        const palletLossVal = parseFloat(inputActualPalletLoss.value) || 3.0;
         const notesVal = inputKaizenNotes.value.trim();
 
-        if (!periodVal || isNaN(actualOpexVal) || isNaN(actualKgVal)) {
-            alert('❌ Vui lòng nhập đầy đủ Kỳ báo cáo và Số tiền OPEX thực tế!');
+        if (!periodVal) {
+            alert('❌ Vui lòng chọn Kỳ Báo Cáo (Tháng/Năm)!');
             return;
         }
 
+        const totalActualOpex = facilityVal + laborVal + consumablesVal + equipmentVal;
         const [yr, mo] = periodVal.split('-');
         const periodLabel = `Tháng ${mo}/${yr}`;
+        const nowStr = new Date().toLocaleString('vi-VN');
 
-        // Check if record already exists
-        const existingIdx = trackingRecords.findIndex(r => r.period === periodVal);
+        const existingIdx = auditRecords.findIndex(r => r.period === periodVal);
         const newRecord = {
             period: periodVal,
             periodLabel: periodLabel,
-            actualOpex: actualOpexVal,
+            sourceTag: 'manual',
+            sourceName: '✍️ Ghi Nhận Trực Tiếp',
+            facilityCost: facilityVal,
+            laborCost: laborVal,
+            consumablesCost: consumablesVal,
+            equipmentCost: equipmentVal,
+            carryingCost: carryingVal,
+            actualOpex: totalActualOpex,
             actualKg: actualKgVal,
             palletLoss: palletLossVal,
+            timestamp: nowStr,
             notes: notesVal || 'Đã áp dụng Kaizen'
         };
 
         if (existingIdx >= 0) {
-            trackingRecords[existingIdx] = newRecord;
+            auditRecords[existingIdx] = newRecord;
         } else {
-            trackingRecords.push(newRecord);
+            auditRecords.push(newRecord);
         }
 
-        // Sort descending by period
-        trackingRecords.sort((a, b) => b.period.localeCompare(a.period));
+        auditRecords.sort((a, b) => b.period.localeCompare(a.period));
 
-        localStorage.setItem('financial_tracking_records', JSON.stringify(trackingRecords));
+        localStorage.setItem('financial_audit_records_v2', JSON.stringify(auditRecords));
         renderTrackingLedger();
-        alert(`🎉 ĐÃ GHI NHẬN KẾT QUẢ P&L THÀNH CÔNG CHO ${periodLabel}!`);
+        
+        lblStorageStatusTag.textContent = `✅ Đã Lưu Local & Sẵn Sàng Xuất File Excel Audit (${nowStr})`;
+        alert(`🎉 ĐÃ BÓC TÁCH VÀ GHI NHẬN THÀNH CÔNG P&L THÁNG ${mo}/${yr}!\nTổng OPEX Vận Hành Kho: ${totalActualOpex.toLocaleString()} VND.`);
+    });
+
+    // DOWNLOAD EXCEL HISTORY FILE
+    btnExportLedgerExcel.addEventListener('click', () => {
+        if (typeof XLSX === 'undefined') {
+            alert('Đang nạp thư viện Excel...');
+            return;
+        }
+
+        const wb = XLSX.utils.book_new();
+        const wsData = [
+            ["NHẬT KÝ BÓC TÁCH CHI PHÍ VẬN HÀNH KHO & SO SÁNH VARIANCE HÀNG THÁNG"],
+            ["KỲ BÁO CÁO", "NGUỒN GỐC DỮ LIỆU", "MẶT BẰNG & ĐIỆN NƯỚC (VND)", "QUỸ LƯƠNG 29 NGƯỜI (VND)", "VẬT TƯ & MÀNG PE (VND)", "XE NÂNG & PALLET (VND)", "GIAM VỐN CARRYING (VND)", "TỔNG OPEX THỰC TẾ (VND)", "ĐƠN GIÁ / KG (VND)", "BỂ PALLET (%)", "GHI CHÚ AUDIT KAIZEN", "THỜI GIAN GHI NHẬN"]
+        ];
+
+        auditRecords.forEach(r => {
+            const costKg = (r.actualOpex / r.actualKg).toFixed(2);
+            wsData.append([
+                r.periodLabel,
+                r.sourceName,
+                r.facilityCost,
+                r.laborCost,
+                r.consumablesCost,
+                r.equipmentCost,
+                r.carryingCost,
+                r.actualOpex,
+                parseFloat(costKg),
+                r.palletLoss,
+                r.notes,
+                r.timestamp
+            ]);
+        });
+
+        const ws = XLSX.utils.aoa_to_sheet(wsData);
+        XLSX.utils.book_append_sheet(wb, ws, "Lịch Sử Audit P&L");
+        XLSX.writeFile(wb, "NHAT_KY_SO_SANH_CHI_PHI_KHO_HANG_THANG.xlsx");
     });
 
     function renderTrackingLedger() {
         if (!tblTrackingLedgerBody) return;
         tblTrackingLedgerBody.innerHTML = '';
 
-        // Target baseline reference OPEX: 702,895,000 VND
         const targetBaselineOpex = 702895000;
 
-        trackingRecords.forEach(rec => {
+        auditRecords.forEach(rec => {
             const costPerKg = (rec.actualOpex / rec.actualKg).toFixed(2);
             const varianceVal = rec.actualOpex - targetBaselineOpex;
             const variancePct = ((varianceVal / targetBaselineOpex) * 100).toFixed(1);
@@ -466,16 +547,27 @@ document.addEventListener('DOMContentLoaded', () => {
             if (varianceVal <= 0) {
                 const savedAmt = Math.abs(varianceVal);
                 varianceHTML = `<span class="variance-good"><i class="fa-solid fa-circle-down"></i> Tiết kiệm ${savedAmt.toLocaleString()} VND (${Math.abs(variancePct)}%)</span>`;
-                statusHTML = `<span class="saving-amount-badge"><i class="fa-solid fa-circle-check"></i> ĐẠT TARGET KAIZERN</span>`;
+                statusHTML = `<span class="saving-amount-badge"><i class="fa-solid fa-circle-check"></i> ĐẠT TARGET</span>`;
             } else {
                 varianceHTML = `<span class="variance-bad"><i class="fa-solid fa-circle-up"></i> Vượt ${varianceVal.toLocaleString()} VND (+${variancePct}%)</span>`;
                 statusHTML = `<span style="background: rgba(239, 68, 68, 0.15); color: #ef4444; border: 1px solid #ef4444; padding: 4px 12px; border-radius: 20px; font-size: 11px; font-weight: 800;"><i class="fa-solid fa-triangle-exclamation"></i> CẦN KAIZEN</span>`;
             }
 
+            let sourceTagClass = 'source-manual';
+            if (rec.sourceTag === 'excel') sourceTagClass = 'source-excel';
+            if (rec.sourceTag === 'sap') sourceTagClass = 'source-sap';
+
+            const itemizedHoverStr = `Mặt bằng: ${(rec.facilityCost/1000000).toFixed(1)}M | Lương: ${(rec.laborCost/1000000).toFixed(1)}M | Vật tư: ${(rec.consumablesCost/1000000).toFixed(1)}M | Pallet: ${(rec.equipmentCost/1000000).toFixed(1)}M | Carrying: ${(rec.carryingCost/1000000).toFixed(1)}M`;
+
             const tr = document.createElement('tr');
             tr.innerHTML = `
                 <td style="font-weight: 800; color: #38bdf8;">${rec.periodLabel}</td>
+                <td><span class="source-tag ${sourceTagClass}">${rec.sourceName}</span><div style="font-size: 10px; color: var(--text-muted); margin-top: 2px;">${rec.timestamp || ''}</div></td>
                 <td style="font-weight: 800; color: var(--text-primary);">${rec.actualOpex.toLocaleString()} VND</td>
+                <td style="font-size: 11px; color: var(--accent-blue);" title="${itemizedHoverStr}">
+                    <div>🏢 H.Tầng: <strong>${(rec.facilityCost/1000000).toFixed(1)}M</strong> | ⚡ Lương: <strong>${(rec.laborCost/1000000).toFixed(1)}M</strong></div>
+                    <div>📦 V.Tư: <strong>${(rec.consumablesCost/1000000).toFixed(1)}M</strong> | 🚜 Pallet: <strong>${(rec.equipmentCost/1000000).toFixed(1)}M</strong></div>
+                </td>
                 <td style="font-weight: 700; color: var(--accent-purple);">${parseFloat(costPerKg).toLocaleString()} VND/Kg</td>
                 <td style="font-weight: 700; color: ${rec.palletLoss <= 1.5 ? '#22c55e' : '#f59e0b'};">${rec.palletLoss}% / năm</td>
                 <td>${varianceHTML}</td>

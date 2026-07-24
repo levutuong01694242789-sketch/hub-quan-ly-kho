@@ -13,8 +13,7 @@ OUTPUT_JS_PATH = os.path.join(OUTPUT_DIR, 'financial_data.js')
 OUTPUT_EXCEL_PATH = os.path.join(OUTPUT_DIR, 'BAO_CAO_TAI_CHINH_CHI_PHI_KHO.xlsx')
 TEMPLATE_EXCEL_PATH = os.path.join(OUTPUT_DIR, 'FILE_MAU_NHAP_CHI_PHI_TAI_CHINH_KHO.xlsx')
 
-# Default Reference Dynamic Parameters (Updated: Plastic Steel-Reinforced Pallet Fleet & Damage/Loss Rate)
-# 4,038 Pallets @ 1.0M VND/pallet, 5-year depreciation + 3% annual damage/loss rate
+# Default Reference Dynamic Parameters
 DEFAULT_PARAMS = {
     'warehouse_rent_monthly': 180000000.0, # Tiền thuê mặt bằng kho / tháng (VND)
     'total_labor_monthly': 367500000.0,     # Quỹ lương 29 nhân sự kho ca 12h (1QL 45M + 3TK 20M + 25NV 10.5M)
@@ -48,12 +47,12 @@ DEFAULT_PARAMS = {
 }
 
 def calculate_warehouse_financials(params=None):
-    """Calculate Dynamic Financial Metrics with Pallet Fleet Depreciation & Loss Rate."""
+    """Calculate Dynamic Financial Metrics with Itemized Cost Groups & Data Audit Provenance."""
     p = dict(DEFAULT_PARAMS)
     if params:
         p.update(params)
 
-    # 0. Pallet Fleet Cost Calculation
+    # Pallet Fleet Cost Calculation
     total_pallet_asset_val = p['pallet_count'] * p['pallet_unit_price']
     monthly_pallet_depreciation = total_pallet_asset_val / (p['pallet_useful_years'] * 12)
     monthly_pallet_damage_loss = (total_pallet_asset_val * p['pallet_damage_rate_annual']) / 12
@@ -155,7 +154,7 @@ def calculate_warehouse_financials(params=None):
                 'title': '🚜 4. Chi Phí Xe Nâng & Khấu Hao/Hao Hụt Pallet',
                 'amount_monthly': total_equipment_cost,
                 'pct_of_total': round((total_equipment_cost / total_monthly_opex) * 100, 1),
-                'details': f'Bảo trì xe nâng ({p["forklift_operating_monthly"]:,.0f}) + Khấu hao & hao hụt {p["pallet_count"]:,} Pallet nhựa ống sắt ({total_monthly_pallet_cost:,.0f} VND/tháng).'
+                'details': f'Bảo trì xe nâng + Khấu hao & hao hụt {p["pallet_count"]:,} Pallet nhựa dẻo ống sắt ({total_monthly_pallet_cost:,.0f} VND/tháng).'
             },
             'group_5_carrying': {
                 'title': '📉 5. Chi Phí Giam Vốn Tồn Kho (Carrying Cost)',
