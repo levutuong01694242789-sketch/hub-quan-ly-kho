@@ -1,5 +1,5 @@
 // Dynamic Warehouse Financial Command Center Logic
-// 100% Dynamic Financial Calculations, Asset/Inventory Cross-Linking, Pallet Loss Rate & Formula Guide Tab
+// 100% Dynamic Financial Calculations, Asset/Inventory Cross-Linking, Pallet Loss Rate & Cost Savings Masterclass
 
 document.addEventListener('DOMContentLoaded', () => {
     // --------------------------------------------------------------------------
@@ -59,15 +59,18 @@ document.addEventListener('DOMContentLoaded', () => {
         inventoryValue: 35000000000
     };
 
-    // DOM Elements - Theme & View Tabs
+    // DOM Elements - Theme & View Tabs (3 MAIN TABS)
     const btnThemeToggle = document.getElementById('btn-theme-toggle');
     const themeBtnText = document.getElementById('theme-btn-text');
     const btnCrosslinkData = document.getElementById('btn-crosslink-data');
 
     const tabBtnDashboard = document.getElementById('tab-btn-dashboard');
     const tabBtnFormulas = document.getElementById('tab-btn-formulas');
+    const tabBtnSavings = document.getElementById('tab-btn-savings');
+
     const viewDashboard = document.getElementById('view-financial-dashboard');
     const viewFormulas = document.getElementById('view-financial-formulas');
+    const viewSavings = document.getElementById('view-financial-savings');
 
     // DOM Elements - Sliders
     const sldRent = document.getElementById('sld-rent');
@@ -112,21 +115,32 @@ document.addEventListener('DOMContentLoaded', () => {
     const fileExcelInput = document.getElementById('file-excel-input');
 
     // --------------------------------------------------------------------------
-    // 1. VIEW TAB SWITCHER (P&L DASHBOARD VS FORMULAS GUIDE TAB)
+    // 1. VIEW TAB SWITCHER (3 MAIN TABS)
     // --------------------------------------------------------------------------
-    tabBtnDashboard.addEventListener('click', () => {
-        tabBtnDashboard.classList.add('active');
-        tabBtnFormulas.classList.remove('active');
-        viewDashboard.style.display = 'block';
-        viewFormulas.style.display = 'none';
-    });
+    tabBtnDashboard.addEventListener('click', () => switchTab('dashboard'));
+    tabBtnFormulas.addEventListener('click', () => switchTab('formulas'));
+    tabBtnSavings.addEventListener('click', () => switchTab('savings'));
 
-    tabBtnFormulas.addEventListener('click', () => {
-        tabBtnFormulas.classList.add('active');
+    function switchTab(tabName) {
         tabBtnDashboard.classList.remove('active');
+        tabBtnFormulas.classList.remove('active');
+        tabBtnSavings.classList.remove('active');
+
         viewDashboard.style.display = 'none';
-        viewFormulas.style.display = 'block';
-    });
+        viewFormulas.style.display = 'none';
+        viewSavings.style.display = 'none';
+
+        if (tabName === 'dashboard') {
+            tabBtnDashboard.classList.add('active');
+            viewDashboard.style.display = 'block';
+        } else if (tabName === 'formulas') {
+            tabBtnFormulas.classList.add('active');
+            viewFormulas.style.display = 'block';
+        } else if (tabName === 'savings') {
+            tabBtnSavings.classList.add('active');
+            viewSavings.style.display = 'block';
+        }
+    }
 
     // --------------------------------------------------------------------------
     // 2. THEME SWITCHER
