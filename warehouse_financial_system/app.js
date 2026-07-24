@@ -1,5 +1,5 @@
 // Dynamic Warehouse Financial Command Center Logic
-// 100% Dynamic Financial Calculations, Asset/Inventory Cross-Linking & Fast Excel Upload
+// 100% Dynamic Financial Calculations, Asset/Inventory Cross-Linking, Pallet Loss Rate & Fast Excel Upload
 
 document.addEventListener('DOMContentLoaded', () => {
     // --------------------------------------------------------------------------
@@ -38,19 +38,17 @@ document.addEventListener('DOMContentLoaded', () => {
         mainApp.style.display = 'block';
     }
 
-    // Default Dynamic Financial Parameters (Updated: Exact Org Salary Breakdown: 1 Manager @ 45M + 3 Storekeepers @ 20M + 25 Staff @ 10.5M = 367.5M VND)
+    // Default Dynamic Financial Parameters (Includes 4,038 Plastic Steel-Reinforced Pallets @ 1.0M VND/pallet)
     let currentParams = {
         rent: 180000000,
         labor: 367500000,
         staffCount: 29,
-        managerSalary: 45000000,
-        storekeeperSalary: 20000000,
-        storekeeperCount: 3,
-        workerSalary: 10500000,
-        workerCount: 25,
         utilities: 35000000,
         forklift: 25000000,
         assetsCount: 22,
+        palletCount: 4038,
+        palletUnitPrice: 1000000,
+        palletLossRate: 3.0,
         consumables: 18000000,
         carryingRate: 15.0,
         rackCapacity: 4032,
@@ -69,10 +67,10 @@ document.addEventListener('DOMContentLoaded', () => {
     // DOM Elements - Sliders
     const sldRent = document.getElementById('sld-rent');
     const sldLabor = document.getElementById('sld-labor');
-    const sldStaffCount = document.getElementById('sld-staff-count');
+    const sldPalletCount = document.getElementById('sld-pallet-count');
+    const sldPalletLossRate = document.getElementById('sld-pallet-loss-rate');
     const sldUtilities = document.getElementById('sld-utilities');
     const sldForklift = document.getElementById('sld-forklift');
-    const sldAssetsCount = document.getElementById('sld-assets-count');
     const sldConsumables = document.getElementById('sld-consumables');
     const sldCarryingRate = document.getElementById('sld-carrying-rate');
     const btnResetSliders = document.getElementById('btn-reset-sliders');
@@ -80,10 +78,10 @@ document.addEventListener('DOMContentLoaded', () => {
     // DOM Elements - Labels & KPIs
     const lblRent = document.getElementById('lbl-rent');
     const lblLabor = document.getElementById('lbl-labor');
-    const lblStaffCount = document.getElementById('lbl-staff-count');
+    const lblPalletCount = document.getElementById('lbl-pallet-count');
+    const lblPalletLossRate = document.getElementById('lbl-pallet-loss-rate');
     const lblUtilities = document.getElementById('lbl-utilities');
     const lblForklift = document.getElementById('lbl-forklift');
-    const lblAssetsCount = document.getElementById('lbl-assets-count');
     const lblConsumables = document.getElementById('lbl-consumables');
     const lblCarryingRate = document.getElementById('lbl-carrying-rate');
 
@@ -93,9 +91,10 @@ document.addEventListener('DOMContentLoaded', () => {
     const kpiOccupiedBinCost = document.getElementById('kpi-occupied-bin-cost');
     const kpiOccupancyRate = document.getElementById('kpi-occupancy-rate');
     const kpiCostPerStaff = document.getElementById('kpi-cost-per-staff');
-    const kpiStaffCount = document.getElementById('kpi-staff-count');
-    const kpiCostPerAsset = document.getElementById('kpi-cost-per-asset');
-    const kpiAssetsCount = document.getElementById('kpi-assets-count');
+
+    const kpiTotalPalletCost = document.getElementById('kpi-total-pallet-cost');
+    const kpiPalletCount = document.getElementById('kpi-pallet-count');
+    const kpiPalletAssetVal = document.getElementById('kpi-pallet-asset-val');
 
     const tblCostGroupsBody = document.getElementById('tbl-cost-groups-body');
     const uomCardsContainer = document.getElementById('uom-cards-container');
@@ -106,9 +105,6 @@ document.addEventListener('DOMContentLoaded', () => {
     const btnCloseUploadModal = document.getElementById('btn-close-upload-modal');
     const dragDropArea = document.getElementById('drag-drop-area');
     const fileExcelInput = document.getElementById('file-excel-input');
-
-    // Set slider initial values
-    if (sldLabor) sldLabor.value = 367500000;
 
     // --------------------------------------------------------------------------
     // 1. THEME SWITCHER
@@ -143,19 +139,21 @@ document.addEventListener('DOMContentLoaded', () => {
         currentParams.staffCount = 29;
         currentParams.labor = 367500000;
         currentParams.assetsCount = 22;
+        currentParams.palletCount = 4038;
+        currentParams.palletLossRate = 3.0;
         currentParams.inventoryValue = 35000000000;
         currentParams.monthlyKg = 450000;
 
-        sldLabor.value = 367500000;
-        sldStaffCount.value = 29;
-        sldAssetsCount.value = 22;
+        if (sldLabor) sldLabor.value = 367500000;
+        if (sldPalletCount) sldPalletCount.value = 4038;
+        if (sldPalletLossRate) sldPalletLossRate.value = 3.0;
 
         recalculateFinancials();
 
         alert('⚡ ĐÃ LIÊN KẾT THÀNH CÔNG DỮ LIỆU REALTIME:\n' +
               '• Tồn kho WMS SAP: 3,798 Ô Kệ đang lấp đầy (94.2%), Trị giá 35 Tỷ VND\n' +
               '• Cơ cấu Lương 29 Nhân sự: 1 Quản lý (45Tr) + 3 Thủ kho (20Tr) + 25 Nhân viên (10.5Tr)\n' +
-              '• Thiết bị IT & Xe nâng: 22 Thiết bị\n' +
+              '• Fleet Pallet Nhựa Ống Sắt: 4,038 Pallet (Trị giá 4.038 Tỷ VND), Tỷ lệ hao hụt 3%/năm\n' +
               'Bảng chỉ số tài chính đã được cập nhật chuẩn xác 100%!');
     });
 
@@ -166,28 +164,34 @@ document.addEventListener('DOMContentLoaded', () => {
         // Read slider values
         currentParams.rent = parseFloat(sldRent.value);
         currentParams.labor = parseFloat(sldLabor.value);
-        currentParams.staffCount = parseInt(sldStaffCount.value);
+        currentParams.palletCount = parseInt(sldPalletCount.value);
+        currentParams.palletLossRate = parseFloat(sldPalletLossRate.value);
         currentParams.utilities = parseFloat(sldUtilities.value);
         currentParams.forklift = parseFloat(sldForklift.value);
-        currentParams.assetsCount = parseInt(sldAssetsCount.value);
         currentParams.consumables = parseFloat(sldConsumables.value);
         currentParams.carryingRate = parseFloat(sldCarryingRate.value);
 
         // Format slider labels
         lblRent.textContent = `${(currentParams.rent / 1000000).toFixed(1)} Tr VND`;
         lblLabor.textContent = `${(currentParams.labor / 1000000).toFixed(1)} Tr VND`;
-        lblStaffCount.textContent = `${currentParams.staffCount} Người`;
+        lblPalletCount.textContent = `${currentParams.palletCount.toLocaleString()} Cái`;
+        lblPalletLossRate.textContent = `${currentParams.palletLossRate.toFixed(1)}% / Năm`;
         lblUtilities.textContent = `${(currentParams.utilities / 1000000).toFixed(1)} Tr VND`;
         lblForklift.textContent = `${(currentParams.forklift / 1000000).toFixed(1)} Tr VND`;
-        lblAssetsCount.textContent = `${currentParams.assetsCount} Thiết Bị`;
         lblConsumables.textContent = `${(currentParams.consumables / 1000000).toFixed(1)} Tr VND`;
         lblCarryingRate.textContent = `${currentParams.carryingRate.toFixed(1)}% / Năm`;
+
+        // Calculate Pallet Fleet Depreciation & Damage/Loss Rate
+        const totalPalletVal = currentParams.palletCount * currentParams.palletUnitPrice;
+        const monthlyPalletDepr = totalPalletVal / 60; // 5-year depreciation
+        const monthlyPalletLoss = (totalPalletVal * (currentParams.palletLossRate / 100)) / 12;
+        const totalMonthlyPalletCost = monthlyPalletDepr + monthlyPalletLoss;
 
         // Calculate Cost Groups
         const facilityCost = currentParams.rent + (currentParams.utilities * 0.6);
         const laborCost = currentParams.labor;
         const consumablesCost = currentParams.consumables;
-        const equipmentCost = currentParams.forklift + (currentParams.utilities * 0.4);
+        const equipmentCost = currentParams.forklift + (currentParams.utilities * 0.4) + totalMonthlyPalletCost;
 
         const totalMonthlyOpex = facilityCost + laborCost + consumablesCost + equipmentCost;
         const totalAnnualOpex = totalMonthlyOpex * 12;
@@ -199,7 +203,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
         const costPerKg = (totalMonthlyOpex / currentParams.monthlyKg).toFixed(2);
         const costPerStaff = Math.round(laborCost / currentParams.staffCount);
-        const costPerAsset = Math.round(equipmentCost / currentParams.assetsCount);
 
         const annualCarrying = currentParams.inventoryValue * (currentParams.carryingRate / 100);
         const monthlyCarrying = Math.round(annualCarrying / 12);
@@ -210,11 +213,11 @@ document.addEventListener('DOMContentLoaded', () => {
         kpiCostPerBin.textContent = `${costPerBinMonthly.toLocaleString()} VND`;
         kpiOccupiedBinCost.textContent = `${costPerOccupiedBin.toLocaleString()} VND`;
         kpiOccupancyRate.textContent = `${occupancyRate}%`;
-
         kpiCostPerStaff.textContent = `${costPerStaff.toLocaleString()} VND`;
-        kpiStaffCount.textContent = `29 Người (1QL 45M + 3TK 20M + 25NV 10.5M)`;
-        kpiCostPerAsset.textContent = `${costPerAsset.toLocaleString()} VND`;
-        kpiAssetsCount.textContent = `${currentParams.assetsCount} Thiết Bị`;
+
+        kpiTotalPalletCost.textContent = `${Math.round(totalMonthlyPalletCost).toLocaleString()} VND`;
+        kpiPalletCount.textContent = `${currentParams.palletCount.toLocaleString()} Pallet`;
+        kpiPalletAssetVal.textContent = `${(totalPalletVal / 1000000000).toFixed(3)} Tỷ VND`;
 
         // Update 5 Cost Groups Table
         const groupsData = [
@@ -224,7 +227,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 pct: ((facilityCost / totalMonthlyOpex) * 100).toFixed(1),
                 perBin: Math.round(facilityCost / totalBins),
                 perKg: (facilityCost / currentParams.monthlyKg).toFixed(2),
-                details: `Bao gồm mặt bằng kho & điện nước. Tính trên ${totalBins.toLocaleString()} ô kệ (lấp đầy ${occupancyRate}%).`
+                details: `Mặt bằng kho & điện nước hạ tầng. Tính trên ${totalBins.toLocaleString()} ô kệ (lấp đầy ${occupancyRate}%).`
             },
             {
                 title: '⚡ 2. Chi Phí Nhân Công (Cơ Cấu Thực Tế 29 Người)',
@@ -243,12 +246,12 @@ document.addEventListener('DOMContentLoaded', () => {
                 details: 'Màng PE quấn Pallet, băng keo, đai niềng, tem nhãn Barcode/QR.'
             },
             {
-                title: '🚜 4. Chi Phí Thiết Bị & Xe Nâng',
+                title: '🚜 4. Chi Phí Xe Nâng & Khấu Hao/Hao Hụt Pallet',
                 amount: equipmentCost,
                 pct: ((equipmentCost / totalMonthlyOpex) * 100).toFixed(1),
                 perBin: Math.round(equipmentCost / totalBins),
                 perKg: (equipmentCost / currentParams.monthlyKg).toFixed(2),
-                details: `Khấu hao & bảo trì ${currentParams.assetsCount} thiết bị IT, máy quét & 4 Xe nâng hàng.`
+                details: `Bảo trì xe nâng + Khấu hao & hao hụt ${currentParams.palletCount.toLocaleString()} Pallet nhựa dẻo ống sắt (${Math.round(totalMonthlyPalletCost).toLocaleString()} VND/tháng).`
             },
             {
                 title: '📉 5. Chi Phí Giam Vốn Tồn Kho (Carrying)',
@@ -303,17 +306,17 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     // Attach Sliders Event Listeners
-    [sldRent, sldLabor, sldStaffCount, sldUtilities, sldForklift, sldAssetsCount, sldConsumables, sldCarryingRate].forEach(sld => {
-        sld.addEventListener('input', recalculateFinancials);
+    [sldRent, sldLabor, sldPalletCount, sldPalletLossRate, sldUtilities, sldForklift, sldConsumables, sldCarryingRate].forEach(sld => {
+        if (sld) sld.addEventListener('input', recalculateFinancials);
     });
 
     btnResetSliders.addEventListener('click', () => {
         sldRent.value = 180000000;
         sldLabor.value = 367500000;
-        sldStaffCount.value = 29;
+        sldPalletCount.value = 4038;
+        sldPalletLossRate.value = 3.0;
         sldUtilities.value = 35000000;
         sldForklift.value = 25000000;
-        sldAssetsCount.value = 22;
         sldConsumables.value = 18000000;
         sldCarryingRate.value = 15.0;
         recalculateFinancials();
@@ -384,19 +387,19 @@ document.addEventListener('DOMContentLoaded', () => {
                         const val = Object.values(row).find(v => typeof v === 'number' && v > 1000000);
                         if (val) sldLabor.value = val;
                     }
-                    if (rowStr.includes('số lượng nhân sự') || rowStr.includes('số nhân sự')) {
-                        const val = Object.values(row).find(v => typeof v === 'number' && v < 200);
-                        if (val) sldStaffCount.value = val;
+                    if (rowStr.includes('pallet')) {
+                        const val = Object.values(row).find(v => typeof v === 'number' && v > 100 && v < 10000);
+                        if (val) sldPalletCount.value = val;
                     }
-                    if (rowStr.includes('điện') || rowStr.includes('nước')) {
-                        const val = Object.values(row).find(v => typeof v === 'number' && v > 100000);
-                        if (val) sldUtilities.value = val;
+                    if (rowStr.includes('hao hụt') || rowStr.includes('gãy')) {
+                        const val = Object.values(row).find(v => typeof v === 'number' && v < 50);
+                        if (val) sldPalletLossRate.value = val;
                     }
                 });
 
                 recalculateFinancials();
                 uploadModalOverlay.classList.remove('active');
-                alert('🎉 ĐÃ NẠP THÀNH CÔNG DỮ LIỆU TÀI CHÍNH TỪ FILE EXCEL! Mô hình chi phí đã được cập nhật.');
+                alert('🎉 ĐÃ NẠP THÀNH CÔNG DỮ LIỆU TÀI CHÍNH VÀ PALLET TỪ FILE EXCEL! Mô hình chi phí đã được cập nhật.');
 
             } catch (err) {
                 alert('❌ Lỗi đọc file Excel: ' + err.message);

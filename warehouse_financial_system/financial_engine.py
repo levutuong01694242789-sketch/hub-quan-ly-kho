@@ -13,11 +13,11 @@ OUTPUT_JS_PATH = os.path.join(OUTPUT_DIR, 'financial_data.js')
 OUTPUT_EXCEL_PATH = os.path.join(OUTPUT_DIR, 'BAO_CAO_TAI_CHINH_CHI_PHI_KHO.xlsx')
 TEMPLATE_EXCEL_PATH = os.path.join(OUTPUT_DIR, 'FILE_MAU_NHAP_CHI_PHI_TAI_CHINH_KHO.xlsx')
 
-# Default Reference Dynamic Parameters (Updated: Exact Org Hierarchy Salary Breakdown)
-# 1x Manager @ 45M + 3x Storekeepers @ 20M + 25x Staff @ 10.5M = 367.5M VND/month
+# Default Reference Dynamic Parameters (Updated: Plastic Steel-Reinforced Pallet Fleet & Damage/Loss Rate)
+# 4,038 Pallets @ 1.0M VND/pallet, 5-year depreciation + 3% annual damage/loss rate
 DEFAULT_PARAMS = {
     'warehouse_rent_monthly': 180000000.0, # Tiền thuê mặt bằng kho / tháng (VND)
-    'total_labor_monthly': 367500000.0,     # Tổng quỹ lương 29 nhân sự theo cơ cấu thực tế (VND)
+    'total_labor_monthly': 367500000.0,     # Quỹ lương 29 nhân sự kho ca 12h (1QL 45M + 3TK 20M + 25NV 10.5M)
     'staff_count': 29,                       # Tổng 29 nhân sự kho
     'manager_salary': 45000000.0,            # 1 Quản lý kho / Architect: 45 Tr VND/tháng
     'storekeepers_count': 3,                 # 3 Thủ kho
@@ -28,6 +28,13 @@ DEFAULT_PARAMS = {
     'utilities_monthly': 35000000.0,        # Điện nước & viễn thông kho / tháng (VND)
     'forklift_operating_monthly': 25000000.0,# Nhiên liệu sạc điện & bảo trì xe nâng / tháng (VND)
     'assets_count': 22,                      # Số lượng Xe nâng & Thiết bị IT/Barcode (Cái)
+    
+    # Pallet Fleet Parameters (Pallet Nhựa Dẻo Có Ống Sắt)
+    'pallet_count': 4038,                    # 4,038 Pallet nhựa ống sắt (Khớp 4,032 Ô kệ + 6 Vùng đệm sàn)
+    'pallet_unit_price': 1000000.0,          # 1,000,000 VND / 1 Pallet nhựa ống sắt
+    'pallet_useful_years': 5,                # Khấu hao Pallet trong 5 năm (60 tháng)
+    'pallet_damage_rate_annual': 0.03,       # Tỷ lệ gãy nứt / hư hỏng / hao hụt Pallet (3%/năm)
+
     'consumables_monthly': 18000000.0,       # Màng PE, băng keo, đai niềng, tem nhãn / tháng (VND)
     'inventory_carrying_rate_annual': 0.15, # Lãi suất cơ hội giam vốn tồn kho (%/năm)
     
@@ -41,16 +48,22 @@ DEFAULT_PARAMS = {
 }
 
 def calculate_warehouse_financials(params=None):
-    """Calculate 100% Dynamic Warehouse Operational & Financial Metrics with Exact Org Hierarchy Salary Breakdown."""
+    """Calculate Dynamic Financial Metrics with Pallet Fleet Depreciation & Loss Rate."""
     p = dict(DEFAULT_PARAMS)
     if params:
         p.update(params)
+
+    # 0. Pallet Fleet Cost Calculation
+    total_pallet_asset_val = p['pallet_count'] * p['pallet_unit_price']
+    monthly_pallet_depreciation = total_pallet_asset_val / (p['pallet_useful_years'] * 12)
+    monthly_pallet_damage_loss = (total_pallet_asset_val * p['pallet_damage_rate_annual']) / 12
+    total_monthly_pallet_cost = monthly_pallet_depreciation + monthly_pallet_damage_loss
 
     # 1. Total Monthly OPEX (P&L Operating Expense)
     total_facility_cost = p['warehouse_rent_monthly'] + (p['utilities_monthly'] * 0.6)
     total_labor_cost = p['total_labor_monthly']
     total_consumables_cost = p['consumables_monthly']
-    total_equipment_cost = p['forklift_operating_monthly'] + (p['utilities_monthly'] * 0.4)
+    total_equipment_cost = p['forklift_operating_monthly'] + (p['utilities_monthly'] * 0.4) + total_monthly_pallet_cost
 
     total_monthly_opex = total_facility_cost + total_labor_cost + total_consumables_cost + total_equipment_cost
     total_annual_opex = total_monthly_opex * 12
@@ -92,10 +105,14 @@ def calculate_warehouse_financials(params=None):
     financial_summary = {
         'timestamp': now_str,
         'parameters': p,
-        'org_breakdown': {
-            'manager': {'count': 1, 'salary': p['manager_salary'], 'total': p['manager_salary']},
-            'storekeepers': {'count': p['storekeepers_count'], 'salary': p['storekeeper_salary'], 'total': p['storekeeper_salary'] * p['storekeepers_count']},
-            'workers': {'count': p['workers_count'], 'salary': p['worker_salary'], 'total': p['worker_salary'] * p['workers_count']}
+        'pallet_metrics': {
+            'total_pallets': p['pallet_count'],
+            'unit_price': p['pallet_unit_price'],
+            'total_asset_value': total_pallet_asset_val,
+            'monthly_depreciation': monthly_pallet_depreciation,
+            'monthly_damage_loss': monthly_pallet_damage_loss,
+            'total_monthly_pallet_cost': total_monthly_pallet_cost,
+            'cost_per_pallet_monthly': round(total_monthly_pallet_cost / p['pallet_count'], 0)
         },
         'kpi_summary': {
             'total_monthly_opex': total_monthly_opex,
@@ -109,6 +126,7 @@ def calculate_warehouse_financials(params=None):
             'cost_per_pick_line': cost_per_pick_line,
             'annual_carrying_cost': annual_carrying_cost,
             'monthly_carrying_cost': monthly_carrying_cost,
+            'total_monthly_pallet_cost': total_monthly_pallet_cost,
             'storage_cost_ratio_pct': storage_cost_ratio_pct,
             'total_storage_locations': total_storage_locations,
             'occupied_bins_count': p['occupied_bins_count'],
@@ -125,7 +143,7 @@ def calculate_warehouse_financials(params=None):
                 'title': '⚡ 2. Chi Phí Nhân Công (Cơ Cấu Thực Tế 29 Người)',
                 'amount_monthly': total_labor_cost,
                 'pct_of_total': round((total_labor_cost / total_monthly_opex) * 100, 1),
-                'details': f'Cơ cấu: 1 Quản lý kho (45Tr) + 3 Thủ kho (20Tr/người) + 25 Nhân viên ca 12h (10.5Tr/người).'
+                'details': f'Quỹ lương 29 người: 1 Quản lý (45Tr) + 3 Thủ kho (20Tr) + 25 Nhân viên ca 12h (10.5Tr).'
             },
             'group_3_consumables': {
                 'title': '📦 3. Chi Phí Vật Tư & PE Quấn Pallet',
@@ -134,10 +152,10 @@ def calculate_warehouse_financials(params=None):
                 'details': 'Bao gồm màng PE quấn Pallet, băng keo, đai niềng, tem nhãn Barcode/QR.'
             },
             'group_4_equipment': {
-                'title': '🚜 4. Chi Phí Thiết Bị & Xe Nâng',
+                'title': '🚜 4. Chi Phí Xe Nâng & Khấu Hao/Hao Hụt Pallet',
                 'amount_monthly': total_equipment_cost,
                 'pct_of_total': round((total_equipment_cost / total_monthly_opex) * 100, 1),
-                'details': f'Khấu hao & bảo trì {p["assets_count"]} thiết bị IT, máy quét & 4 Xe nâng hàng.'
+                'details': f'Bảo trì xe nâng ({p["forklift_operating_monthly"]:,.0f}) + Khấu hao & hao hụt {p["pallet_count"]:,} Pallet nhựa ống sắt ({total_monthly_pallet_cost:,.0f} VND/tháng).'
             },
             'group_5_carrying': {
                 'title': '📉 5. Chi Phí Giam Vốn Tồn Kho (Carrying Cost)',
@@ -176,6 +194,9 @@ def generate_excel_template_file(output_path):
         "Số Lượng Nhân Viên Kho Ca 12H (Người)",
         "Lương Nhân Viên Kho (VND/Người)",
         "Chi Phí Điện Nước Kho (VND)",
+        "Số Lượng Pallet Nhựa Ống Sắt (Cái)",
+        "Giá 1 Pallet Nhựa Ống Sắt (VND)",
+        "Tỷ Lệ Hao Hụt/Bể Pallet (%/Năm)",
         "Chi Phí Xe Nâng & Thiết Bị (VND)",
         "Số Lượng Xe Nâng & IT Assets (Cái)",
         "Chi Phí Màng PE & Vật Tư (VND)",
@@ -193,6 +214,9 @@ def generate_excel_template_file(output_path):
         25,
         10500000,
         35000000,
+        4038,
+        1000000,
+        3.0,
         25000000,
         22,
         18000000,
@@ -210,15 +234,17 @@ def generate_excel_financial_report(data, output_path):
     ws_pl = wb.active
     ws_pl.title = "P&L Báo Cáo Chi Phí Kho"
 
-    ws_pl.append(["BÁO CÁO TỔNG HỢP CHI PHÍ VẬN HÀNH KHO & P&L THÁNG (CƠ CẤU LƯƠNG THỰC TẾ)"])
+    ws_pl.append(["BÁO CÁO TỔNG HỢP CHI PHÍ VẬN HÀNH KHO & KHẤU HAO/HAO HỤT PALLET NHỰA ỐNG SẮT"])
     ws_pl.append([f"Thời gian lập báo cáo: {data['timestamp']}"])
     ws_pl.append([])
 
-    ws_pl.append(["CƠ CẤU LƯƠNG NHÂN SỰ KHO (29 NGƯỜI)", "SỐ LƯỢNG", "MỨC LƯƠNG/NGƯỜI (VND)", "TỔNG THÁNG (VND)"])
-    ws_pl.append(["1. Quản Lý Kho / Architect", 1, 45000000, 45000000])
-    ws_pl.append(["2. Thủ Kho (Trưởng Ca)", 3, 20000000, 60000000])
-    ws_pl.append(["3. Nhân Viên Kho Ca 12H", 25, 10500000, 262500000])
-    ws_pl.append(["TỔNG QUỸ LƯƠNG NHÂN SỰ KHO", 29, "-", 367500000])
+    pal = data['pallet_metrics']
+    ws_pl.append(["BẢNG PHÂN TÍCH CHI PHÍ PALLET NHỰA ỐNG SẮT (1.000.000 VND/CÁI)", "CHỈ SỐ", "GIÁ TRỊ THÁNG (VND)", "DIỄN GIẢI GIẢI TRÌNH"])
+    ws_pl.append(["1. Tổng số lượng Pallet nhựa dẻo ống sắt trong kho", f"{pal['total_pallets']:,} Pallet", "-", "Phủ 4,032 ô kệ + 6 vùng đệm"])
+    ws_pl.append(["2. Tổng giá trị tài sản Pallet (1 Tr VND/Cái)", f"{pal['total_asset_value']:,.0f} VND", "-", "Vốn đầu tư ban đầu Pallet"])
+    ws_pl.append(["3. Chi phí Khấu hao Pallet (Khấu hao 5 năm)", "-", f"{pal['monthly_depreciation']:,.0f} VND", "Phân bổ 60 tháng"])
+    ws_pl.append(["4. Chi phí Hao hụt / Gãy nứt / Bể Pallet (3%/Năm)", "-", f"{pal['monthly_damage_loss']:,.0f} VND", "Dự phòng tổn thất xe nâng va chạm"])
+    ws_pl.append(["TỔNG CHI PHÍ PALLET HÀNG THÁNG", "-", f"{pal['total_monthly_pallet_cost']:,.0f} VND", f"Bình quân {pal['cost_per_pallet_monthly']:,.0f} VND/Pallet/tháng"])
     ws_pl.append([])
 
     ws_pl.append(["HẠNG MỤC CHI PHÍ VẬN HÀNH KHO", "CHI PHÍ THÁNG (VND)", "% TRÊN TỔNG CHI PHÍ", "GHI CHÚ DIỄN GIẢI"])
@@ -233,7 +259,7 @@ def generate_excel_financial_report(data, output_path):
 
     ws_pl.append([])
     kpi = data['kpi_summary']
-    ws_pl.append(["TỔNG CHI PHÍ OPEX KHO HÀNG THÁNG", kpi['total_monthly_opex'], "100%", "Tổng chi phí vận hành kho tháng"])
+    ws_pl.append(["TỔNG CHI PHÍ OPEX KHO HÀNG THÁNG", kpi['total_monthly_opex'], "100%", "Tổng chi phí vận hành kho tháng (Bao gồm Pallet)"])
     ws_pl.append(["TỔNG CHI PHÍ OPEX KHO NĂM (DỰ TOÁN)", kpi['total_annual_opex'], "-", "Dự toán chi phí kho cả năm"])
     ws_pl.append([])
     ws_pl.append(["CHI PHÍ TRÊN 1 Ô KỆ / THÁNG (4,038 Ô KỆ)", kpi['cost_per_bin_monthly'], "VND/Ô Kệ", f"Đơn giá ngày: {kpi['cost_per_bin_daily']:,.0f} VND/ngày"])

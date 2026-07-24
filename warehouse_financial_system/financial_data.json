@@ -1,5 +1,5 @@
 {
-  "timestamp": "24/07/2026 18:01:29",
+  "timestamp": "24/07/2026 18:07:24",
   "parameters": {
     "warehouse_rent_monthly": 180000000.0,
     "total_labor_monthly": 367500000.0,
@@ -12,6 +12,10 @@
     "utilities_monthly": 35000000.0,
     "forklift_operating_monthly": 25000000.0,
     "assets_count": 22,
+    "pallet_count": 4038,
+    "pallet_unit_price": 1000000.0,
+    "pallet_useful_years": 5,
+    "pallet_damage_rate_annual": 0.03,
     "consumables_monthly": 18000000.0,
     "inventory_carrying_rate_annual": 0.15,
     "highbay_rack_capacity": 4032,
@@ -21,35 +25,28 @@
     "monthly_pick_lines_count": 12500,
     "inventory_total_value": 35000000000.0
   },
-  "org_breakdown": {
-    "manager": {
-      "count": 1,
-      "salary": 45000000.0,
-      "total": 45000000.0
-    },
-    "storekeepers": {
-      "count": 3,
-      "salary": 20000000.0,
-      "total": 60000000.0
-    },
-    "workers": {
-      "count": 25,
-      "salary": 10500000.0,
-      "total": 262500000.0
-    }
+  "pallet_metrics": {
+    "total_pallets": 4038,
+    "unit_price": 1000000.0,
+    "total_asset_value": 4038000000.0,
+    "monthly_depreciation": 67300000.0,
+    "monthly_damage_loss": 10095000.0,
+    "total_monthly_pallet_cost": 77395000.0,
+    "cost_per_pallet_monthly": 19167.0
   },
   "kpi_summary": {
-    "total_monthly_opex": 625500000.0,
-    "total_annual_opex": 7506000000.0,
+    "total_monthly_opex": 702895000.0,
+    "total_annual_opex": 8434740000.0,
     "cost_per_bin_monthly": 49777.0,
     "cost_per_occupied_bin_monthly": 52923.0,
     "cost_per_bin_daily": 1659.0,
-    "cost_per_kg_handled": 1390.0,
+    "cost_per_kg_handled": 1561.99,
     "cost_per_staff_member": 12672414.0,
-    "cost_per_asset_device": 1772727.0,
+    "cost_per_asset_device": 5290682.0,
     "cost_per_pick_line": 30840.0,
     "annual_carrying_cost": 5250000000.0,
     "monthly_carrying_cost": 437500000.0,
+    "total_monthly_pallet_cost": 77395000.0,
     "storage_cost_ratio_pct": 0.57,
     "total_storage_locations": 4038,
     "occupied_bins_count": 3798,
@@ -59,43 +56,43 @@
     "group_1_storage": {
       "title": "🏗️ 1. Chi Phí Lưu Kho & Hạ Tầng",
       "amount_monthly": 201000000.0,
-      "pct_of_total": 32.1,
+      "pct_of_total": 28.6,
       "details": "Mặt bằng kho & điện nước hạ tầng. Tính trên 4,038 vị trí (lấp đầy 94.1%)."
     },
     "group_2_labor": {
       "title": "⚡ 2. Chi Phí Nhân Công (Cơ Cấu Thực Tế 29 Người)",
       "amount_monthly": 367500000.0,
-      "pct_of_total": 58.8,
-      "details": "Cơ cấu: 1 Quản lý kho (45Tr) + 3 Thủ kho (20Tr/người) + 25 Nhân viên ca 12h (10.5Tr/người)."
+      "pct_of_total": 52.3,
+      "details": "Quỹ lương 29 người: 1 Quản lý (45Tr) + 3 Thủ kho (20Tr) + 25 Nhân viên ca 12h (10.5Tr)."
     },
     "group_3_consumables": {
       "title": "📦 3. Chi Phí Vật Tư & PE Quấn Pallet",
       "amount_monthly": 18000000.0,
-      "pct_of_total": 2.9,
+      "pct_of_total": 2.6,
       "details": "Bao gồm màng PE quấn Pallet, băng keo, đai niềng, tem nhãn Barcode/QR."
     },
     "group_4_equipment": {
-      "title": "🚜 4. Chi Phí Thiết Bị & Xe Nâng",
-      "amount_monthly": 39000000.0,
-      "pct_of_total": 6.2,
-      "details": "Khấu hao & bảo trì 22 thiết bị IT, máy quét & 4 Xe nâng hàng."
+      "title": "🚜 4. Chi Phí Xe Nâng & Khấu Hao/Hao Hụt Pallet",
+      "amount_monthly": 116395000.0,
+      "pct_of_total": 16.6,
+      "details": "Bảo trì xe nâng (25,000,000) + Khấu hao & hao hụt 4,038 Pallet nhựa ống sắt (77,395,000 VND/tháng)."
     },
     "group_5_carrying": {
       "title": "📉 5. Chi Phí Giam Vốn Tồn Kho (Carrying Cost)",
       "amount_monthly": 437500000.0,
-      "pct_of_total": 41.2,
+      "pct_of_total": 38.4,
       "details": "Chi phí cơ hội giam vốn (15.0%/năm trên 35.0 tỷ tồn kho)."
     }
   },
   "uom_cost_breakdown": {
-    "Kg": 1390.0,
-    "Thùng": 20850.0,
-    "Cái": 695.0,
-    "Cuộn": 34750.0,
-    "Met": 1668.0,
-    "Bộ": 2780.0,
-    "Đôi": 1112.0,
-    "Chai": 1390.0,
-    "Vắt": 70.0
+    "Kg": 1561.99,
+    "Thùng": 23430.0,
+    "Cái": 781.0,
+    "Cuộn": 39050.0,
+    "Met": 1874.0,
+    "Bộ": 3124.0,
+    "Đôi": 1250.0,
+    "Chai": 1562.0,
+    "Vắt": 78.0
   }
 }
