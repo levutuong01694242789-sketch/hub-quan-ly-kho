@@ -1,0 +1,457 @@
+/* ==========================================================================
+   PROCUREMENT SUPPLIER INTELLIGENCE & PRICE COMPARISON SYSTEM
+   Design System: Supports Both LIGHT MODE & DARK MODE
+   ========================================================================== */
+
+/* Dark Theme (Default) */
+:root {
+    --bg-primary: #0b132b;
+    --bg-secondary: #1c2541;
+    --bg-card: rgba(28, 37, 65, 0.9);
+    --border-color: rgba(255, 255, 255, 0.12);
+    
+    --text-primary: #f8fafc;
+    --text-secondary: #94a3b8;
+    --text-muted: #64748b;
+    
+    --header-bg: linear-gradient(135deg, #0b132b, #1c2541);
+    --card-shadow: 0 10px 30px -5px rgba(0, 0, 0, 0.5);
+
+    --accent-blue: #38bdf8;
+    --accent-indigo: #6366f1;
+    --accent-purple: #a855f7;
+    --accent-green: #22c55e;
+    --accent-amber: #f59e0b;
+    --accent-red: #ef4444;
+
+    --font-main: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    --font-heading: 'Outfit', sans-serif;
+    
+    --radius-sm: 8px;
+    --radius-md: 12px;
+    --radius-lg: 18px;
+    --transition-fast: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Light Theme (Office White) */
+[data-theme="light"] {
+    --bg-primary: #f1f5f9;
+    --bg-secondary: #ffffff;
+    --bg-card: #ffffff;
+    --border-color: #cbd5e1;
+    
+    --text-primary: #0f172a;
+    --text-secondary: #334155;
+    --text-muted: #64748b;
+    
+    --header-bg: linear-gradient(135deg, #0f766e, #0d9488);
+    --card-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+
+    --accent-blue: #0284c7;
+    --accent-indigo: #4338ca;
+    --accent-purple: #7e22ce;
+    --accent-green: #16a34a;
+    --accent-amber: #d97706;
+    --accent-red: #dc2626;
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: var(--font-main);
+    background-color: var(--bg-primary);
+    color: var(--text-primary);
+    line-height: 1.5;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+/* ==========================================================================
+   UNIVERSAL TOP NAVIGATION & HEADER
+   ========================================================================== */
+.universal-top-nav {
+    background: #020617;
+    border-bottom: 1px solid #1e293b;
+    padding: 8px 24px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    font-size: 13px;
+    font-weight: 600;
+    color: #fff;
+    sticky: top;
+    z-index: 1000;
+}
+
+.nav-link {
+    text-decoration: none;
+    padding: 4px 12px;
+    border-radius: 6px;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 12px;
+    transition: var(--transition-fast);
+}
+
+.app-header {
+    background: var(--header-bg);
+    border-bottom: 1px solid var(--border-color);
+    padding: 20px 32px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+}
+
+.header-container {
+    max-width: 1700px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 20px;
+}
+
+.brand {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+}
+
+.logo-icon {
+    width: 52px;
+    height: 52px;
+    background: linear-gradient(135deg, #0d9488, #0f766e);
+    border-radius: var(--radius-md);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 26px;
+    color: #fff;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+}
+
+.brand-text h1 {
+    font-family: var(--font-heading);
+    font-size: 22px;
+    font-weight: 800;
+    color: #ffffff;
+}
+
+.brand-text .subtitle {
+    font-size: 13px;
+    color: rgba(255, 255, 255, 0.85);
+}
+
+/* Domain Tabs Switcher */
+.domain-tabs-wrapper {
+    display: flex;
+    gap: 12px;
+    margin-top: 16px;
+}
+
+.domain-tab-btn {
+    padding: 12px 24px;
+    border-radius: 30px;
+    font-family: var(--font-heading);
+    font-size: 14px;
+    font-weight: 700;
+    border: 2px solid rgba(255, 255, 255, 0.2);
+    background: rgba(255, 255, 255, 0.1);
+    color: #fff;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    transition: var(--transition-fast);
+}
+
+.domain-tab-btn.active {
+    background: #0d9488;
+    border-color: #2dd4bf;
+    color: #fff;
+    box-shadow: 0 4px 15px rgba(13, 148, 136, 0.4);
+}
+
+/* Theme Toggle */
+.theme-toggle-btn {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 18px;
+    background: rgba(255, 255, 255, 0.15);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    border-radius: 30px;
+    color: #ffffff;
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: var(--transition-fast);
+}
+
+/* ==========================================================================
+   MAIN LAYOUT & CARDS
+   ========================================================================== */
+.main-layout {
+    max-width: 1700px;
+    margin: 24px auto;
+    padding: 0 24px;
+    flex: 1;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+}
+
+.procurement-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-lg);
+    padding: 24px;
+    box-shadow: var(--card-shadow);
+    transition: background-color 0.3s ease, border-color 0.3s ease;
+}
+
+.search-bar-group {
+    position: relative;
+    display: flex;
+    align-items: center;
+    margin-bottom: 16px;
+}
+
+.search-bar-group input {
+    width: 100%;
+    padding: 14px 48px 14px 50px;
+    background: var(--bg-primary);
+    border: 2px solid var(--border-color);
+    border-radius: var(--radius-md);
+    color: var(--text-primary);
+    font-size: 15px;
+    font-weight: 500;
+    outline: none;
+    transition: var(--transition-fast);
+}
+
+.search-bar-group input:focus {
+    border-color: #0d9488;
+}
+
+.search-icon {
+    position: absolute;
+    left: 18px;
+    color: var(--text-muted);
+    font-size: 18px;
+}
+
+/* Filter Bar */
+.filter-row {
+    display: flex;
+    gap: 16px;
+    flex-wrap: wrap;
+    margin-bottom: 20px;
+}
+
+.filter-item {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    flex: 1;
+    min-width: 200px;
+}
+
+.filter-item label {
+    font-size: 12px;
+    font-weight: 700;
+    color: var(--text-secondary);
+}
+
+.filter-item select {
+    padding: 10px 14px;
+    background: var(--bg-primary);
+    border: 2px solid var(--border-color);
+    border-radius: var(--radius-sm);
+    color: var(--text-primary);
+    font-size: 14px;
+    font-weight: 600;
+    outline: none;
+    cursor: pointer;
+}
+
+/* ==========================================================================
+   ITEMS & SUPPLIER COMPARISON MATRIX GRID
+   ========================================================================== */
+.items-grid-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(480px, 1fr));
+    gap: 20px;
+}
+
+.item-procurement-card {
+    background: var(--bg-primary);
+    border: 2px solid var(--border-color);
+    border-radius: var(--radius-md);
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    transition: var(--transition-fast);
+    position: relative;
+}
+
+.item-procurement-card:hover {
+    border-color: #0d9488;
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
+}
+
+.item-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    border-bottom: 1px solid var(--border-color);
+    padding-bottom: 12px;
+}
+
+.item-code-badge {
+    background: linear-gradient(135deg, #0d9488, #0f766e);
+    color: #fff;
+    font-family: var(--font-heading);
+    font-weight: 800;
+    font-size: 14px;
+    padding: 4px 10px;
+    border-radius: 6px;
+}
+
+.item-title {
+    font-family: var(--font-heading);
+    font-size: 16px;
+    font-weight: 800;
+    color: var(--text-primary);
+    margin-top: 4px;
+}
+
+.domain-tag {
+    font-size: 11px;
+    font-weight: 700;
+    color: var(--accent-amber);
+}
+
+/* Supplier Rows Table */
+.suppliers-comp-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 12px;
+}
+
+.suppliers-comp-table th, .suppliers-comp-table td {
+    padding: 8px 10px;
+    text-align: left;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.suppliers-comp-table th {
+    background: rgba(0, 0, 0, 0.2);
+    color: var(--text-secondary);
+    font-weight: 700;
+}
+
+.price-val {
+    font-weight: 800;
+    color: var(--text-primary);
+}
+
+.price-val.best {
+    color: var(--accent-green);
+    font-size: 13px;
+}
+
+.badge-best-price {
+    background: rgba(34, 197, 94, 0.15);
+    color: var(--accent-green);
+    border: 1px solid var(--accent-green);
+    padding: 2px 6px;
+    border-radius: 4px;
+    font-size: 10px;
+    font-weight: 800;
+}
+
+.btn-view-sup {
+    background: none;
+    border: 1px solid var(--accent-blue);
+    color: var(--accent-blue);
+    padding: 4px 8px;
+    border-radius: 4px;
+    font-size: 11px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: var(--transition-fast);
+}
+
+.btn-view-sup:hover {
+    background: var(--accent-blue);
+    color: #fff;
+}
+
+/* MODAL TOOLTIP */
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(15, 23, 42, 0.8);
+    backdrop-filter: blur(6px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 2000;
+    opacity: 0;
+    visibility: hidden;
+    transition: var(--transition-fast);
+}
+
+.modal-overlay.active {
+    opacity: 1;
+    visibility: visible;
+}
+
+.modal-content {
+    background: var(--bg-card);
+    border: 2px solid var(--border-color);
+    border-radius: var(--radius-lg);
+    width: 90%;
+    max-width: 750px;
+    padding: 32px;
+    position: relative;
+    box-shadow: 0 25px 60px rgba(0, 0, 0, 0.4);
+    max-height: 90vh;
+    overflow-y: auto;
+}
+
+.modal-close {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    background: rgba(0, 0, 0, 0.1);
+    border: none;
+    color: var(--text-primary);
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    font-size: 18px;
+    cursor: pointer;
+}
+
+.app-footer {
+    text-align: center;
+    padding: 20px;
+    font-size: 13px;
+    color: var(--text-muted);
+    border-top: 1px solid var(--border-color);
+    margin-top: 32px;
+}

@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="vi" data-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hệ Thống Tra Cứu Nhà Cung Cấp & Báo Giá Thu Mua - Lê Vũ Tường</title>
+    <!-- Google Fonts & FontAwesome Icons -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Outfit:wght@500;700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Embedded Supplier Data -->
+    <script src="supplier_data.js"></script>
+
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <!-- UNIVERSAL TOP NAVIGATION BAR FOR INSTANT SWITCHING -->
+    <nav class="universal-top-nav">
+        <div style="display: flex; gap: 10px; align-items: center; flex-wrap: wrap;">
+            <span style="color: #94a3b8; font-size: 11px; font-weight: 800; text-transform: uppercase;">Chuyển Ứng Dụng:</span>
+            <a href="../index.html" class="nav-link" style="color: #38bdf8; background: rgba(56, 189, 248, 0.15);"><i class="fa-solid fa-house"></i> 🏠 Trang Chủ Hub</a>
+            <a href="https://github.com/levutuong01694242789-sketch/hub-quan-ly-kho#readme" target="_blank" class="nav-link" style="color: #4ade80; background: rgba(74, 222, 128, 0.15);"><i class="fa-solid fa-book-open"></i> 📖 Trang Giới Thiệu Master</a>
+            <a href="../he_thong_hop_nhat_fifo_sap/index.html" class="nav-link" style="color: #a855f7; background: rgba(168, 85, 247, 0.15);"><i class="fa-solid fa-wand-magic-sparkles"></i> 🌟 Hợp Nhất 1-Chạm</a>
+            <a href="../wms_vdt_sap4hana/index.html" class="nav-link" style="color: #38bdf8; background: rgba(56, 189, 248, 0.15);"><i class="fa-solid fa-table-cells-large"></i> 🏢 Kho Động 2D SAP</a>
+            <a href="index.html" class="nav-link" style="color: #2dd4bf; background: rgba(45, 212, 191, 0.3); border: 1px solid #2dd4bf;"><i class="fa-solid fa-truck-field"></i> 🛒 Tra Cứu NCC Thu Mua</a>
+            <a href="../mo_app_tru_kho.html" class="nav-link" style="color: #60a5fa; background: rgba(96, 165, 250, 0.15);"><i class="fa-solid fa-chart-line"></i> 📊 Trữ Kho 3 Ngày & PO</a>
+            <a href="../it_asset.html" class="nav-link" style="color: #c084fc; background: rgba(192, 132, 252, 0.15);"><i class="fa-solid fa-laptop-code"></i> 💻 IT Asset QR</a>
+        </div>
+        <div style="font-size: 11px; color: #94a3b8;">
+            <i class="fa-solid fa-user-check" style="color: #2dd4bf;"></i> Lê Vũ Tường
+        </div>
+    </nav>
+
+    <!-- App Header -->
+    <header class="app-header">
+        <div class="header-container">
+            <div class="brand">
+                <div class="logo-icon">
+                    <i class="fa-solid fa-truck-ramp-box"></i>
+                </div>
+                <div class="brand-text">
+                    <h1>HỆ THỐNG TRA CỨU NHÀ CUNG CẤP & BÁO GIÁ THU MUA</h1>
+                    <span class="subtitle">Chuyên Gia Thu Mua Nguyên Liệu • Tự Động Hóa Quản Lý Báo Giá Toàn Việt Nam</span>
+                </div>
+            </div>
+
+            <div style="display: flex; align-items: center; gap: 16px;">
+                <!-- Download Excel Report Button -->
+                <a href="BAO_CAO_SO_SANH_GIA_NHA_CUNG_CAP.xlsx" download class="theme-toggle-btn" style="background: linear-gradient(135deg, #16a34a, #15803d); text-decoration: none;" title="Tải báo cáo so sánh giá Excel">
+                    <i class="fa-solid fa-file-excel"></i>
+                    <span>Tải Báo Cáo Excel</span>
+                </a>
+
+                <!-- Theme Switcher -->
+                <button class="theme-toggle-btn" id="btn-theme-toggle" title="Chuyển đổi giao diện Sáng / Tối">
+                    <i class="fa-solid fa-sun"></i>
+                    <span id="theme-btn-text">Giao Diện Sáng</span>
+                </button>
+            </div>
+        </div>
+
+        <!-- Domain Switcher Tabs -->
+        <div class="header-container">
+            <div class="domain-tabs-wrapper">
+                <button class="domain-tab-btn active" id="tab-btn-agri" data-domain="AGRI">
+                    <i class="fa-solid fa-wheat-awn"></i>
+                    <span>🌾 Mảng 1: Nguyên Liệu Nông Sản & Bột (<span id="count-agri">254</span> mặt hàng)</span>
+                </button>
+                <button class="domain-tab-btn" id="tab-btn-chem" data-domain="CHEM">
+                    <i class="fa-solid fa-flask-vial"></i>
+                    <span>🧪 Mảng 2: Phụ Gia & Hóa Chất Thực Phẩm (<span id="count-chem">114</span> mặt hàng)</span>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Container -->
+    <main class="main-layout">
+        
+        <!-- Search & Filter Controls -->
+        <section class="procurement-card">
+            <div class="search-bar-group">
+                <i class="fa-solid fa-magnifying-glass search-icon"></i>
+                <input type="text" id="txt-search-procurement" placeholder="Nhập Mã hàng, Tên nguyên liệu (vd: TINH BỘT KHOAI MÌ 1412, ACID CITRIC, BỘT MÌ, GẠO 504), Tên Nhà Cung Cấp, Mã Số Thuế...">
+            </div>
+
+            <div class="filter-row">
+                <div class="filter-item">
+                    <label><i class="fa-solid fa-location-dot"></i> Lọc Theo Tỉnh Thành / Khu Vực NCC:</label>
+                    <select id="sel-region">
+                        <option value="ALL">Tất cả Khu vực (TP.HCM, Hà Nội, Bình Dương, Đồng Nai...)</option>
+
+                    </select>
+                </div>
+
+                <div class="filter-item">
+                    <label><i class="fa-solid fa-award"></i> Lọc Theo Chứng Nhận Chất Lượng:</label>
+                    <select id="sel-cert">
+                        <option value="ALL">Tất cả Chứng nhận (ISO, HACCP, HALAL, FSSC...)</option>
+                        <option value="ISO 22000">ISO 22000 / FSSC 22000</option>
+                        <option value="HACCP">HACCP</option>
+                        <option value="HALAL">HALAL</option>
+                    </select>
+                </div>
+
+                <div class="filter-item">
+                    <label><i class="fa-solid fa-file-contract"></i> Điều Khoản Công Nợ:</label>
+                    <select id="sel-credit">
+                        <option value="ALL">Tất cả Điều khoản</option>
+                        <option value="CREDIT">Công nợ (Nợ 30 - 45 - 60 ngày)</option>
+                        <option value="CASH">Thanh toán ngay (Có chiết khấu)</option>
+                    </select>
+                </div>
+            </div>
+
+            <div style="font-size: 13px; font-weight: 700; color: var(--accent-blue);" id="display-filter-count">
+                Đang hiển thị 254 mặt hàng
+            </div>
+        </section>
+
+        <!-- Items Procurement Comparison Grid -->
+        <section class="procurement-card">
+            <div id="procurement-grid" class="items-grid-container">
+                <!-- Rendered dynamically via JS -->
+            </div>
+        </section>
+
+    </main>
+
+    <!-- SUPPLIER DETAIL MODAL TOOLTIP -->
+    <div id="supplier-detail-modal" class="modal-overlay">
+        <div class="modal-content">
+            <button class="modal-close" id="btn-close-modal"><i class="fa-solid fa-xmark"></i></button>
+            
+            <div style="display: flex; align-items: center; gap: 16px; margin-bottom: 20px;">
+                <div style="width: 50px; height: 50px; background: #0d9488; border-radius: 12px; display: flex; align-items: center; justify-content: center; color: #fff; font-size: 24px;">
+                    <i class="fa-solid fa-building"></i>
+                </div>
+                <div>
+                    <h2 id="modal-sup-name" style="font-family: var(--font-heading); font-size: 20px; font-weight: 800;">Tên Công Ty</h2>
+                    <span id="modal-sup-mst" style="font-size: 13px; color: var(--text-secondary);">Mã số thuế: 0303889911</span>
+                </div>
+            </div>
+
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 14px; background: var(--bg-primary); padding: 18px; border-radius: var(--radius-md); margin-bottom: 20px; border: 1px solid var(--border-color);">
+                <div>
+                    <span style="font-size: 11px; color: var(--text-muted); display: block;">Địa Chỉ / Trụ Sở:</span>
+                    <span id="modal-sup-address" style="font-size: 13px; font-weight: 700;">TP.HCM</span>
+                </div>
+                <div>
+                    <span style="font-size: 11px; color: var(--text-muted); display block;">SĐT Hotline:</span>
+                    <span id="modal-sup-phone" style="font-size: 13px; font-weight: 800; color: var(--accent-green);">0903.123.456</span>
+                </div>
+                <div>
+                    <span style="font-size: 11px; color: var(--text-muted); display: block;">Đại Diện Kinh Doanh:</span>
+                    <span id="modal-sup-sales" style="font-size: 13px; font-weight: 700;">Anh Minh</span>
+                </div>
+                <div>
+                    <span style="font-size: 11px; color: var(--text-muted); display: block;">Email Liên Hệ:</span>
+                    <span id="modal-sup-email" style="font-size: 13px; font-weight: 700; color: var(--accent-blue);">sales@company.com</span>
+                </div>
+                <div>
+                    <span style="font-size: 11px; color: var(--text-muted); display: block;">Điều Khoản Công Nợ:</span>
+                    <span id="modal-sup-payment" style="font-size: 13px; font-weight: 800; color: var(--accent-amber);">Công nợ 30 ngày</span>
+                </div>
+                <div>
+                    <span style="font-size: 11px; color: var(--text-muted); display: block;">Quy Cách & MOQ:</span>
+                    <span id="modal-sup-packing" style="font-size: 13px; font-weight: 700;">Bao 25kg (MOQ 500kg)</span>
+                </div>
+            </div>
+
+            <div style="margin-bottom: 20px;">
+                <h3 style="font-size: 14px; font-weight: 700; margin-bottom: 8px;"><i class="fa-solid fa-award"></i> Chứng Nhận Chất Lượng Công Ty:</h3>
+                <div id="modal-sup-certs-container" style="display: flex; gap: 8px; flex-wrap: wrap;">
+                    <!-- Rendered cert badges -->
+                </div>
+            </div>
+
+            <div style="display: flex; gap: 12px; justify-content: flex-end;">
+                <a id="btn-call-sup" href="#" style="background: linear-gradient(135deg, #16a34a, #15803d); color: #fff; text-decoration: none; padding: 10px 18px; border-radius: 8px; font-weight: 700; font-size: 13px;">
+                    <i class="fa-solid fa-phone"></i> Gọi Điện Ngay
+                </a>
+                <a id="btn-email-sup" href="#" style="background: linear-gradient(135deg, #0284c7, #0369a1); color: #fff; text-decoration: none; padding: 10px 18px; border-radius: 8px; font-weight: 700; font-size: 13px;">
+                    <i class="fa-solid fa-envelope"></i> Gửi Yêu Cầu Báo Giá (RFQ)
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="app-footer">
+        <p>Hệ Thống Tra Cứu Nhà Cung Cấp & Báo Giá Thu Mua Nguyên Liệu Toàn Việt Nam &copy; 2026. Thiết Kế Cho Bộ Phận Thu Mua Công Ty • Lê Vũ Tường.</p>
+    </footer>
+
+    <!-- JavaScript -->
+    <script src="app.js"></script>
+</body>
+</html>
