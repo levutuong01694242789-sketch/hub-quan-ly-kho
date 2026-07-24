@@ -13,11 +13,18 @@ OUTPUT_JS_PATH = os.path.join(OUTPUT_DIR, 'financial_data.js')
 OUTPUT_EXCEL_PATH = os.path.join(OUTPUT_DIR, 'BAO_CAO_TAI_CHINH_CHI_PHI_KHO.xlsx')
 TEMPLATE_EXCEL_PATH = os.path.join(OUTPUT_DIR, 'FILE_MAU_NHAP_CHI_PHI_TAI_CHINH_KHO.xlsx')
 
-# Default Reference Dynamic Parameters (Updated: 12h Shift Salaries > 10M VND/person)
+# Default Reference Dynamic Parameters (Updated: Exact Org Hierarchy Salary Breakdown)
+# 1x Manager @ 45M + 3x Storekeepers @ 20M + 25x Staff @ 10.5M = 367.5M VND/month
 DEFAULT_PARAMS = {
     'warehouse_rent_monthly': 180000000.0, # Tiền thuê mặt bằng kho / tháng (VND)
-    'total_labor_monthly': 333500000.0,     # Quỹ lương 29 nhân sự kho ca 12 tiếng (11.5 Tr VND/người/tháng)
-    'staff_count': 29,                       # Số lượng nhân sự kho vận thực tế (29 Người)
+    'total_labor_monthly': 367500000.0,     # Tổng quỹ lương 29 nhân sự theo cơ cấu thực tế (VND)
+    'staff_count': 29,                       # Tổng 29 nhân sự kho
+    'manager_salary': 45000000.0,            # 1 Quản lý kho / Architect: 45 Tr VND/tháng
+    'storekeepers_count': 3,                 # 3 Thủ kho
+    'storekeeper_salary': 20000000.0,        # Lương 1 Thủ kho: 20 Tr VND/tháng
+    'workers_count': 25,                     # 25 Nhân viên kho
+    'worker_salary': 10500000.0,             # Lương 1 Nhân viên kho ca 12h: 10.5 Tr VND/tháng
+    
     'utilities_monthly': 35000000.0,        # Điện nước & viễn thông kho / tháng (VND)
     'forklift_operating_monthly': 25000000.0,# Nhiên liệu sạc điện & bảo trì xe nâng / tháng (VND)
     'assets_count': 22,                      # Số lượng Xe nâng & Thiết bị IT/Barcode (Cái)
@@ -34,7 +41,7 @@ DEFAULT_PARAMS = {
 }
 
 def calculate_warehouse_financials(params=None):
-    """Calculate 100% Dynamic Warehouse Operational & Financial Metrics with 12h Shift Salaries."""
+    """Calculate 100% Dynamic Warehouse Operational & Financial Metrics with Exact Org Hierarchy Salary Breakdown."""
     p = dict(DEFAULT_PARAMS)
     if params:
         p.update(params)
@@ -85,6 +92,11 @@ def calculate_warehouse_financials(params=None):
     financial_summary = {
         'timestamp': now_str,
         'parameters': p,
+        'org_breakdown': {
+            'manager': {'count': 1, 'salary': p['manager_salary'], 'total': p['manager_salary']},
+            'storekeepers': {'count': p['storekeepers_count'], 'salary': p['storekeeper_salary'], 'total': p['storekeeper_salary'] * p['storekeepers_count']},
+            'workers': {'count': p['workers_count'], 'salary': p['worker_salary'], 'total': p['worker_salary'] * p['workers_count']}
+        },
         'kpi_summary': {
             'total_monthly_opex': total_monthly_opex,
             'total_annual_opex': total_annual_opex,
@@ -110,10 +122,10 @@ def calculate_warehouse_financials(params=None):
                 'details': f'Mặt bằng kho & điện nước hạ tầng. Tính trên {total_storage_locations:,} vị trí (lấp đầy {occupancy_rate_pct}%).'
             },
             'group_2_labor': {
-                'title': '⚡ 2. Chi Phí Nhân Công (Ca 12 Tiếng)',
+                'title': '⚡ 2. Chi Phí Nhân Công (Cơ Cấu Thực Tế 29 Người)',
                 'amount_monthly': total_labor_cost,
                 'pct_of_total': round((total_labor_cost / total_monthly_opex) * 100, 1),
-                'details': f'Quỹ lương 29 nhân sự kho ca 12 tiếng (Bình quân {cost_per_staff_member:,.0f} VND/người/tháng).'
+                'details': f'Cơ cấu: 1 Quản lý kho (45Tr) + 3 Thủ kho (20Tr/người) + 25 Nhân viên ca 12h (10.5Tr/người).'
             },
             'group_3_consumables': {
                 'title': '📦 3. Chi Phí Vật Tư & PE Quấn Pallet',
@@ -158,8 +170,11 @@ def generate_excel_template_file(output_path):
 
     headers = [
         "Tiền Thuê Mặt Bằng Kho (VND)",
-        "Quỹ Lương Nhân Sự Kho Ca 12H (VND)",
-        "Số Lượng Nhân Sự Kho (Người)",
+        "Lương Quản Lý Kho (VND)",
+        "Số Lượng Thủ Kho (Người)",
+        "Lương Thủ Kho (VND/Người)",
+        "Số Lượng Nhân Viên Kho Ca 12H (Người)",
+        "Lương Nhân Viên Kho (VND/Người)",
         "Chi Phí Điện Nước Kho (VND)",
         "Chi Phí Xe Nâng & Thiết Bị (VND)",
         "Số Lượng Xe Nâng & IT Assets (Cái)",
@@ -172,8 +187,11 @@ def generate_excel_template_file(output_path):
 
     sample_row = [
         180000000,
-        333500000,
-        29,
+        45000000,
+        3,
+        20000000,
+        25,
+        10500000,
         35000000,
         25000000,
         22,
@@ -192,8 +210,15 @@ def generate_excel_financial_report(data, output_path):
     ws_pl = wb.active
     ws_pl.title = "P&L Báo Cáo Chi Phí Kho"
 
-    ws_pl.append(["BÁO CÁO TỔNG HỢP CHI PHÍ VẬN HÀNH KHO & P&L THÁNG (CA 12 HỜ)"])
+    ws_pl.append(["BÁO CÁO TỔNG HỢP CHI PHÍ VẬN HÀNH KHO & P&L THÁNG (CƠ CẤU LƯƠNG THỰC TẾ)"])
     ws_pl.append([f"Thời gian lập báo cáo: {data['timestamp']}"])
+    ws_pl.append([])
+
+    ws_pl.append(["CƠ CẤU LƯƠNG NHÂN SỰ KHO (29 NGƯỜI)", "SỐ LƯỢNG", "MỨC LƯƠNG/NGƯỜI (VND)", "TỔNG THÁNG (VND)"])
+    ws_pl.append(["1. Quản Lý Kho / Architect", 1, 45000000, 45000000])
+    ws_pl.append(["2. Thủ Kho (Trưởng Ca)", 3, 20000000, 60000000])
+    ws_pl.append(["3. Nhân Viên Kho Ca 12H", 25, 10500000, 262500000])
+    ws_pl.append(["TỔNG QUỸ LƯƠNG NHÂN SỰ KHO", 29, "-", 367500000])
     ws_pl.append([])
 
     ws_pl.append(["HẠNG MỤC CHI PHÍ VẬN HÀNH KHO", "CHI PHÍ THÁNG (VND)", "% TRÊN TỔNG CHI PHÍ", "GHI CHÚ DIỄN GIẢI"])
@@ -208,11 +233,11 @@ def generate_excel_financial_report(data, output_path):
 
     ws_pl.append([])
     kpi = data['kpi_summary']
-    ws_pl.append(["TỔNG CHI PHÍ OPEX KHO HÀNG THÁNG", kpi['total_monthly_opex'], "100%", "Tổng chi phí vận hành kho tháng (Lương ca 12h)"])
+    ws_pl.append(["TỔNG CHI PHÍ OPEX KHO HÀNG THÁNG", kpi['total_monthly_opex'], "100%", "Tổng chi phí vận hành kho tháng"])
     ws_pl.append(["TỔNG CHI PHÍ OPEX KHO NĂM (DỰ TOÁN)", kpi['total_annual_opex'], "-", "Dự toán chi phí kho cả năm"])
     ws_pl.append([])
     ws_pl.append(["CHI PHÍ TRÊN 1 Ô KỆ / THÁNG (4,038 Ô KỆ)", kpi['cost_per_bin_monthly'], "VND/Ô Kệ", f"Đơn giá ngày: {kpi['cost_per_bin_daily']:,.0f} VND/ngày"])
-    ws_pl.append(["CHI PHÍ BÌNH QUÂN / 1 NHÂN SỰ KHO CA 12H (29 NGƯỜI)", kpi['cost_per_staff_member'], "VND/Người", f"Quỹ lương ca 12h chia cho 29 nhân sự kho (Bình quân 11.5 Tr/người)"])
+    ws_pl.append(["CHI PHÍ BÌNH QUÂN / 1 NHÂN SỰ KHO (29 NGƯỜI)", kpi['cost_per_staff_member'], "VND/Người", "Bình quân 12.67 Tr VND/người trên toàn bộ cơ cấu"])
     ws_pl.append(["CHI PHÍ BÌNH QUÂN / 1 THIẾT BỊ IT & XE NÂNG", kpi['cost_per_asset_device'], "VND/Thiết bị", f"Chi phí bảo trì trên {data['parameters']['assets_count']} thiết bị"])
     ws_pl.append(["CHI PHÍ LƯU KHO & XỬ LÝ TRÊN 1 KG", kpi['cost_per_kg_handled'], "VND/Kg", "Đơn giá bóc tách theo Kg"])
 

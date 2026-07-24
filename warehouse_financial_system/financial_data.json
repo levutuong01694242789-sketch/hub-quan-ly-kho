@@ -1,9 +1,14 @@
 {
-  "timestamp": "24/07/2026 17:59:53",
+  "timestamp": "24/07/2026 18:01:29",
   "parameters": {
     "warehouse_rent_monthly": 180000000.0,
-    "total_labor_monthly": 333500000.0,
+    "total_labor_monthly": 367500000.0,
     "staff_count": 29,
+    "manager_salary": 45000000.0,
+    "storekeepers_count": 3,
+    "storekeeper_salary": 20000000.0,
+    "workers_count": 25,
+    "worker_salary": 10500000.0,
     "utilities_monthly": 35000000.0,
     "forklift_operating_monthly": 25000000.0,
     "assets_count": 22,
@@ -16,16 +21,33 @@
     "monthly_pick_lines_count": 12500,
     "inventory_total_value": 35000000000.0
   },
+  "org_breakdown": {
+    "manager": {
+      "count": 1,
+      "salary": 45000000.0,
+      "total": 45000000.0
+    },
+    "storekeepers": {
+      "count": 3,
+      "salary": 20000000.0,
+      "total": 60000000.0
+    },
+    "workers": {
+      "count": 25,
+      "salary": 10500000.0,
+      "total": 262500000.0
+    }
+  },
   "kpi_summary": {
-    "total_monthly_opex": 591500000.0,
-    "total_annual_opex": 7098000000.0,
+    "total_monthly_opex": 625500000.0,
+    "total_annual_opex": 7506000000.0,
     "cost_per_bin_monthly": 49777.0,
     "cost_per_occupied_bin_monthly": 52923.0,
     "cost_per_bin_daily": 1659.0,
-    "cost_per_kg_handled": 1314.44,
-    "cost_per_staff_member": 11500000.0,
+    "cost_per_kg_handled": 1390.0,
+    "cost_per_staff_member": 12672414.0,
     "cost_per_asset_device": 1772727.0,
-    "cost_per_pick_line": 28120.0,
+    "cost_per_pick_line": 30840.0,
     "annual_carrying_cost": 5250000000.0,
     "monthly_carrying_cost": 437500000.0,
     "storage_cost_ratio_pct": 0.57,
@@ -37,43 +59,43 @@
     "group_1_storage": {
       "title": "🏗️ 1. Chi Phí Lưu Kho & Hạ Tầng",
       "amount_monthly": 201000000.0,
-      "pct_of_total": 34.0,
+      "pct_of_total": 32.1,
       "details": "Mặt bằng kho & điện nước hạ tầng. Tính trên 4,038 vị trí (lấp đầy 94.1%)."
     },
     "group_2_labor": {
-      "title": "⚡ 2. Chi Phí Nhân Công (Ca 12 Tiếng)",
-      "amount_monthly": 333500000.0,
-      "pct_of_total": 56.4,
-      "details": "Quỹ lương 29 nhân sự kho ca 12 tiếng (Bình quân 11,500,000 VND/người/tháng)."
+      "title": "⚡ 2. Chi Phí Nhân Công (Cơ Cấu Thực Tế 29 Người)",
+      "amount_monthly": 367500000.0,
+      "pct_of_total": 58.8,
+      "details": "Cơ cấu: 1 Quản lý kho (45Tr) + 3 Thủ kho (20Tr/người) + 25 Nhân viên ca 12h (10.5Tr/người)."
     },
     "group_3_consumables": {
       "title": "📦 3. Chi Phí Vật Tư & PE Quấn Pallet",
       "amount_monthly": 18000000.0,
-      "pct_of_total": 3.0,
+      "pct_of_total": 2.9,
       "details": "Bao gồm màng PE quấn Pallet, băng keo, đai niềng, tem nhãn Barcode/QR."
     },
     "group_4_equipment": {
       "title": "🚜 4. Chi Phí Thiết Bị & Xe Nâng",
       "amount_monthly": 39000000.0,
-      "pct_of_total": 6.6,
+      "pct_of_total": 6.2,
       "details": "Khấu hao & bảo trì 22 thiết bị IT, máy quét & 4 Xe nâng hàng."
     },
     "group_5_carrying": {
       "title": "📉 5. Chi Phí Giam Vốn Tồn Kho (Carrying Cost)",
       "amount_monthly": 437500000.0,
-      "pct_of_total": 42.5,
+      "pct_of_total": 41.2,
       "details": "Chi phí cơ hội giam vốn (15.0%/năm trên 35.0 tỷ tồn kho)."
     }
   },
   "uom_cost_breakdown": {
-    "Kg": 1314.44,
-    "Thùng": 19717.0,
-    "Cái": 657.0,
-    "Cuộn": 32861.0,
-    "Met": 1577.0,
-    "Bộ": 2629.0,
-    "Đôi": 1052.0,
-    "Chai": 1314.0,
-    "Vắt": 66.0
+    "Kg": 1390.0,
+    "Thùng": 20850.0,
+    "Cái": 695.0,
+    "Cuộn": 34750.0,
+    "Met": 1668.0,
+    "Bộ": 2780.0,
+    "Đôi": 1112.0,
+    "Chai": 1390.0,
+    "Vắt": 70.0
   }
 }

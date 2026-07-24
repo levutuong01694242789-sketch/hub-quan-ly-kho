@@ -38,11 +38,16 @@ document.addEventListener('DOMContentLoaded', () => {
         mainApp.style.display = 'block';
     }
 
-    // Default Dynamic Financial Parameters (Updated: 29 Staff Members @ 12h Shift Salary ~11.5M VND/person)
+    // Default Dynamic Financial Parameters (Updated: Exact Org Salary Breakdown: 1 Manager @ 45M + 3 Storekeepers @ 20M + 25 Staff @ 10.5M = 367.5M VND)
     let currentParams = {
         rent: 180000000,
-        labor: 333500000,
+        labor: 367500000,
         staffCount: 29,
+        managerSalary: 45000000,
+        storekeeperSalary: 20000000,
+        storekeeperCount: 3,
+        workerSalary: 10500000,
+        workerCount: 25,
         utilities: 35000000,
         forklift: 25000000,
         assetsCount: 22,
@@ -103,7 +108,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const fileExcelInput = document.getElementById('file-excel-input');
 
     // Set slider initial values
-    if (sldLabor) sldLabor.value = 333500000;
+    if (sldLabor) sldLabor.value = 367500000;
 
     // --------------------------------------------------------------------------
     // 1. THEME SWITCHER
@@ -136,12 +141,12 @@ document.addEventListener('DOMContentLoaded', () => {
     btnCrosslinkData.addEventListener('click', () => {
         currentParams.occupiedBins = 3798;
         currentParams.staffCount = 29;
-        currentParams.labor = 333500000;
+        currentParams.labor = 367500000;
         currentParams.assetsCount = 22;
         currentParams.inventoryValue = 35000000000;
         currentParams.monthlyKg = 450000;
 
-        sldLabor.value = 333500000;
+        sldLabor.value = 367500000;
         sldStaffCount.value = 29;
         sldAssetsCount.value = 22;
 
@@ -149,7 +154,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         alert('⚡ ĐÃ LIÊN KẾT THÀNH CÔNG DỮ LIỆU REALTIME:\n' +
               '• Tồn kho WMS SAP: 3,798 Ô Kệ đang lấp đầy (94.2%), Trị giá 35 Tỷ VND\n' +
-              '• Nhân sự Kho Ca 12H: 29 Người (Bình quân 11.5 Tr VND/người)\n' +
+              '• Cơ cấu Lương 29 Nhân sự: 1 Quản lý (45Tr) + 3 Thủ kho (20Tr) + 25 Nhân viên (10.5Tr)\n' +
               '• Thiết bị IT & Xe nâng: 22 Thiết bị\n' +
               'Bảng chỉ số tài chính đã được cập nhật chuẩn xác 100%!');
     });
@@ -207,7 +212,7 @@ document.addEventListener('DOMContentLoaded', () => {
         kpiOccupancyRate.textContent = `${occupancyRate}%`;
 
         kpiCostPerStaff.textContent = `${costPerStaff.toLocaleString()} VND`;
-        kpiStaffCount.textContent = `${currentParams.staffCount} Người (Ca 12H)`;
+        kpiStaffCount.textContent = `29 Người (1QL 45M + 3TK 20M + 25NV 10.5M)`;
         kpiCostPerAsset.textContent = `${costPerAsset.toLocaleString()} VND`;
         kpiAssetsCount.textContent = `${currentParams.assetsCount} Thiết Bị`;
 
@@ -222,12 +227,12 @@ document.addEventListener('DOMContentLoaded', () => {
                 details: `Bao gồm mặt bằng kho & điện nước. Tính trên ${totalBins.toLocaleString()} ô kệ (lấp đầy ${occupancyRate}%).`
             },
             {
-                title: '⚡ 2. Chi Phí Nhân Công (Ca 12 Tiếng)',
+                title: '⚡ 2. Chi Phí Nhân Công (Cơ Cấu Thực Tế 29 Người)',
                 amount: laborCost,
                 pct: ((laborCost / totalMonthlyOpex) * 100).toFixed(1),
                 perBin: Math.round(laborCost / totalBins),
                 perKg: (laborCost / currentParams.monthlyKg).toFixed(2),
-                details: `Quỹ lương ${currentParams.staffCount} nhân sự kho ca 12H (Bình quân ${costPerStaff.toLocaleString()} VND/người/tháng).`
+                details: `Quỹ lương 29 người: 1 Quản lý (45Tr) + 3 Thủ kho (20Tr) + 25 Nhân viên ca 12h (10.5Tr).`
             },
             {
                 title: '📦 3. Chi Phí Vật Tư & PE Quấn Pallet',
@@ -304,7 +309,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     btnResetSliders.addEventListener('click', () => {
         sldRent.value = 180000000;
-        sldLabor.value = 333500000;
+        sldLabor.value = 367500000;
         sldStaffCount.value = 29;
         sldUtilities.value = 35000000;
         sldForklift.value = 25000000;
