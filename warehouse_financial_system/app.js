@@ -1,5 +1,5 @@
 // Dynamic Warehouse Financial Command Center Logic
-// 100% Dynamic Financial Calculations, Asset/Inventory Cross-Linking, Pallet Loss Rate & Cost Savings Masterclass
+// 100% Dynamic Financial Calculations, Asset/Inventory Cross-Linking, Pallet Loss Rate, Savings Masterclass & Monthly Tracking Ledger
 
 document.addEventListener('DOMContentLoaded', () => {
     // --------------------------------------------------------------------------
@@ -59,7 +59,7 @@ document.addEventListener('DOMContentLoaded', () => {
         inventoryValue: 35000000000
     };
 
-    // DOM Elements - Theme & View Tabs (3 MAIN TABS)
+    // DOM Elements - Theme & View Tabs (4 MAIN TABS)
     const btnThemeToggle = document.getElementById('btn-theme-toggle');
     const themeBtnText = document.getElementById('theme-btn-text');
     const btnCrosslinkData = document.getElementById('btn-crosslink-data');
@@ -67,10 +67,12 @@ document.addEventListener('DOMContentLoaded', () => {
     const tabBtnDashboard = document.getElementById('tab-btn-dashboard');
     const tabBtnFormulas = document.getElementById('tab-btn-formulas');
     const tabBtnSavings = document.getElementById('tab-btn-savings');
+    const tabBtnTracking = document.getElementById('tab-btn-tracking');
 
     const viewDashboard = document.getElementById('view-financial-dashboard');
     const viewFormulas = document.getElementById('view-financial-formulas');
     const viewSavings = document.getElementById('view-financial-savings');
+    const viewTracking = document.getElementById('view-financial-tracking');
 
     // DOM Elements - Sliders
     const sldRent = document.getElementById('sld-rent');
@@ -107,6 +109,15 @@ document.addEventListener('DOMContentLoaded', () => {
     const tblCostGroupsBody = document.getElementById('tbl-cost-groups-body');
     const uomCardsContainer = document.getElementById('uom-cards-container');
 
+    // DOM Elements - Tracking & Form
+    const inputPeriodMonth = document.getElementById('input-period-month');
+    const inputActualOpex = document.getElementById('input-actual-opex');
+    const inputActualKg = document.getElementById('input-actual-kg');
+    const inputActualPalletLoss = document.getElementById('input-actual-pallet-loss');
+    const inputKaizenNotes = document.getElementById('input-kaizen-notes');
+    const btnSaveMonthlyRecord = document.getElementById('btn-save-monthly-record');
+    const tblTrackingLedgerBody = document.getElementById('tbl-tracking-ledger-body');
+
     // DOM Elements - Upload Modal
     const btnOpenUploadModal = document.getElementById('btn-open-upload-modal');
     const uploadModalOverlay = document.getElementById('excel-upload-modal');
@@ -115,20 +126,23 @@ document.addEventListener('DOMContentLoaded', () => {
     const fileExcelInput = document.getElementById('file-excel-input');
 
     // --------------------------------------------------------------------------
-    // 1. VIEW TAB SWITCHER (3 MAIN TABS)
+    // 1. VIEW TAB SWITCHER (4 MAIN TABS)
     // --------------------------------------------------------------------------
     tabBtnDashboard.addEventListener('click', () => switchTab('dashboard'));
     tabBtnFormulas.addEventListener('click', () => switchTab('formulas'));
     tabBtnSavings.addEventListener('click', () => switchTab('savings'));
+    tabBtnTracking.addEventListener('click', () => switchTab('tracking'));
 
     function switchTab(tabName) {
         tabBtnDashboard.classList.remove('active');
         tabBtnFormulas.classList.remove('active');
         tabBtnSavings.classList.remove('active');
+        tabBtnTracking.classList.remove('active');
 
         viewDashboard.style.display = 'none';
         viewFormulas.style.display = 'none';
         viewSavings.style.display = 'none';
+        viewTracking.style.display = 'none';
 
         if (tabName === 'dashboard') {
             tabBtnDashboard.classList.add('active');
@@ -139,6 +153,10 @@ document.addEventListener('DOMContentLoaded', () => {
         } else if (tabName === 'savings') {
             tabBtnSavings.classList.add('active');
             viewSavings.style.display = 'block';
+        } else if (tabName === 'tracking') {
+            tabBtnTracking.classList.add('active');
+            viewTracking.style.display = 'block';
+            renderTrackingLedger();
         }
     }
 
@@ -358,11 +376,122 @@ document.addEventListener('DOMContentLoaded', () => {
         recalculateFinancials();
     });
 
-    // Initial calculation
+    // --------------------------------------------------------------------------
+    // 5. MONTHLY TRACKING & VARIANCE ANALYSIS LEDGER LOGIC
+    // --------------------------------------------------------------------------
+    const DEFAULT_MONTHLY_RECORDS = [
+        {
+            period: '2026-05',
+            periodLabel: 'Tháng 05/2026',
+            actualOpex: 720000000,
+            actualKg: 440000,
+            palletLoss: 3.2,
+            notes: 'Giai đoạn trước khi áp dụng các giải pháp Kaizen'
+        },
+        {
+            period: '2026-06',
+            periodLabel: 'Tháng 06/2026',
+            actualOpex: 680000000,
+            actualKg: 455000,
+            palletLoss: 2.1,
+            notes: 'Áp dụng sạc xe nâng giờ thấp điểm & quy hoạch đường nhặt hàng Rank A'
+        },
+        {
+            period: '2026-07',
+            periodLabel: 'Tháng 07/2026 (Kỳ Hiện Tại)',
+            actualOpex: 645000000,
+            actualKg: 465000,
+            palletLoss: 1.2,
+            notes: 'Gắn càng bọc cao su xe nâng & máy quấn PE Pre-stretch kéo căng 300%'
+        }
+    ];
+
+    let trackingRecords = JSON.parse(localStorage.getItem('financial_tracking_records')) || DEFAULT_MONTHLY_RECORDS;
+
+    btnSaveMonthlyRecord.addEventListener('click', () => {
+        const periodVal = inputPeriodMonth.value;
+        const actualOpexVal = parseFloat(inputActualOpex.value);
+        const actualKgVal = parseFloat(inputActualKg.value);
+        const palletLossVal = parseFloat(inputActualPalletLoss.value);
+        const notesVal = inputKaizenNotes.value.trim();
+
+        if (!periodVal || isNaN(actualOpexVal) || isNaN(actualKgVal)) {
+            alert('❌ Vui lòng nhập đầy đủ Kỳ báo cáo và Số tiền OPEX thực tế!');
+            return;
+        }
+
+        const [yr, mo] = periodVal.split('-');
+        const periodLabel = `Tháng ${mo}/${yr}`;
+
+        // Check if record already exists
+        const existingIdx = trackingRecords.findIndex(r => r.period === periodVal);
+        const newRecord = {
+            period: periodVal,
+            periodLabel: periodLabel,
+            actualOpex: actualOpexVal,
+            actualKg: actualKgVal,
+            palletLoss: palletLossVal,
+            notes: notesVal || 'Đã áp dụng Kaizen'
+        };
+
+        if (existingIdx >= 0) {
+            trackingRecords[existingIdx] = newRecord;
+        } else {
+            trackingRecords.push(newRecord);
+        }
+
+        // Sort descending by period
+        trackingRecords.sort((a, b) => b.period.localeCompare(a.period));
+
+        localStorage.setItem('financial_tracking_records', JSON.stringify(trackingRecords));
+        renderTrackingLedger();
+        alert(`🎉 ĐÃ GHI NHẬN KẾT QUẢ P&L THÀNH CÔNG CHO ${periodLabel}!`);
+    });
+
+    function renderTrackingLedger() {
+        if (!tblTrackingLedgerBody) return;
+        tblTrackingLedgerBody.innerHTML = '';
+
+        // Target baseline reference OPEX: 702,895,000 VND
+        const targetBaselineOpex = 702895000;
+
+        trackingRecords.forEach(rec => {
+            const costPerKg = (rec.actualOpex / rec.actualKg).toFixed(2);
+            const varianceVal = rec.actualOpex - targetBaselineOpex;
+            const variancePct = ((varianceVal / targetBaselineOpex) * 100).toFixed(1);
+
+            let varianceHTML = '';
+            let statusHTML = '';
+
+            if (varianceVal <= 0) {
+                const savedAmt = Math.abs(varianceVal);
+                varianceHTML = `<span class="variance-good"><i class="fa-solid fa-circle-down"></i> Tiết kiệm ${savedAmt.toLocaleString()} VND (${Math.abs(variancePct)}%)</span>`;
+                statusHTML = `<span class="saving-amount-badge"><i class="fa-solid fa-circle-check"></i> ĐẠT TARGET KAIZERN</span>`;
+            } else {
+                varianceHTML = `<span class="variance-bad"><i class="fa-solid fa-circle-up"></i> Vượt ${varianceVal.toLocaleString()} VND (+${variancePct}%)</span>`;
+                statusHTML = `<span style="background: rgba(239, 68, 68, 0.15); color: #ef4444; border: 1px solid #ef4444; padding: 4px 12px; border-radius: 20px; font-size: 11px; font-weight: 800;"><i class="fa-solid fa-triangle-exclamation"></i> CẦN KAIZEN</span>`;
+            }
+
+            const tr = document.createElement('tr');
+            tr.innerHTML = `
+                <td style="font-weight: 800; color: #38bdf8;">${rec.periodLabel}</td>
+                <td style="font-weight: 800; color: var(--text-primary);">${rec.actualOpex.toLocaleString()} VND</td>
+                <td style="font-weight: 700; color: var(--accent-purple);">${parseFloat(costPerKg).toLocaleString()} VND/Kg</td>
+                <td style="font-weight: 700; color: ${rec.palletLoss <= 1.5 ? '#22c55e' : '#f59e0b'};">${rec.palletLoss}% / năm</td>
+                <td>${varianceHTML}</td>
+                <td>${statusHTML}</td>
+                <td style="font-size: 11px; color: var(--text-secondary);">${rec.notes}</td>
+            `;
+            tblTrackingLedgerBody.appendChild(tr);
+        });
+    }
+
+    // Initial calculation & rendering
     recalculateFinancials();
+    renderTrackingLedger();
 
     // --------------------------------------------------------------------------
-    // 5. FAST DRAG & DROP EXCEL UPLOAD PARSING (SHEETJS)
+    // 6. FAST DRAG & DROP EXCEL UPLOAD PARSING (SHEETJS)
     // --------------------------------------------------------------------------
     btnOpenUploadModal.addEventListener('click', () => uploadModalOverlay.classList.add('active'));
     btnCloseUploadModal.addEventListener('click', () => uploadModalOverlay.classList.remove('active'));
