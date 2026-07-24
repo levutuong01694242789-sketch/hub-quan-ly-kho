@@ -30,6 +30,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const btnCloseUploadModal = document.getElementById('btn-close-upload-modal');
     const dragDropArea = document.getElementById('drag-drop-area');
     const fileExcelInput = document.getElementById('file-excel-input');
+    const btnDownloadExcelTemplate = document.getElementById('btn-download-excel-template');
 
     // --------------------------------------------------------------------------
     // 1. THEME SWITCHER
@@ -273,12 +274,53 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     // --------------------------------------------------------------------------
-    // 6. WEB DRAG & DROP EXCEL UPLOAD PARSING (SHEETJS)
+    // 6. WEB DRAG & DROP EXCEL UPLOAD PARSING & TEMPLATE DOWNLOAD (SHEETJS)
     // --------------------------------------------------------------------------
     btnOpenUploadModal.addEventListener('click', () => uploadModalOverlay.classList.add('active'));
     btnCloseUploadModal.addEventListener('click', () => uploadModalOverlay.classList.remove('active'));
     uploadModalOverlay.addEventListener('click', (e) => {
         if (e.target === uploadModalOverlay) uploadModalOverlay.classList.remove('active');
+    });
+
+    btnDownloadExcelTemplate.addEventListener('click', () => {
+        if (typeof XLSX === 'undefined') {
+            alert('Đang tải thư viện Excel SheetJS, vui lòng thử lại sau 2 giây...');
+            return;
+        }
+
+        const templateData = [
+            {
+                "Mã Hàng": "B0001",
+                "Tên Nguyên Liệu": "TINH BỘT BIẾN TÍNH KHOAI MÌ 1412",
+                "ĐVT": "Kg",
+                "Tên Công Ty NCC Mới": "Công ty TNHH Nông Sản Tân Bình",
+                "Mã Số Thuế": "0318999888",
+                "SĐT Hotline": "0903888777",
+                "Email Lien He": "sales@tanbinhagri.vn",
+                "Báo Giá Mới (VND)": 18200,
+                "Điều Khoản Công Nợ": "Công nợ 30 ngày",
+                "Quy Cách Đóng Gói": "Bao 25kg",
+                "Số Lượng Tối Thiểu MOQ": 500
+            },
+            {
+                "Mã Hàng": "B0252",
+                "Tên Nguyên Liệu": "ACID CITRIC",
+                "ĐVT": "Kg",
+                "Tên Công Ty NCC Mới": "Công ty TNHH Hóa Chất Đông Nam",
+                "Mã Số Thuế": "0309111222",
+                "SĐT Hotline": "0918111222",
+                "Email Lien He": "kinhdoanh@dongnamchem.com",
+                "Báo Giá Mới (VND)": 31500,
+                "Điều Khoản Công Nợ": "Công nợ 45 ngày",
+                "Quy Cách Đóng Gói": "Bao 25kg",
+                "Số Lượng Tối Thiểu MOQ": 200
+            }
+        ];
+
+        const worksheet = XLSX.utils.json_to_sheet(templateData);
+        const workbook = XLSX.utils.book_new();
+        XLSX.utils.book_append_sheet(workbook, worksheet, "Cập Nhật Báo Giá Mới");
+        XLSX.writeFile(workbook, "FILE_MAU_NHAP_BAO_GIA_NCC_MOI.xlsx");
     });
 
     dragDropArea.addEventListener('dragover', (e) => {
@@ -305,7 +347,7 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     function handleUploadedExcelFile(file) {
-        if (!typeof XLSX !== 'undefined') {
+        if (typeof XLSX === 'undefined') {
             alert('Đang tải thư viện xử lý Excel SheetJS, vui lòng thử lại sau 2 giây...');
             return;
         }
@@ -358,7 +400,7 @@ document.addEventListener('DOMContentLoaded', () => {
                             targetItem.suppliers.push(newSupRec);
 
                             // Recalculate best price
-                            let minP = floatMax();
+                            let minP = 9999999999;
                             let minSupName = '';
                             targetItem.suppliers.forEach(s => {
                                 s.is_best_price = false;
@@ -376,8 +418,6 @@ document.addEventListener('DOMContentLoaded', () => {
                         }
                     }
                 });
-
-                function floatMax() { return 9999999999; }
 
                 uploadModalOverlay.classList.remove('active');
                 if (currentSupplierData) {
