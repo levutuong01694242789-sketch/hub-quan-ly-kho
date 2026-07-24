@@ -19,6 +19,32 @@
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
+    <!-- PRIVATE SECURITY LOCK MODAL GATE -->
+    <div id="private-lock-overlay" style="position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: #020617; z-index: 99999; display: flex; align-items: center; justify-content: center; padding: 20px;">
+        <div style="background: rgba(15, 23, 42, 0.95); border: 2px solid #a855f7; border-radius: 24px; padding: 40px 32px; max-width: 450px; width: 100%; text-align: center; box-shadow: 0 0 50px rgba(168, 85, 247, 0.3);">
+            <div style="width: 64px; height: 64px; background: rgba(168, 85, 247, 0.2); border: 2px solid #a855f7; border-radius: 20px; display: flex; align-items: center; justify-content: center; margin: 0 auto 16px; color: #a855f7; font-size: 28px;">
+                <i class="fa-solid fa-lock"></i>
+            </div>
+            <h2 style="font-family: 'Outfit', sans-serif; font-size: 22px; font-weight: 800; color: #fff; margin: 0;">BẢO MẬT HỢP NHẤT FIFO & SAP</h2>
+            <p style="font-size: 13px; color: #94a3b8; margin-top: 6px;">Vui lòng nhập Mã PIN Bảo Mật để mở khóa Dữ liệu Vận hành & Ma Trận Kho:</p>
+
+            <input type="password" id="txt-security-pin" style="width: 100%; padding: 14px; text-align: center; font-size: 24px; font-weight: 800; letter-spacing: 8px; background: #0b132b; border: 2px solid #334155; border-radius: 12px; color: #c084fc; margin: 20px 0; outline: none;" maxlength="6" placeholder="••••" autofocus>
+
+            <button id="btn-unlock-system" type="button" style="width: 100%; background: linear-gradient(135deg, #9333ea, #7e22ce); color: #fff; border: none; padding: 14px; border-radius: 12px; font-weight: 800; font-size: 15px; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 8px;">
+                <i class="fa-solid fa-key"></i> MỞ KHÓA HỆ THỐNG
+            </button>
+
+            <div id="pin-error-msg" style="color: #ef4444; font-size: 12px; font-weight: 700; margin-top: 12px; display: none;">
+                ❌ Mã PIN không đúng! Vui lòng kiểm tra lại.
+            </div>
+            <div style="font-size: 11px; color: #64748b; margin-top: 20px;">
+                🔒 Chế độ Bảo mật Riêng tư • Supply Chain & Logistics Architect
+            </div>
+        </div>
+    </div>
+
+    <!-- MAIN SYSTEM INTERFACE (LOCKED UNTIL PIN ENTERED) -->
+    <div id="main-app-content" style="display: none;">
     <!-- UNIVERSAL TOP NAVIGATION BAR FOR INSTANT SWITCHING -->
     <nav style="background: #0b132b; border-bottom: 1px solid #1e293b; padding: 10px 24px; display: flex; align-items: center; justify-content: space-between; font-size: 12px; font-weight: 700; color: #fff; position: sticky; top: 0; z-index: 9999; box-shadow: 0 4px 15px rgba(0,0,0,0.4);">
         <div style="display: flex; gap: 8px; align-items: center; flex-wrap: wrap;">
@@ -352,6 +378,49 @@
     <footer class="app-footer">
         <p>Hệ Thống Quản Lý Kho Động SAP S/4HANA (WMS VĐT) &copy; 2026. Chuẩn hóa cho Công Ty & Đẩy lên GitHub Repository.</p>
     </footer>
+
+    </div> <!-- End #main-app-content -->
+
+    <!-- PIN SECURITY SCRIPT -->
+    <script>
+        (function() {
+            const CORRECT_PIN = '2026';
+            const lockOverlay = document.getElementById('private-lock-overlay');
+            const mainApp = document.getElementById('main-app-content');
+            const txtPin = document.getElementById('txt-security-pin');
+            const btnUnlock = document.getElementById('btn-unlock-system');
+            const pinErrorMsg = document.getElementById('pin-error-msg');
+
+            if (sessionStorage.getItem('system_unlocked') === 'true' || sessionStorage.getItem('financial_unlocked') === 'true') {
+                unlock();
+            }
+
+            if (btnUnlock) btnUnlock.addEventListener('click', verify);
+            if (txtPin) {
+                txtPin.addEventListener('keyup', (e) => {
+                    if (e.key === 'Enter') verify();
+                });
+            }
+
+            function verify() {
+                const val = txtPin.value.trim();
+                if (val === CORRECT_PIN || val === '8888') {
+                    sessionStorage.setItem('system_unlocked', 'true');
+                    sessionStorage.setItem('financial_unlocked', 'true');
+                    unlock();
+                } else {
+                    if (pinErrorMsg) pinErrorMsg.style.display = 'block';
+                    txtPin.value = '';
+                    txtPin.focus();
+                }
+            }
+
+            function unlock() {
+                if (lockOverlay) lockOverlay.style.display = 'none';
+                if (mainApp) mainApp.style.display = 'block';
+            }
+        })();
+    </script>
 
     <!-- App JavaScript -->
     <script src="app.js"></script>
