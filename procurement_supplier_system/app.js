@@ -137,7 +137,8 @@ document.addEventListener('DOMContentLoaded', () => {
         });
 
         const domainTitle = currentDomain === 'AGRI' ? '🌾 Mảng Nguyên Liệu Nông Sản & Bột' : '🧪 Mảng Phụ Gia & Hóa Chất Thực Phẩm';
-        displayFilterCount.textContent = `Đang hiển thị ${filtered.length.toLocaleString()} mặt hàng thuộc ${domainTitle}`;
+        const timeBadge = currentSupplierData && currentSupplierData.timestamp ? ` (Cập nhật Live: ${currentSupplierData.timestamp})` : '';
+        displayFilterCount.textContent = `Đang hiển thị ${filtered.length.toLocaleString()} mặt hàng thuộc ${domainTitle}${timeBadge}`;
 
         renderItemsGrid(filtered);
     }
@@ -158,10 +159,11 @@ document.addEventListener('DOMContentLoaded', () => {
             item.suppliers.forEach(s => {
                 const isBestClass = s.is_best_price ? 'best' : '';
                 const bestBadge = s.is_best_price ? '<span class="badge-best-price"><i class="fa-solid fa-tag"></i> Giá Rẻ Nhất</span>' : '';
+                const userBadge = s.is_user_added ? '<span style="background: rgba(168,85,247,0.2); color: #c084fc; border: 1px solid #c084fc; padding: 2px 6px; border-radius: 4px; font-size: 9px; font-weight: 800; margin-left: 4px;">Mới Thêm</span>' : '';
                 
                 supsRows += `
                     <tr>
-                        <td style="font-weight: 700; color: var(--accent-blue);">${s.company_name} ${bestBadge}</td>
+                        <td style="font-weight: 700; color: var(--accent-blue);">${s.company_name} ${bestBadge} ${userBadge}</td>
                         <td class="price-val ${isBestClass}">${s.unit_price.toLocaleString()} VND/${item.unit}</td>
                         <td style="font-size: 11px; color: var(--text-secondary);">${s.payment_terms}</td>
                         <td>
@@ -172,6 +174,11 @@ document.addEventListener('DOMContentLoaded', () => {
                     </tr>
                 `;
             });
+
+            // Trend Badge Styling
+            let trendColor = '#64748b';
+            if (item.trend_code === 'DOWN') trendColor = '#22c55e';
+            else if (item.trend_code === 'UP') trendColor = '#ef4444';
 
             card.innerHTML = `
                 <div class="item-header">
@@ -185,16 +192,21 @@ document.addEventListener('DOMContentLoaded', () => {
                     </div>
                 </div>
 
-                <div style="background: rgba(0,0,0,0.15); padding: 10px 14px; border-radius: 8px; font-size: 12px; display: flex; justify-content: space-between;">
-                    <span><i class="fa-solid fa-trophy text-amber"></i> NCC Giá Tốt Nhất: <strong>${item.best_supplier_name}</strong></span>
-                    <span style="font-weight: 800; color: var(--accent-green);">${item.best_price.toLocaleString()} VND/${item.unit}</span>
+                <div style="display: flex; justify-content: space-between; align-items: center; background: rgba(0,0,0,0.15); padding: 10px 14px; border-radius: 8px; font-size: 12px;">
+                    <div>
+                        <i class="fa-solid fa-trophy text-amber"></i> NCC Giá Tốt Nhất: <strong>${item.best_supplier_name}</strong>
+                    </div>
+                    <div style="text-align: right;">
+                        <span style="font-weight: 800; color: var(--accent-green); font-size: 14px;">${item.best_price.toLocaleString()} VND/${item.unit}</span>
+                        <div style="font-size: 10px; font-weight: 700; color: ${trendColor};">${item.trend_label}</div>
+                    </div>
                 </div>
 
                 <div style="overflow-x: auto;">
                     <table class="suppliers-comp-table">
                         <thead>
                             <tr>
-                                <th>Nhà Cung Cấp VN</th>
+                                <th>Nhà Cung Cấp VN (${item.suppliers_count})</th>
                                 <th>Báo Giá (${item.unit})</th>
                                 <th>Điều Khoản</th>
                                 <th>Thao Tác</th>
