@@ -19,7 +19,7 @@
             border: 1px solid rgba(255, 255, 255, 0.1);
         }
         .glow-indigo { box-shadow: 0 0 35px rgba(99, 102, 241, 0.25); }
-        .glow-emerald { box-shadow: 0 0 25px rgba(16, 185, 129, 0.2); }
+        .glow-emerald { box-shadow: 0 0 25px rgba(16, 185, 129, 0.3); }
     </style>
 </head>
 <body class="selection:bg-indigo-500 selection:text-white min-h-screen flex flex-col justify-between">
@@ -29,7 +29,7 @@
         <div class="flex items-center gap-2 sm:gap-3 flex-wrap">
             <span class="text-slate-400 text-[10px] font-black uppercase tracking-wider">Chuyển Ứng Dụng:</span>
             <a href="index.html" class="text-sky-400 bg-sky-500/20 border border-sky-400/40 px-3 py-1 rounded-lg flex items-center gap-1.5"><i class="fa-solid fa-house"></i> 🏠 Trang Chủ Hub</a>
-            <a href="https://github.com/levutuong01694242789-sketch/hub-quan-ly-kho#readme" target="_blank" class="text-emerald-400 bg-emerald-500/15 hover:bg-emerald-500/30 px-3 py-1 rounded-lg flex items-center gap-1.5 transition"><i class="fa-solid fa-book-open"></i> 📖 Trang Giới Thiệu & Tài Liệu Master</a>
+            <a href="https://github.com/levutuong01694242789-sketch/hub-quan-ly-kho#readme" target="_blank" class="text-emerald-400 bg-emerald-500/25 hover:bg-emerald-500/40 border border-emerald-400/50 px-3.5 py-1 rounded-lg flex items-center gap-1.5 transition font-bold"><i class="fa-solid fa-book-open"></i> 📖 Trang Giới Thiệu Master</a>
             <a href="he_thong_hop_nhat_fifo_sap/index.html" target="_blank" class="text-purple-400 bg-purple-500/15 hover:bg-purple-500/30 px-3 py-1 rounded-lg flex items-center gap-1.5 transition"><i class="fa-solid fa-wand-magic-sparkles"></i> 🌟 Hợp Nhất 1-Chạm</a>
             <a href="wms_vdt_sap4hana/index.html" target="_blank" class="text-sky-300 bg-sky-500/15 hover:bg-sky-500/30 px-3 py-1 rounded-lg flex items-center gap-1.5 transition"><i class="fa-solid fa-table-cells-large"></i> 🏢 Kho Động 2D SAP</a>
             <a href="mo_app_tru_kho.html" target="_blank" class="text-blue-300 bg-blue-500/15 hover:bg-blue-500/30 px-3 py-1 rounded-lg flex items-center gap-1.5 transition"><i class="fa-solid fa-chart-line"></i> 📊 Trữ Kho 3 Ngày & PO</a>
@@ -61,14 +61,28 @@
             </div>
 
             <div class="flex flex-col sm:flex-row gap-3 z-10 w-full md:w-auto">
-                <a href="https://github.com/levutuong01694242789-sketch/hub-quan-ly-kho#readme" target="_blank" class="bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-xs px-5 py-3.5 rounded-2xl transition border border-emerald-400/40 flex items-center justify-center gap-2 shadow-lg shadow-emerald-900/30">
-                    <i class="fa-solid fa-book-open text-base"></i> 📖 Xem Trang Giới Thiệu Master
-                </a>
                 <a href="https://github.com/levutuong01694242789-sketch/hub-quan-ly-kho" target="_blank" class="bg-slate-800 hover:bg-slate-700 text-white font-bold text-xs px-5 py-3.5 rounded-2xl transition border border-slate-700 flex items-center justify-center gap-2 shadow-lg">
                     <i class="fa-brands fa-github text-base"></i> GitHub Hub Repo
                 </a>
             </div>
         </header>
+
+        <!-- HUGE GLOWING GREEN BANNER CARD FOR TRANG GIỚI THIỆU MASTER README -->
+        <div class="bg-gradient-to-r from-emerald-950/90 via-teal-900/90 to-slate-900 border-2 border-emerald-500 p-6 sm:p-8 rounded-3xl shadow-2xl relative overflow-hidden group glow-emerald flex flex-col md:flex-row justify-between items-center gap-6">
+            <div class="flex items-center gap-5 z-10">
+                <div class="w-16 h-16 bg-emerald-500/20 border border-emerald-400/40 rounded-2xl flex items-center justify-center text-emerald-400 text-3xl font-black shrink-0">
+                    <i class="fa-solid fa-book-open"></i>
+                </div>
+                <div>
+                    <span class="bg-emerald-500/20 text-emerald-300 border border-emerald-400/40 text-[10px] font-black px-3 py-1 rounded-full uppercase tracking-wider">TÀI LIỆU MASTER CHUYÊN NGHIỆP</span>
+                    <h2 class="text-xl sm:text-2xl font-extrabold text-white font-heading mt-1">📖 Trang Giới Thiệu & Bài Viết Master Dự Án (GitHub README)</h2>
+                    <p class="text-xs sm:text-sm text-slate-300 mt-1">Xem đầy đủ sơ đồ luồng dữ liệu Mermaid, quy trình vận hành và tài liệu giới thiệu dự án chuẩn quốc tế.</p>
+                </div>
+            </div>
+            <a href="https://github.com/levutuong01694242789-sketch/hub-quan-ly-kho#readme" target="_blank" class="bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-black text-sm px-8 py-4 rounded-2xl transition flex items-center justify-center gap-3 shadow-xl shadow-emerald-900/50 shrink-0 w-full md:w-auto">
+                <i class="fa-solid fa-book-open text-lg"></i> BẤM MỞ TRANG GIỚI THIỆU <i class="fa-solid fa-arrow-up-right-from-square text-xs"></i>
+            </a>
+        </div>
 
         <!-- Metric KPI Cards Summary -->
         <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
