@@ -1,5 +1,5 @@
 // Dynamic Warehouse Financial Command Center Logic
-// 100% Dynamic Financial Calculations, Asset/Inventory Cross-Linking, Pallet Loss Rate & Fast Excel Upload
+// 100% Dynamic Financial Calculations, Asset/Inventory Cross-Linking, Pallet Loss Rate & Formula Guide Tab
 
 document.addEventListener('DOMContentLoaded', () => {
     // --------------------------------------------------------------------------
@@ -38,7 +38,7 @@ document.addEventListener('DOMContentLoaded', () => {
         mainApp.style.display = 'block';
     }
 
-    // Default Dynamic Financial Parameters (Includes 4,038 Plastic Steel-Reinforced Pallets @ 1.0M VND/pallet)
+    // Default Dynamic Financial Parameters
     let currentParams = {
         rent: 180000000,
         labor: 367500000,
@@ -59,10 +59,15 @@ document.addEventListener('DOMContentLoaded', () => {
         inventoryValue: 35000000000
     };
 
-    // DOM Elements - Theme & Controls
+    // DOM Elements - Theme & View Tabs
     const btnThemeToggle = document.getElementById('btn-theme-toggle');
     const themeBtnText = document.getElementById('theme-btn-text');
     const btnCrosslinkData = document.getElementById('btn-crosslink-data');
+
+    const tabBtnDashboard = document.getElementById('tab-btn-dashboard');
+    const tabBtnFormulas = document.getElementById('tab-btn-formulas');
+    const viewDashboard = document.getElementById('view-financial-dashboard');
+    const viewFormulas = document.getElementById('view-financial-formulas');
 
     // DOM Elements - Sliders
     const sldRent = document.getElementById('sld-rent');
@@ -107,7 +112,24 @@ document.addEventListener('DOMContentLoaded', () => {
     const fileExcelInput = document.getElementById('file-excel-input');
 
     // --------------------------------------------------------------------------
-    // 1. THEME SWITCHER
+    // 1. VIEW TAB SWITCHER (P&L DASHBOARD VS FORMULAS GUIDE TAB)
+    // --------------------------------------------------------------------------
+    tabBtnDashboard.addEventListener('click', () => {
+        tabBtnDashboard.classList.add('active');
+        tabBtnFormulas.classList.remove('active');
+        viewDashboard.style.display = 'block';
+        viewFormulas.style.display = 'none';
+    });
+
+    tabBtnFormulas.addEventListener('click', () => {
+        tabBtnFormulas.classList.add('active');
+        tabBtnDashboard.classList.remove('active');
+        viewDashboard.style.display = 'none';
+        viewFormulas.style.display = 'block';
+    });
+
+    // --------------------------------------------------------------------------
+    // 2. THEME SWITCHER
     // --------------------------------------------------------------------------
     const savedTheme = localStorage.getItem('financial_theme') || 'dark';
     setTheme(savedTheme);
@@ -132,7 +154,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     // --------------------------------------------------------------------------
-    // 2. REALTIME SYSTEM CROSS-LINKING TOOL
+    // 3. REALTIME SYSTEM CROSS-LINKING TOOL
     // --------------------------------------------------------------------------
     btnCrosslinkData.addEventListener('click', () => {
         currentParams.occupiedBins = 3798;
@@ -158,7 +180,7 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     // --------------------------------------------------------------------------
-    // 3. 100% DYNAMIC FINANCIAL CALCULATIONS
+    // 4. 100% DYNAMIC FINANCIAL CALCULATIONS
     // --------------------------------------------------------------------------
     function recalculateFinancials() {
         // Read slider values
@@ -183,7 +205,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         // Calculate Pallet Fleet Depreciation & Damage/Loss Rate
         const totalPalletVal = currentParams.palletCount * currentParams.palletUnitPrice;
-        const monthlyPalletDepr = totalPalletVal / 60; // 5-year depreciation
+        const monthlyPalletDepr = totalPalletVal / 60;
         const monthlyPalletLoss = (totalPalletVal * (currentParams.palletLossRate / 100)) / 12;
         const totalMonthlyPalletCost = monthlyPalletDepr + monthlyPalletLoss;
 
@@ -326,7 +348,7 @@ document.addEventListener('DOMContentLoaded', () => {
     recalculateFinancials();
 
     // --------------------------------------------------------------------------
-    // 4. FAST DRAG & DROP EXCEL UPLOAD PARSING (SHEETJS)
+    // 5. FAST DRAG & DROP EXCEL UPLOAD PARSING (SHEETJS)
     // --------------------------------------------------------------------------
     btnOpenUploadModal.addEventListener('click', () => uploadModalOverlay.classList.add('active'));
     btnCloseUploadModal.addEventListener('click', () => uploadModalOverlay.classList.remove('active'));

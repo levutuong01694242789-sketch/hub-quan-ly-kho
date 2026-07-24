@@ -17,6 +17,60 @@
     <script src="financial_data.js"></script>
 
     <link rel="stylesheet" href="styles.css">
+    <style>
+        .tab-nav-btn {
+            background: rgba(255, 255, 255, 0.08);
+            border: 1px solid var(--border-color);
+            color: var(--text-secondary);
+            padding: 10px 20px;
+            border-radius: 10px;
+            font-weight: 700;
+            font-size: 13px;
+            cursor: pointer;
+            transition: var(--transition-fast);
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .tab-nav-btn.active {
+            background: linear-gradient(135deg, #16a34a, #15803d);
+            color: #ffffff;
+            border-color: #22c55e;
+            box-shadow: 0 4px 15px rgba(34, 197, 94, 0.3);
+        }
+        .formula-box {
+            background: var(--bg-primary);
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-md);
+            padding: 18px;
+            margin-top: 12px;
+        }
+        .formula-title {
+            font-size: 14px;
+            font-weight: 800;
+            color: var(--accent-green);
+            margin-bottom: 6px;
+        }
+        .formula-math {
+            background: rgba(0, 0, 0, 0.25);
+            padding: 10px 14px;
+            border-radius: 8px;
+            font-family: monospace;
+            font-size: 13px;
+            color: var(--accent-blue);
+            margin: 8px 0;
+            border-left: 4px solid var(--accent-blue);
+        }
+        .relation-card {
+            background: var(--bg-primary);
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-md);
+            padding: 16px;
+            display: flex;
+            align-items: flex-start;
+            gap: 14px;
+        }
+    </style>
 </head>
 <body>
     <!-- PRIVATE SECURITY LOCK MODAL GATE -->
@@ -102,183 +156,309 @@
                     </button>
                 </div>
             </div>
+
+            <!-- View Switcher Tabs -->
+            <div class="header-container" style="margin-top: 16px;">
+                <div style="display: flex; gap: 12px; flex-wrap: wrap;">
+                    <button class="tab-nav-btn active" id="tab-btn-dashboard">
+                        <i class="fa-solid fa-gauge-high"></i>
+                        <span>💰 Bảng Quản Trị P&L & Định Mức Chi Phí</span>
+                    </button>
+                    <button class="tab-nav-btn" id="tab-btn-formulas">
+                        <i class="fa-solid fa-graduation-cap"></i>
+                        <span>📖 Hướng Dẫn, Công Thức Toán & Ma Trận Tương Tác</span>
+                    </button>
+                </div>
+            </div>
         </header>
 
         <!-- Main Layout -->
         <main class="main-layout">
             
-            <!-- EXECUTIVE FINANCIAL KPI CARDS GRID -->
-            <section class="kpi-grid">
-                <div class="kpi-card" style="border-color: #0284c7;">
-                    <div class="kpi-icon" style="background: #0284c7;">
-                        <i class="fa-solid fa-receipt"></i>
-                    </div>
-                    <div>
-                        <div class="kpi-title">Tổng Chi Phí OPEX Kho / Tháng</div>
-                        <div class="kpi-value" id="kpi-total-opex" style="color: #38bdf8;">702,895,000 VND</div>
-                        <div style="font-size: 11px; color: var(--text-muted); margin-top: 2px;">Dự toán cả năm: <strong id="kpi-annual-opex">8.435 Tỷ VND</strong></div>
-                    </div>
-                </div>
-
-                <div class="kpi-card" style="border-color: #22c55e;">
-                    <div class="kpi-icon" style="background: #16a34a;">
-                        <i class="fa-solid fa-cubes"></i>
-                    </div>
-                    <div>
-                        <div class="kpi-title">Chi Phí 1 Ô Kệ / Tháng (4,038 Ô)</div>
-                        <div class="kpi-value" id="kpi-cost-per-bin" style="color: #22c55e;">49,777 VND</div>
-                        <div style="font-size: 11px; color: var(--text-muted); margin-top: 2px;">Ô đang chứa hàng: <strong id="kpi-occupied-bin-cost">52,844 VND</strong> (Lấp đầy <span id="kpi-occupancy-rate">94.2%</span>)</div>
-                    </div>
-                </div>
-
-                <div class="kpi-card" style="border-color: #a855f7;">
-                    <div class="kpi-icon" style="background: #9333ea;">
-                        <i class="fa-solid fa-users-gear"></i>
-                    </div>
-                    <div>
-                        <div class="kpi-title">Bình Quân / Nhân Sự Kho</div>
-                        <div class="kpi-value" id="kpi-cost-per-staff" style="color: #c084fc;">12,672,414 VND</div>
-                        <div style="font-size: 11px; color: var(--text-muted); margin-top: 2px;">Cơ cấu lương 29 người: <strong id="kpi-staff-count">1QL 45M + 3TK 20M + 25NV 10.5M</strong></div>
-                    </div>
-                </div>
-
-                <!-- PALLET ASSETS & LOSS KPI CARD -->
-                <div class="kpi-card" style="border-color: #ef4444;">
-                    <div class="kpi-icon" style="background: #dc2626;">
-                        <i class="fa-solid fa-pallet"></i>
-                    </div>
-                    <div>
-                        <div class="kpi-title">Khấu Hao & Hao Hụt Pallet Nhựa / Tháng</div>
-                        <div class="kpi-value" id="kpi-total-pallet-cost" style="color: #f87171;">77,395,000 VND</div>
-                        <div style="font-size: 11px; color: var(--text-muted); margin-top: 2px;">Tổng <strong id="kpi-pallet-count">4,038 Pallet</strong> ống sắt (Trị giá <span id="kpi-pallet-asset-val">4.038 Tỷ VND</span>)</div>
-                    </div>
-                </div>
-            </section>
-
-            <!-- 100% DYNAMIC FINANCIAL SLIDERS SECTION -->
-            <section class="financial-card">
-                <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px; margin-bottom: 8px;">
-                    <div>
-                        <h2 style="font-family: var(--font-heading); font-size: 18px; font-weight: 800; color: var(--accent-green);">
-                            <i class="fa-solid fa-sliders"></i> MÔ HÌNH THAY ĐỔI ĐỊNH MỨC CHI PHÍ ĐỘNG (100% DYNAMIC CONTROL)
-                        </h2>
-                        <p style="font-size: 12px; color: var(--text-secondary);">Kéo thanh trượt bên dưới ➔ Toàn bộ Chi Phí/Ô Kệ, Chi Phí Pallet, Chi Phí/Kg & Chi Phí/Nhân Sự tự động nhảy tức thì trong 1 giây!</p>
-                    </div>
-                    <button id="btn-reset-sliders" class="btn-view-sup" style="background: rgba(255,255,255,0.1); color: var(--text-primary); padding: 6px 14px; font-size: 12px;">
-                        <i class="fa-solid fa-rotate-left"></i> Khôi Phục Định Mức Chuẩn
-                    </button>
-                </div>
-
-                <div class="sliders-grid">
-                    <!-- Slider 1: Rent -->
-                    <div class="slider-group">
-                        <div class="slider-header">
-                            <span>🏢 Tiền Thuê Mặt Bằng Kho / Tháng:</span>
-                            <span class="slider-val-badge" id="lbl-rent">180.0 Tr VND</span>
+            <!-- VIEW 1: FINANCIAL P&L DASHBOARD -->
+            <div id="view-financial-dashboard">
+                <!-- EXECUTIVE FINANCIAL KPI CARDS GRID -->
+                <section class="kpi-grid">
+                    <div class="kpi-card" style="border-color: #0284c7;">
+                        <div class="kpi-icon" style="background: #0284c7;">
+                            <i class="fa-solid fa-receipt"></i>
                         </div>
-                        <input type="range" id="sld-rent" class="range-slider" min="50000000" max="400000000" step="5000000" value="180000000">
-                    </div>
-
-                    <!-- Slider 2: Labor -->
-                    <div class="slider-group">
-                        <div class="slider-header">
-                            <span>⚡ Quỹ Lương Nhân Sự Kho / Tháng:</span>
-                            <span class="slider-val-badge" id="lbl-labor">367.5 Tr VND</span>
+                        <div>
+                            <div class="kpi-title">Tổng Chi Phí OPEX Kho / Tháng</div>
+                            <div class="kpi-value" id="kpi-total-opex" style="color: #38bdf8;">702,895,000 VND</div>
+                            <div style="font-size: 11px; color: var(--text-muted); margin-top: 2px;">Dự toán cả năm: <strong id="kpi-annual-opex">8.435 Tỷ VND</strong></div>
                         </div>
-                        <input type="range" id="sld-labor" class="range-slider" min="100000000" max="600000000" step="5000000" value="367500000">
                     </div>
 
-                    <!-- Slider 3: Pallet Count -->
-                    <div class="slider-group">
-                        <div class="slider-header">
-                            <span>📦 Số Lượng Pallet Nhựa Ống Sắt (Cái):</span>
-                            <span class="slider-val-badge" id="lbl-pallet-count">4,038 Cái</span>
+                    <div class="kpi-card" style="border-color: #22c55e;">
+                        <div class="kpi-icon" style="background: #16a34a;">
+                            <i class="fa-solid fa-cubes"></i>
                         </div>
-                        <input type="range" id="sld-pallet-count" class="range-slider" min="1000" max="8000" step="50" value="4038">
-                    </div>
-
-                    <!-- Slider 4: Pallet Damage Rate -->
-                    <div class="slider-group">
-                        <div class="slider-header">
-                            <span>🚨 Tỷ Lệ Hao Hụt/Bể Pallet (%/Năm):</span>
-                            <span class="slider-val-badge" id="lbl-pallet-loss-rate">3.0% / Năm</span>
+                        <div>
+                            <div class="kpi-title">Chi Phí 1 Ô Kệ / Tháng (4,038 Ô)</div>
+                            <div class="kpi-value" id="kpi-cost-per-bin" style="color: #22c55e;">49,777 VND</div>
+                            <div style="font-size: 11px; color: var(--text-muted); margin-top: 2px;">Ô đang chứa hàng: <strong id="kpi-occupied-bin-cost">52,844 VND</strong> (Lấp đầy <span id="kpi-occupancy-rate">94.2%</span>)</div>
                         </div>
-                        <input type="range" id="sld-pallet-loss-rate" class="range-slider" min="0.5" max="15.0" step="0.5" value="3.0">
                     </div>
 
-                    <!-- Slider 5: Utilities -->
-                    <div class="slider-group">
-                        <div class="slider-header">
-                            <span>💡 Điện Nước & Hạ Tầng / Tháng:</span>
-                            <span class="slider-val-badge" id="lbl-utilities">35.0 Tr VND</span>
+                    <div class="kpi-card" style="border-color: #a855f7;">
+                        <div class="kpi-icon" style="background: #9333ea;">
+                            <i class="fa-solid fa-users-gear"></i>
                         </div>
-                        <input type="range" id="sld-utilities" class="range-slider" min="10000000" max="100000000" step="1000000" value="35000000">
-                    </div>
-
-                    <!-- Slider 6: Forklift -->
-                    <div class="slider-group">
-                        <div class="slider-header">
-                            <span>🚜 Xăng Điện & Bảo Trì Xe Nâng / Tháng:</span>
-                            <span class="slider-val-badge" id="lbl-forklift">25.0 Tr VND</span>
+                        <div>
+                            <div class="kpi-title">Bình Quân / Nhân Sự Kho</div>
+                            <div class="kpi-value" id="kpi-cost-per-staff" style="color: #c084fc;">12,672,414 VND</div>
+                            <div style="font-size: 11px; color: var(--text-muted); margin-top: 2px;">Cơ cấu lương 29 người: <strong id="kpi-staff-count">1QL 45M + 3TK 20M + 25NV 10.5M</strong></div>
                         </div>
-                        <input type="range" id="sld-forklift" class="range-slider" min="5000000" max="80000000" step="1000000" value="25000000">
                     </div>
 
-                    <!-- Slider 7: Consumables -->
-                    <div class="slider-group">
-                        <div class="slider-header">
-                            <span>📦 Màng PE, Băng Keo & Tem Nhãn / Tháng:</span>
-                            <span class="slider-val-badge" id="lbl-consumables">18.0 Tr VND</span>
+                    <!-- PALLET ASSETS & LOSS KPI CARD -->
+                    <div class="kpi-card" style="border-color: #ef4444;">
+                        <div class="kpi-icon" style="background: #dc2626;">
+                            <i class="fa-solid fa-pallet"></i>
                         </div>
-                        <input type="range" id="sld-consumables" class="range-slider" min="3000000" max="50000000" step="1000000" value="18000000">
-                    </div>
-
-                    <!-- Slider 8: Carrying Rate -->
-                    <div class="slider-group">
-                        <div class="slider-header">
-                            <span>📉 Lãi Suất Cơ Hội Giam Vốn Tồn Kho:</span>
-                            <span class="slider-val-badge" id="lbl-carrying-rate">15.0% / Năm</span>
+                        <div>
+                            <div class="kpi-title">Khấu Hao & Hao Hụt Pallet Nhựa / Tháng</div>
+                            <div class="kpi-value" id="kpi-total-pallet-cost" style="color: #f87171;">77,395,000 VND</div>
+                            <div style="font-size: 11px; color: var(--text-muted); margin-top: 2px;">Tổng <strong id="kpi-pallet-count">4,038 Pallet</strong> ống sắt (Trị giá <span id="kpi-pallet-asset-val">4.038 Tỷ VND</span>)</div>
                         </div>
-                        <input type="range" id="sld-carrying-rate" class="range-slider" min="5.0" max="30.0" step="0.5" value="15.0">
                     </div>
-                </div>
-            </section>
+                </section>
 
-            <!-- 5 COST GROUPS BREAKDOWN & P&L TABLE -->
-            <section class="financial-card">
-                <h2 style="font-family: var(--font-heading); font-size: 18px; font-weight: 800; margin-bottom: 12px;">
-                    <i class="fa-solid fa-list-check"></i> BẢNG PHÂN BỔ 5 NHÓM CHI PHÍ VẬN HÀNH KHO (P&L STATEMENT)
-                </h2>
-                
-                <div style="overflow-x: auto;">
-                    <table class="cost-table">
-                        <thead>
-                            <tr>
-                                <th>Nhóm Chi Phí Vận Hành Kho</th>
-                                <th>Chi Phí Hàng Tháng (VND)</th>
-                                <th>Tỷ Trọng (%)</th>
-                                <th>Chi Phí Phân Bổ / Ô Kệ / Tháng</th>
-                                <th>Chi Phí Phân Bổ / Kg</th>
-                                <th>Diễn Giải Chi Tiết</th>
-                            </tr>
-                        </thead>
-                        <tbody id="tbl-cost-groups-body">
-                            <!-- Rendered dynamically via JS -->
-                        </tbody>
-                    </table>
-                </div>
-            </section>
+                <!-- 100% DYNAMIC FINANCIAL SLIDERS SECTION -->
+                <section class="financial-card" style="margin-top: 24px;">
+                    <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px; margin-bottom: 8px;">
+                        <div>
+                            <h2 style="font-family: var(--font-heading); font-size: 18px; font-weight: 800; color: var(--accent-green);">
+                                <i class="fa-solid fa-sliders"></i> MÔ HÌNH THAY ĐỔI ĐỊNH MỨC CHI PHÍ ĐỘNG (100% DYNAMIC CONTROL)
+                            </h2>
+                            <p style="font-size: 12px; color: var(--text-secondary);">Kéo thanh trượt bên dưới ➔ Toàn bộ Chi Phí/Ô Kệ, Chi Phí Pallet, Chi Phí/Kg & Chi Phí/Nhân Sự tự động nhảy tức thì trong 1 giây!</p>
+                        </div>
+                        <button id="btn-reset-sliders" class="btn-view-sup" style="background: rgba(255,255,255,0.1); color: var(--text-primary); padding: 6px 14px; font-size: 12px;">
+                            <i class="fa-solid fa-rotate-left"></i> Khôi Phục Định Mức Chuẩn
+                        </button>
+                    </div>
 
-            <!-- MULTI-UOM UNIT COST BREAKDOWN TABLE (9 UOMs) -->
-            <section class="financial-card">
-                <h2 style="font-family: var(--font-heading); font-size: 18px; font-weight: 800; margin-bottom: 12px; color: var(--accent-purple);">
-                    <i class="fa-solid fa-boxes-packing"></i> BẢNG ĐƠN GIÁ LƯU KHO & XỬ LÝ THEO 9 ĐƠN VỊ TÍNH (MULTI-UOM)
-                </h2>
-                
-                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 14px;" id="uom-cards-container">
-                    <!-- Rendered dynamically via JS -->
-                </div>
-            </section>
+                    <div class="sliders-grid">
+                        <!-- Slider 1: Rent -->
+                        <div class="slider-group">
+                            <div class="slider-header">
+                                <span>🏢 Tiền Thuê Mặt Bằng Kho / Tháng:</span>
+                                <span class="slider-val-badge" id="lbl-rent">180.0 Tr VND</span>
+                            </div>
+                            <input type="range" id="sld-rent" class="range-slider" min="50000000" max="400000000" step="5000000" value="180000000">
+                        </div>
+
+                        <!-- Slider 2: Labor -->
+                        <div class="slider-group">
+                            <div class="slider-header">
+                                <span>⚡ Quỹ Lương Nhân Sự Kho / Tháng:</span>
+                                <span class="slider-val-badge" id="lbl-labor">367.5 Tr VND</span>
+                            </div>
+                            <input type="range" id="sld-labor" class="range-slider" min="100000000" max="600000000" step="5000000" value="367500000">
+                        </div>
+
+                        <!-- Slider 3: Pallet Count -->
+                        <div class="slider-group">
+                            <div class="slider-header">
+                                <span>📦 Số Lượng Pallet Nhựa Ống Sắt (Cái):</span>
+                                <span class="slider-val-badge" id="lbl-pallet-count">4,038 Cái</span>
+                            </div>
+                            <input type="range" id="sld-pallet-count" class="range-slider" min="1000" max="8000" step="50" value="4038">
+                        </div>
+
+                        <!-- Slider 4: Pallet Damage Rate -->
+                        <div class="slider-group">
+                            <div class="slider-header">
+                                <span>🚨 Tỷ Lệ Hao Hụt/Bể Pallet (%/Năm):</span>
+                                <span class="slider-val-badge" id="lbl-pallet-loss-rate">3.0% / Năm</span>
+                            </div>
+                            <input type="range" id="sld-pallet-loss-rate" class="range-slider" min="0.5" max="15.0" step="0.5" value="3.0">
+                        </div>
+
+                        <!-- Slider 5: Utilities -->
+                        <div class="slider-group">
+                            <div class="slider-header">
+                                <span>💡 Điện Nước & Hạ Tầng / Tháng:</span>
+                                <span class="slider-val-badge" id="lbl-utilities">35.0 Tr VND</span>
+                            </div>
+                            <input type="range" id="sld-utilities" class="range-slider" min="10000000" max="100000000" step="1000000" value="35000000">
+                        </div>
+
+                        <!-- Slider 6: Forklift -->
+                        <div class="slider-group">
+                            <div class="slider-header">
+                                <span>🚜 Xăng Điện & Bảo Trì Xe Nâng / Tháng:</span>
+                                <span class="slider-val-badge" id="lbl-forklift">25.0 Tr VND</span>
+                            </div>
+                            <input type="range" id="sld-forklift" class="range-slider" min="5000000" max="80000000" step="1000000" value="25000000">
+                        </div>
+
+                        <!-- Slider 7: Consumables -->
+                        <div class="slider-group">
+                            <div class="slider-header">
+                                <span>📦 Màng PE, Băng Keo & Tem Nhãn / Tháng:</span>
+                                <span class="slider-val-badge" id="lbl-consumables">18.0 Tr VND</span>
+                            </div>
+                            <input type="range" id="sld-consumables" class="range-slider" min="3000000" max="50000000" step="1000000" value="18000000">
+                        </div>
+
+                        <!-- Slider 8: Carrying Rate -->
+                        <div class="slider-group">
+                            <div class="slider-header">
+                                <span>📉 Lãi Suất Cơ Hội Giam Vốn Tồn Kho:</span>
+                                <span class="slider-val-badge" id="lbl-carrying-rate">15.0% / Năm</span>
+                            </div>
+                            <input type="range" id="sld-carrying-rate" class="range-slider" min="5.0" max="30.0" step="0.5" value="15.0">
+                        </div>
+                    </div>
+                </section>
+
+                <!-- 5 COST GROUPS BREAKDOWN & P&L TABLE -->
+                <section class="financial-card" style="margin-top: 24px;">
+                    <h2 style="font-family: var(--font-heading); font-size: 18px; font-weight: 800; margin-bottom: 12px;">
+                        <i class="fa-solid fa-list-check"></i> BẢNG PHÂN BỔ 5 NHÓM CHI PHÍ VẬN HÀNH KHO (P&L STATEMENT)
+                    </h2>
+                    
+                    <div style="overflow-x: auto;">
+                        <table class="cost-table">
+                            <thead>
+                                <tr>
+                                    <th>Nhóm Chi Phí Vận Hành Kho</th>
+                                    <th>Chi Phí Hàng Tháng (VND)</th>
+                                    <th>Tỷ Trọng (%)</th>
+                                    <th>Chi Phí Phân Bổ / Ô Kệ / Tháng</th>
+                                    <th>Chi Phí Phân Bổ / Kg</th>
+                                    <th>Diễn Giải Chi Tiết</th>
+                                </tr>
+                            </thead>
+                            <tbody id="tbl-cost-groups-body">
+                                <!-- Rendered dynamically via JS -->
+                            </tbody>
+                        </table>
+                    </div>
+                </section>
+
+                <!-- MULTI-UOM UNIT COST BREAKDOWN TABLE (9 UOMs) -->
+                <section class="financial-card" style="margin-top: 24px;">
+                    <h2 style="font-family: var(--font-heading); font-size: 18px; font-weight: 800; margin-bottom: 12px; color: var(--accent-purple);">
+                        <i class="fa-solid fa-boxes-packing"></i> BẢNG ĐƠN GIÁ LƯU KHO & XỬ LÝ THEO 9 ĐƠN VỊ TÍNH (MULTI-UOM)
+                    </h2>
+                    
+                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 14px;" id="uom-cards-container">
+                        <!-- Rendered dynamically via JS -->
+                    </div>
+                </section>
+            </div>
+
+            <!-- VIEW 2: FORMULAS & DYNAMIC SENSITIVITY MATRIX GUIDE TAB -->
+            <div id="view-financial-formulas" style="display: none;">
+                <!-- FORMULAS EXPLANATION CARD -->
+                <section class="financial-card">
+                    <h2 style="font-family: var(--font-heading); font-size: 20px; font-weight: 800; color: var(--accent-green); margin-bottom: 6px;">
+                        <i class="fa-solid fa-square-root-variable"></i> CÔNG THỨC TOÁN HỌC & GIẢI TRÌNH CÁCH TÍNH CÁC CHỈ SỐ TÀI CHÍNH KHO
+                    </h2>
+                    <p style="font-size: 13px; color: var(--text-secondary); margin-bottom: 20px;">Dưới đây là công thức chuẩn mực quản trị tài chính WMS được lập trình trực tiếp trong hệ thống:</p>
+
+                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(340px, 1fr)); gap: 16px;">
+                        <!-- Formula 1 -->
+                        <div class="formula-box">
+                            <div class="formula-title">1. Chi Phí Phân Bổ Trên 1 Ô Kệ / Tháng (Cost per Bin)</div>
+                            <div class="formula-math">Chi Phí 1 Ô Kệ = (Tiền Thuê Mặt Bằng Kho + Điện Nước 60%) ÷ (4,032 Ô Kệ + 6 Đệm Sàn)</div>
+                            <p style="font-size: 12px; color: var(--text-muted);">👉 Giải thích: Điện nước tính 60% cho chiếu sáng & quạt thông gió hạ tầng kho. Chia đều cho toàn bộ 4,038 vị trí lưu trữ.</p>
+                        </div>
+
+                        <!-- Formula 2 -->
+                        <div class="formula-box">
+                            <div class="formula-title">2. Chi Phí Ô Kệ Đang Chứa Hàng Thực Tế (Occupied Bin Cost)</div>
+                            <div class="formula-math">Chi Phí Ô Kệ Thực Tế = Total Facility Cost ÷ 3,798 Ô Kệ Chứa Hàng (Lấp Đầy 94.2%)</div>
+                            <p style="font-size: 12px; color: var(--text-muted);">👉 Giải thích: Khi ô kệ bị trống (5.8% lấp đầy), chi phí mặt bằng của ô trống sẽ được phân bổ gánh lên các ô đang chứa hàng.</p>
+                        </div>
+
+                        <!-- Formula 3 -->
+                        <div class="formula-box">
+                            <div class="formula-title">3. Chi Phí Lưu Kho & Xử Lý Trên 1 Kg (Cost per Kg)</div>
+                            <div class="formula-math">Chi Phí/Kg = Tổng Chi Phí OPEX Kho Tháng ÷ 450,000 Kg Sản Lượng Xuất Nhập/Tháng</div>
+                            <p style="font-size: 12px; color: var(--text-muted);">👉 Giải thích: Tính trọn gói 5 nhóm chi phí (Mặt bằng + Lương ca 12h + Xe nâng + Pallet + Màng PE) trên tổng sản lượng luân chuyển.</p>
+                        </div>
+
+                        <!-- Formula 4 -->
+                        <div class="formula-box">
+                            <div class="formula-title">4. Chi Phí Pallet Nhựa Ống Sắt (Depreciation & Loss Rate)</div>
+                            <div class="formula-math">Chi Phí Pallet/Tháng = (4,038 Pallet × 1 Tr ÷ 60 Tháng) + (4,038 Tr × 3% ÷ 12 Tháng)</div>
+                            <p style="font-size: 12px; color: var(--text-muted);">👉 Giải thích: Bao gồm Khấu hao 5 năm (67.3 Tr/tháng) + Tỷ lệ hao hụt gãy nứt va chạm xe nâng 3%/năm (10.1 Tr/tháng).</p>
+                        </div>
+
+                        <!-- Formula 5 -->
+                        <div class="formula-box">
+                            <div class="formula-title">5. Chi Phí Cơ Hội Giam Vốn Tồn Kho (Carrying Cost)</div>
+                            <div class="formula-math">Carrying Cost/Tháng = (35 Tỷ VND Giá Trị Tồn Kho Realtime × 15%/Năm) ÷ 12 Tháng</div>
+                            <p style="font-size: 12px; color: var(--text-muted);">👉 Giải thích: Chi phí cơ hội vốn vay ngân hàng (WACC) giam trong 35 tỷ nguyên vật liệu trữ tại kho (437.5 Tr/tháng).</p>
+                        </div>
+
+                        <!-- Formula 6 -->
+                        <div class="formula-box">
+                            <div class="formula-title">6. Chi Phí Nhặt 1 Dòng Hàng Xuất (Pick Line Cost)</div>
+                            <div class="formula-math">Chi Phí 1 Line Nhặt = (Quỹ Lương 29 Người + Vật Tư PE) ÷ 12,500 Dòng Xuất/Tháng</div>
+                            <p style="font-size: 12px; color: var(--text-muted);">👉 Giải thích: Đo lường hiệu suất nhặt hàng của nhân sự kho ca 12h (28,120 VND / Line nhặt xuất).</p>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- DYNAMIC SENSITIVITY MATRIX & RELATIONSHIP MODEL CARD -->
+                <section class="financial-card" style="margin-top: 24px;">
+                    <h2 style="font-family: var(--font-heading); font-size: 20px; font-weight: 800; color: var(--accent-purple); margin-bottom: 6px;">
+                        <i class="fa-solid fa-diagram-project"></i> MÔ HÌNH MA TRẬN TƯƠNG TÁC QUA LẠI GIỮA CHI PHÍ ĐỘNG & CHI PHÍ VẬN HÀNH KHO
+                    </h2>
+                    <p style="font-size: 13px; color: var(--text-secondary); margin-bottom: 20px;">Sự ảnh hưởng qua lại của từng biến số đầu vào đến bức tranh tài chính tổng thể:</p>
+
+                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 16px;">
+                        <!-- Relation 1 -->
+                        <div class="relation-card">
+                            <div style="width: 44px; height: 44px; background: rgba(56, 189, 248, 0.15); color: #38bdf8; border-radius: 10px; display: flex; align-items: center; justify-content: center; font-size: 20px; shrink: 0;">
+                                <i class="fa-solid fa-arrow-trend-up"></i>
+                            </div>
+                            <div>
+                                <h4 style="font-size: 14px; font-weight: 800; color: var(--accent-blue);">Tăng Quỹ Lương / Ca 12H ➔ Tăng Chi Phí Nhặt Hàng & OPEX/Kg</h4>
+                                <p style="font-size: 12px; color: var(--text-muted); margin-top: 4px;">Khi điều chỉnh lương nhân sự (ví dụ: tăng ca 12h), nhóm Chi Phí Nhân Công sẽ chiếm tỷ trọng lớn nhất (52% - 58% OPEX). Điều này đẩy đơn giá nhặt hàng/Line và chi phí phân bổ/Kg tăng tương ứng.</p>
+                            </div>
+                        </div>
+
+                        <!-- Relation 2 -->
+                        <div class="relation-card">
+                            <div style="width: 44px; height: 44px; background: rgba(34, 197, 94, 0.15); color: #22c55e; border-radius: 10px; display: flex; align-items: center; justify-content: center; font-size: 20px; shrink: 0;">
+                                <i class="fa-solid fa-boxes-packing"></i>
+                            </div>
+                            <div>
+                                <h4 style="font-size: 14px; font-weight: 800; color: var(--accent-green);">Tăng Tỷ Lệ Lấp Đầy Ô Kệ (Occupancy %) ➔ Tối Ưu Chi Phí Mặt Bằng</h4>
+                                <p style="font-size: 12px; color: var(--text-muted); margin-top: 4px;">Khi kho đạt tỷ lệ lấp đầy cao (như 94.2%), chi phí ô kệ thực tế chứa hàng tiệm cận với chi phí định mức ô kệ. Nếu lấp đầy giảm xuống 70%, đơn giá trên mỗi ô kệ chứa hàng sẽ bị đội lên 30%!</p>
+                            </div>
+                        </div>
+
+                        <!-- Relation 3 -->
+                        <div class="relation-card">
+                            <div style="width: 44px; height: 44px; background: rgba(239, 68, 68, 0.15); color: #ef4444; border-radius: 10px; display: flex; align-items: center; justify-content: center; font-size: 20px; shrink: 0;">
+                                <i class="fa-solid fa-pallet"></i>
+                            </div>
+                            <div>
+                                <h4 style="font-size: 14px; font-weight: 800; color: #f87171;">Giảm Tỷ Lệ Bể Pallet (3% ➔ 1%) ➔ Tiết Kiệm Ngay 6.7 Tr VND/Tháng</h4>
+                                <p style="font-size: 12px; color: var(--text-muted); margin-top: 4px;">Huấn luyện tài xế xe nâng di chuyển cẩn thận giảm tỷ lệ hư hỏng Pallet nhựa dẻo ống sắt từ 3% xuống 1% sẽ giúp doanh nghiệp tiết kiệm 80.7 Triệu VND/năm trực tiếp vào lợi nhuận!</p>
+                            </div>
+                        </div>
+
+                        <!-- Relation 4 -->
+                        <div class="relation-card">
+                            <div style="width: 44px; height: 44px; background: rgba(168, 85, 247, 0.15); color: #a855f7; border-radius: 10px; display: flex; align-items: center; justify-content: center; font-size: 20px; shrink: 0;">
+                                <i class="fa-solid fa-arrows-spin"></i>
+                            </div>
+                            <div>
+                                <h4 style="font-size: 14px; font-weight: 800; color: var(--accent-purple);">Tăng Vòng Quay Tồn Kho (FIFO Engine) ➔ Giảm Carrying Cost</h4>
+                                <p style="font-size: 12px; color: var(--text-muted); margin-top: 4px;">Áp dụng Engine FIFO chuẩn giúp giảm ngày lưu kho từ 45 ngày xuống 30 ngày ➔ Giảm ngay 33% Chi phí giam vốn tồn kho (giảm 145 Tr VND/tháng) và giải phóng dòng tiền tự do cho công ty!</p>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            </div>
 
         </main>
 
