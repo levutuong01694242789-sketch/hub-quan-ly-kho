@@ -11,26 +11,30 @@ OUTPUT_DIR = os.path.dirname(os.path.abspath(__file__))
 OUTPUT_JSON_PATH = os.path.join(OUTPUT_DIR, 'financial_data.json')
 OUTPUT_JS_PATH = os.path.join(OUTPUT_DIR, 'financial_data.js')
 OUTPUT_EXCEL_PATH = os.path.join(OUTPUT_DIR, 'BAO_CAO_TAI_CHINH_CHI_PHI_KHO.xlsx')
+TEMPLATE_EXCEL_PATH = os.path.join(OUTPUT_DIR, 'FILE_MAU_NHAP_CHI_PHI_TAI_CHINH_KHO.xlsx')
 
-# Default Reference Dynamic Parameters (Can be dynamically adjusted via Web App Sliders)
+# Default Reference Dynamic Parameters
 DEFAULT_PARAMS = {
     'warehouse_rent_monthly': 180000000.0, # Tiền thuê mặt bằng kho / tháng (VND)
     'total_labor_monthly': 220000000.0,     # Quỹ lương nhân sự kho hàng tháng (VND)
+    'staff_count': 18,                       # Số lượng nhân sự kho vận (Người)
     'utilities_monthly': 35000000.0,        # Điện nước & viễn thông kho / tháng (VND)
     'forklift_operating_monthly': 25000000.0,# Nhiên liệu sạc điện & bảo trì xe nâng / tháng (VND)
+    'assets_count': 22,                      # Số lượng Xe nâng & Thiết bị IT/Barcode (Cái)
     'consumables_monthly': 18000000.0,       # Màng PE, băng keo, đai niềng, tem nhãn / tháng (VND)
     'inventory_carrying_rate_annual': 0.15, # Lãi suất cơ hội giam vốn tồn kho (%/năm)
     
-    # Capacity Parameters
+    # Capacity & Inventory Cross-Linked Parameters
     'highbay_rack_capacity': 4032,           # 4,032 Ô kệ cao tầng (Dãy A-H)
     'buffer_zones_count': 6,                # 6 Vùng Đệm Sàn (TW, VW, VL)
+    'occupied_bins_count': 3798,            # Số ô kệ đang chứa hàng thực tế (Tỷ lệ lấp đầy 94.2%)
     'monthly_handling_volume_kg': 450000.0, # Sản lượng luân chuyển xuất nhập kho (Kg/tháng)
     'monthly_pick_lines_count': 12500,      # Số dòng hàng nhặt (Pick Lines/tháng)
-    'inventory_total_value': 35000000000.0  # Tổng giá trị hàng tồn kho trữ trong kho (VND)
+    'inventory_total_value': 35000000000.0  # Tổng giá trị hàng tồn kho thực tế trong kho (VND)
 }
 
 def calculate_warehouse_financials(params=None):
-    """Calculate 100% Dynamic Warehouse Operational & Financial Metrics."""
+    """Calculate 100% Dynamic Warehouse Operational & Financial Metrics with Asset & Inventory Cross-Linking."""
     p = dict(DEFAULT_PARAMS)
     if params:
         p.update(params)
@@ -44,13 +48,18 @@ def calculate_warehouse_financials(params=None):
     total_monthly_opex = total_facility_cost + total_labor_cost + total_consumables_cost + total_equipment_cost
     total_annual_opex = total_monthly_opex * 12
 
-    # 2. Group 1: Storage & Bin Costs
+    # 2. Storage & Bin Costs with Real Capacity Occupancy
     total_storage_locations = p['highbay_rack_capacity'] + p['buffer_zones_count']
+    occupancy_rate_pct = round((p['occupied_bins_count'] / total_storage_locations) * 100, 1)
+    
     cost_per_bin_monthly = round(total_facility_cost / total_storage_locations, 0)
+    cost_per_occupied_bin_monthly = round(total_facility_cost / p['occupied_bins_count'], 0)
     cost_per_bin_daily = round(cost_per_bin_monthly / 30, 0)
 
-    # 3. Group 2: Handling & Labor Unit Costs
+    # 3. Handling, Labor & Asset Unit Costs
     cost_per_kg_handled = round(total_monthly_opex / p['monthly_handling_volume_kg'], 2)
+    cost_per_staff_member = round(total_labor_cost / p['staff_count'], 0) if p['staff_count'] > 0 else 0
+    cost_per_asset_device = round(total_equipment_cost / p['assets_count'], 0) if p['assets_count'] > 0 else 0
     cost_per_pick_line = round((total_labor_cost + total_consumables_cost) / p['monthly_pick_lines_count'], 0)
 
     # Multi-UoM Unit Cost Estimations
@@ -66,7 +75,7 @@ def calculate_warehouse_financials(params=None):
         'Vắt': round(cost_per_kg_handled * 0.05, 0)     # Quy đổi 1 Vắt ~ 0.05kg
     }
 
-    # 4. Group 5: Inventory Carrying Costs
+    # 4. Inventory Carrying Costs
     annual_carrying_cost = round(p['inventory_total_value'] * p['inventory_carrying_rate_annual'], 0)
     monthly_carrying_cost = round(annual_carrying_cost / 12, 0)
     storage_cost_ratio_pct = round((total_facility_cost / p['inventory_total_value']) * 100, 2)
@@ -80,26 +89,31 @@ def calculate_warehouse_financials(params=None):
             'total_monthly_opex': total_monthly_opex,
             'total_annual_opex': total_annual_opex,
             'cost_per_bin_monthly': cost_per_bin_monthly,
+            'cost_per_occupied_bin_monthly': cost_per_occupied_bin_monthly,
             'cost_per_bin_daily': cost_per_bin_daily,
             'cost_per_kg_handled': cost_per_kg_handled,
+            'cost_per_staff_member': cost_per_staff_member,
+            'cost_per_asset_device': cost_per_asset_device,
             'cost_per_pick_line': cost_per_pick_line,
             'annual_carrying_cost': annual_carrying_cost,
             'monthly_carrying_cost': monthly_carrying_cost,
             'storage_cost_ratio_pct': storage_cost_ratio_pct,
-            'total_storage_locations': total_storage_locations
+            'total_storage_locations': total_storage_locations,
+            'occupied_bins_count': p['occupied_bins_count'],
+            'occupancy_rate_pct': occupancy_rate_pct
         },
         'cost_groups_breakdown': {
             'group_1_storage': {
                 'title': '🏗️ 1. Chi Phí Lưu Kho & Hạ Tầng',
                 'amount_monthly': total_facility_cost,
                 'pct_of_total': round((total_facility_cost / total_monthly_opex) * 100, 1),
-                'details': 'Bao gồm tiền thuê mặt bằng kho, khấu hao kệ cao tầng và điện nước hạ tầng.'
+                'details': f'Mặt bằng kho & điện nước hạ tầng. Tính trên {total_storage_locations:,} vị trí (lấp đầy {occupancy_rate_pct}%).'
             },
             'group_2_labor': {
                 'title': '⚡ 2. Chi Phí Nhân Công & Nhặt Hàng',
                 'amount_monthly': total_labor_cost,
                 'pct_of_total': round((total_labor_cost / total_monthly_opex) * 100, 1),
-                'details': 'Bao gồm quỹ lương nhân sự kho, quản lý kho, phụ cấp bốc xếp và thưởng năng suất.'
+                'details': f'Quỹ lương {p["staff_count"]} nhân sự kho (Bình quân {cost_per_staff_member:,.0f} VND/người/tháng).'
             },
             'group_3_consumables': {
                 'title': '📦 3. Chi Phí Vật Tư & PE Quấn Pallet',
@@ -111,13 +125,13 @@ def calculate_warehouse_financials(params=None):
                 'title': '🚜 4. Chi Phí Thiết Bị & Xe Nâng',
                 'amount_monthly': total_equipment_cost,
                 'pct_of_total': round((total_equipment_cost / total_monthly_opex) * 100, 1),
-                'details': 'Bao gồm chi phí sạc điện, nhiên liệu dầu xe nâng, bảo trì sửa chữa và khấu hao xe.'
+                'details': f'Khấu hao & bảo trì {p["assets_count"]} thiết bị IT, máy quét & 4 Xe nâng hàng.'
             },
             'group_5_carrying': {
                 'title': '📉 5. Chi Phí Giam Vốn Tồn Kho (Carrying Cost)',
                 'amount_monthly': monthly_carrying_cost,
                 'pct_of_total': round((monthly_carrying_cost / (total_monthly_opex + monthly_carrying_cost)) * 100, 1),
-                'details': 'Chi phí cơ hội vốn vay giam trong hàng tồn kho (tính 15%/năm trên 35 tỷ tồn kho).'
+                'details': f'Chi phí cơ hội giam vốn ({p["inventory_carrying_rate_annual"]*100}%/năm trên {p["inventory_total_value"]/1000000000:.1f} tỷ tồn kho).'
             }
         },
         'uom_cost_breakdown': uom_cost_breakdown
@@ -132,23 +146,50 @@ def calculate_warehouse_financials(params=None):
         json.dump(financial_summary, f_js, ensure_ascii=False)
         f_js.write(';')
 
-    print(f"📊 TỔNG QUAN TÀI CHÍNH KHO VẬN HÀNH (LIVE CALCULATION):")
-    print(f"  - Thời gian tính toán: {now_str}")
-    print(f"  - Tổng Chi Phí Vận Hành Kho/Tháng (OPEX): {total_monthly_opex:,.0f} VND")
-    print(f"  - Chi Phí 1 Ô Kệ / Tháng: {cost_per_bin_monthly:,.0f} VND/Ô Kệ (hằng ngày: {cost_per_bin_daily:,.0f} VND/ngày)")
-    print(f"  - Chi Phí Lưu Kho & Xử Lý / Kg: {cost_per_kg_handled:,.2f} VND/Kg")
-    print(f"  - Chi Phí Nhặt 1 Dòng Hàng (Pick Line): {cost_per_pick_line:,.0f} VND/Line")
-    print(f"✅ Đã xuất dữ liệu financial_data.json & financial_data.js cho Web App.")
-
-    # Export Excel Financial Report
     generate_excel_financial_report(financial_summary, OUTPUT_EXCEL_PATH)
+    generate_excel_template_file(TEMPLATE_EXCEL_PATH)
     return financial_summary
+
+def generate_excel_template_file(output_path):
+    """Generate Structured Sample Excel Template File for Staff Data Entry."""
+    wb = openpyxl.Workbook()
+    ws = wb.active
+    ws.title = "Nạp Chi Phí Kho"
+
+    headers = [
+        "Tiền Thuê Mặt Bằng Kho (VND)",
+        "Quỹ Lương Nhân Sự Kho (VND)",
+        "Số Lượng Nhân Sự Kho (Người)",
+        "Chi Phí Điện Nước Kho (VND)",
+        "Chi Phí Xe Nâng & Thiết Bị (VND)",
+        "Số Lượng Xe Nâng & IT Assets (Cái)",
+        "Chi Phí Màng PE & Vật Tư (VND)",
+        "Lãi Suất Giam Vốn (%/Năm)",
+        "Tổng Giá Trị Tồn Kho Realtime (VND)",
+        "Sản Lượng Xuất Nhập (Kg/Tháng)"
+    ]
+    ws.append(headers)
+
+    sample_row = [
+        180000000,
+        220000000,
+        18,
+        35000000,
+        25000000,
+        22,
+        18000000,
+        15.0,
+        35000000000,
+        450000
+    ]
+    ws.append(sample_row)
+
+    wb.save(output_path)
+    print(f"✅ Đã tạo file Excel mẫu chuẩn: {output_path}")
 
 def generate_excel_financial_report(data, output_path):
     """Generate Excel Financial Report for CFO & Executive Management."""
     wb = openpyxl.Workbook()
-    
-    # Sheet 1: Báo Cáo P&L Chi Phí Kho Vận
     ws_pl = wb.active
     ws_pl.title = "P&L Báo Cáo Chi Phí Kho"
 
@@ -171,19 +212,17 @@ def generate_excel_financial_report(data, output_path):
     ws_pl.append(["TỔNG CHI PHÍ OPEX KHO HÀNG THÁNG", kpi['total_monthly_opex'], "100%", "Tổng chi phí vận hành kho tháng"])
     ws_pl.append(["TỔNG CHI PHÍ OPEX KHO NĂM (DỰ TOÁN)", kpi['total_annual_opex'], "-", "Dự toán chi phí kho cả năm"])
     ws_pl.append([])
-    ws_pl.append(["CHI PHÍ TRÊN 1 Ô KỆ / THÁNG (4,032 RACK + 6 ĐỆM SÀN)", kpi['cost_per_bin_monthly'], "VND/Ô Kệ", f"Đơn giá ngày: {kpi['cost_per_bin_daily']:,.0f} VND/ngày"])
+    ws_pl.append(["CHI PHÍ TRÊN 1 Ô KỆ / THÁNG (4,038 Ô KỆ)", kpi['cost_per_bin_monthly'], "VND/Ô Kệ", f"Đơn giá ngày: {kpi['cost_per_bin_daily']:,.0f} VND/ngày"])
+    ws_pl.append(["CHI PHÍ BÌNH QUÂN / 1 NHÂN SỰ KHO / THÁNG", kpi['cost_per_staff_member'], "VND/Người", f"Quỹ lương chia cho {data['parameters']['staff_count']} nhân sự"])
+    ws_pl.append(["CHI PHÍ BÌNH QUÂN / 1 THIẾT BỊ IT & XE NÂNG", kpi['cost_per_asset_device'], "VND/Thiết bị", f"Chi phí bảo trì trên {data['parameters']['assets_count']} thiết bị"])
     ws_pl.append(["CHI PHÍ LƯU KHO & XỬ LÝ TRÊN 1 KG", kpi['cost_per_kg_handled'], "VND/Kg", "Đơn giá bóc tách theo Kg"])
-    ws_pl.append(["CHI PHÍ NHẶT 1 DÒNG HÀNG (PICK LINE)", kpi['cost_per_pick_line'], "VND/Line", "Chi phí nhân công & bao bì / dòng xuất"])
-    ws_pl.append(["CHI PHÍ CƠ HỘI GIAM VỐN TỒN KHO (CARRYING COST/THÁNG)", kpi['monthly_carrying_cost'], "VND/Tháng", "Chi phí cơ hội vốn (15%/năm trên 35 tỷ tồn kho)"])
 
-    # Sheet 2: Đơn Giá Bóc Tách Theo 9 ĐVT
     ws_uom = wb.create_sheet(title="Đơn Giá Theo 9 ĐVT")
     ws_uom.append(["ĐƠN VỊ TÍNH (UoM)", "CHI PHÍ PHÂN BỔ KHO (VND/ĐVT)", "QUY ĐỔI THAM CHIẾU"])
     for uom, price in data['uom_cost_breakdown'].items():
         ws_uom.append([uom, price, f"Đơn giá lưu kho & xử lý cho 1 {uom}"])
 
     wb.save(output_path)
-    print(f"✅ Đã xuất báo cáo Excel tài chính kho: {output_path}")
 
 if __name__ == '__main__':
     try:

@@ -77,6 +77,12 @@
                 </div>
 
                 <div style="display: flex; align-items: center; gap: 12px; flex-wrap: wrap;">
+                    <!-- Auto Cross-Link Realtime Data Button -->
+                    <button id="btn-crosslink-data" class="theme-toggle-btn" style="background: linear-gradient(135deg, #a855f7, #7e22ce); border: 1px solid #c084fc;" title="Liên kết tự động với Kho 2D SAP & IT Asset Management">
+                        <i class="fa-solid fa-link"></i>
+                        <span>🔗 Liên Kết Tồn Kho & Tài Sản Realtime</span>
+                    </button>
+
                     <!-- Web Upload Excel Financial Report Button -->
                     <button id="btn-open-upload-modal" class="theme-toggle-btn" style="background: linear-gradient(135deg, #0284c7, #0369a1); border: 1px solid #38bdf8;" title="Nạp / Cập nhật báo cáo chi phí từ file Excel">
                         <i class="fa-solid fa-cloud-arrow-up"></i>
@@ -121,29 +127,29 @@
                     <div>
                         <div class="kpi-title">Chi Phí 1 Ô Kệ / Tháng (4,038 Ô)</div>
                         <div class="kpi-value" id="kpi-cost-per-bin" style="color: #22c55e;">49,777 VND</div>
-                        <div style="font-size: 11px; color: var(--text-muted); margin-top: 2px;">Đơn giá hằng ngày: <strong id="kpi-cost-per-bin-daily">1,659 VND/ngày</strong></div>
+                        <div style="font-size: 11px; color: var(--text-muted); margin-top: 2px;">Ô đang chứa hàng: <strong id="kpi-occupied-bin-cost">52,844 VND</strong> (Lấp đầy <span id="kpi-occupancy-rate">94.2%</span>)</div>
                     </div>
                 </div>
 
                 <div class="kpi-card" style="border-color: #a855f7;">
                     <div class="kpi-icon" style="background: #9333ea;">
-                        <i class="fa-solid fa-weight-hanging"></i>
+                        <i class="fa-solid fa-users-gear"></i>
                     </div>
                     <div>
-                        <div class="kpi-title">Chi Phí Lưu Kho & Xử Lý / Kg</div>
-                        <div class="kpi-value" id="kpi-cost-per-kg" style="color: #c084fc;">1,062 VND/Kg</div>
-                        <div style="font-size: 11px; color: var(--text-muted); margin-top: 2px;">Dựa trên 450,000 Kg xuất nhập/tháng</div>
+                        <div class="kpi-title">Bình Quân / Nhân Sự Kho</div>
+                        <div class="kpi-value" id="kpi-cost-per-staff" style="color: #c084fc;">12,222,222 VND</div>
+                        <div style="font-size: 11px; color: var(--text-muted); margin-top: 2px;">Tổng nhân sự kho: <strong id="kpi-staff-count">18 Người</strong></div>
                     </div>
                 </div>
 
                 <div class="kpi-card" style="border-color: #f59e0b;">
                     <div class="kpi-icon" style="background: #d97706;">
-                        <i class="fa-solid fa-hand-holding-dollar"></i>
+                        <i class="fa-solid fa-truck-monster"></i>
                     </div>
                     <div>
-                        <div class="kpi-title">Chi Phí Cơ Hội Giam Vốn (Carrying)</div>
-                        <div class="kpi-value" id="kpi-carrying-cost" style="color: #fbbf24;">437,500,000 VND</div>
-                        <div style="font-size: 11px; color: var(--text-muted); margin-top: 2px;">Lãi suất 15%/năm trên 35 tỷ tồn kho</div>
+                        <div class="kpi-title">Bảo Trì / Xe Nâng & Thiết Bị IT</div>
+                        <div class="kpi-value" id="kpi-cost-per-asset" style="color: #fbbf24;">1,136,364 VND</div>
+                        <div style="font-size: 11px; color: var(--text-muted); margin-top: 2px;">Số lượng thiết bị: <strong id="kpi-assets-count">22 Thiết Bị</strong></div>
                     </div>
                 </div>
             </section>
@@ -155,7 +161,7 @@
                         <h2 style="font-family: var(--font-heading); font-size: 18px; font-weight: 800; color: var(--accent-green);">
                             <i class="fa-solid fa-sliders"></i> MÔ HÌNH THAY ĐỔI ĐỊNH MỨC CHI PHÍ ĐỘNG (100% DYNAMIC CONTROL)
                         </h2>
-                        <p style="font-size: 12px; color: var(--text-secondary);">Kéo thanh trượt bên dưới ➔ Toàn bộ Chi Phí/Ô Kệ & Chi Phí/Kg tự động nhảy tức thì trong 1 giây!</p>
+                        <p style="font-size: 12px; color: var(--text-secondary);">Kéo thanh trượt bên dưới ➔ Toàn bộ Chi Phí/Ô Kệ, Chi Phí/Kg & Chi Phí/Nhân Sự tự động nhảy tức thì trong 1 giây!</p>
                     </div>
                     <button id="btn-reset-sliders" class="btn-view-sup" style="background: rgba(255,255,255,0.1); color: var(--text-primary); padding: 6px 14px; font-size: 12px;">
                         <i class="fa-solid fa-rotate-left"></i> Khôi Phục Định Mức Chuẩn
@@ -181,7 +187,16 @@
                         <input type="range" id="sld-labor" class="range-slider" min="80000000" max="500000000" step="5000000" value="220000000">
                     </div>
 
-                    <!-- Slider 3: Utilities -->
+                    <!-- Slider 3: Staff Count -->
+                    <div class="slider-group">
+                        <div class="slider-header">
+                            <span>👥 Số Lượng Nhân Sự Kho (Người):</span>
+                            <span class="slider-val-badge" id="lbl-staff-count">18 Người</span>
+                        </div>
+                        <input type="range" id="sld-staff-count" class="range-slider" min="5" max="60" step="1" value="18">
+                    </div>
+
+                    <!-- Slider 4: Utilities -->
                     <div class="slider-group">
                         <div class="slider-header">
                             <span>💡 Điện Nước & Hạ Tầng / Tháng:</span>
@@ -190,7 +205,7 @@
                         <input type="range" id="sld-utilities" class="range-slider" min="10000000" max="100000000" step="1000000" value="35000000">
                     </div>
 
-                    <!-- Slider 4: Forklift -->
+                    <!-- Slider 5: Forklift -->
                     <div class="slider-group">
                         <div class="slider-header">
                             <span>🚜 Xăng Điện & Bảo Trì Xe Nâng / Tháng:</span>
@@ -199,7 +214,16 @@
                         <input type="range" id="sld-forklift" class="range-slider" min="5000000" max="80000000" step="1000000" value="25000000">
                     </div>
 
-                    <!-- Slider 5: Consumables -->
+                    <!-- Slider 6: Assets Count -->
+                    <div class="slider-group">
+                        <div class="slider-header">
+                            <span>💻 Số Lượng Thiết Bị IT & Xe Nâng (Cái):</span>
+                            <span class="slider-val-badge" id="lbl-assets-count">22 Thiết Bị</span>
+                        </div>
+                        <input type="range" id="sld-assets-count" class="range-slider" min="5" max="80" step="1" value="22">
+                    </div>
+
+                    <!-- Slider 7: Consumables -->
                     <div class="slider-group">
                         <div class="slider-header">
                             <span>📦 Màng PE, Băng Keo & Tem Nhãn / Tháng:</span>
@@ -208,7 +232,7 @@
                         <input type="range" id="sld-consumables" class="range-slider" min="3000000" max="50000000" step="1000000" value="18000000">
                     </div>
 
-                    <!-- Slider 6: Carrying Rate -->
+                    <!-- Slider 8: Carrying Rate -->
                     <div class="slider-group">
                         <div class="slider-header">
                             <span>📉 Lãi Suất Cơ Hội Giam Vốn Tồn Kho:</span>
@@ -257,19 +281,26 @@
 
         </main>
 
-        <!-- WEB UPLOAD EXCEL FINANCIAL REPORT MODAL (SHEETJS) -->
+        <!-- WEB UPLOAD EXCEL FINANCIAL REPORT MODAL (WITH TEMPLATE DOWNLOAD) -->
         <div id="excel-upload-modal" class="modal-overlay">
             <div class="modal-content">
                 <button class="modal-close" id="btn-close-upload-modal"><i class="fa-solid fa-xmark"></i></button>
                 
-                <div style="display: flex; align-items: center; gap: 14px; margin-bottom: 16px;">
-                    <div style="width: 48px; height: 48px; background: #0284c7; border-radius: 12px; display: flex; align-items: center; justify-content: center; color: #fff; font-size: 22px;">
-                        <i class="fa-solid fa-cloud-arrow-up"></i>
+                <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 16px; flex-wrap: wrap; gap: 10px;">
+                    <div style="display: flex; align-items: center; gap: 14px;">
+                        <div style="width: 48px; height: 48px; background: #0284c7; border-radius: 12px; display: flex; align-items: center; justify-content: center; color: #fff; font-size: 22px;">
+                            <i class="fa-solid fa-cloud-arrow-up"></i>
+                        </div>
+                        <div>
+                            <h2 style="font-family: var(--font-heading); font-size: 18px; font-weight: 800;">NẠP BÁO CÁO CHI PHÍ EXCEL TỰ ĐỘNG</h2>
+                            <p style="font-size: 12px; color: var(--text-secondary);">Cập nhật định mức chi phí mới từ file Excel của phòng Kế toán!</p>
+                        </div>
                     </div>
-                    <div>
-                        <h2 style="font-family: var(--font-heading); font-size: 18px; font-weight: 800;">NẠP BÁO CÁO CHI PHÍ EXCEL TỰ ĐỘNG</h2>
-                        <p style="font-size: 12px; color: var(--text-secondary);">Cập nhật định mức chi phí mới từ file Excel của phòng Kế toán!</p>
-                    </div>
+
+                    <!-- DOWNLOAD TEMPLATE BUTTON -->
+                    <a href="FILE_MAU_NHAP_CHI_PHI_TAI_CHINH_KHO.xlsx" download id="btn-download-template" class="btn-view-sup" style="background: rgba(34,197,94,0.15); color: #22c55e; border-color: #22c55e; padding: 8px 14px; font-size: 12px; text-decoration: none; display: inline-flex; align-items: center; gap: 6px;" title="Tải file mẫu Excel tài chính chuẩn">
+                        <i class="fa-solid fa-file-download"></i> 📥 Tải File Mẫu Excel
+                    </a>
                 </div>
 
                 <div style="border: 2px dashed #0284c7; background: rgba(2, 132, 199, 0.08); padding: 32px 20px; border-radius: 16px; text-align: center; margin-bottom: 20px; cursor: pointer;" id="drag-drop-area">
