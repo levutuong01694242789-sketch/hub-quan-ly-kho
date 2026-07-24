@@ -1,0 +1,341 @@
+<!DOCTYPE html>
+<html lang="vi" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hệ Thống Quản Lý Kho Động SAP S/4HANA - Kho VĐT</title>
+    <!-- Google Fonts & FontAwesome Icons -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Outfit:wght@400;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- SheetJS for Client-Side Excel Processing -->
+    <script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
+
+    <!-- Master Storage Bins Embedded Data -->
+    <script src="data.js"></script>
+
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <!-- Top Header Navigation -->
+    <header class="app-header">
+        <div class="header-container">
+            <div class="brand">
+                <div class="logo-icon">
+                    <i class="fa-solid fa-boxes-stacked"></i>
+                </div>
+                <div class="brand-text">
+                    <h1>WMS VĐT - SAP S/4HANA</h1>
+                    <span class="subtitle">Hệ Thống Quản Lý Kho Động & Tự Động Trừ Kho FIFO</span>
+                </div>
+            </div>
+
+            <div class="header-actions">
+                <!-- Theme Switcher Button -->
+                <button class="theme-toggle-btn" id="btn-theme-toggle" title="Chuyển đổi giao diện Sáng / Tối">
+                    <i class="fa-solid fa-sun"></i>
+                    <span id="theme-btn-text">Giao Diện Sáng</span>
+                </button>
+
+                <div class="header-stats">
+                    <div class="stat-badge">
+                        <i class="fa-solid fa-warehouse"></i>
+                        <div>
+                            <span class="stat-val" id="lbl-total-bins">4,032</span>
+                            <span class="stat-lbl">Kệ Cao Tầng (A-H)</span>
+                        </div>
+                    </div>
+                    <div class="stat-badge">
+                        <i class="fa-solid fa-box-open"></i>
+                        <div>
+                            <span class="stat-val" id="lbl-empty-bins">1,937</span>
+                            <span class="stat-lbl">Ô Kệ Trống</span>
+                        </div>
+                    </div>
+                    <div class="stat-badge">
+                        <i class="fa-solid fa-cubes"></i>
+                        <div>
+                            <span class="stat-val" id="lbl-occupied-bins">2,093</span>
+                            <span class="stat-lbl">Ô Kệ Có Hàng</span>
+                        </div>
+                    </div>
+                    <div class="stat-badge">
+                        <i class="fa-solid fa-chart-pie"></i>
+                        <div>
+                            <span class="stat-val" id="lbl-occupancy-rate">51.9%</span>
+                            <span class="stat-lbl">Lấp Đầy Kệ</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Container -->
+    <main class="main-layout">
+        
+        <!-- 3-STEP EASY ACTION BAR FOR WAREHOUSE STAFF -->
+        <section class="action-bar-card">
+            <div class="card-header">
+                <h2><i class="fa-solid fa-wand-magic-sparkles"></i> THAO TÁC XỬ LÝ 3-BƯỚC DÀNH CHO NHÂN VIÊN KHO</h2>
+                <span class="badge-tag">Rất đơn giản - Không cần gõ phím</span>
+            </div>
+
+            <div class="steps-grid">
+                <!-- Step 1 -->
+                <div class="step-box" id="step-box-1">
+                    <div class="step-num">1</div>
+                    <div class="step-content">
+                        <h3>Chọn File FIFO</h3>
+                        <p>Nạp file kết quả nhặt hàng (<code>KET_QUA_MOI_NHAT.xlsx</code>)</p>
+                        <label for="input-fifo-file" class="btn-step btn-upload">
+                            <i class="fa-solid fa-file-excel"></i> Chọn File Excel...
+                        </label>
+                        <input type="file" id="input-fifo-file" accept=".xlsx, .xls" style="display: none;">
+                        <span class="file-name-display" id="display-file-name">Chưa chọn file (Đang dùng dữ liệu sẵn có)</span>
+                    </div>
+                </div>
+
+                <!-- Step 2 -->
+                <div class="step-box" id="step-box-2">
+                    <div class="step-num">2</div>
+                    <div class="step-content">
+                        <h3>Tự Động Trừ Kho & Map SAP</h3>
+                        <p>Đối chiếu 4,032 vị trí kho mới <code>VDT-A-1-01-N</code> & Vùng đệm</p>
+                        <button class="btn-step btn-process" id="btn-process-deduction" disabled>
+                            <i class="fa-solid fa-bolt"></i> Thực Hiện Trừ Kho
+                        </button>
+                        <span class="process-status" id="display-process-status">Chờ chọn file ở Bước 1</span>
+                    </div>
+                </div>
+
+                <!-- Step 3 -->
+                <div class="step-box" id="step-box-3">
+                    <div class="step-num">3</div>
+                    <div class="step-content">
+                        <h3>Tải Báo Cáo & Xem Sơ Đồ</h3>
+                        <p>Xuất file Excel kết quả & cập nhật ma trận kho</p>
+                        <button class="btn-step btn-download" id="btn-download-excel" disabled>
+                            <i class="fa-solid fa-download"></i> Tải Báo Cáo Excel SAP
+                        </button>
+                        <span class="process-status text-green" id="display-download-status">Sẵn sàng sau Bước 2</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SEARCH AND MATRIX FILTERS SECTION -->
+        <section class="controls-card">
+            <div class="search-filter-wrapper">
+                <div class="search-input-group">
+                    <i class="fa-solid fa-magnifying-glass search-icon"></i>
+                    <input type="text" id="txt-search" placeholder="Tra cứu nhanh Mã Hàng, Tên Hàng, Mã Pallet, Vị Trí Kho Cũ / Mới SAP (vd: A1-1-1, TW_SX1-1, VL_PA_001_CD-1, B0006)...">
+                    <button class="btn-clear-search" id="btn-clear-search" title="Xóa tìm kiếm"><i class="fa-solid fa-xmark"></i></button>
+                </div>
+
+                <div class="filter-controls">
+                    <!-- Rack & Buffer Filter -->
+                    <div class="filter-group">
+                        <label><i class="fa-solid fa-layer-group"></i> Chọn Khu Vực Kệ / Vùng Đệm:</label>
+                        <select id="sel-rack">
+                            <option value="ALL">Tất cả Khu Vực (Kệ Cao Tầng & Vùng Đệm)</option>
+                            <option value="RACKS_ONLY">🏢 Tất cả Kệ Cao Tầng (Dãy A - H)</option>
+                            <option value="BUFFER">🔄 Tất cả Vùng Đệm & Trung Chuyển (TW/VW/VL)</option>
+                            <option value="A">Dãy A (Kho Nguyên Liệu RM)</option>
+                            <option value="B">Dãy B (Kho Nguyên Liệu RM)</option>
+                            <option value="C">Dãy C (Kho Nguyên Liệu RM)</option>
+                            <option value="D">Dãy D (Kho Nguyên Liệu RM)</option>
+                            <option value="E">Dãy E (Kho Bao Bì / TP Khô)</option>
+                            <option value="F">Dãy F (Kho Bao Bì / TP Khô)</option>
+                            <option value="G">Dãy G (Kho Thành Phẩm AP)</option>
+                            <option value="H">Dãy H (Kho Thành Phẩm AP)</option>
+                        </select>
+                    </div>
+
+                    <!-- Level Filter -->
+                    <div class="filter-group">
+                        <label><i class="fa-solid fa-bars-staggered"></i> Chọn Tầng Kệ:</label>
+                        <select id="sel-level">
+                            <option value="ALL">Tất cả Tầng (1 - 4)</option>
+                            <option value="1">Tầng 1 (Tầng Trệt)</option>
+                            <option value="2">Tầng 2</option>
+                            <option value="3">Tầng 3</option>
+                            <option value="4">Tầng 4 (Tầng Trên Cùng)</option>
+                        </select>
+                    </div>
+
+                    <!-- In/Out Double-Deep Filter -->
+                    <div class="filter-group">
+                        <label><i class="fa-solid fa-arrows-left-right"></i> Vị trí Kép (T/N):</label>
+                        <select id="sel-inout">
+                            <option value="ALL">Tất cả (Trong & Ngoài)</option>
+                            <option value="N">Phía Ngoài (N - Accessibility 100%)</option>
+                            <option value="T">Phía Trong (T - Double Deep)</option>
+                            <option value="S">Vùng Đệm Sàn (Staging)</option>
+                        </select>
+                    </div>
+
+                    <!-- Status Filter -->
+                    <div class="filter-group">
+                        <label><i class="fa-solid fa-filter"></i> Trạng Thái Ô:</label>
+                        <select id="sel-status">
+                            <option value="ALL">Tất cả Trạng thái</option>
+                            <option value="EMPTY">🟢 Ô Trống (0 Pallet)</option>
+                            <option value="FULL">🔴 Ô Đang Chứa Hàng</option>
+                        </select>
+                    </div>
+                </div>
+
+                <!-- DYNAMIC FILTERED STATS BANNER -->
+                <div class="filtered-stats-banner" id="filtered-stats-banner">
+                    <div class="filtered-stat-card">
+                        <i class="fa-solid fa-filter"></i>
+                        <div>
+                            <span class="lbl">Phạm Vi Lọc:</span>
+                            <span class="val" id="f-stat-scope">Tất cả kho</span>
+                        </div>
+                    </div>
+                    <div class="filtered-stat-card">
+                        <i class="fa-solid fa-boxes-stacked"></i>
+                        <div>
+                            <span class="lbl">Số Vị Trí Khớp Bộ Lọc:</span>
+                            <span class="val" id="f-stat-total">4,032 ô</span>
+                        </div>
+                    </div>
+                    <div class="filtered-stat-card success">
+                        <i class="fa-solid fa-circle-check"></i>
+                        <div>
+                            <span class="lbl">Số Ô Trống (Khả Dụng):</span>
+                            <span class="val" id="f-stat-empty">1,937 ô</span>
+                        </div>
+                    </div>
+                    <div class="filtered-stat-card danger">
+                        <i class="fa-solid fa-cubes"></i>
+                        <div>
+                            <span class="lbl">Số Ô Đang Có Hàng:</span>
+                            <span class="val" id="f-stat-occupied">2,093 ô</span>
+                        </div>
+                    </div>
+                    <div class="filtered-stat-card warning">
+                        <i class="fa-solid fa-weight-hanging"></i>
+                        <div>
+                            <span class="lbl">Tồn Kho Theo Đơn Vị Tính:</span>
+                            <span class="val" id="f-stat-weight">0 Tồn</span>
+                        </div>
+                    </div>
+                    <div class="filtered-stat-card info">
+                        <i class="fa-solid fa-pallet"></i>
+                        <div>
+                            <span class="lbl">Tổng Số Pallet:</span>
+                            <span class="val" id="f-stat-pallets">0 Pallet</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- LEGEND STATUS BAR -->
+        <div class="legend-bar">
+            <span class="legend-title"><i class="fa-solid fa-palette"></i> Trạng Thái Vị Trí Kho:</span>
+            <div class="legend-item"><span class="color-dot empty"></span> Ô Trống (100% Khả dụng)</div>
+            <div class="legend-item"><span class="color-dot full"></span> Ô Kệ Đang Chứa Hàng</div>
+            <div class="legend-item"><span class="color-dot in-out-t"></span> Vị trí Phía Trong [T]</div>
+            <div class="legend-item"><span class="color-dot buffer"></span> Vùng Đệm Sàn (TW / VW / VL)</div>
+            <div class="legend-item"><span class="color-dot match-search"></span> Phù hợp tìm kiếm</div>
+        </div>
+
+        <!-- 2D STORAGE BIN MATRIX MAP CONTAINER -->
+        <section class="matrix-card">
+            <div class="matrix-header">
+                <h3 id="matrix-title"><i class="fa-solid fa-table-cells-large"></i> SƠ ĐỒ KHO MA TRẬN VỊ TRÍ SAP S/4HANA & VÙNG ĐỆM</h3>
+                <span class="matrix-count" id="matrix-count-display">Đang hiển thị 4,032 / 4,032 Vị trí</span>
+            </div>
+
+            <div id="warehouse-matrix-grid" class="matrix-grid-container">
+                <!-- Dynamic Racks and Bins Grid Rendered via JS -->
+            </div>
+        </section>
+    </main>
+
+    <!-- BIN DETAIL MODAL TOOLTIP -->
+    <div id="bin-detail-modal" class="modal-overlay">
+        <div class="modal-content">
+            <button class="modal-close" id="btn-close-modal"><i class="fa-solid fa-xmark"></i></button>
+            
+            <div class="modal-header">
+                <div class="bin-icon-tag"><i class="fa-solid fa-box"></i></div>
+                <div>
+                    <h2 id="modal-bin-sap">VDT-A-1-01-N</h2>
+                    <span class="bin-old-badge" id="modal-bin-old">Mã cũ: A1-1-1</span>
+                </div>
+            </div>
+
+            <div class="modal-body">
+                <div class="info-grid">
+                    <div class="info-item">
+                        <span class="lbl">Loại Vị Trí:</span>
+                        <span class="val" id="modal-type">Kệ Cao Tầng A-H</span>
+                    </div>
+                    <div class="info-item">
+                        <span class="lbl">Dãy Kệ / Vùng:</span>
+                        <span class="val" id="modal-rack">A</span>
+                    </div>
+                    <div class="info-item">
+                        <span class="lbl">Tầng Kệ:</span>
+                        <span class="val" id="modal-level">1</span>
+                    </div>
+                    <div class="info-item">
+                        <span class="lbl">Vị trí Ô:</span>
+                        <span class="val" id="modal-pos">01</span>
+                    </div>
+                    <div class="info-item">
+                        <span class="lbl">Vị trí Kép (T/N):</span>
+                        <span class="val" id="modal-inout">N (Phía Ngoài)</span>
+                    </div>
+                    <div class="info-item">
+                        <span class="lbl">Kho SAP:</span>
+                        <span class="val" id="modal-sap-wh">RM_01_CD</span>
+                    </div>
+                    <div class="info-item">
+                        <span class="lbl">Khu Vực:</span>
+                        <span class="val" id="modal-area">Kho Nguyên Liệu Khô</span>
+                    </div>
+                </div>
+
+                <div class="pallets-section">
+                    <h3><i class="fa-solid fa-cubes"></i> Danh Sách Pallet Đang Lưu Trữ Tại Vị Trí Này (<span id="modal-pallet-count">0</span> Pallet):</h3>
+                    
+                    <div class="table-responsive">
+                        <table class="pallets-table">
+                            <thead>
+                                <tr>
+                                    <th>STT</th>
+                                    <th>Mã Hàng</th>
+                                    <th>Tên Hàng</th>
+                                    <th>Số Pallet No</th>
+                                    <th>Số Lượng (ĐVT)</th>
+                                    <th>Số Lô (Batch)</th>
+                                    <th>Hạn Sử Dụng / NSX</th>
+                                </tr>
+                            </thead>
+                            <tbody id="modal-pallets-tbody">
+                                <!-- Rendered dynamically -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="app-footer">
+        <p>Hệ Thống Quản Lý Kho Động SAP S/4HANA (WMS VĐT) &copy; 2026. Chuẩn hóa cho Công Ty & Đẩy lên GitHub Repository.</p>
+    </footer>
+
+    <!-- App JavaScript -->
+    <script src="app.js"></script>
+</body>
+</html>

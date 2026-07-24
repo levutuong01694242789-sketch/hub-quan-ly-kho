@@ -1,0 +1,12 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Temporary Excel Lock Files
+~$*.xlsx
+~$*.xls
+
+# OS Files
+.DS_Store
+Thumbs.db
