@@ -391,7 +391,7 @@
             const btnUnlock = document.getElementById('btn-unlock-system');
             const pinErrorMsg = document.getElementById('pin-error-msg');
 
-            if (sessionStorage.getItem('system_unlocked') === 'true' || sessionStorage.getItem('financial_unlocked') === 'true') {
+            if (sessionStorage.getItem('fifo_unlocked') === 'true') {
                 unlock();
             }
 
@@ -405,8 +405,7 @@
             function verify() {
                 const val = txtPin.value.trim();
                 if (val === CORRECT_PIN || val === '8888') {
-                    sessionStorage.setItem('system_unlocked', 'true');
-                    sessionStorage.setItem('financial_unlocked', 'true');
+                    sessionStorage.setItem('fifo_unlocked', 'true');
                     unlock();
                 } else {
                     if (pinErrorMsg) pinErrorMsg.style.display = 'block';
