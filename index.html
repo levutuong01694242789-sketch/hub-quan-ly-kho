@@ -1,60 +1,115 @@
 <!DOCTYPE html>
-<html lang="vi">
+<html lang="vi" data-theme="dark">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>TRUNG TÂM QUẢN LÝ KHO VẬN & IT SUPPLY CHAIN - LÊ VŨ TƯỜNG</title>
+    <title>ENTERPRISE SUPPLY CHAIN & WAREHOUSE COMMAND CENTER - LÊ VŨ TƯỜNG</title>
     <!-- Tailwind CSS & FontAwesome Icons -->
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800;900&family=Outfit:wght@600;800;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Outfit:wght@500;700;800;900&display=swap" rel="stylesheet">
     <style>
-        body { font-family: 'Inter', sans-serif; background: #0F172A; color: #F8FAFC; }
+        body { font-family: 'Inter', sans-serif; background: #0B132B; color: #F8FAFC; }
         .font-heading { font-family: 'Outfit', sans-serif; }
+        .glass-card {
+            background: rgba(15, 23, 42, 0.85);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        .glow-indigo { box-shadow: 0 0 35px rgba(99, 102, 241, 0.25); }
+        .glow-emerald { box-shadow: 0 0 25px rgba(16, 185, 129, 0.2); }
     </style>
 </head>
-<body class="p-4 sm:p-8 min-h-screen flex flex-col justify-between">
+<body class="p-4 sm:p-8 min-h-screen flex flex-col justify-between selection:bg-indigo-500 selection:text-white">
     <div class="max-w-7xl mx-auto w-full space-y-8">
         
         <!-- Header Banner -->
-        <div class="bg-gradient-to-r from-slate-900 via-slate-800 to-slate-900 border border-slate-700/80 p-6 sm:p-8 rounded-3xl shadow-2xl flex flex-col md:flex-row justify-between items-center gap-6 border-l-8 border-emerald-500">
-            <div class="flex items-center gap-5">
-                <div class="w-16 h-16 bg-emerald-500/20 border border-emerald-500/40 rounded-2xl flex items-center justify-center text-emerald-400 text-3xl font-black shadow-lg shadow-emerald-900/30">
+        <header class="glass-card p-6 sm:p-8 rounded-3xl shadow-2xl flex flex-col md:flex-row justify-between items-center gap-6 border-l-8 border-emerald-500 relative overflow-hidden">
+            <div class="absolute -right-20 -top-20 w-64 h-64 bg-emerald-500/10 rounded-full blur-3xl pointer-events-none"></div>
+            
+            <div class="flex items-center gap-6 z-10">
+                <div class="w-18 h-18 w-16 h-16 sm:w-20 sm:h-20 bg-gradient-to-br from-emerald-500 to-teal-700 rounded-2xl flex items-center justify-center text-white text-3xl sm:text-4xl font-black shadow-xl shadow-emerald-900/40">
                     <i class="fa-solid fa-warehouse"></i>
                 </div>
                 <div>
-                    <h1 class="text-2xl sm:text-3xl font-black text-white font-heading tracking-tight">TRUNG TÂM DỰ ÁN KHO VẬN & IT SUPPLY CHAIN</h1>
-                    <p class="text-xs sm:text-sm text-slate-300 mt-1">Chuyên gia Quản lý Kho vận **Lê Vũ Tường** • Chuẩn hóa SAP S/4HANA & Tự động hóa FIFO</p>
+                    <div class="flex items-center gap-2 mb-1.5 flex-wrap">
+                        <span class="bg-emerald-500/20 text-emerald-300 border border-emerald-500/40 text-[10px] font-black px-3 py-0.5 rounded-full uppercase tracking-wider">SAP S/4HANA EWM READY</span>
+                        <span class="bg-blue-500/20 text-blue-300 border border-blue-500/40 text-[10px] font-black px-3 py-0.5 rounded-full uppercase tracking-wider">Enterprise v2.5</span>
+                    </div>
+                    <h1 class="text-2xl sm:text-3xl font-extrabold text-white font-heading tracking-tight">ENTERPRISE SUPPLY CHAIN & WAREHOUSE COMMAND CENTER</h1>
+                    <p class="text-xs sm:text-sm text-slate-300 mt-1">Chuyên gia Quản lý Kho vận **Lê Vũ Tường** • Hệ Thống Chuẩn Hóa Logistics Nhà Máy & Tự Động Hóa FIFO</p>
                 </div>
             </div>
-            <a href="https://github.com/levutuong01694242789-sketch/hub-quan-ly-kho" target="_blank" class="bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-xs px-6 py-3.5 rounded-2xl transition flex items-center gap-2.5 shadow-xl shadow-emerald-900/40 border border-emerald-400/30">
-                <i class="fa-brands fa-github text-lg"></i> GitHub Hub Repository
-            </a>
+
+            <div class="flex flex-col sm:flex-row gap-3 z-10 w-full md:w-auto">
+                <a href="https://github.com/levutuong01694242789-sketch/hub-quan-ly-kho" target="_blank" class="bg-slate-800 hover:bg-slate-700 text-white font-bold text-xs px-5 py-3.5 rounded-2xl transition border border-slate-700 flex items-center justify-center gap-2 shadow-lg">
+                    <i class="fa-brands fa-github text-base"></i> GitHub Hub Repo
+                </a>
+            </div>
+        </header>
+
+        <!-- Metric KPI Cards Summary -->
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+            <div class="glass-card p-5 rounded-2xl border-l-4 border-sky-500 flex items-center gap-4">
+                <div class="text-sky-400 text-2xl"><i class="fa-solid fa-boxes-stacked"></i></div>
+                <div>
+                    <span class="text-xs text-slate-400 font-semibold block uppercase">Ô Kệ Cao Tầng</span>
+                    <span class="text-xl font-extrabold text-white font-heading">4,032 Vị Trí</span>
+                </div>
+            </div>
+            <div class="glass-card p-5 rounded-2xl border-l-4 border-purple-500 flex items-center gap-4">
+                <div class="text-purple-400 text-2xl"><i class="fa-solid fa-dolly"></i></div>
+                <div>
+                    <span class="text-xs text-slate-400 font-semibold block uppercase">Vùng Đệm Sàn</span>
+                    <span class="text-xl font-extrabold text-white font-heading">6 Khu Đệm Sàn</span>
+                </div>
+            </div>
+            <div class="glass-card p-5 rounded-2xl border-l-4 border-amber-500 flex items-center gap-4">
+                <div class="text-amber-400 text-2xl"><i class="fa-solid fa-scale-balanced"></i></div>
+                <div>
+                    <span class="text-xs text-slate-400 font-semibold block uppercase">Phân Loại Đơn Vị</span>
+                    <span class="text-xl font-extrabold text-white font-heading">9 ĐVT Gốc</span>
+                </div>
+            </div>
+            <div class="glass-card p-5 rounded-2xl border-l-4 border-emerald-500 flex items-center gap-4">
+                <div class="text-emerald-400 text-2xl"><i class="fa-solid fa-circle-check"></i></div>
+                <div>
+                    <span class="text-xs text-slate-400 font-semibold block uppercase">Độ Chính Xác FIFO</span>
+                    <span class="text-xl font-extrabold text-white font-heading">100% Chuẩn Xác</span>
+                </div>
+            </div>
         </div>
 
         <!-- Featured Highlight: HỆ THỐNG HỢP NHẤT ALL-IN-ONE -->
-        <div class="bg-gradient-to-r from-indigo-950/90 via-slate-900 to-blue-950/90 border-2 border-indigo-500/50 p-6 sm:p-8 rounded-3xl shadow-2xl relative overflow-hidden group">
-            <div class="absolute -right-10 -bottom-10 opacity-10 text-indigo-400 group-hover:scale-110 transition duration-500">
-                <i class="fa-solid fa-wand-magic-sparkles text-[200px]"></i>
+        <div class="bg-gradient-to-br from-indigo-950/90 via-slate-900 to-blue-950/90 border-2 border-indigo-500/60 p-6 sm:p-10 rounded-3xl shadow-2xl relative overflow-hidden group glow-indigo">
+            <div class="absolute -right-12 -bottom-12 opacity-10 text-indigo-400 group-hover:scale-110 transition duration-700 pointer-events-none">
+                <i class="fa-solid fa-wand-magic-sparkles text-[240px]"></i>
             </div>
-            <div class="relative z-10 flex flex-col lg:flex-row justify-between items-start lg:items-center gap-6">
-                <div class="space-y-3 max-w-3xl">
+            <div class="relative z-10 flex flex-col lg:flex-row justify-between items-start lg:items-center gap-8">
+                <div class="space-y-4 max-w-3xl">
                     <div class="flex items-center gap-3 flex-wrap">
-                        <span class="bg-indigo-500/20 text-indigo-300 border border-indigo-400/40 text-xs font-black px-3.5 py-1 rounded-full uppercase tracking-wider">🌟 HỢP NHẤT ALL-IN-ONE (KHUYÊN DÙNG)</span>
-                        <span class="bg-emerald-500/20 text-emerald-300 border border-emerald-400/40 text-xs font-black px-3.5 py-1 rounded-full uppercase">1-Click Vận Hành</span>
+                        <span class="bg-indigo-500/20 text-indigo-300 border border-indigo-400/40 text-xs font-black px-4 py-1.5 rounded-full uppercase tracking-wider flex items-center gap-2">
+                            <i class="fa-solid fa-star text-indigo-400"></i> HỢP NHẤT ALL-IN-ONE (KHUYÊN DÙNG KHỔNG LỀU)
+                        </span>
+                        <span class="bg-emerald-500/20 text-emerald-300 border border-emerald-400/40 text-xs font-black px-3.5 py-1.5 rounded-full uppercase">1-Click Desktop Launcher</span>
                     </div>
-                    <h2 class="text-xl sm:text-2xl font-extrabold text-white font-heading group-hover:text-indigo-300 transition">
-                        3. Hệ Thống Hợp Nhất 1-Chạm: Phân Bổ FIFO & Ma Trận Kho Động SAP S/4HANA
+                    <h2 class="text-2xl sm:text-3xl font-extrabold text-white font-heading group-hover:text-indigo-300 transition">
+                        1. Hệ Thống Hợp Nhất 1-Chạm: Phân Bổ FIFO & Ma Trận Kho Động SAP S/4HANA
                     </h2>
                     <p class="text-xs sm:text-sm text-slate-300 leading-relaxed">
-                        Tự động kết nối 2 quy trình trong 1 cú nhấp chuột: **Phân bổ nhặt hàng FIFO** (theo Lô/Hạn dùng) ➔ **Map 4,032 vị trí kho mới chuẩn SAP S/4HANA & Vùng Đệm Sàn (TW/VW/VL)** ➔ **Trừ tồn kho thời gian thực** & **Sơ đồ ma trận 2D trực quan**.
+                        Tự động kết nối 2 quy trình trong 1 cú nhấp chuột: **Phân bổ nhặt hàng FIFO** (theo Lô/Hạn sử dụng) ➔ **Map 4,032 vị trí kho mới chuẩn SAP S/4HANA & Vùng Đệm Sàn (TW/VW/VL)** ➔ **Trừ tồn kho thời gian thực** & **Sơ đồ ma trận 2D trực quan**.
                     </p>
+                    <div class="flex items-center gap-4 text-xs text-slate-400 pt-2 flex-wrap">
+                        <span><i class="fa-solid fa-check text-emerald-400 mr-1"></i> Tự động đọc file Nhu Cầu Xuất</span>
+                        <span><i class="fa-solid fa-check text-emerald-400 mr-1"></i> Xuất file Excel hợp nhất 4 Sheet</span>
+                        <span><i class="fa-solid fa-check text-emerald-400 mr-1"></i> Chế độ màu Sáng/Tối</span>
+                    </div>
                 </div>
                 <div class="flex flex-col sm:flex-row gap-3 w-full lg:w-auto">
-                    <a href="he_thong_hop_nhat_fifo_sap/index.html" target="_blank" class="bg-indigo-600 hover:bg-indigo-500 text-white font-extrabold text-xs px-6 py-4 rounded-2xl transition flex items-center justify-center gap-2 shadow-xl shadow-indigo-900/50">
-                        <i class="fa-solid fa-play"></i> Mở Web App Hợp Nhất <i class="fa-solid fa-arrow-up-right-from-square text-[10px]"></i>
+                    <a href="he_thong_hop_nhat_fifo_sap/index.html" target="_blank" class="bg-gradient-to-r from-indigo-600 to-blue-600 hover:from-indigo-500 hover:to-blue-500 text-white font-extrabold text-sm px-8 py-4 rounded-2xl transition flex items-center justify-center gap-3 shadow-xl shadow-indigo-900/60 border border-indigo-400/30">
+                        <i class="fa-solid fa-play"></i> Mở Web App Hợp Nhất <i class="fa-solid fa-arrow-up-right-from-square text-xs"></i>
                     </a>
                 </div>
             </div>
@@ -62,90 +117,90 @@
 
         <!-- Section Title for Individual Modules -->
         <div class="flex items-center justify-between pt-4 border-t border-slate-800">
-            <h3 class="text-lg font-bold text-slate-200 font-heading flex items-center gap-2">
+            <h3 class="text-xl font-bold text-slate-100 font-heading flex items-center gap-3">
                 <i class="fa-solid fa-cubes-stacked text-emerald-400"></i> Các Phân Hệ Ứng Dụng Độc Lập
             </h3>
-            <span class="text-xs text-slate-400">Người dùng có thể chọn dùng riêng từng ứng dụng theo nhu cầu</span>
+            <span class="text-xs text-slate-400">Tùy chọn chạy riêng từng ứng dụng theo nhu cầu công việc</span>
         </div>
 
         <!-- Grid of Individual Modules -->
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
             
             <!-- Module 1: Kho Động SAP S/4HANA 2D Matrix -->
-            <div class="bg-slate-900 border border-slate-800 p-6 rounded-3xl shadow-xl hover:border-sky-500/50 transition group flex flex-col justify-between border-l-4 border-sky-500">
+            <div class="glass-card p-6 rounded-3xl shadow-xl hover:border-sky-500/60 transition group flex flex-col justify-between border-l-4 border-sky-500">
                 <div class="space-y-4">
                     <div class="flex justify-between items-start">
-                        <span class="bg-sky-950 text-sky-400 border border-sky-500/30 text-[10px] font-black px-3 py-1 rounded-full uppercase">Sơ Đồ Kho 2D</span>
+                        <span class="bg-sky-950 text-sky-400 border border-sky-500/30 text-[10px] font-black px-3 py-1 rounded-full uppercase">Ma Trận Kho 2D</span>
                         <i class="fa-solid fa-table-cells-large text-slate-600 group-hover:text-sky-400 transition text-xl"></i>
                     </div>
-                    <h4 class="text-base font-bold text-white group-hover:text-sky-400 transition">1. Kho Động SAP S/4HANA & Vùng Đệm Sàn</h4>
+                    <h4 class="text-lg font-bold text-white group-hover:text-sky-400 transition font-heading">2. Kho Động SAP S/4HANA & Vùng Đệm Sàn</h4>
                     <p class="text-xs text-slate-400 leading-relaxed">Sơ đồ ma trận 4,032 vị trí kệ (Dãy A-H) + 6 Vùng đệm sàn. Thống kê bóc tách đa đơn vị tính (Kg, Thùng, Cái...).</p>
                 </div>
                 <div class="pt-6 border-t border-slate-800/80 mt-6 flex justify-between items-center">
                     <a href="wms_vdt_sap4hana/HDSD_NHAN_VIEN_KHO.md" target="_blank" class="text-xs text-slate-400 hover:text-white font-semibold flex items-center gap-1.5">
                         <i class="fa-solid fa-book"></i> HDSD
                     </a>
-                    <a href="wms_vdt_sap4hana/index.html" target="_blank" class="bg-sky-600 hover:bg-sky-500 text-white font-bold text-xs px-3.5 py-2.5 rounded-xl transition flex items-center gap-1.5 shadow-lg shadow-sky-500/20">
+                    <a href="wms_vdt_sap4hana/index.html" target="_blank" class="bg-sky-600 hover:bg-sky-500 text-white font-bold text-xs px-4 py-2.5 rounded-xl transition flex items-center gap-1.5 shadow-lg shadow-sky-500/20">
                         Chạy 2D Map <i class="fa-solid fa-arrow-up-right-from-square text-[10px]"></i>
                     </a>
                 </div>
             </div>
 
             <!-- Module 2: Xuất Kho FIFO Engine -->
-            <div class="bg-slate-900 border border-slate-800 p-6 rounded-3xl shadow-xl hover:border-amber-500/50 transition group flex flex-col justify-between border-l-4 border-amber-500">
+            <div class="glass-card p-6 rounded-3xl shadow-xl hover:border-amber-500/60 transition group flex flex-col justify-between border-l-4 border-amber-500">
                 <div class="space-y-4">
                     <div class="flex justify-between items-start">
                         <span class="bg-amber-950 text-amber-400 border border-amber-500/30 text-[10px] font-black px-3 py-1 rounded-full uppercase">Engine FIFO</span>
                         <i class="fa-solid fa-boxes-packing text-slate-600 group-hover:text-amber-400 transition text-xl"></i>
                     </div>
-                    <h4 class="text-base font-bold text-white group-hover:text-amber-400 transition">2. Xuất Kho FIFO Tự Động</h4>
-                    <p class="text-xs text-slate-400 leading-relaxed">Tự động ghép nối nhu cầu xuất hàng với tồn kho thực tế theo nguyên tắc FIFO (Hạn dùng/Ngày nhập) & xuất báo cáo Excel.</p>
+                    <h4 class="text-lg font-bold text-white group-hover:text-amber-400 transition font-heading">3. Engine Phân Bổ FIFO Tự Động</h4>
+                    <p class="text-xs text-slate-400 leading-relaxed">Engine Python tự động ghép nối nhu cầu xuất hàng với tồn kho thực tế theo nguyên tắc FIFO (Hạn dùng/Ngày nhập) & xuất Excel.</p>
                 </div>
                 <div class="pt-6 border-t border-slate-800/80 mt-6 flex justify-between items-center">
                     <a href="quan_ly_kho_fifo/README.md" target="_blank" class="text-xs text-slate-400 hover:text-white font-semibold flex items-center gap-1.5">
                         <i class="fa-solid fa-file-lines"></i> Tài liệu
                     </a>
-                    <a href="https://github.com/levutuong01694242789-sketch/hub-quan-ly-kho/tree/main/quan_ly_kho_fifo" target="_blank" class="bg-amber-500 hover:bg-amber-400 text-slate-950 font-black text-xs px-3.5 py-2.5 rounded-xl transition flex items-center gap-1.5 shadow-lg shadow-amber-500/20">
+                    <a href="https://github.com/levutuong01694242789-sketch/hub-quan-ly-kho/tree/main/quan_ly_kho_fifo" target="_blank" class="bg-amber-500 hover:bg-amber-400 text-slate-950 font-black text-xs px-4 py-2.5 rounded-xl transition flex items-center gap-1.5 shadow-lg shadow-amber-500/20">
                         Xem Code <i class="fa-brands fa-github text-[10px]"></i>
                     </a>
                 </div>
             </div>
 
             <!-- Module 3: Định Mức Trữ Kho 3 Ngày -->
-            <div class="bg-slate-900 border border-slate-800 p-6 rounded-3xl shadow-xl hover:border-blue-500/50 transition group flex flex-col justify-between border-l-4 border-blue-500">
+            <div class="glass-card p-6 rounded-3xl shadow-xl hover:border-blue-500/60 transition group flex flex-col justify-between border-l-4 border-blue-500">
                 <div class="space-y-4">
                     <div class="flex justify-between items-start">
                         <span class="bg-blue-950 text-blue-400 border border-blue-500/30 text-[10px] font-black px-3 py-1 rounded-full uppercase">Web App PO</span>
                         <i class="fa-solid fa-chart-line text-slate-600 group-hover:text-blue-400 transition text-xl"></i>
                     </div>
-                    <h4 class="text-base font-bold text-white group-hover:text-blue-400 transition">4. Trữ Kho 3 Ngày & Đơn PO</h4>
+                    <h4 class="text-lg font-bold text-white group-hover:text-blue-400 transition font-heading">4. Trữ Kho 3 Ngày & Đơn Mua PO</h4>
                     <p class="text-xs text-slate-400 leading-relaxed">Tính điểm ROP, định mức trữ kho 3 ngày và xuất file báo cáo đơn mua hàng PO Excel chuẩn phòng kế hoạch.</p>
                 </div>
                 <div class="pt-6 border-t border-slate-800/80 mt-6 flex justify-between items-center">
                     <a href="https://github.com/levutuong01694242789-sketch/quan-li-kho" target="_blank" class="text-xs text-slate-400 hover:text-white font-semibold flex items-center gap-1.5">
                         <i class="fa-brands fa-github"></i> Repo
                     </a>
-                    <a href="mo_app_tru_kho.html" target="_blank" class="bg-blue-600 hover:bg-blue-500 text-white font-bold text-xs px-3.5 py-2.5 rounded-xl transition flex items-center gap-1.5 shadow-lg shadow-blue-500/20">
+                    <a href="mo_app_tru_kho.html" target="_blank" class="bg-blue-600 hover:bg-blue-500 text-white font-bold text-xs px-4 py-2.5 rounded-xl transition flex items-center gap-1.5 shadow-lg shadow-blue-500/20">
                         Chạy Web <i class="fa-solid fa-arrow-up-right-from-square text-[10px]"></i>
                     </a>
                 </div>
             </div>
 
             <!-- Module 4: IT Asset QR Manager -->
-            <div class="bg-slate-900 border border-slate-800 p-6 rounded-3xl shadow-xl hover:border-purple-500/50 transition group flex flex-col justify-between border-l-4 border-purple-500">
+            <div class="glass-card p-6 rounded-3xl shadow-xl hover:border-purple-500/60 transition group flex flex-col justify-between border-l-4 border-purple-500">
                 <div class="space-y-4">
                     <div class="flex justify-between items-start">
                         <span class="bg-purple-950 text-purple-400 border border-purple-500/30 text-[10px] font-black px-3 py-1 rounded-full uppercase">IT Asset Pro</span>
                         <i class="fa-solid fa-laptop-code text-slate-600 group-hover:text-purple-400 transition text-xl"></i>
                     </div>
-                    <h4 class="text-base font-bold text-white group-hover:text-purple-400 transition">5. Quản Lý Tài Sản IT & Mã QR</h4>
+                    <h4 class="text-lg font-bold text-white group-hover:text-purple-400 transition font-heading">5. Quản Lý Tài Sản IT & Mã QR</h4>
                     <p class="text-xs text-slate-400 leading-relaxed">Quản lý cấp phát tài sản IT (Laptop, Máy in, Thiết bị mạng), quét mã QR Camera & tạo tem nhãn chuyên nghiệp.</p>
                 </div>
                 <div class="pt-6 border-t border-slate-800/80 mt-6 flex justify-between items-center">
                     <a href="https://github.com/levutuong01694242789-sketch/it-asset-qr-manager" target="_blank" class="text-xs text-slate-400 hover:text-white font-semibold flex items-center gap-1.5">
                         <i class="fa-brands fa-github"></i> Repo
                     </a>
-                    <a href="it_asset.html" target="_blank" class="bg-purple-600 hover:bg-purple-500 text-white font-bold text-xs px-3.5 py-2.5 rounded-xl transition flex items-center gap-1.5 shadow-lg shadow-purple-500/20">
+                    <a href="it_asset.html" target="_blank" class="bg-purple-600 hover:bg-purple-500 text-white font-bold text-xs px-4 py-2.5 rounded-xl transition flex items-center gap-1.5 shadow-lg shadow-purple-500/20">
                         Chạy App IT <i class="fa-solid fa-qrcode text-[10px]"></i>
                     </a>
                 </div>
@@ -155,8 +210,8 @@
     </div>
 
     <!-- Footer -->
-    <div class="text-center text-xs text-slate-500 py-8 border-t border-slate-800 max-w-7xl mx-auto w-full mt-8">
-        © 2026 **Le Vu Tuong** - Supply Chain & Warehouse Command Center • Single Unified GitHub Repository
-    </div>
+    <footer class="text-center text-xs text-slate-500 py-8 border-t border-slate-800 max-w-7xl mx-auto w-full mt-10">
+        © 2026 **Le Vu Tuong** - Enterprise Supply Chain & Warehouse Command Center • Designed & Engineered with Antigravity AI
+    </footer>
 </body>
 </html>
