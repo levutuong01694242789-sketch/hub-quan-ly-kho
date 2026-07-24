@@ -1,5 +1,5 @@
 // Procurement Supplier Intelligence & Price Comparison Logic
-// Focuses strictly on 2 Domains: Agri/Flours (254 items) & Additives/Chemicals (114 items)
+// Supports Web Drag & Drop Excel Upload & Browser Parsing via SheetJS
 
 document.addEventListener('DOMContentLoaded', () => {
     // State variables
@@ -20,9 +20,16 @@ document.addEventListener('DOMContentLoaded', () => {
     const displayFilterCount = document.getElementById('display-filter-count');
     const procurementGrid = document.getElementById('procurement-grid');
 
-    // DOM Elements - Modal
+    // DOM Elements - Supplier Modal
     const modalOverlay = document.getElementById('supplier-detail-modal');
     const btnCloseModal = document.getElementById('btn-close-modal');
+
+    // DOM Elements - Upload Modal
+    const btnOpenUploadModal = document.getElementById('btn-open-upload-modal');
+    const uploadModalOverlay = document.getElementById('excel-upload-modal');
+    const btnCloseUploadModal = document.getElementById('btn-close-upload-modal');
+    const dragDropArea = document.getElementById('drag-drop-area');
+    const fileExcelInput = document.getElementById('file-excel-input');
 
     // --------------------------------------------------------------------------
     // 1. THEME SWITCHER
@@ -159,7 +166,7 @@ document.addEventListener('DOMContentLoaded', () => {
             item.suppliers.forEach(s => {
                 const isBestClass = s.is_best_price ? 'best' : '';
                 const bestBadge = s.is_best_price ? '<span class="badge-best-price"><i class="fa-solid fa-tag"></i> Giá Rẻ Nhất</span>' : '';
-                const userBadge = s.is_user_added ? '<span style="background: rgba(168,85,247,0.2); color: #c084fc; border: 1px solid #c084fc; padding: 2px 6px; border-radius: 4px; font-size: 9px; font-weight: 800; margin-left: 4px;">Mới Thêm</span>' : '';
+                const userBadge = s.is_user_added ? '<span style="background: rgba(168,85,247,0.2); color: #c084fc; border: 1px solid #c084fc; padding: 2px 6px; border-radius: 4px; font-size: 9px; font-weight: 800; margin-left: 4px;">Mới Nạp</span>' : '';
                 
                 supsRows += `
                     <tr>
@@ -264,6 +271,128 @@ document.addEventListener('DOMContentLoaded', () => {
     modalOverlay.addEventListener('click', (e) => {
         if (e.target === modalOverlay) modalOverlay.classList.remove('active');
     });
+
+    // --------------------------------------------------------------------------
+    // 6. WEB DRAG & DROP EXCEL UPLOAD PARSING (SHEETJS)
+    // --------------------------------------------------------------------------
+    btnOpenUploadModal.addEventListener('click', () => uploadModalOverlay.classList.add('active'));
+    btnCloseUploadModal.addEventListener('click', () => uploadModalOverlay.classList.remove('active'));
+    uploadModalOverlay.addEventListener('click', (e) => {
+        if (e.target === uploadModalOverlay) uploadModalOverlay.classList.remove('active');
+    });
+
+    dragDropArea.addEventListener('dragover', (e) => {
+        e.preventDefault();
+        dragDropArea.style.borderColor = '#22c55e';
+    });
+
+    dragDropArea.addEventListener('dragleave', () => {
+        dragDropArea.style.borderColor = '#0284c7';
+    });
+
+    dragDropArea.addEventListener('drop', (e) => {
+        e.preventDefault();
+        dragDropArea.style.borderColor = '#0284c7';
+        if (e.dataTransfer.files && e.dataTransfer.files.length > 0) {
+            handleUploadedExcelFile(e.dataTransfer.files[0]);
+        }
+    });
+
+    fileExcelInput.addEventListener('change', (e) => {
+        if (e.target.files && e.target.files.length > 0) {
+            handleUploadedExcelFile(e.target.files[0]);
+        }
+    });
+
+    function handleUploadedExcelFile(file) {
+        if (!typeof XLSX !== 'undefined') {
+            alert('Đang tải thư viện xử lý Excel SheetJS, vui lòng thử lại sau 2 giây...');
+            return;
+        }
+
+        const reader = new FileReader();
+        reader.onload = (e) => {
+            try {
+                const data = new Uint8Array(e.target.result);
+                const workbook = XLSX.read(data, { type: 'array' });
+                const firstSheetName = workbook.SheetNames[0];
+                const worksheet = workbook.Sheets[firstSheetName];
+                const jsonRows = XLSX.utils.sheet_to_json(worksheet);
+
+                if (!jsonRows || jsonRows.length === 0) {
+                    alert('❌ File Excel không chứa dữ liệu!');
+                    return;
+                }
+
+                let updatedCount = 0;
+                jsonRows.forEach((row, idx) => {
+                    const mCode = String(row['Mã Hàng'] || row['MÃ HÀNG'] || row['Mã Vật Tư'] || '').trim();
+                    const cName = String(row['Tên Công Ty NCC Mới'] || row['Tên NCC'] || row['Nhà Cung Cấp'] || '').trim();
+                    const priceVal = parseFloat(row['Báo Giá Mới (VND)'] || row['Báo Giá'] || row['Đơn Giá'] || 0);
+
+                    if (mCode && cName && priceVal > 0) {
+                        const targetItem = allItemsList.find(x => x.item_code === mCode);
+                        if (targetItem) {
+                            updatedCount++;
+                            const newSupRec = {
+                                supplier_id: `SUP-WEB-${Date.now()}-${idx}`,
+                                company_name: cName,
+                                mst: String(row['Mã Số Thuế'] || 'N/A'),
+                                address: 'Cập nhật từ Web Upload',
+                                city: 'TP. Hồ Chí Minh',
+                                region: 'Miền Nam',
+                                phone: String(row['SĐT Hotline'] || row['SĐT'] || 'N/A'),
+                                sales_exec: 'Kinh Doanh Báo Giá',
+                                email: String(row['Email Lien He'] || row['Email'] || 'N/A'),
+                                website: 'https://supplier.vn',
+                                certs: ['ISO 22000', 'HACCP'],
+                                payment_terms: String(row['Điều Khoản Công Nợ'] || row['Điều Khoản'] || 'Công nợ 30 ngày'),
+                                packing: String(row['Quy Cách Đóng Gói'] || row['Quy Cách'] || 'Bao 25kg'),
+                                moq: parseInt(row['Số Lượng Tối Thiểu MOQ'] || row['MOQ'] || 100),
+                                rank: 'Hạng A (Web Upload Báo Giá Mới)',
+                                unit_price: priceVal,
+                                is_best_price: false,
+                                is_user_added: true
+                            };
+
+                            targetItem.suppliers.push(newSupRec);
+
+                            // Recalculate best price
+                            let minP = floatMax();
+                            let minSupName = '';
+                            targetItem.suppliers.forEach(s => {
+                                s.is_best_price = false;
+                                if (s.unit_price < minP) {
+                                    minP = s.unit_price;
+                                    minSupName = s.company_name;
+                                }
+                            });
+                            targetItem.best_price = minP;
+                            targetItem.best_supplier_name = minSupName;
+                            targetItem.suppliers_count = targetItem.suppliers.length;
+                            targetItem.suppliers.forEach(s => {
+                                if (s.unit_price === minP) s.is_best_price = true;
+                            });
+                        }
+                    }
+                });
+
+                function floatMax() { return 9999999999; }
+
+                uploadModalOverlay.classList.remove('active');
+                if (currentSupplierData) {
+                    currentSupplierData.timestamp = new Date().toLocaleString('vi-VN');
+                }
+                applyProcurementFilters();
+
+                alert(`🎉 ĐÃ NẠP THÀNH CÔNG ${updatedCount} BÁO GIÁ MỚI VÀO WEB APP! Bảng so sánh giá đã được tự động cập nhật.`);
+
+            } catch (err) {
+                alert('❌ Lỗi đọc file Excel: ' + err.message);
+            }
+        };
+        reader.readAsArrayBuffer(file);
+    }
 
     txtSearch.addEventListener('input', applyProcurementFilters);
     selCert.addEventListener('change', applyProcurementFilters);

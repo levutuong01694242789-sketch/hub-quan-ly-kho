@@ -10,6 +10,9 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Outfit:wght@500;700;800;900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
+    <!-- SheetJS library for parsing and exporting Excel directly in browser -->
+    <script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
+
     <!-- Embedded Supplier Data -->
     <script src="supplier_data.js"></script>
 
@@ -46,9 +49,15 @@
                 </div>
             </div>
 
-            <div style="display: flex; align-items: center; gap: 16px;">
+            <div style="display: flex; align-items: center; gap: 12px; flex-wrap: wrap;">
+                <!-- Web Upload Excel Button -->
+                <button id="btn-open-upload-modal" class="theme-toggle-btn" style="background: linear-gradient(135deg, #0284c7, #0369a1); border: 1px solid #38bdf8;" title="Nạp / Cập nhật báo giá mới từ file Excel">
+                    <i class="fa-solid fa-cloud-arrow-up"></i>
+                    <span>📤 Nạp Báo Giá Excel Mới</span>
+                </button>
+
                 <!-- Download Excel Report Button -->
-                <a href="BAO_CAO_SO_SANH_GIA_NHA_CUNG_CAP.xlsx" download class="theme-toggle-btn" style="background: linear-gradient(135deg, #16a34a, #15803d); text-decoration: none;" title="Tải báo cáo so sánh giá Excel">
+                <a href="BAO_CAO_SO_SANH_GIA_NHA_CUNG_CAP.xlsx" download id="btn-download-excel-report" class="theme-toggle-btn" style="background: linear-gradient(135deg, #16a34a, #15803d); text-decoration: none;" title="Tải báo cáo so sánh giá Excel">
                     <i class="fa-solid fa-file-excel"></i>
                     <span>Tải Báo Cáo Excel</span>
                 </a>
@@ -91,7 +100,6 @@
                     <label><i class="fa-solid fa-location-dot"></i> Lọc Theo Tỉnh Thành / Khu Vực NCC:</label>
                     <select id="sel-region">
                         <option value="ALL">Tất cả Khu vực (TP.HCM, Hà Nội, Bình Dương, Đồng Nai...)</option>
-
                     </select>
                 </div>
 
@@ -129,6 +137,37 @@
 
     </main>
 
+    <!-- WEB UPLOAD EXCEL MODAL -->
+    <div id="excel-upload-modal" class="modal-overlay">
+        <div class="modal-content" style="max-width: 600px;">
+            <button class="modal-close" id="btn-close-upload-modal"><i class="fa-solid fa-xmark"></i></button>
+            
+            <div style="display: flex; align-items: center; gap: 16px; margin-bottom: 16px;">
+                <div style="width: 48px; height: 48px; background: #0284c7; border-radius: 12px; display: flex; align-items: center; justify-content: center; color: #fff; font-size: 22px;">
+                    <i class="fa-solid fa-cloud-arrow-up"></i>
+                </div>
+                <div>
+                    <h2 style="font-family: var(--font-heading); font-size: 18px; font-weight: 800;">NẠP BÁO GIÁ EXCEL TRỰC TIẾP TRÊN WEB</h2>
+                    <p style="font-size: 12px; color: var(--text-secondary);">Cập nhật tức thì Nhà cung cấp mới hoặc bảng giá mới từ bất kỳ đâu!</p>
+                </div>
+            </div>
+
+            <div style="border: 2px dashed #0284c7; background: rgba(2, 132, 199, 0.08); padding: 32px 20px; border-radius: 16px; text-align: center; margin-bottom: 20px; cursor: pointer;" id="drag-drop-area">
+                <i class="fa-solid fa-file-excel" style="font-size: 48px; color: #38bdf8; margin-bottom: 12px; display: block;"></i>
+                <h3 style="font-size: 14px; font-weight: 700; color: var(--text-primary);">Kéo - Thả Tệp Báo Giá Excel Vào Đây</h3>
+                <p style="font-size: 12px; color: var(--text-muted); margin-top: 4px;">hoặc bấm chọn tệp Excel từ máy tính / điện thoại của bạn</p>
+                <input type="file" id="file-excel-input" accept=".xlsx, .xls" style="display: none;">
+                <button type="button" class="btn-view-sup" style="margin-top: 16px; padding: 8px 20px; font-size: 13px;" onclick="document.getElementById('file-excel-input').click()">
+                    <i class="fa-solid fa-folder-open"></i> Chọn Tệp Excel...
+                </button>
+            </div>
+
+            <div style="font-size: 12px; color: var(--text-secondary); background: var(--bg-primary); padding: 12px 16px; border-radius: 8px; border: 1px solid var(--border-color);">
+                <i class="fa-solid fa-circle-info text-amber"></i> <strong>Định dạng hỗ trợ:</strong> Tệp Excel chứa các cột `Mã Hàng`, `Tên Nguyên Liệu`, `Tên NCC`, `Báo Giá` (VND), `SĐT`, `Điều Khoản`... Hệ thống sẽ tự động cập nhật ngay trên giao diện Web App.
+            </div>
+        </div>
+    </div>
+
     <!-- SUPPLIER DETAIL MODAL TOOLTIP -->
     <div id="supplier-detail-modal" class="modal-overlay">
         <div class="modal-content">
@@ -150,7 +189,7 @@
                     <span id="modal-sup-address" style="font-size: 13px; font-weight: 700;">TP.HCM</span>
                 </div>
                 <div>
-                    <span style="font-size: 11px; color: var(--text-muted); display block;">SĐT Hotline:</span>
+                    <span style="font-size: 11px; color: var(--text-muted); display: block;">SĐT Hotline:</span>
                     <span id="modal-sup-phone" style="font-size: 13px; font-weight: 800; color: var(--accent-green);">0903.123.456</span>
                 </div>
                 <div>
