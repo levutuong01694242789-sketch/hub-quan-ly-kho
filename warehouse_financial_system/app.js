@@ -397,7 +397,7 @@ document.addEventListener('DOMContentLoaded', () => {
             consumablesCost: 22000000,
             equipmentCost: 112000000,
             carryingCost: 450000000,
-            actualOpex: 702500000, // Facility + Labor + Consumables + Equipment
+            actualOpex: 702500000,
             actualKg: 440000,
             palletLoss: 3.2,
             timestamp: '31/05/2026 17:30',
@@ -494,40 +494,45 @@ document.addEventListener('DOMContentLoaded', () => {
         alert(`🎉 ĐÃ BÓC TÁCH VÀ GHI NHẬN THÀNH CÔNG P&L THÁNG ${mo}/${yr}!\nTổng OPEX Vận Hành Kho: ${totalActualOpex.toLocaleString()} VND.`);
     });
 
-    // DOWNLOAD EXCEL HISTORY FILE
+    // FIXED DOWNLOAD EXCEL HISTORY FILE (.push() instead of .append())
     btnExportLedgerExcel.addEventListener('click', () => {
-        if (typeof XLSX === 'undefined') {
-            alert('Đang nạp thư viện Excel...');
-            return;
+        try {
+            if (typeof XLSX === 'undefined') {
+                alert('Đang nạp thư viện SheetJS, vui lòng thử lại...');
+                return;
+            }
+
+            const wsData = [
+                ["NHẬT KÝ BÓC TÁCH CHI PHÍ VẬN HÀNH KHO & SO SÁNH VARIANCE HÀNG THÁNG"],
+                ["KỲ BÁO CÁO", "NGUỒN GỐC DỮ LIỆU", "MẶT BẰNG & ĐIỆN NƯỚC (VND)", "QUỸ LƯƠNG 29 NGƯỜI (VND)", "VẬT TƯ & MÀNG PE (VND)", "XE NÂNG & PALLET (VND)", "GIAM VỐN CARRYING (VND)", "TỔNG OPEX THỰC TẾ (VND)", "ĐƠN GIÁ / KG (VND)", "BỂ PALLET (%)", "GHI CHÚ AUDIT KAIZEN", "THỜI GIAN GHI NHẬN"]
+            ];
+
+            auditRecords.forEach(r => {
+                const costKg = (r.actualOpex / r.actualKg).toFixed(2);
+                wsData.push([
+                    r.periodLabel,
+                    r.sourceName,
+                    r.facilityCost,
+                    r.laborCost,
+                    r.consumablesCost,
+                    r.equipmentCost,
+                    r.carryingCost,
+                    r.actualOpex,
+                    parseFloat(costKg),
+                    r.palletLoss,
+                    r.notes,
+                    r.timestamp || ''
+                ]);
+            });
+
+            const wb = XLSX.utils.book_new();
+            const ws = XLSX.utils.aoa_to_sheet(wsData);
+            XLSX.utils.book_append_sheet(wb, ws, "Lịch Sử Audit P&L");
+            XLSX.writeFile(wb, "NHAT_KY_SO_SANH_CHI_PHI_KHO_HANG_THANG.xlsx");
+            
+        } catch (err) {
+            alert('❌ Lỗi xuất file Excel: ' + err.message);
         }
-
-        const wb = XLSX.utils.book_new();
-        const wsData = [
-            ["NHẬT KÝ BÓC TÁCH CHI PHÍ VẬN HÀNH KHO & SO SÁNH VARIANCE HÀNG THÁNG"],
-            ["KỲ BÁO CÁO", "NGUỒN GỐC DỮ LIỆU", "MẶT BẰNG & ĐIỆN NƯỚC (VND)", "QUỸ LƯƠNG 29 NGƯỜI (VND)", "VẬT TƯ & MÀNG PE (VND)", "XE NÂNG & PALLET (VND)", "GIAM VỐN CARRYING (VND)", "TỔNG OPEX THỰC TẾ (VND)", "ĐƠN GIÁ / KG (VND)", "BỂ PALLET (%)", "GHI CHÚ AUDIT KAIZEN", "THỜI GIAN GHI NHẬN"]
-        ];
-
-        auditRecords.forEach(r => {
-            const costKg = (r.actualOpex / r.actualKg).toFixed(2);
-            wsData.append([
-                r.periodLabel,
-                r.sourceName,
-                r.facilityCost,
-                r.laborCost,
-                r.consumablesCost,
-                r.equipmentCost,
-                r.carryingCost,
-                r.actualOpex,
-                parseFloat(costKg),
-                r.palletLoss,
-                r.notes,
-                r.timestamp
-            ]);
-        });
-
-        const ws = XLSX.utils.aoa_to_sheet(wsData);
-        XLSX.utils.book_append_sheet(wb, ws, "Lịch Sử Audit P&L");
-        XLSX.writeFile(wb, "NHAT_KY_SO_SANH_CHI_PHI_KHO_HANG_THANG.xlsx");
     });
 
     function renderTrackingLedger() {
