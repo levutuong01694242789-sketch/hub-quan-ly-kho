@@ -21,6 +21,19 @@
         .glow-indigo { box-shadow: 0 0 35px rgba(99, 102, 241, 0.25); }
         .glow-emerald { box-shadow: 0 0 25px rgba(16, 185, 129, 0.3); }
         .glow-teal { box-shadow: 0 0 25px rgba(45, 212, 191, 0.3); }
+
+        .pin-modal-overlay {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: rgba(7, 10, 18, 0.85);
+            backdrop-filter: blur(16px);
+            z-index: 1000;
+            align-items: center;
+            justify-content: center;
+            padding: 1rem;
+        }
+        .pin-modal-overlay.active { display: flex; }
     </style>
 </head>
 <body class="selection:bg-indigo-500 selection:text-white min-h-screen flex flex-col justify-between">
@@ -31,13 +44,13 @@
             <span class="text-slate-400 text-[10px] font-black uppercase tracking-wider">Chuyển Ứng Dụng:</span>
             <a href="index.html" class="text-sky-400 bg-sky-500/20 border border-sky-400/40 px-3 py-1 rounded-lg flex items-center gap-1.5"><i class="fa-solid fa-house"></i> 🏠 Trang Chủ Hub</a>
             <a href="https://github.com/levutuong01694242789-sketch/hub-quan-ly-kho#readme" target="_blank" class="text-emerald-400 bg-emerald-500/25 hover:bg-emerald-500/40 border border-emerald-400/50 px-3.5 py-1 rounded-lg flex items-center gap-1.5 transition font-bold"><i class="fa-solid fa-book-open"></i> 📖 Trang Giới Thiệu Master</a>
+            <a href="enterprise-qr-asset-manager/index.html" target="_blank" class="text-blue-300 bg-blue-500/25 border border-blue-400/50 px-3.5 py-1 rounded-lg flex items-center gap-1.5 transition font-bold"><i class="fa-solid fa-print"></i> 🏢 Tài Sản & Tem QR In Nhiệt</a>
             <a href="he_thong_hop_nhat_fifo_sap/index.html" target="_blank" class="text-purple-400 bg-purple-500/15 hover:bg-purple-500/30 px-3 py-1 rounded-lg flex items-center gap-1.5 transition"><i class="fa-solid fa-wand-magic-sparkles"></i> 🌟 Hợp Nhất 1-Chạm</a>
             <a href="procurement_supplier_system/index.html" target="_blank" class="text-teal-300 bg-teal-500/20 hover:bg-teal-500/35 border border-teal-400/40 px-3 py-1 rounded-lg flex items-center gap-1.5 transition font-bold"><i class="fa-solid fa-truck-field"></i> 🛒 Thu Mua & Báo Giá NCC</a>
-            <a href="warehouse_financial_system/index.html" target="_blank" class="text-emerald-300 bg-emerald-500/25 hover:bg-emerald-500/40 border border-emerald-400/50 px-3.5 py-1 rounded-lg flex items-center gap-1.5 transition font-bold"><i class="fa-solid fa-sack-dollar"></i> 💰 Tài Chính & Chi Phí Kho</a>
-            <a href="wms_vdt_sap4hana/index.html" target="_blank" class="text-sky-300 bg-sky-500/15 hover:bg-sky-500/30 px-3 py-1 rounded-lg flex items-center gap-1.5 transition"><i class="fa-solid fa-table-cells-large"></i> 🏢 Kho Động 2D SAP</a>
-            <a href="mo_app_tru_kho.html" target="_blank" class="text-blue-300 bg-blue-500/15 hover:bg-blue-500/30 px-3 py-1 rounded-lg flex items-center gap-1.5 transition"><i class="fa-solid fa-chart-line"></i> 📊 Trữ Kho 3 Ngày & PO</a>
-            <a href="it_asset.html" target="_blank" class="text-purple-300 bg-purple-500/15 hover:bg-purple-500/30 px-3 py-1 rounded-lg flex items-center gap-1.5 transition"><i class="fa-solid fa-laptop-code"></i> 💻 IT Asset QR</a>
-            <a href="kiem_ke_kho.html" target="_blank" class="text-amber-300 bg-amber-500/15 hover:bg-amber-500/30 border border-amber-400/40 px-3 py-1 rounded-lg flex items-center gap-1.5 transition font-bold"><i class="fa-solid fa-boxes-packing"></i> 📋 Kiểm Kê Kho & Mô Phỏng</a>
+            <a href="warehouse_financial_system/index.html" target="_blank" class="text-emerald-300 bg-emerald-500/25 hover:bg-emerald-500/40 border border-emerald-400/50 px-3.5 py-1 rounded-lg flex items-center gap-1.5 transition font-bold"><i class="fa-solid fa-sack-dollar"></i> 💰 Tài Chính Kho</a>
+            <a href="wms_vdt_sap4hana/index.html" target="_blank" class="text-sky-300 bg-sky-500/15 hover:bg-sky-500/30 px-3 py-1 rounded-lg flex items-center gap-1.5 transition"><i class="fa-solid fa-table-cells-large"></i> 🏢 Kho 2D SAP</a>
+            <a href="mo_app_tru_kho.html" target="_blank" class="text-blue-300 bg-blue-500/15 hover:bg-blue-500/30 px-3 py-1 rounded-lg flex items-center gap-1.5 transition"><i class="fa-solid fa-chart-line"></i> 📊 Trữ Kho PO</a>
+            <a href="kiem_ke_kho.html" target="_blank" class="text-amber-300 bg-amber-500/15 hover:bg-amber-500/30 border border-amber-400/40 px-3 py-1 rounded-lg flex items-center gap-1.5 transition font-bold"><i class="fa-solid fa-boxes-packing"></i> 📋 Kiểm Kê Kho</a>
         </div>
         <div class="text-[11px] text-slate-400 hidden lg:block">
             <i class="fa-solid fa-user-check text-emerald-400"></i> SUPPLY CHAIN & LOGISTICS ARCHITECT
@@ -57,10 +70,10 @@
                 <div>
                     <div class="flex items-center gap-2 mb-1.5 flex-wrap">
                         <span class="bg-emerald-500/20 text-emerald-300 border border-emerald-500/40 text-[10px] font-black px-3 py-0.5 rounded-full uppercase tracking-wider">SAP S/4HANA EWM READY</span>
-                        <span class="bg-teal-500/20 text-teal-300 border border-teal-500/40 text-[10px] font-black px-3 py-0.5 rounded-full uppercase tracking-wider">8 Sub-System Suite</span>
+                        <span class="bg-teal-500/20 text-teal-300 border border-teal-500/40 text-[10px] font-black px-3 py-0.5 rounded-full uppercase tracking-wider">9 Sub-System Suite</span>
                     </div>
                     <h1 class="text-2xl sm:text-3xl font-extrabold text-white font-heading tracking-tight">TRUNG TÂM ỨNG DỤNG KHO VẬN & SUPPLY CHAIN COMMAND CENTER</h1>
-                    <p class="text-xs sm:text-sm text-slate-300 mt-1">Chuyên gia Quản lý Kho vận **SUPPLY CHAIN & LOGISTICS ARCHITECT** • Bộ Hệ Thống Chuẩn Hóa Logistics Nhà Máy & Thu Mua Nguyên Liệu</p>
+                    <p class="text-xs sm:text-sm text-slate-300 mt-1">Chuyên gia Quản lý Kho vận **SUPPLY CHAIN & LOGISTICS ARCHITECT** • Bộ Hệ Thống Chuẩn Hóa Logistics Nhà Máy, Tài Sản Doanh Nghiệp & Thu Mua Nguyên Liệu</p>
                 </div>
             </div>
 
@@ -77,7 +90,7 @@
                 <div class="text-indigo-400 text-2xl"><i class="fa-solid fa-layer-group"></i></div>
                 <div>
                     <span class="text-xs text-slate-400 font-semibold block uppercase">Phân Hệ Ứng Dụng</span>
-                    <span class="text-xl font-extrabold text-white font-heading">8 Phân Hệ</span>
+                    <span class="text-xl font-extrabold text-white font-heading">9 Phân Hệ</span>
                 </div>
             </div>
             <div class="glass-card p-5 rounded-2xl border-l-4 border-sky-500 flex items-center gap-4">
@@ -103,25 +116,43 @@
             </div>
         </div>
 
-        <!-- Section Title: ALL 7 SYSTEM MODULES -->
+        <!-- Section Title: ALL SYSTEM MODULES -->
         <div class="flex items-center justify-between pt-4 border-t border-slate-800">
             <h3 class="text-xl font-bold text-slate-100 font-heading flex items-center gap-3">
-                <i class="fa-solid fa-cubes-stacked text-emerald-400"></i> DANH SÁCH 7 PHÂN HỆ ỨNG DỤNG HỆ THỐNG
+                <i class="fa-solid fa-cubes-stacked text-emerald-400"></i> DANH SÁCH 9 PHÂN HỆ ỨNG DỤNG HỆ THỐNG
             </h3>
             <span class="text-xs text-slate-400">Bấm "Chạy Ứng Dụng" để mở trực tiếp từng hệ thống</span>
         </div>
 
-        <!-- Grid of All 6 Modules -->
+        <!-- Grid of All Modules -->
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             
-            <!-- Module 1: Hợp Nhất 1-Chạm -->
-            <div class="glass-card p-6 rounded-3xl shadow-xl hover:border-purple-500/60 transition group flex flex-col justify-between border-l-4 border-purple-500 glow-indigo">
+            <!-- Module 1: Enterprise Fixed Asset & Thermal Label Printer QR Manager (NỔI BẬT NÂNG CẤP) -->
+            <div class="glass-card p-6 rounded-3xl shadow-xl hover:border-blue-500/60 transition group flex flex-col justify-between border-l-4 border-blue-500 glow-indigo">
+                <div class="space-y-4">
+                    <div class="flex justify-between items-start">
+                        <span class="bg-blue-950 text-blue-300 border border-blue-500/30 text-[10px] font-black px-3 py-1 rounded-full uppercase">Enterprise Asset & Thermal Label</span>
+                        <i class="fa-solid fa-print text-slate-500 group-hover:text-blue-400 transition text-2xl"></i>
+                    </div>
+                    <h4 class="text-lg font-bold text-white group-hover:text-blue-300 transition font-heading">1. Quản Lý Tài Sản Doanh Nghiệp & Tem QR In Nhiệt</h4>
+                    <p class="text-xs text-slate-300 leading-relaxed">Giao diện Trắng Sáng (Light Theme) công sở, Quản lý 11.000+ Pallet & Thiết bị, Studio in tem nhãn nhiệt (50x30mm, 70x40mm, 100x50mm), Phân trang siêu tốc, Quét QR Camera & Xóa trắng dữ liệu bàn giao.</p>
+                </div>
+                <div class="pt-6 border-t border-slate-800/80 mt-6 flex justify-between items-center">
+                    <span class="text-[11px] text-blue-400 font-bold"><i class="fa-solid fa-lock text-blue-400 mr-1"></i> Khóa Bảo Mật PIN</span>
+                    <button onclick="promptPinForModule('enterprise-qr-asset-manager/index.html', 'Quản Lý Tài Sản Doanh Nghiệp & Tem QR In Nhiệt')" class="bg-blue-600 hover:bg-blue-500 text-white font-bold text-xs px-4 py-2.5 rounded-xl transition flex items-center gap-1.5 shadow-lg shadow-blue-500/20">
+                        Mở App Tài Sản <i class="fa-solid fa-arrow-up-right-from-square text-[10px]"></i>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Module 2: Hợp Nhất 1-Chạm -->
+            <div class="glass-card p-6 rounded-3xl shadow-xl hover:border-purple-500/60 transition group flex flex-col justify-between border-l-4 border-purple-500">
                 <div class="space-y-4">
                     <div class="flex justify-between items-start">
                         <span class="bg-purple-950 text-purple-300 border border-purple-500/30 text-[10px] font-black px-3 py-1 rounded-full uppercase">1-Click All-in-One</span>
                         <i class="fa-solid fa-wand-magic-sparkles text-slate-500 group-hover:text-purple-400 transition text-2xl"></i>
                     </div>
-                    <h4 class="text-lg font-bold text-white group-hover:text-purple-300 transition font-heading">1. Hệ Thống Hợp Nhất 1-Chạm (FIFO & SAP 2D)</h4>
+                    <h4 class="text-lg font-bold text-white group-hover:text-purple-300 transition font-heading">2. Hệ Thống Hợp Nhất 1-Chạm (FIFO & SAP 2D)</h4>
                     <p class="text-xs text-slate-300 leading-relaxed">Tự động kết nối 2 quy trình: Phân bổ FIFO ➔ Map 4,032 vị trí SAP & Vùng đệm ➔ Trừ tồn kho & Sơ đồ 2D trực quan.</p>
                 </div>
                 <div class="pt-6 border-t border-slate-800/80 mt-6 flex justify-between items-center">
@@ -132,14 +163,14 @@
                 </div>
             </div>
 
-            <!-- Module 2: Thu Mua & Báo Giá NCC -->
+            <!-- Module 3: Thu Mua & Báo Giá NCC -->
             <div class="glass-card p-6 rounded-3xl shadow-xl hover:border-teal-500/60 transition group flex flex-col justify-between border-l-4 border-teal-500 glow-teal">
                 <div class="space-y-4">
                     <div class="flex justify-between items-start">
                         <span class="bg-teal-950 text-teal-300 border border-teal-500/30 text-[10px] font-black px-3 py-1 rounded-full uppercase">Phân Hệ Thu Mua</span>
                         <i class="fa-solid fa-truck-field text-slate-500 group-hover:text-teal-400 transition text-2xl"></i>
                     </div>
-                    <h4 class="text-lg font-bold text-white group-hover:text-teal-300 transition font-heading">2. Tra Cứu Nhà Cung Cấp & Báo Giá Thu Mua</h4>
+                    <h4 class="text-lg font-bold text-white group-hover:text-teal-300 transition font-heading">3. Tra Cứu Nhà Cung Cấp & Báo Giá Thu Mua</h4>
                     <p class="text-xs text-slate-300 leading-relaxed">Nạp 366 mặt hàng, Danh bạ 5 NCC Việt Nam thực tế, Cập nhật xu hướng giá Live (🟢/🔴/⚪) 2 mảng Nông sản & Phụ gia.</p>
                 </div>
                 <div class="pt-6 border-t border-slate-800/80 mt-6 flex justify-between items-center">
@@ -150,14 +181,14 @@
                 </div>
             </div>
 
-            <!-- Module 3: Kho Động SAP S/4HANA 2D Matrix -->
+            <!-- Module 4: Kho Động SAP S/4HANA 2D Matrix -->
             <div class="glass-card p-6 rounded-3xl shadow-xl hover:border-sky-500/60 transition group flex flex-col justify-between border-l-4 border-sky-500">
                 <div class="space-y-4">
                     <div class="flex justify-between items-start">
                         <span class="bg-sky-950 text-sky-400 border border-sky-500/30 text-[10px] font-black px-3 py-1 rounded-full uppercase">Ma Trận Kho 2D</span>
                         <i class="fa-solid fa-table-cells-large text-slate-500 group-hover:text-sky-400 transition text-2xl"></i>
                     </div>
-                    <h4 class="text-lg font-bold text-white group-hover:text-sky-400 transition font-heading">3. Kho Động SAP S/4HANA & Vùng Đệm Sàn</h4>
+                    <h4 class="text-lg font-bold text-white group-hover:text-sky-400 transition font-heading">4. Kho Động SAP S/4HANA & Vùng Đệm Sàn</h4>
                     <p class="text-xs text-slate-300 leading-relaxed">Sơ đồ ma trận 4,032 ô kệ cao tầng (Dãy A-H) + 6 Vùng đệm sàn (TW/VW/VL). Thống kê bóc tách 9 đơn vị tính.</p>
                 </div>
                 <div class="pt-6 border-t border-slate-800/80 mt-6 flex justify-between items-center">
@@ -168,14 +199,14 @@
                 </div>
             </div>
 
-            <!-- Module 4: Trữ Kho 3 Ngày & Đơn Mua PO -->
+            <!-- Module 5: Trữ Kho 3 Ngày & Đơn Mua PO -->
             <div class="glass-card p-6 rounded-3xl shadow-xl hover:border-blue-500/60 transition group flex flex-col justify-between border-l-4 border-blue-500">
                 <div class="space-y-4">
                     <div class="flex justify-between items-start">
                         <span class="bg-blue-950 text-blue-400 border border-blue-500/30 text-[10px] font-black px-3 py-1 rounded-full uppercase">Kế Hoạch Mua Hàng</span>
                         <i class="fa-solid fa-chart-line text-slate-500 group-hover:text-blue-400 transition text-2xl"></i>
                     </div>
-                    <h4 class="text-lg font-bold text-white group-hover:text-blue-400 transition font-heading">4. Định Mức Trữ Kho 3 Ngày & Đặt Hàng PO</h4>
+                    <h4 class="text-lg font-bold text-white group-hover:text-blue-400 transition font-heading">5. Định Mức Trữ Kho 3 Ngày & Đặt Hàng PO</h4>
                     <p class="text-xs text-slate-300 leading-relaxed">Tự động tính điểm ROP, định mức trữ kho 3 ngày và xuất báo cáo Đơn mua hàng PO Excel chuẩn phòng kế hoạch.</p>
                 </div>
                 <div class="pt-6 border-t border-slate-800/80 mt-6 flex justify-between items-center">
@@ -186,32 +217,32 @@
                 </div>
             </div>
 
-            <!-- Module 5: IT Asset QR Manager -->
+            <!-- Module 6: IT Asset QR Manager -->
             <div class="glass-card p-6 rounded-3xl shadow-xl hover:border-purple-500/60 transition group flex flex-col justify-between border-l-4 border-purple-500">
                 <div class="space-y-4">
                     <div class="flex justify-between items-start">
                         <span class="bg-purple-950 text-purple-400 border border-purple-500/30 text-[10px] font-black px-3 py-1 rounded-full uppercase">Quản Lý Tài Sản IT</span>
                         <i class="fa-solid fa-laptop-code text-slate-500 group-hover:text-purple-400 transition text-2xl"></i>
                     </div>
-                    <h4 class="text-lg font-bold text-white group-hover:text-purple-400 transition font-heading">5. Quản Lý Tài Sản IT & Quét Mã QR</h4>
+                    <h4 class="text-lg font-bold text-white group-hover:text-purple-400 transition font-heading">6. Quản Lý Tài Sản IT & Quét Mã QR</h4>
                     <p class="text-xs text-slate-300 leading-relaxed">Quản lý cấp phát Laptop, Máy in, Thiết bị mạng, quét mã QR qua Camera điện thoại & in tem nhãn tài sản.</p>
                 </div>
                 <div class="pt-6 border-t border-slate-800/80 mt-6 flex justify-between items-center">
-                    <span class="text-[11px] text-slate-400"><i class="fa-solid fa-qrcode text-purple-400 mr-1"></i> Quét QR Camera</span>
-                    <a href="it_asset.html" target="_blank" class="bg-purple-600 hover:bg-purple-500 text-white font-bold text-xs px-4 py-2.5 rounded-xl transition flex items-center gap-1.5 shadow-lg shadow-purple-500/20">
-                        Chạy App IT <i class="fa-solid fa-arrow-up-right-from-square text-[10px]"></i>
-                    </a>
+                    <span class="text-[11px] text-purple-400 font-bold"><i class="fa-solid fa-lock text-purple-400 mr-1"></i> Khóa Bảo Mật PIN</span>
+                    <button onclick="promptPinForModule('it_asset.html', 'Quản Lý Tài Sản IT & Quét Mã QR')" class="bg-purple-600 hover:bg-purple-500 text-white font-bold text-xs px-4 py-2.5 rounded-xl transition flex items-center gap-1.5 shadow-lg shadow-purple-500/20">
+                        Mở App IT <i class="fa-solid fa-arrow-up-right-from-square text-[10px]"></i>
+                    </button>
                 </div>
             </div>
 
-            <!-- Module 6: Engine FIFO Xuất Kho -->
+            <!-- Module 7: Engine FIFO Xuất Kho -->
             <div class="glass-card p-6 rounded-3xl shadow-xl hover:border-amber-500/60 transition group flex flex-col justify-between border-l-4 border-amber-500">
                 <div class="space-y-4">
                     <div class="flex justify-between items-start">
                         <span class="bg-amber-950 text-amber-400 border border-amber-500/30 text-[10px] font-black px-3 py-1 rounded-full uppercase">Engine FIFO Độc Lập</span>
                         <i class="fa-solid fa-boxes-packing text-slate-500 group-hover:text-amber-400 transition text-2xl"></i>
                     </div>
-                    <h4 class="text-lg font-bold text-white group-hover:text-amber-400 transition font-heading">6. Engine Phân Bổ Xuất Kho FIFO Tự Động</h4>
+                    <h4 class="text-lg font-bold text-white group-hover:text-amber-400 transition font-heading">7. Engine Phân Bổ Xuất Kho FIFO Tự Động</h4>
                     <p class="text-xs text-slate-300 leading-relaxed">Engine Python độc lập tự động ghép nối nhu cầu xuất hàng với tồn kho thực tế theo nguyên tắc FIFO & xuất Excel.</p>
                 </div>
                 <div class="pt-6 border-t border-slate-800/80 mt-6 flex justify-between items-center">
@@ -224,42 +255,64 @@
                 </div>
             </div>
 
-            <!-- Module 7: Tài Chính & Chi Phí Vận Hành Kho -->
+            <!-- Module 8: Tài Chính & Chi Phí Vận Hành Kho -->
             <div class="glass-card p-6 rounded-3xl shadow-xl hover:border-emerald-500/60 transition group flex flex-col justify-between border-l-4 border-emerald-500 glow-emerald">
                 <div class="space-y-4">
                     <div class="flex justify-between items-start">
                         <span class="bg-emerald-950 text-emerald-300 border border-emerald-500/30 text-[10px] font-black px-3 py-1 rounded-full uppercase">Dynamic P&L Command Center</span>
                         <i class="fa-solid fa-sack-dollar text-slate-500 group-hover:text-emerald-400 transition text-2xl"></i>
                     </div>
-                    <h4 class="text-lg font-bold text-white group-hover:text-emerald-300 transition font-heading">7. Quản Trị Tài Chính & Chi Phí Vận Hành Kho</h4>
+                    <h4 class="text-lg font-bold text-white group-hover:text-emerald-300 transition font-heading">8. Quản Trị Tài Chính & Chi Phí Vận Hành Kho</h4>
                     <p class="text-xs text-slate-300 leading-relaxed">Báo cáo P&L bóc tách 5 nhóm chi phí kho, Khấu hao & hao hụt 4,038 Pallet nhựa ống sắt, Quỹ lương ca 12h, Công thức toán & Nhật ký Variance Hàng tháng.</p>
                 </div>
                 <div class="pt-6 border-t border-slate-800/80 mt-6 flex justify-between items-center">
-                    <span class="text-[11px] text-emerald-400"><i class="fa-solid fa-shield-halved text-emerald-400 mr-1"></i> Truy Cập Bảo Mật</span>
-                    <a href="warehouse_financial_system/index.html" target="_blank" class="bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-xs px-4 py-2.5 rounded-xl transition flex items-center gap-1.5 shadow-lg shadow-emerald-500/20">
-                        Chạy Web Tài Chính <i class="fa-solid fa-arrow-up-right-from-square text-[10px]"></i>
-                    </a>
+                    <span class="text-[11px] text-emerald-400 font-bold"><i class="fa-solid fa-lock text-emerald-400 mr-1"></i> Khóa Bảo Mật PIN</span>
+                    <button onclick="promptPinForModule('warehouse_financial_system/index.html', 'Quản Trị Tài Chính & Chi Phí Vận Hành Kho')" class="bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-xs px-4 py-2.5 rounded-xl transition flex items-center gap-1.5 shadow-lg shadow-emerald-500/20">
+                        Mở Web Tài Chính <i class="fa-solid fa-arrow-up-right-from-square text-[10px]"></i>
+                    </button>
                 </div>
             </div>
 
-            <!-- Module 8: Kiểm Kê Kho & Mô Phỏng Chuyển Động Đa Công Ty -->
+            <!-- Module 9: Kiểm Kê Kho & Mô Phỏng Chuyển Động Đa Công Ty -->
             <div class="glass-card p-6 rounded-3xl shadow-xl hover:border-amber-500/60 transition group flex flex-col justify-between border-l-4 border-amber-500 glow-teal">
                 <div class="space-y-4">
                     <div class="flex justify-between items-start">
                         <span class="bg-amber-950 text-amber-300 border border-amber-500/30 text-[10px] font-black px-3 py-1 rounded-full uppercase">Kiểm Kê Đa Công Ty</span>
                         <i class="fa-solid fa-boxes-packing text-slate-500 group-hover:text-amber-400 transition text-2xl"></i>
                     </div>
-                    <h4 class="text-lg font-bold text-white group-hover:text-amber-300 transition font-heading">8. Kiểm Kê Kho & Mô Phỏng Chuyển Động SVG</h4>
+                    <h4 class="text-lg font-bold text-white group-hover:text-amber-300 transition font-heading">9. Kiểm Kê Kho & Mô Phỏng Chuyển Động SVG</h4>
                     <p class="text-xs text-slate-300 leading-relaxed">Tự động hóa 100% Kế hoạch kiểm kê & Sơ đồ mô phỏng chuyển động SVG cho 12 kho thuộc LCFOODS, KMSVINA & VẠN ĐẠT THÀNH.</p>
                 </div>
                 <div class="pt-6 border-t border-slate-800/80 mt-6 flex justify-between items-center">
-                    <span class="text-[11px] text-amber-400"><i class="fa-solid fa-lock text-amber-400 mr-1"></i> Khóa Bảo Mật PIN</span>
-                    <a href="kiem_ke_kho.html" target="_blank" class="bg-amber-600 hover:bg-amber-500 text-white font-bold text-xs px-4 py-2.5 rounded-xl transition flex items-center gap-1.5 shadow-lg shadow-amber-500/20">
+                    <span class="text-[11px] text-amber-400 font-bold"><i class="fa-solid fa-lock text-amber-400 mr-1"></i> Khóa Bảo Mật PIN</span>
+                    <button onclick="promptPinForModule('kiem_ke_kho.html', 'Kiểm Kê Kho & Mô Phỏng Chuyển Động SVG')" class="bg-amber-600 hover:bg-amber-500 text-white font-bold text-xs px-4 py-2.5 rounded-xl transition flex items-center gap-1.5 shadow-lg shadow-amber-500/20">
                         Chạy Kiểm Kê Kho <i class="fa-solid fa-arrow-up-right-from-square text-[10px]"></i>
-                    </a>
+                    </button>
                 </div>
             </div>
 
+        </div>
+    </div>
+
+    <!-- PIN SECURITY LOCK MODAL -->
+    <div class="pin-modal-overlay" id="pin-modal">
+        <div class="glass-card p-6 sm:p-8 rounded-3xl max-w-sm w-full text-center border border-slate-700 shadow-2xl relative">
+            <div class="w-14 h-14 bg-indigo-600/20 border border-indigo-500/40 rounded-2xl flex items-center justify-center text-indigo-400 text-2xl mx-auto mb-4">
+                <i class="fa-solid fa-shield-halved"></i>
+            </div>
+            
+            <h3 class="text-lg font-bold text-white font-heading mb-1" id="pin-modal-title">Xác Thực Mã PIN Bảo Mật</h3>
+            <p class="text-xs text-slate-400 mb-6" id="pin-modal-subtitle">Vui lòng nhập mã PIN bảo mật quản trị viên để mở phân hệ ứng dụng này</p>
+
+            <div class="space-y-4 mb-6">
+                <input type="password" id="input-pin-code" maxlength="8" placeholder="Nhập mã PIN truy cập..." class="w-full text-center tracking-widest text-lg font-extrabold bg-slate-900/90 border border-slate-700 rounded-xl py-3 text-white outline-none focus:border-indigo-500">
+                <p class="text-[11px] text-rose-400 hidden" id="pin-error-msg">⚠️ Mã PIN không đúng. Vui lòng thử lại!</p>
+            </div>
+
+            <div class="flex gap-2">
+                <button onclick="closePinModal()" class="w-1/2 py-2.5 rounded-xl border border-slate-700 text-slate-300 font-bold text-xs hover:bg-slate-800 transition">Hủy</button>
+                <button onclick="verifyPinAndRedirect()" class="w-1/2 py-2.5 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white font-bold text-xs shadow-lg shadow-indigo-600/30 transition">Xác Nhận →</button>
+            </div>
         </div>
     </div>
 
@@ -267,5 +320,40 @@
     <footer class="text-center text-xs text-slate-500 py-8 border-t border-slate-800 max-w-7xl mx-auto w-full mt-10">
         © 2026 **Supply Chain & Logistics Architect** - Enterprise Supply Chain & Warehouse Command Center • Designed & Engineered with Antigravity AI
     </footer>
+
+    <script>
+        let pendingRedirectUrl = '';
+
+        function promptPinForModule(targetUrl, moduleTitle) {
+            pendingRedirectUrl = targetUrl;
+            document.getElementById('pin-modal-title').textContent = moduleTitle;
+            document.getElementById('pin-modal-subtitle').textContent = 'Vui lòng nhập mã PIN quản trị viên để mở phân hệ này';
+            document.getElementById('input-pin-code').value = '';
+            document.getElementById('pin-error-msg').classList.add('hidden');
+            document.getElementById('pin-modal').classList.add('active');
+            setTimeout(() => document.getElementById('input-pin-code').focus(), 100);
+        }
+
+        function closePinModal() {
+            document.getElementById('pin-modal').classList.remove('active');
+            pendingRedirectUrl = '';
+        }
+
+        function verifyPinAndRedirect() {
+            const inputPin = document.getElementById('input-pin-code').value;
+            // Default PIN 8888 or custom admin PIN
+            if (inputPin === '8888' || inputPin === '1234' || inputPin === '2026') {
+                closePinModal();
+                window.open(pendingRedirectUrl, '_blank');
+            } else {
+                document.getElementById('pin-error-msg').classList.remove('hidden');
+            }
+        }
+
+        // Enter key listener on password input
+        document.getElementById('input-pin-code').addEventListener('keyup', function(e) {
+            if (e.key === 'Enter') verifyPinAndRedirect();
+        });
+    </script>
 </body>
 </html>

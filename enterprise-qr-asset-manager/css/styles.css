@@ -1,0 +1,172 @@
+/* Enterprise Fixed Asset & Label Printer QR Manager - Clean Light Design System */
+:root {
+  --bg-main: #f8fafc;
+  --bg-card: #ffffff;
+  --border-color: #e2e8f0;
+  --border-accent: #cbd5e1;
+  
+  --primary: #2563eb;
+  --primary-hover: #1d4ed8;
+  --primary-light: #eff6ff;
+  
+  --success: #059669;
+  --warning: #d97706;
+  --danger: #dc2626;
+  --info: #0284c7;
+  
+  --text-main: #0f172a;
+  --text-muted: #64748b;
+  --text-dim: #94a3b8;
+  
+  --radius-lg: 16px;
+  --radius-md: 10px;
+  --radius-sm: 6px;
+  --shadow-card: 0 4px 16px rgba(15, 23, 42, 0.05);
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: 'Inter', system-ui, -apple-system, sans-serif;
+  background-color: var(--bg-main);
+  color: var(--text-main);
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.glass-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-card);
+}
+
+/* Status Badges */
+.badge {
+  padding: 0.3rem 0.7rem;
+  border-radius: 20px;
+  font-size: 0.75rem;
+  font-weight: 700;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+}
+
+.badge-active { background: #dcfce7; color: #15803d; border: 1px solid #86efac; }
+.badge-spare { background: #e0f2fe; color: #0369a1; border: 1px solid #7dd3fc; }
+.badge-loaned { background: #fef3c7; color: #b45309; border: 1px solid #fde68a; }
+.badge-repair { background: #fee2e2; color: #b91c1c; border: 1px solid #fca5a5; }
+.badge-disposed { background: #f1f5f9; color: #64748b; border: 1px solid #cbd5e1; }
+
+/* Thermal Label Print Layout Styles */
+.label-preview-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  justify-content: center;
+  padding: 1.5rem;
+  background: #cbd5e1;
+  border-radius: var(--radius-md);
+}
+
+/* 50x30mm Standard Thermal Sticker Size (Exact Millimeter Bounds) */
+.label-sticker-50x30 {
+  width: 50mm;
+  height: 30mm;
+  background: #ffffff;
+  border: 1.5px solid #000000;
+  border-radius: 2mm;
+  padding: 1.5mm 2mm;
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  gap: 2mm;
+  color: #000000;
+  font-family: Arial, sans-serif;
+  overflow: hidden;
+  position: relative;
+  page-break-inside: avoid;
+  break-inside: avoid;
+}
+
+/* 70x40mm Medium Label Size */
+.label-sticker-70x40 {
+  width: 70mm;
+  height: 40mm;
+  background: #ffffff;
+  border: 1.5px solid #000000;
+  border-radius: 2.5mm;
+  padding: 2mm 3mm;
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  gap: 3mm;
+  color: #000000;
+  font-family: Arial, sans-serif;
+  overflow: hidden;
+  position: relative;
+  page-break-inside: avoid;
+  break-inside: avoid;
+}
+
+/* 100x50mm Large Asset Tag Size */
+.label-sticker-100x50 {
+  width: 100mm;
+  height: 50mm;
+  background: #ffffff;
+  border: 2px solid #000000;
+  border-radius: 3mm;
+  padding: 3mm 4mm;
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  gap: 4mm;
+  color: #000000;
+  font-family: Arial, sans-serif;
+  overflow: hidden;
+  position: relative;
+  page-break-inside: avoid;
+  break-inside: avoid;
+}
+
+/* Print CSS setup for Thermal Printers (Xprinter, TSC, Zebra) & A4 Decal Sheet */
+@media print {
+  @page {
+    margin: 0;
+  }
+  body {
+    background: #ffffff !important;
+    margin: 0 !important;
+    padding: 0 !important;
+  }
+  body * {
+    visibility: hidden;
+  }
+  #print-area, #print-area * {
+    visibility: visible;
+  }
+  #print-area {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    background: #ffffff !important;
+    padding: 2mm !important;
+    margin: 0 !important;
+  }
+  .label-preview-container {
+    background: transparent !important;
+    padding: 0 !important;
+    gap: 3mm !important;
+    justify-content: flex-start !important;
+  }
+  .label-sticker-50x30, .label-sticker-70x40, .label-sticker-100x50 {
+    border-color: #000000 !important;
+    box-shadow: none !important;
+  }
+}

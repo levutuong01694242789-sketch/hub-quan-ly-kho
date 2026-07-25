@@ -1,0 +1,1001 @@
+﻿Mã Tài Sản,Tên Thiết Bị,Danh Mục,Model/Kích Thước,Số Serial/Mã Lô,Phòng Ban,Vị Trí,Người Quản Lý,Trạng Thái,Nguyên Giá (VNĐ),Ngày Mua,Ghi Chú
+AST-00001,Bộ Máy Hàn TIG Điện Tử 250A #1,Dụng Cụ Công Nghiệp,Jasic TIG-250A,SN-2026-42814,DEPT-WAREHOUSE,Kho Dụng Cụ Kỹ Thuật - Ô 8,Trần Văn Nam,REPAIR,12452120,2026-01-02,Tài sản mẫu kiểm thử số 1
+AST-00002,Xe Nâng Điện Toyota 2.5 Tấn #2,Máy Móc Nhà Máy,Toyota 8FBN25,SN-2026-75033,DEPT-FACTORY,Nhà Máy A1 - Cầu Cảng - Ô 2,Nguyễn Văn Hùng,LOANED,420029540,2026-01-03,Tài sản mẫu kiểm thử số 2
+AST-00003,Pallet Nhựa 2 Mặt Tải Trọng Nặng #3,Pallet Nhựa,1200x1200x160mm,SN-2026-24119,DEPT-WAREHOUSE,Kho Hàng A1 - Kệ Heavy Duty - Ô 97,Phạm Thị Lan,ACTIVE,655500,2026-01-04,Tài sản mẫu kiểm thử số 3
+AST-00004,Máy In Tem Nhãn QR Code Thermal #4,Thiết Bị IT,Xprinter XP-420B,SN-2026-11875,DEPT-IT,Tầng 4 - Phòng IT - Ô 60,Nguyễn Thị Hoa,REPAIR,2799290,2026-01-05,Tài sản mẫu kiểm thử số 4
+AST-00005,Máy Nén Khí Piston 15HP #5,Máy Móc Nhà Máy,Pegasus T-15,SN-2026-84609,DEPT-FACTORY,Xưởng Cơ Khí A2 - Ô 18,Phạm Thị Lan,ACTIVE,34960380,2026-01-06,Tài sản mẫu kiểm thử số 5
+AST-00006,Ghế Xoay Lưới Công Trình Ergonomic #6,Thiết Bị Văn Phòng,Hòa Phát EG-01,SN-2026-63788,DEPT-OFFICE,Tầng 5 - Khối Văn Phòng - Ô 60,Lê Vũ Tường,ACTIVE,1893860,2026-01-07,Tài sản mẫu kiểm thử số 6
+AST-00007,Máy In Tem Nhãn QR Code Thermal #7,Thiết Bị IT,Xprinter XP-420B,SN-2026-53454,DEPT-IT,Tầng 4 - Phòng IT - Ô 89,Phạm Minh Đức,ACTIVE,2778320,2026-01-08,Tài sản mẫu kiểm thử số 7
+AST-00008,Ghế Xoay Lưới Công Trình Ergonomic #8,Thiết Bị Văn Phòng,Hòa Phát EG-01,SN-2026-41080,DEPT-OFFICE,Tầng 5 - Khối Văn Phòng - Ô 97,Phạm Minh Đức,SPARE,1892710,2026-01-09,Tài sản mẫu kiểm thử số 8
+AST-00009,Pallet Gỗ Thông Xuất Khẩu Euro #9,Pallet Gỗ,1200x800x144mm,SN-2026-83850,DEPT-WAREHOUSE,Kho Xuất Hàng C - Ô 18,Nguyễn Thị Hoa,ACTIVE,286260,2026-01-10,Tài sản mẫu kiểm thử số 9
+AST-00010,Ghế Xoay Lưới Công Trình Ergonomic #10,Thiết Bị Văn Phòng,Hòa Phát EG-01,SN-2026-47232,DEPT-OFFICE,Tầng 5 - Khối Văn Phòng - Ô 100,Lê Vũ Tường,ACTIVE,1860550,2026-01-11,Tài sản mẫu kiểm thử số 10
+AST-00011,Ghế Xoay Lưới Công Trình Ergonomic #11,Thiết Bị Văn Phòng,Hòa Phát EG-01,SN-2026-47030,DEPT-OFFICE,Tầng 5 - Khối Văn Phòng - Ô 65,Phạm Thị Lan,ACTIVE,1814150,2026-01-12,Tài sản mẫu kiểm thử số 11
+AST-00012,Xe Nâng Điện Toyota 2.5 Tấn #12,Máy Móc Nhà Máy,Toyota 8FBN25,SN-2026-93234,DEPT-FACTORY,Nhà Máy A1 - Cầu Cảng - Ô 29,Trần Văn Nam,LOANED,420023010,2026-01-13,Tài sản mẫu kiểm thử số 12
+AST-00013,Máy In Tem Nhãn QR Code Thermal #13,Thiết Bị IT,Xprinter XP-420B,SN-2026-15559,DEPT-IT,Tầng 4 - Phòng IT - Ô 79,Hoàng Văn Thái,ACTIVE,2796890,2026-01-14,Tài sản mẫu kiểm thử số 13
+AST-00014,Pallet Nhựa Đen 1200x1000mm #14,Pallet Nhựa,1200x1000x150mm,SN-2026-24339,DEPT-WAREHOUSE,Kho Vật Tư Tổng - Dãy A - Ô 5,Phạm Minh Đức,ACTIVE,410470,2026-01-15,Tài sản mẫu kiểm thử số 14
+AST-00015,Laptop Dell Latitude 5440 i7 #15,Thiết Bị IT,Core i7 16GB 512GB,SN-2026-73611,DEPT-IT,Tầng 4 - Phòng IT - Ô 61,Nguyễn Văn Hùng,LOANED,22529400,2026-01-16,Tài sản mẫu kiểm thử số 15
+AST-00016,Pallet Gỗ Thông Xuất Khẩu Euro #16,Pallet Gỗ,1200x800x144mm,SN-2026-75448,DEPT-WAREHOUSE,Kho Xuất Hàng C - Ô 35,Lê Vũ Tường,ACTIVE,286370,2026-01-17,Tài sản mẫu kiểm thử số 16
+AST-00017,Xe Nâng Điện Toyota 2.5 Tấn #17,Máy Móc Nhà Máy,Toyota 8FBN25,SN-2026-58375,DEPT-FACTORY,Nhà Máy A1 - Cầu Cảng - Ô 41,Hoàng Văn Thái,ACTIVE,419998860,2026-01-18,Tài sản mẫu kiểm thử số 17
+AST-00018,Laptop Dell Latitude 5440 i7 #18,Thiết Bị IT,Core i7 16GB 512GB,SN-2026-40491,DEPT-IT,Tầng 4 - Phòng IT - Ô 84,Phạm Minh Đức,ACTIVE,22463610,2026-01-19,Tài sản mẫu kiểm thử số 18
+AST-00019,Máy Nén Khí Piston 15HP #19,Máy Móc Nhà Máy,Pegasus T-15,SN-2026-80047,DEPT-FACTORY,Xưởng Cơ Khí A2 - Ô 63,Trần Văn Nam,ACTIVE,35032410,2026-01-20,Tài sản mẫu kiểm thử số 19
+AST-00020,Pallet Gỗ Thông Xuất Khẩu Euro #20,Pallet Gỗ,1200x800x144mm,SN-2026-73195,DEPT-WAREHOUSE,Kho Xuất Hàng C - Ô 59,Nguyễn Thị Hoa,ACTIVE,292500,2026-01-21,Tài sản mẫu kiểm thử số 20
+AST-00021,Xe Nâng Điện Toyota 2.5 Tấn #21,Máy Móc Nhà Máy,Toyota 8FBN25,SN-2026-69847,DEPT-FACTORY,Nhà Máy A1 - Cầu Cảng - Ô 38,Trần Văn Nam,SPARE,420039240,2026-01-22,Tài sản mẫu kiểm thử số 21
+AST-00022,Máy In Tem Nhãn QR Code Thermal #22,Thiết Bị IT,Xprinter XP-420B,SN-2026-60721,DEPT-IT,Tầng 4 - Phòng IT - Ô 74,Nguyễn Thị Hoa,ACTIVE,2796980,2026-01-23,Tài sản mẫu kiểm thử số 22
+AST-00023,Màn Hình Dell UltraSharp 27 inch 4K #23,Thiết Bị IT,U2723QE,SN-2026-59051,DEPT-IT,Tầng 4 - Phòng IT - Ô 98,Nguyễn Thị Hoa,ACTIVE,12792400,2026-01-24,Tài sản mẫu kiểm thử số 23
+AST-00024,Máy Điều Hòa Âm Trần Daikin 36000BTU #24,Thiết Bị Văn Phòng,FCNQ36MV1,SN-2026-19560,DEPT-OFFICE,Tầng 5 - Phòng Họp Lớn - Ô 36,Trần Văn Nam,ACTIVE,37956270,2026-01-25,Tài sản mẫu kiểm thử số 24
+AST-00025,Máy In Tem Nhãn QR Code Thermal #25,Thiết Bị IT,Xprinter XP-420B,SN-2026-11082,DEPT-IT,Tầng 4 - Phòng IT - Ô 30,Phạm Thị Lan,ACTIVE,2842950,2026-01-26,Tài sản mẫu kiểm thử số 25
+AST-00026,Ghế Xoay Lưới Công Trình Ergonomic #26,Thiết Bị Văn Phòng,Hòa Phát EG-01,SN-2026-42184,DEPT-OFFICE,Tầng 5 - Khối Văn Phòng - Ô 75,Phạm Minh Đức,SPARE,1853770,2026-01-27,Tài sản mẫu kiểm thử số 26
+AST-00027,Màn Hình Dell UltraSharp 27 inch 4K #27,Thiết Bị IT,U2723QE,SN-2026-54949,DEPT-IT,Tầng 4 - Phòng IT - Ô 85,Nguyễn Thị Hoa,LOANED,12819280,2026-01-28,Tài sản mẫu kiểm thử số 27
+AST-00028,Xe Nâng Điện Toyota 2.5 Tấn #28,Máy Móc Nhà Máy,Toyota 8FBN25,SN-2026-35713,DEPT-FACTORY,Nhà Máy A1 - Cầu Cảng - Ô 93,Trần Văn Nam,ACTIVE,420035860,2026-01-01,Tài sản mẫu kiểm thử số 28
+AST-00029,Pallet Gỗ Thông Xuất Khẩu Euro #29,Pallet Gỗ,1200x800x144mm,SN-2026-83197,DEPT-WAREHOUSE,Kho Xuất Hàng C - Ô 74,Nguyễn Văn Hùng,ACTIVE,264050,2026-01-02,Tài sản mẫu kiểm thử số 29
+AST-00030,Laptop Dell Latitude 5440 i7 #30,Thiết Bị IT,Core i7 16GB 512GB,SN-2026-19283,DEPT-IT,Tầng 4 - Phòng IT - Ô 61,Nguyễn Văn Hùng,ACTIVE,22534420,2026-01-03,Tài sản mẫu kiểm thử số 30
+AST-00031,Pallet Nhựa Đen 1200x1000mm #31,Pallet Nhựa,1200x1000x150mm,SN-2026-62164,DEPT-WAREHOUSE,Kho Vật Tư Tổng - Dãy A - Ô 46,Phạm Thị Lan,SPARE,420250,2026-01-04,Tài sản mẫu kiểm thử số 31
+AST-00032,Màn Hình Dell UltraSharp 27 inch 4K #32,Thiết Bị IT,U2723QE,SN-2026-45291,DEPT-IT,Tầng 4 - Phòng IT - Ô 40,Nguyễn Văn Hùng,LOANED,12794900,2026-01-05,Tài sản mẫu kiểm thử số 32
+AST-00033,Pallet Nhựa Xanh Lót Sàn #33,Pallet Nhựa,1100x1100x120mm,SN-2026-38301,DEPT-WAREHOUSE,Kho Vật Tư Tổng - Dãy B - Ô 97,Phạm Minh Đức,ACTIVE,366470,2026-01-06,Tài sản mẫu kiểm thử số 33
+AST-00034,Máy Nén Khí Piston 15HP #34,Máy Móc Nhà Máy,Pegasus T-15,SN-2026-27788,DEPT-FACTORY,Xưởng Cơ Khí A2 - Ô 92,Hoàng Văn Thái,ACTIVE,35023910,2026-01-07,Tài sản mẫu kiểm thử số 34
+AST-00035,Ghế Xoay Lưới Công Trình Ergonomic #35,Thiết Bị Văn Phòng,Hòa Phát EG-01,SN-2026-40491,DEPT-OFFICE,Tầng 5 - Khối Văn Phòng - Ô 4,Phạm Thị Lan,LOANED,1864710,2026-01-08,Tài sản mẫu kiểm thử số 35
+AST-00036,Pallet Nhựa Xanh Lót Sàn #36,Pallet Nhựa,1100x1100x120mm,SN-2026-36246,DEPT-WAREHOUSE,Kho Vật Tư Tổng - Dãy B - Ô 64,Nguyễn Văn Hùng,LOANED,412140,2026-01-09,Tài sản mẫu kiểm thử số 36
+AST-00037,Laptop Dell Latitude 5440 i7 #37,Thiết Bị IT,Core i7 16GB 512GB,SN-2026-34315,DEPT-IT,Tầng 4 - Phòng IT - Ô 91,Phạm Minh Đức,LOANED,22546200,2026-01-10,Tài sản mẫu kiểm thử số 37
+AST-00038,Laptop Dell Latitude 5440 i7 #38,Thiết Bị IT,Core i7 16GB 512GB,SN-2026-96014,DEPT-IT,Tầng 4 - Phòng IT - Ô 44,Phạm Minh Đức,LOANED,22504890,2026-01-11,Tài sản mẫu kiểm thử số 38
+AST-00039,Máy Nén Khí Piston 15HP #39,Máy Móc Nhà Máy,Pegasus T-15,SN-2026-46026,DEPT-FACTORY,Xưởng Cơ Khí A2 - Ô 54,Phạm Thị Lan,REPAIR,35027750,2026-01-12,Tài sản mẫu kiểm thử số 39
+AST-00040,Màn Hình Dell UltraSharp 27 inch 4K #40,Thiết Bị IT,U2723QE,SN-2026-31839,DEPT-IT,Tầng 4 - Phòng IT - Ô 40,Phạm Thị Lan,ACTIVE,12767750,2026-01-13,Tài sản mẫu kiểm thử số 40
+AST-00041,Pallet Gỗ Thông Xuất Khẩu Euro #41,Pallet Gỗ,1200x800x144mm,SN-2026-59595,DEPT-WAREHOUSE,Kho Xuất Hàng C - Ô 37,Nguyễn Văn Hùng,ACTIVE,241850,2026-01-14,Tài sản mẫu kiểm thử số 41
+AST-00042,Máy In Tem Nhãn QR Code Thermal #42,Thiết Bị IT,Xprinter XP-420B,SN-2026-85568,DEPT-IT,Tầng 4 - Phòng IT - Ô 6,Hoàng Văn Thái,SPARE,2816180,2026-01-15,Tài sản mẫu kiểm thử số 42
+AST-00043,Pallet Nhựa 2 Mặt Tải Trọng Nặng #43,Pallet Nhựa,1200x1200x160mm,SN-2026-20386,DEPT-WAREHOUSE,Kho Hàng A1 - Kệ Heavy Duty - Ô 99,Trần Văn Nam,SPARE,609270,2026-01-16,Tài sản mẫu kiểm thử số 43
+AST-00044,Màn Hình Dell UltraSharp 27 inch 4K #44,Thiết Bị IT,U2723QE,SN-2026-31553,DEPT-IT,Tầng 4 - Phòng IT - Ô 7,Lê Vũ Tường,ACTIVE,12760690,2026-01-17,Tài sản mẫu kiểm thử số 44
+AST-00045,Pallet Nhựa Đen 1200x1000mm #45,Pallet Nhựa,1200x1000x150mm,SN-2026-84054,DEPT-WAREHOUSE,Kho Vật Tư Tổng - Dãy A - Ô 75,Lê Vũ Tường,REPAIR,454180,2026-01-18,Tài sản mẫu kiểm thử số 45
+AST-00046,Máy Nén Khí Piston 15HP #46,Máy Móc Nhà Máy,Pegasus T-15,SN-2026-27986,DEPT-FACTORY,Xưởng Cơ Khí A2 - Ô 14,Phạm Thị Lan,REPAIR,34994760,2026-01-19,Tài sản mẫu kiểm thử số 46
+AST-00047,Pallet Nhựa Đen 1200x1000mm #47,Pallet Nhựa,1200x1000x150mm,SN-2026-40134,DEPT-WAREHOUSE,Kho Vật Tư Tổng - Dãy A - Ô 43,Nguyễn Văn Hùng,ACTIVE,472990,2026-01-20,Tài sản mẫu kiểm thử số 47
+AST-00048,Máy Nén Khí Piston 15HP #48,Máy Móc Nhà Máy,Pegasus T-15,SN-2026-25848,DEPT-FACTORY,Xưởng Cơ Khí A2 - Ô 59,Trần Văn Nam,ACTIVE,35016820,2026-01-21,Tài sản mẫu kiểm thử số 48
+AST-00049,Máy In Tem Nhãn QR Code Thermal #49,Thiết Bị IT,Xprinter XP-420B,SN-2026-50844,DEPT-IT,Tầng 4 - Phòng IT - Ô 29,Hoàng Văn Thái,SPARE,2847380,2026-01-22,Tài sản mẫu kiểm thử số 49
+AST-00050,Máy In Tem Nhãn QR Code Thermal #50,Thiết Bị IT,Xprinter XP-420B,SN-2026-94607,DEPT-IT,Tầng 4 - Phòng IT - Ô 7,Phạm Minh Đức,ACTIVE,2766910,2026-01-23,Tài sản mẫu kiểm thử số 50
+AST-00051,Pallet Nhựa Đen 1200x1000mm #51,Pallet Nhựa,1200x1000x150mm,SN-2026-75693,DEPT-WAREHOUSE,Kho Vật Tư Tổng - Dãy A - Ô 38,Phạm Minh Đức,ACTIVE,497930,2026-01-24,Tài sản mẫu kiểm thử số 51
+AST-00052,Pallet Nhựa 2 Mặt Tải Trọng Nặng #52,Pallet Nhựa,1200x1200x160mm,SN-2026-45903,DEPT-WAREHOUSE,Kho Hàng A1 - Kệ Heavy Duty - Ô 58,Phạm Minh Đức,ACTIVE,596750,2026-01-25,Tài sản mẫu kiểm thử số 52
+AST-00053,Pallet Nhựa Xanh Lót Sàn #53,Pallet Nhựa,1100x1100x120mm,SN-2026-44989,DEPT-WAREHOUSE,Kho Vật Tư Tổng - Dãy B - Ô 1,Phạm Thị Lan,SPARE,351070,2026-01-26,Tài sản mẫu kiểm thử số 53
+AST-00054,Máy In Tem Nhãn QR Code Thermal #54,Thiết Bị IT,Xprinter XP-420B,SN-2026-99787,DEPT-IT,Tầng 4 - Phòng IT - Ô 55,Nguyễn Thị Hoa,ACTIVE,2782620,2026-01-27,Tài sản mẫu kiểm thử số 54
+AST-00055,Pallet Nhựa 2 Mặt Tải Trọng Nặng #55,Pallet Nhựa,1200x1200x160mm,SN-2026-74649,DEPT-WAREHOUSE,Kho Hàng A1 - Kệ Heavy Duty - Ô 20,Nguyễn Thị Hoa,ACTIVE,591640,2026-01-28,Tài sản mẫu kiểm thử số 55
+AST-00056,Pallet Nhựa Đen 1200x1000mm #56,Pallet Nhựa,1200x1000x150mm,SN-2026-98028,DEPT-WAREHOUSE,Kho Vật Tư Tổng - Dãy A - Ô 4,Hoàng Văn Thái,REPAIR,498890,2026-01-01,Tài sản mẫu kiểm thử số 56
+AST-00057,Pallet Nhựa Đen 1200x1000mm #57,Pallet Nhựa,1200x1000x150mm,SN-2026-30128,DEPT-WAREHOUSE,Kho Vật Tư Tổng - Dãy A - Ô 61,Phạm Minh Đức,REPAIR,461530,2026-01-02,Tài sản mẫu kiểm thử số 57
+AST-00058,Ghế Xoay Lưới Công Trình Ergonomic #58,Thiết Bị Văn Phòng,Hòa Phát EG-01,SN-2026-68804,DEPT-OFFICE,Tầng 5 - Khối Văn Phòng - Ô 89,Phạm Minh Đức,ACTIVE,1874000,2026-01-03,Tài sản mẫu kiểm thử số 58
+AST-00059,Máy Nén Khí Piston 15HP #59,Máy Móc Nhà Máy,Pegasus T-15,SN-2026-76543,DEPT-FACTORY,Xưởng Cơ Khí A2 - Ô 67,Nguyễn Văn Hùng,REPAIR,35034820,2026-01-04,Tài sản mẫu kiểm thử số 59
+AST-00060,Máy Điều Hòa Âm Trần Daikin 36000BTU #60,Thiết Bị Văn Phòng,FCNQ36MV1,SN-2026-59269,DEPT-OFFICE,Tầng 5 - Phòng Họp Lớn - Ô 2,Hoàng Văn Thái,ACTIVE,38048230,2026-01-05,Tài sản mẫu kiểm thử số 60
+AST-00061,Xe Nâng Điện Toyota 2.5 Tấn #61,Máy Móc Nhà Máy,Toyota 8FBN25,SN-2026-32400,DEPT-FACTORY,Nhà Máy A1 - Cầu Cảng - Ô 59,Phạm Thị Lan,ACTIVE,420047580,2026-01-06,Tài sản mẫu kiểm thử số 61
+AST-00062,Pallet Nhựa Đen 1200x1000mm #62,Pallet Nhựa,1200x1000x150mm,SN-2026-86141,DEPT-WAREHOUSE,Kho Vật Tư Tổng - Dãy A - Ô 19,Trần Văn Nam,ACTIVE,454840,2026-01-07,Tài sản mẫu kiểm thử số 62
+AST-00063,Máy Nén Khí Piston 15HP #63,Máy Móc Nhà Máy,Pegasus T-15,SN-2026-56264,DEPT-FACTORY,Xưởng Cơ Khí A2 - Ô 17,Phạm Minh Đức,ACTIVE,35018950,2026-01-08,Tài sản mẫu kiểm thử số 63
+AST-00064,Máy Nén Khí Piston 15HP #64,Máy Móc Nhà Máy,Pegasus T-15,SN-2026-89331,DEPT-FACTORY,Xưởng Cơ Khí A2 - Ô 93,Phạm Thị Lan,SPARE,34986890,2026-01-09,Tài sản mẫu kiểm thử số 64
+AST-00065,Pallet Nhựa Xanh Lót Sàn #65,Pallet Nhựa,1100x1100x120mm,SN-2026-29874,DEPT-WAREHOUSE,Kho Vật Tư Tổng - Dãy B - Ô 91,Phạm Minh Đức,ACTIVE,383080,2026-01-10,Tài sản mẫu kiểm thử số 65
+AST-00066,Pallet Nhựa Đen 1200x1000mm #66,Pallet Nhựa,1200x1000x150mm,SN-2026-76525,DEPT-WAREHOUSE,Kho Vật Tư Tổng - Dãy A - Ô 40,Phạm Thị Lan,ACTIVE,430780,2026-01-11,Tài sản mẫu kiểm thử số 66
+AST-00067,Laptop Dell Latitude 5440 i7 #67,Thiết Bị IT,Core i7 16GB 512GB,SN-2026-56613,DEPT-IT,Tầng 4 - Phòng IT - Ô 81,Nguyễn Văn Hùng,LOANED,22497690,2026-01-12,Tài sản mẫu kiểm thử số 67
+AST-00068,Pallet Nhựa Đen 1200x1000mm #68,Pallet Nhựa,1200x1000x150mm,SN-2026-84857,DEPT-WAREHOUSE,Kho Vật Tư Tổng - Dãy A - Ô 13,Phạm Thị Lan,ACTIVE,438200,2026-01-13,Tài sản mẫu kiểm thử số 68
+AST-00069,Ghế Xoay Lưới Công Trình Ergonomic #69,Thiết Bị Văn Phòng,Hòa Phát EG-01,SN-2026-50953,DEPT-OFFICE,Tầng 5 - Khối Văn Phòng - Ô 83,Nguyễn Thị Hoa,ACTIVE,1835470,2026-01-14,Tài sản mẫu kiểm thử số 69
+AST-00070,Máy Điều Hòa Âm Trần Daikin 36000BTU #70,Thiết Bị Văn Phòng,FCNQ36MV1,SN-2026-33554,DEPT-OFFICE,Tầng 5 - Phòng Họp Lớn - Ô 18,Lê Vũ Tường,ACTIVE,38012090,2026-01-15,Tài sản mẫu kiểm thử số 70
+AST-00071,Xe Nâng Điện Toyota 2.5 Tấn #71,Máy Móc Nhà Máy,Toyota 8FBN25,SN-2026-28931,DEPT-FACTORY,Nhà Máy A1 - Cầu Cảng - Ô 98,Phạm Thị Lan,ACTIVE,420020420,2026-01-16,Tài sản mẫu kiểm thử số 71
+AST-00072,Pallet Nhựa 2 Mặt Tải Trọng Nặng #72,Pallet Nhựa,1200x1200x160mm,SN-2026-47746,DEPT-WAREHOUSE,Kho Hàng A1 - Kệ Heavy Duty - Ô 76,Phạm Thị Lan,REPAIR,576290,2026-01-17,Tài sản mẫu kiểm thử số 72
+AST-00073,Màn Hình Dell UltraSharp 27 inch 4K #73,Thiết Bị IT,U2723QE,SN-2026-14773,DEPT-IT,Tầng 4 - Phòng IT - Ô 62,Trần Văn Nam,REPAIR,12818440,2026-01-18,Tài sản mẫu kiểm thử số 73
+AST-00074,Bộ Máy Hàn TIG Điện Tử 250A #74,Dụng Cụ Công Nghiệp,Jasic TIG-250A,SN-2026-31642,DEPT-WAREHOUSE,Kho Dụng Cụ Kỹ Thuật - Ô 59,Phạm Thị Lan,SPARE,12479820,2026-01-19,Tài sản mẫu kiểm thử số 74
+AST-00075,Pallet Nhựa Xanh Lót Sàn #75,Pallet Nhựa,1100x1100x120mm,SN-2026-83919,DEPT-WAREHOUSE,Kho Vật Tư Tổng - Dãy B - Ô 26,Nguyễn Văn Hùng,REPAIR,383090,2026-01-20,Tài sản mẫu kiểm thử số 75
+AST-00076,Pallet Nhựa Đen 1200x1000mm #76,Pallet Nhựa,1200x1000x150mm,SN-2026-88195,DEPT-WAREHOUSE,Kho Vật Tư Tổng - Dãy A - Ô 2,Phạm Minh Đức,SPARE,493090,2026-01-21,Tài sản mẫu kiểm thử số 76
+AST-00077,Pallet Nhựa 2 Mặt Tải Trọng Nặng #77,Pallet Nhựa,1200x1200x160mm,SN-2026-26444,DEPT-WAREHOUSE,Kho Hàng A1 - Kệ Heavy Duty - Ô 83,Phạm Thị Lan,ACTIVE,589090,2026-01-22,Tài sản mẫu kiểm thử số 77
+AST-00078,Pallet Nhựa 2 Mặt Tải Trọng Nặng #78,Pallet Nhựa,1200x1200x160mm,SN-2026-14477,DEPT-WAREHOUSE,Kho Hàng A1 - Kệ Heavy Duty - Ô 86,Hoàng Văn Thái,LOANED,598410,2026-01-23,Tài sản mẫu kiểm thử số 78
+AST-00079,Xe Nâng Điện Toyota 2.5 Tấn #79,Máy Móc Nhà Máy,Toyota 8FBN25,SN-2026-13624,DEPT-FACTORY,Nhà Máy A1 - Cầu Cảng - Ô 77,Trần Văn Nam,ACTIVE,420036220,2026-01-24,Tài sản mẫu kiểm thử số 79
+AST-00080,Máy Nén Khí Piston 15HP #80,Máy Móc Nhà Máy,Pegasus T-15,SN-2026-20654,DEPT-FACTORY,Xưởng Cơ Khí A2 - Ô 75,Hoàng Văn Thái,LOANED,35047200,2026-01-25,Tài sản mẫu kiểm thử số 80
+AST-00081,Máy Điều Hòa Âm Trần Daikin 36000BTU #81,Thiết Bị Văn Phòng,FCNQ36MV1,SN-2026-67867,DEPT-OFFICE,Tầng 5 - Phòng Họp Lớn - Ô 30,Trần Văn Nam,REPAIR,37996950,2026-01-26,Tài sản mẫu kiểm thử số 81
+AST-00082,Màn Hình Dell UltraSharp 27 inch 4K #82,Thiết Bị IT,U2723QE,SN-2026-72560,DEPT-IT,Tầng 4 - Phòng IT - Ô 61,Phạm Thị Lan,ACTIVE,12820080,2026-01-27,Tài sản mẫu kiểm thử số 82
+AST-00083,Máy Nén Khí Piston 15HP #83,Máy Móc Nhà Máy,Pegasus T-15,SN-2026-57283,DEPT-FACTORY,Xưởng Cơ Khí A2 - Ô 16,Phạm Thị Lan,LOANED,35040010,2026-01-28,Tài sản mẫu kiểm thử số 83
+AST-00084,Bộ Máy Hàn TIG Điện Tử 250A #84,Dụng Cụ Công Nghiệp,Jasic TIG-250A,SN-2026-98374,DEPT-WAREHOUSE,Kho Dụng Cụ Kỹ Thuật - Ô 81,Phạm Thị Lan,SPARE,12512140,2026-01-01,Tài sản mẫu kiểm thử số 84
+AST-00085,Pallet Nhựa Đen 1200x1000mm #85,Pallet Nhựa,1200x1000x150mm,SN-2026-67111,DEPT-WAREHOUSE,Kho Vật Tư Tổng - Dãy A - Ô 97,Hoàng Văn Thái,SPARE,444650,2026-01-02,Tài sản mẫu kiểm thử số 85
+AST-00086,Pallet Nhựa Xanh Lót Sàn #86,Pallet Nhựa,1100x1100x120mm,SN-2026-64109,DEPT-WAREHOUSE,Kho Vật Tư Tổng - Dãy B - Ô 38,Phạm Thị Lan,ACTIVE,352680,2026-01-03,Tài sản mẫu kiểm thử số 86
+AST-00087,Pallet Gỗ Thông Xuất Khẩu Euro #87,Pallet Gỗ,1200x800x144mm,SN-2026-14141,DEPT-WAREHOUSE,Kho Xuất Hàng C - Ô 4,Lê Vũ Tường,ACTIVE,258080,2026-01-04,Tài sản mẫu kiểm thử số 87
+AST-00088,Máy Nén Khí Piston 15HP #88,Máy Móc Nhà Máy,Pegasus T-15,SN-2026-22746,DEPT-FACTORY,Xưởng Cơ Khí A2 - Ô 24,Hoàng Văn Thái,LOANED,35025270,2026-01-05,Tài sản mẫu kiểm thử số 88
+AST-00089,Pallet Nhựa Đen 1200x1000mm #89,Pallet Nhựa,1200x1000x150mm,SN-2026-48645,DEPT-WAREHOUSE,Kho Vật Tư Tổng - Dãy A - Ô 33,Nguyễn Thị Hoa,ACTIVE,406940,2026-01-06,Tài sản mẫu kiểm thử số 89
+AST-00090,Máy Điều Hòa Âm Trần Daikin 36000BTU #90,Thiết Bị Văn Phòng,FCNQ36MV1,SN-2026-99089,DEPT-OFFICE,Tầng 5 - Phòng Họp Lớn - Ô 41,Phạm Minh Đức,ACTIVE,37994850,2026-01-07,Tài sản mẫu kiểm thử số 90
+AST-00091,Laptop Dell Latitude 5440 i7 #91,Thiết Bị IT,Core i7 16GB 512GB,SN-2026-99381,DEPT-IT,Tầng 4 - Phòng IT - Ô 35,Phạm Thị Lan,ACTIVE,22464940,2026-01-08,Tài sản mẫu kiểm thử số 91
+AST-00092,Máy Nén Khí Piston 15HP #92,Máy Móc Nhà Máy,Pegasus T-15,SN-2026-60258,DEPT-FACTORY,Xưởng Cơ Khí A2 - Ô 22,Hoàng Văn Thái,ACTIVE,34998690,2026-01-09,Tài sản mẫu kiểm thử số 92
+AST-00093,Màn Hình Dell UltraSharp 27 inch 4K #93,Thiết Bị IT,U2723QE,SN-2026-54537,DEPT-IT,Tầng 4 - Phòng IT - Ô 63,Phạm Minh Đức,REPAIR,12817010,2026-01-10,Tài sản mẫu kiểm thử số 93
+AST-00094,Xe Nâng Điện Toyota 2.5 Tấn #94,Máy Móc Nhà Máy,Toyota 8FBN25,SN-2026-87712,DEPT-FACTORY,Nhà Máy A1 - Cầu Cảng - Ô 44,Lê Vũ Tường,LOANED,420013230,2026-01-11,Tài sản mẫu kiểm thử số 94
+AST-00095,Pallet Nhựa 2 Mặt Tải Trọng Nặng #95,Pallet Nhựa,1200x1200x160mm,SN-2026-91907,DEPT-WAREHOUSE,Kho Hàng A1 - Kệ Heavy Duty - Ô 73,Trần Văn Nam,SPARE,618620,2026-01-12,Tài sản mẫu kiểm thử số 95
+AST-00096,Pallet Nhựa Xanh Lót Sàn #96,Pallet Nhựa,1100x1100x120mm,SN-2026-84757,DEPT-WAREHOUSE,Kho Vật Tư Tổng - Dãy B - Ô 100,Trần Văn Nam,SPARE,416960,2026-01-13,Tài sản mẫu kiểm thử số 96
+AST-00097,Màn Hình Dell UltraSharp 27 inch 4K #97,Thiết Bị IT,U2723QE,SN-2026-33437,DEPT-IT,Tầng 4 - Phòng IT - Ô 53,Phạm Thị Lan,LOANED,12770590,2026-01-14,Tài sản mẫu kiểm thử số 97
+AST-00098,Pallet Nhựa Đen 1200x1000mm #98,Pallet Nhựa,1200x1000x150mm,SN-2026-24127,DEPT-WAREHOUSE,Kho Vật Tư Tổng - Dãy A - Ô 68,Trần Văn Nam,LOANED,416630,2026-01-15,Tài sản mẫu kiểm thử số 98
+AST-00099,Máy Điều Hòa Âm Trần Daikin 36000BTU #99,Thiết Bị Văn Phòng,FCNQ36MV1,SN-2026-62354,DEPT-OFFICE,Tầng 5 - Phòng Họp Lớn - Ô 52,Nguyễn Văn Hùng,LOANED,38034900,2026-01-16,Tài sản mẫu kiểm thử số 99
+AST-00100,Pallet Nhựa Đen 1200x1000mm #100,Pallet Nhựa,1200x1000x150mm,SN-2026-77020,DEPT-WAREHOUSE,Kho Vật Tư Tổng - Dãy A - Ô 55,Trần Văn Nam,ACTIVE,427460,2026-01-17,Tài sản mẫu kiểm thử số 100
+AST-00101,Máy Điều Hòa Âm Trần Daikin 36000BTU #101,Thiết Bị Văn Phòng,FCNQ36MV1,SN-2026-32065,DEPT-OFFICE,Tầng 5 - Phòng Họp Lớn - Ô 81,Lê Vũ Tường,ACTIVE,38044760,2026-01-18,Tài sản mẫu kiểm thử số 101
+AST-00102,Bộ Máy Hàn TIG Điện Tử 250A #102,Dụng Cụ Công Nghiệp,Jasic TIG-250A,SN-2026-47596,DEPT-WAREHOUSE,Kho Dụng Cụ Kỹ Thuật - Ô 24,Nguyễn Thị Hoa,ACTIVE,12522190,2026-01-19,Tài sản mẫu kiểm thử số 102
+AST-00103,Pallet Nhựa Đen 1200x1000mm #103,Pallet Nhựa,1200x1000x150mm,SN-2026-31415,DEPT-WAREHOUSE,Kho Vật Tư Tổng - Dãy A - Ô 30,Hoàng Văn Thái,ACTIVE,412960,2026-01-20,Tài sản mẫu kiểm thử số 103
+AST-00104,Máy Điều Hòa Âm Trần Daikin 36000BTU #104,Thiết Bị Văn Phòng,FCNQ36MV1,SN-2026-68110,DEPT-OFFICE,Tầng 5 - Phòng Họp Lớn - Ô 53,Lê Vũ Tường,ACTIVE,38042850,2026-01-21,Tài sản mẫu kiểm thử số 104
+AST-00105,Máy In Tem Nhãn QR Code Thermal #105,Thiết Bị IT,Xprinter XP-420B,SN-2026-41142,DEPT-IT,Tầng 4 - Phòng IT - Ô 43,Nguyễn Văn Hùng,REPAIR,2817670,2026-01-22,Tài sản mẫu kiểm thử số 105
+AST-00106,Bộ Máy Hàn TIG Điện Tử 250A #106,Dụng Cụ Công Nghiệp,Jasic TIG-250A,SN-2026-27747,DEPT-WAREHOUSE,Kho Dụng Cụ Kỹ Thuật - Ô 75,Nguyễn Thị Hoa,SPARE,12513890,2026-01-23,Tài sản mẫu kiểm thử số 106
+AST-00107,Máy Nén Khí Piston 15HP #107,Máy Móc Nhà Máy,Pegasus T-15,SN-2026-12787,DEPT-FACTORY,Xưởng Cơ Khí A2 - Ô 48,Hoàng Văn Thái,ACTIVE,35037600,2026-01-24,Tài sản mẫu kiểm thử số 107
+AST-00108,Bộ Máy Hàn TIG Điện Tử 250A #108,Dụng Cụ Công Nghiệp,Jasic TIG-250A,SN-2026-59072,DEPT-WAREHOUSE,Kho Dụng Cụ Kỹ Thuật - Ô 79,Hoàng Văn Thái,ACTIVE,12539530,2026-01-25,Tài sản mẫu kiểm thử số 108
+AST-00109,Laptop Dell Latitude 5440 i7 #109,Thiết Bị IT,Core i7 16GB 512GB,SN-2026-71715,DEPT-IT,Tầng 4 - Phòng IT - Ô 43,Lê Vũ Tường,ACTIVE,22513920,2026-01-26,Tài sản mẫu kiểm thử số 109
+AST-00110,Pallet Nhựa Đen 1200x1000mm #110,Pallet Nhựa,1200x1000x150mm,SN-2026-35059,DEPT-WAREHOUSE,Kho Vật Tư Tổng - Dãy A - Ô 52,Phạm Minh Đức,ACTIVE,419420,2026-01-27,Tài sản mẫu kiểm thử số 110
+AST-00111,Pallet Nhựa Đen 1200x1000mm #111,Pallet Nhựa,1200x1000x150mm,SN-2026-24770,DEPT-WAREHOUSE,Kho Vật Tư Tổng - Dãy A - Ô 59,Lê Vũ Tường,ACTIVE,425550,2026-01-28,Tài sản mẫu kiểm thử số 111
+AST-00112,Ghế Xoay Lưới Công Trình Ergonomic #112,Thiết Bị Văn Phòng,Hòa Phát EG-01,SN-2026-26375,DEPT-OFFICE,Tầng 5 - Khối Văn Phòng - Ô 20,Nguyễn Thị Hoa,REPAIR,1822860,2026-01-01,Tài sản mẫu kiểm thử số 112
+AST-00113,Laptop Dell Latitude 5440 i7 #113,Thiết Bị IT,Core i7 16GB 512GB,SN-2026-99285,DEPT-IT,Tầng 4 - Phòng IT - Ô 55,Trần Văn Nam,SPARE,22514890,2026-01-02,Tài sản mẫu kiểm thử số 113
+AST-00114,Máy In Tem Nhãn QR Code Thermal #114,Thiết Bị IT,Xprinter XP-420B,SN-2026-46066,DEPT-IT,Tầng 4 - Phòng IT - Ô 60,Hoàng Văn Thái,SPARE,2755510,2026-01-03,Tài sản mẫu kiểm thử số 114
+AST-00115,Pallet Gỗ Thông Xuất Khẩu Euro #115,Pallet Gỗ,1200x800x144mm,SN-2026-85217,DEPT-WAREHOUSE,Kho Xuất Hàng C - Ô 34,Phạm Thị Lan,ACTIVE,295610,2026-01-04,Tài sản mẫu kiểm thử số 115
+AST-00116,Pallet Gỗ Thông Xuất Khẩu Euro #116,Pallet Gỗ,1200x800x144mm,SN-2026-84180,DEPT-WAREHOUSE,Kho Xuất Hàng C - Ô 13,Nguyễn Văn Hùng,REPAIR,230450,2026-01-05,Tài sản mẫu kiểm thử số 116
+AST-00117,Pallet Nhựa 2 Mặt Tải Trọng Nặng #117,Pallet Nhựa,1200x1200x160mm,SN-2026-55508,DEPT-WAREHOUSE,Kho Hàng A1 - Kệ Heavy Duty - Ô 67,Nguyễn Thị Hoa,ACTIVE,586470,2026-01-06,Tài sản mẫu kiểm thử số 117
+AST-00118,Laptop Dell Latitude 5440 i7 #118,Thiết Bị IT,Core i7 16GB 512GB,SN-2026-36063,DEPT-IT,Tầng 4 - Phòng IT - Ô 97,Nguyễn Thị Hoa,ACTIVE,22464280,2026-01-07,Tài sản mẫu kiểm thử số 118
+AST-00119,Pallet Nhựa Đen 1200x1000mm #119,Pallet Nhựa,1200x1000x150mm,SN-2026-64711,DEPT-WAREHOUSE,Kho Vật Tư Tổng - Dãy A - Ô 28,Trần Văn Nam,LOANED,449390,2026-01-08,Tài sản mẫu kiểm thử số 119
+AST-00120,Xe Nâng Điện Toyota 2.5 Tấn #120,Máy Móc Nhà Máy,Toyota 8FBN25,SN-2026-22179,DEPT-FACTORY,Nhà Máy A1 - Cầu Cảng - Ô 14,Nguyễn Thị Hoa,REPAIR,420007510,2026-01-09,Tài sản mẫu kiểm thử số 120
+AST-00121,Máy Nén Khí Piston 15HP #121,Máy Móc Nhà Máy,Pegasus T-15,SN-2026-60031,DEPT-FACTORY,Xưởng Cơ Khí A2 - Ô 77,Lê Vũ Tường,ACTIVE,34995410,2026-01-10,Tài sản mẫu kiểm thử số 121
+AST-00122,Máy Nén Khí Piston 15HP #122,Máy Móc Nhà Máy,Pegasus T-15,SN-2026-15604,DEPT-FACTORY,Xưởng Cơ Khí A2 - Ô 27,Hoàng Văn Thái,ACTIVE,35007860,2026-01-11,Tài sản mẫu kiểm thử số 122
+AST-00123,Máy Điều Hòa Âm Trần Daikin 36000BTU #123,Thiết Bị Văn Phòng,FCNQ36MV1,SN-2026-69155,DEPT-OFFICE,Tầng 5 - Phòng Họp Lớn - Ô 64,Trần Văn Nam,LOANED,38032740,2026-01-12,Tài sản mẫu kiểm thử số 123
+AST-00124,Máy Điều Hòa Âm Trần Daikin 36000BTU #124,Thiết Bị Văn Phòng,FCNQ36MV1,SN-2026-52294,DEPT-OFFICE,Tầng 5 - Phòng Họp Lớn - Ô 3,Nguyễn Văn Hùng,SPARE,37963490,2026-01-13,Tài sản mẫu kiểm thử số 124
+AST-00125,Pallet Gỗ Thông Xuất Khẩu Euro #125,Pallet Gỗ,1200x800x144mm,SN-2026-27089,DEPT-WAREHOUSE,Kho Xuất Hàng C - Ô 57,Trần Văn Nam,ACTIVE,213790,2026-01-14,Tài sản mẫu kiểm thử số 125
+AST-00126,Máy Nén Khí Piston 15HP #126,Máy Móc Nhà Máy,Pegasus T-15,SN-2026-95615,DEPT-FACTORY,Xưởng Cơ Khí A2 - Ô 73,Phạm Thị Lan,ACTIVE,35012250,2026-01-15,Tài sản mẫu kiểm thử số 126
+AST-00127,Xe Nâng Điện Toyota 2.5 Tấn #127,Máy Móc Nhà Máy,Toyota 8FBN25,SN-2026-24939,DEPT-FACTORY,Nhà Máy A1 - Cầu Cảng - Ô 71,Trần Văn Nam,ACTIVE,419979040,2026-01-16,Tài sản mẫu kiểm thử số 127
+AST-00128,Máy Nén Khí Piston 15HP #128,Máy Móc Nhà Máy,Pegasus T-15,SN-2026-14736,DEPT-FACTORY,Xưởng Cơ Khí A2 - Ô 15,Lê Vũ Tường,ACTIVE,34991910,2026-01-17,Tài sản mẫu kiểm thử số 128
+AST-00129,Bộ Máy Hàn TIG Điện Tử 250A #129,Dụng Cụ Công Nghiệp,Jasic TIG-250A,SN-2026-50139,DEPT-WAREHOUSE,Kho Dụng Cụ Kỹ Thuật - Ô 23,Lê Vũ Tường,ACTIVE,12523030,2026-01-18,Tài sản mẫu kiểm thử số 129
+AST-00130,Máy Điều Hòa Âm Trần Daikin 36000BTU #130,Thiết Bị Văn Phòng,FCNQ36MV1,SN-2026-21981,DEPT-OFFICE,Tầng 5 - Phòng Họp Lớn - Ô 47,Nguyễn Văn Hùng,ACTIVE,37989110,2026-01-19,Tài sản mẫu kiểm thử số 130
+AST-00131,Pallet Nhựa 2 Mặt Tải Trọng Nặng #131,Pallet Nhựa,1200x1200x160mm,SN-2026-96580,DEPT-WAREHOUSE,Kho Hàng A1 - Kệ Heavy Duty - Ô 2,Nguyễn Văn Hùng,ACTIVE,600710,2026-01-20,Tài sản mẫu kiểm thử số 131
+AST-00132,Màn Hình Dell UltraSharp 27 inch 4K #132,Thiết Bị IT,U2723QE,SN-2026-90990,DEPT-IT,Tầng 4 - Phòng IT - Ô 77,Hoàng Văn Thái,LOANED,12845390,2026-01-21,Tài sản mẫu kiểm thử số 132
+AST-00133,Pallet Nhựa 2 Mặt Tải Trọng Nặng #133,Pallet Nhựa,1200x1200x160mm,SN-2026-70865,DEPT-WAREHOUSE,Kho Hàng A1 - Kệ Heavy Duty - Ô 16,Hoàng Văn Thái,LOANED,639530,2026-01-22,Tài sản mẫu kiểm thử số 133
+AST-00134,Pallet Nhựa 2 Mặt Tải Trọng Nặng #134,Pallet Nhựa,1200x1200x160mm,SN-2026-84645,DEPT-WAREHOUSE,Kho Hàng A1 - Kệ Heavy Duty - Ô 100,Nguyễn Thị Hoa,LOANED,608530,2026-01-23,Tài sản mẫu kiểm thử số 134
+AST-00135,Pallet Nhựa 2 Mặt Tải Trọng Nặng #135,Pallet Nhựa,1200x1200x160mm,SN-2026-21850,DEPT-WAREHOUSE,Kho Hàng A1 - Kệ Heavy Duty - Ô 86,Nguyễn Văn Hùng,ACTIVE,638740,2026-01-24,Tài sản mẫu kiểm thử số 135
+AST-00136,Laptop Dell Latitude 5440 i7 #136,Thiết Bị IT,Core i7 16GB 512GB,SN-2026-65292,DEPT-IT,Tầng 4 - Phòng IT - Ô 46,Nguyễn Thị Hoa,ACTIVE,22489720,2026-01-25,Tài sản mẫu kiểm thử số 136
+AST-00137,Pallet Gỗ Thông Xuất Khẩu Euro #137,Pallet Gỗ,1200x800x144mm,SN-2026-20705,DEPT-WAREHOUSE,Kho Xuất Hàng C - Ô 41,Nguyễn Văn Hùng,SPARE,277570,2026-01-26,Tài sản mẫu kiểm thử số 137
+AST-00138,Màn Hình Dell UltraSharp 27 inch 4K #138,Thiết Bị IT,U2723QE,SN-2026-27602,DEPT-IT,Tầng 4 - Phòng IT - Ô 85,Nguyễn Thị Hoa,REPAIR,12804390,2026-01-27,Tài sản mẫu kiểm thử số 138
+AST-00139,Laptop Dell Latitude 5440 i7 #139,Thiết Bị IT,Core i7 16GB 512GB,SN-2026-93099,DEPT-IT,Tầng 4 - Phòng IT - Ô 38,Nguyễn Văn Hùng,ACTIVE,22455120,2026-01-28,Tài sản mẫu kiểm thử số 139
+AST-00140,Pallet Nhựa Đen 1200x1000mm #140,Pallet Nhựa,1200x1000x150mm,SN-2026-77024,DEPT-WAREHOUSE,Kho Vật Tư Tổng - Dãy A - Ô 80,Nguyễn Thị Hoa,ACTIVE,452620,2026-01-01,Tài sản mẫu kiểm thử số 140
+AST-00141,Pallet Gỗ Thông Xuất Khẩu Euro #141,Pallet Gỗ,1200x800x144mm,SN-2026-24475,DEPT-WAREHOUSE,Kho Xuất Hàng C - Ô 58,Lê Vũ Tường,ACTIVE,299000,2026-01-02,Tài sản mẫu kiểm thử số 141
+AST-00142,Máy In Tem Nhãn QR Code Thermal #142,Thiết Bị IT,Xprinter XP-420B,SN-2026-35648,DEPT-IT,Tầng 4 - Phòng IT - Ô 79,Hoàng Văn Thái,REPAIR,2804920,2026-01-03,Tài sản mẫu kiểm thử số 142
+AST-00143,Màn Hình Dell UltraSharp 27 inch 4K #143,Thiết Bị IT,U2723QE,SN-2026-69845,DEPT-IT,Tầng 4 - Phòng IT - Ô 15,Nguyễn Thị Hoa,ACTIVE,12839880,2026-01-04,Tài sản mẫu kiểm thử số 143
+AST-00144,Máy In Tem Nhãn QR Code Thermal #144,Thiết Bị IT,Xprinter XP-420B,SN-2026-20534,DEPT-IT,Tầng 4 - Phòng IT - Ô 36,Nguyễn Thị Hoa,ACTIVE,2843520,2026-01-05,Tài sản mẫu kiểm thử số 144
+AST-00145,Máy Nén Khí Piston 15HP #145,Máy Móc Nhà Máy,Pegasus T-15,SN-2026-14775,DEPT-FACTORY,Xưởng Cơ Khí A2 - Ô 58,Nguyễn Văn Hùng,ACTIVE,35046330,2026-01-06,Tài sản mẫu kiểm thử số 145
+AST-00146,Pallet Nhựa 2 Mặt Tải Trọng Nặng #146,Pallet Nhựa,1200x1200x160mm,SN-2026-44644,DEPT-WAREHOUSE,Kho Hàng A1 - Kệ Heavy Duty - Ô 72,Nguyễn Thị Hoa,LOANED,632210,2026-01-07,Tài sản mẫu kiểm thử số 146
+AST-00147,Màn Hình Dell UltraSharp 27 inch 4K #147,Thiết Bị IT,U2723QE,SN-2026-88081,DEPT-IT,Tầng 4 - Phòng IT - Ô 38,Phạm Minh Đức,ACTIVE,12774970,2026-01-08,Tài sản mẫu kiểm thử số 147
+AST-00148,Màn Hình Dell UltraSharp 27 inch 4K #148,Thiết Bị IT,U2723QE,SN-2026-64760,DEPT-IT,Tầng 4 - Phòng IT - Ô 76,Nguyễn Văn Hùng,ACTIVE,12834150,2026-01-09,Tài sản mẫu kiểm thử số 148
+AST-00149,Màn Hình Dell UltraSharp 27 inch 4K #149,Thiết Bị IT,U2723QE,SN-2026-31297,DEPT-IT,Tầng 4 - Phòng IT - Ô 75,Hoàng Văn Thái,ACTIVE,12812450,2026-01-10,Tài sản mẫu kiểm thử số 149
+AST-00150,Máy Điều Hòa Âm Trần Daikin 36000BTU #150,Thiết Bị Văn Phòng,FCNQ36MV1,SN-2026-28641,DEPT-OFFICE,Tầng 5 - Phòng Họp Lớn - Ô 92,Lê Vũ Tường,REPAIR,38048110,2026-01-11,Tài sản mẫu kiểm thử số 150
+AST-00151,Pallet Nhựa Đen 1200x1000mm #151,Pallet Nhựa,1200x1000x150mm,SN-2026-63020,DEPT-WAREHOUSE,Kho Vật Tư Tổng - Dãy A - Ô 14,Phạm Thị Lan,REPAIR,460860,2026-01-12,Tài sản mẫu kiểm thử số 151
+AST-00152,Bộ Máy Hàn TIG Điện Tử 250A #152,Dụng Cụ Công Nghiệp,Jasic TIG-250A,SN-2026-93305,DEPT-WAREHOUSE,Kho Dụng Cụ Kỹ Thuật - Ô 8,Lê Vũ Tường,ACTIVE,12466950,2026-01-13,Tài sản mẫu kiểm thử số 152
+AST-00153,Màn Hình Dell UltraSharp 27 inch 4K #153,Thiết Bị IT,U2723QE,SN-2026-51109,DEPT-IT,Tầng 4 - Phòng IT - Ô 24,Hoàng Văn Thái,LOANED,12777480,2026-01-14,Tài sản mẫu kiểm thử số 153
+AST-00154,Ghế Xoay Lưới Công Trình Ergonomic #154,Thiết Bị Văn Phòng,Hòa Phát EG-01,SN-2026-81007,DEPT-OFFICE,Tầng 5 - Khối Văn Phòng - Ô 72,Nguyễn Thị Hoa,LOANED,1827230,2026-01-15,Tài sản mẫu kiểm thử số 154
+AST-00155,Ghế Xoay Lưới Công Trình Ergonomic #155,Thiết Bị Văn Phòng,Hòa Phát EG-01,SN-2026-56394,DEPT-OFFICE,Tầng 5 - Khối Văn Phòng - Ô 18,Nguyễn Thị Hoa,ACTIVE,1848180,2026-01-16,Tài sản mẫu kiểm thử số 155
+AST-00156,Laptop Dell Latitude 5440 i7 #156,Thiết Bị IT,Core i7 16GB 512GB,SN-2026-48810,DEPT-IT,Tầng 4 - Phòng IT - Ô 30,Nguyễn Văn Hùng,ACTIVE,22538920,2026-01-17,Tài sản mẫu kiểm thử số 156
+AST-00157,Ghế Xoay Lưới Công Trình Ergonomic #157,Thiết Bị Văn Phòng,Hòa Phát EG-01,SN-2026-95364,DEPT-OFFICE,Tầng 5 - Khối Văn Phòng - Ô 39,Phạm Minh Đức,ACTIVE,1825920,2026-01-18,Tài sản mẫu kiểm thử số 157
+AST-00158,Pallet Gỗ Thông Xuất Khẩu Euro #158,Pallet Gỗ,1200x800x144mm,SN-2026-85475,DEPT-WAREHOUSE,Kho Xuất Hàng C - Ô 59,Hoàng Văn Thái,ACTIVE,213050,2026-01-19,Tài sản mẫu kiểm thử số 158
+AST-00159,Xe Nâng Điện Toyota 2.5 Tấn #159,Máy Móc Nhà Máy,Toyota 8FBN25,SN-2026-94968,DEPT-FACTORY,Nhà Máy A1 - Cầu Cảng - Ô 75,Phạm Thị Lan,ACTIVE,420011630,2026-01-20,Tài sản mẫu kiểm thử số 159
+AST-00160,Laptop Dell Latitude 5440 i7 #160,Thiết Bị IT,Core i7 16GB 512GB,SN-2026-12230,DEPT-IT,Tầng 4 - Phòng IT - Ô 85,Nguyễn Thị Hoa,LOANED,22462720,2026-01-21,Tài sản mẫu kiểm thử số 160
+AST-00161,Máy In Tem Nhãn QR Code Thermal #161,Thiết Bị IT,Xprinter XP-420B,SN-2026-82702,DEPT-IT,Tầng 4 - Phòng IT - Ô 21,Hoàng Văn Thái,ACTIVE,2804940,2026-01-22,Tài sản mẫu kiểm thử số 161
+AST-00162,Màn Hình Dell UltraSharp 27 inch 4K #162,Thiết Bị IT,U2723QE,SN-2026-20719,DEPT-IT,Tầng 4 - Phòng IT - Ô 85,Lê Vũ Tường,SPARE,12843030,2026-01-23,Tài sản mẫu kiểm thử số 162
+AST-00163,Bộ Máy Hàn TIG Điện Tử 250A #163,Dụng Cụ Công Nghiệp,Jasic TIG-250A,SN-2026-23168,DEPT-WAREHOUSE,Kho Dụng Cụ Kỹ Thuật - Ô 24,Nguyễn Văn Hùng,ACTIVE,12477060,2026-01-24,Tài sản mẫu kiểm thử số 163
+AST-00164,Bộ Máy Hàn TIG Điện Tử 250A #164,Dụng Cụ Công Nghiệp,Jasic TIG-250A,SN-2026-45326,DEPT-WAREHOUSE,Kho Dụng Cụ Kỹ Thuật - Ô 44,Phạm Thị Lan,REPAIR,12544870,2026-01-25,Tài sản mẫu kiểm thử số 164
+AST-00165,Máy In Tem Nhãn QR Code Thermal #165,Thiết Bị IT,Xprinter XP-420B,SN-2026-13220,DEPT-IT,Tầng 4 - Phòng IT - Ô 13,Lê Vũ Tường,LOANED,2838910,2026-01-26,Tài sản mẫu kiểm thử số 165
+AST-00166,Máy In Tem Nhãn QR Code Thermal #166,Thiết Bị IT,Xprinter XP-420B,SN-2026-73836,DEPT-IT,Tầng 4 - Phòng IT - Ô 87,Phạm Minh Đức,SPARE,2814320,2026-01-27,Tài sản mẫu kiểm thử số 166
+AST-00167,Máy In Tem Nhãn QR Code Thermal #167,Thiết Bị IT,Xprinter XP-420B,SN-2026-10019,DEPT-IT,Tầng 4 - Phòng IT - Ô 70,Lê Vũ Tường,ACTIVE,2782570,2026-01-28,Tài sản mẫu kiểm thử số 167
+AST-00168,Máy Điều Hòa Âm Trần Daikin 36000BTU #168,Thiết Bị Văn Phòng,FCNQ36MV1,SN-2026-35234,DEPT-OFFICE,Tầng 5 - Phòng Họp Lớn - Ô 12,Phạm Thị Lan,SPARE,38044810,2026-01-01,Tài sản mẫu kiểm thử số 168
+AST-00169,Pallet Nhựa Xanh Lót Sàn #169,Pallet Nhựa,1100x1100x120mm,SN-2026-20775,DEPT-WAREHOUSE,Kho Vật Tư Tổng - Dãy B - Ô 98,Trần Văn Nam,ACTIVE,345820,2026-01-02,Tài sản mẫu kiểm thử số 169
+AST-00170,Pallet Nhựa 2 Mặt Tải Trọng Nặng #170,Pallet Nhựa,1200x1200x160mm,SN-2026-57139,DEPT-WAREHOUSE,Kho Hàng A1 - Kệ Heavy Duty - Ô 15,Lê Vũ Tường,ACTIVE,578970,2026-01-03,Tài sản mẫu kiểm thử số 170
+AST-00171,Pallet Gỗ Thông Xuất Khẩu Euro #171,Pallet Gỗ,1200x800x144mm,SN-2026-33168,DEPT-WAREHOUSE,Kho Xuất Hàng C - Ô 74,Phạm Thị Lan,ACTIVE,225550,2026-01-04,Tài sản mẫu kiểm thử số 171
+AST-00172,Pallet Nhựa 2 Mặt Tải Trọng Nặng #172,Pallet Nhựa,1200x1200x160mm,SN-2026-63420,DEPT-WAREHOUSE,Kho Hàng A1 - Kệ Heavy Duty - Ô 33,Phạm Minh Đức,REPAIR,616480,2026-01-05,Tài sản mẫu kiểm thử số 172
+AST-00173,Laptop Dell Latitude 5440 i7 #173,Thiết Bị IT,Core i7 16GB 512GB,SN-2026-59942,DEPT-IT,Tầng 4 - Phòng IT - Ô 51,Phạm Minh Đức,ACTIVE,22486840,2026-01-06,Tài sản mẫu kiểm thử số 173
+AST-00174,Ghế Xoay Lưới Công Trình Ergonomic #174,Thiết Bị Văn Phòng,Hòa Phát EG-01,SN-2026-44262,DEPT-OFFICE,Tầng 5 - Khối Văn Phòng - Ô 68,Trần Văn Nam,SPARE,1857870,2026-01-07,Tài sản mẫu kiểm thử số 174
+AST-00175,Máy In Tem Nhãn QR Code Thermal #175,Thiết Bị IT,Xprinter XP-420B,SN-2026-48175,DEPT-IT,Tầng 4 - Phòng IT - Ô 36,Trần Văn Nam,ACTIVE,2848560,2026-01-08,Tài sản mẫu kiểm thử số 175
+AST-00176,Pallet Nhựa 2 Mặt Tải Trọng Nặng #176,Pallet Nhựa,1200x1200x160mm,SN-2026-23653,DEPT-WAREHOUSE,Kho Hàng A1 - Kệ Heavy Duty - Ô 76,Nguyễn Văn Hùng,ACTIVE,631320,2026-01-09,Tài sản mẫu kiểm thử số 176
+AST-00177,Pallet Nhựa Đen 1200x1000mm #177,Pallet Nhựa,1200x1000x150mm,SN-2026-70012,DEPT-WAREHOUSE,Kho Vật Tư Tổng - Dãy A - Ô 70,Nguyễn Thị Hoa,SPARE,451880,2026-01-10,Tài sản mẫu kiểm thử số 177
+AST-00178,Máy In Tem Nhãn QR Code Thermal #178,Thiết Bị IT,Xprinter XP-420B,SN-2026-18638,DEPT-IT,Tầng 4 - Phòng IT - Ô 72,Nguyễn Thị Hoa,ACTIVE,2841980,2026-01-11,Tài sản mẫu kiểm thử số 178
+AST-00179,Bộ Máy Hàn TIG Điện Tử 250A #179,Dụng Cụ Công Nghiệp,Jasic TIG-250A,SN-2026-82655,DEPT-WAREHOUSE,Kho Dụng Cụ Kỹ Thuật - Ô 15,Nguyễn Văn Hùng,ACTIVE,12510600,2026-01-12,Tài sản mẫu kiểm thử số 179
+AST-00180,Ghế Xoay Lưới Công Trình Ergonomic #180,Thiết Bị Văn Phòng,Hòa Phát EG-01,SN-2026-78804,DEPT-OFFICE,Tầng 5 - Khối Văn Phòng - Ô 45,Nguyễn Văn Hùng,ACTIVE,1838340,2026-01-13,Tài sản mẫu kiểm thử số 180
+AST-00181,Xe Nâng Điện Toyota 2.5 Tấn #181,Máy Móc Nhà Máy,Toyota 8FBN25,SN-2026-42979,DEPT-FACTORY,Nhà Máy A1 - Cầu Cảng - Ô 74,Phạm Thị Lan,LOANED,419984580,2026-01-14,Tài sản mẫu kiểm thử số 181
+AST-00182,Màn Hình Dell UltraSharp 27 inch 4K #182,Thiết Bị IT,U2723QE,SN-2026-69409,DEPT-IT,Tầng 4 - Phòng IT - Ô 65,Trần Văn Nam,SPARE,12802590,2026-01-15,Tài sản mẫu kiểm thử số 182
+AST-00183,Pallet Nhựa 2 Mặt Tải Trọng Nặng #183,Pallet Nhựa,1200x1200x160mm,SN-2026-20404,DEPT-WAREHOUSE,Kho Hàng A1 - Kệ Heavy Duty - Ô 68,Phạm Minh Đức,ACTIVE,635820,2026-01-16,Tài sản mẫu kiểm thử số 183
+AST-00184,Máy Điều Hòa Âm Trần Daikin 36000BTU #184,Thiết Bị Văn Phòng,FCNQ36MV1,SN-2026-54228,DEPT-OFFICE,Tầng 5 - Phòng Họp Lớn - Ô 63,Hoàng Văn Thái,SPARE,37978510,2026-01-17,Tài sản mẫu kiểm thử số 184
+AST-00185,Pallet Nhựa Đen 1200x1000mm #185,Pallet Nhựa,1200x1000x150mm,SN-2026-22773,DEPT-WAREHOUSE,Kho Vật Tư Tổng - Dãy A - Ô 28,Trần Văn Nam,ACTIVE,430430,2026-01-18,Tài sản mẫu kiểm thử số 185
+AST-00186,Bộ Máy Hàn TIG Điện Tử 250A #186,Dụng Cụ Công Nghiệp,Jasic TIG-250A,SN-2026-29820,DEPT-WAREHOUSE,Kho Dụng Cụ Kỹ Thuật - Ô 30,Lê Vũ Tường,ACTIVE,12542680,2026-01-19,Tài sản mẫu kiểm thử số 186
+AST-00187,Pallet Nhựa 2 Mặt Tải Trọng Nặng #187,Pallet Nhựa,1200x1200x160mm,SN-2026-24621,DEPT-WAREHOUSE,Kho Hàng A1 - Kệ Heavy Duty - Ô 67,Nguyễn Thị Hoa,REPAIR,596750,2026-01-20,Tài sản mẫu kiểm thử số 187
+AST-00188,Màn Hình Dell UltraSharp 27 inch 4K #188,Thiết Bị IT,U2723QE,SN-2026-74232,DEPT-IT,Tầng 4 - Phòng IT - Ô 29,Nguyễn Thị Hoa,REPAIR,12750950,2026-01-21,Tài sản mẫu kiểm thử số 188
+AST-00189,Màn Hình Dell UltraSharp 27 inch 4K #189,Thiết Bị IT,U2723QE,SN-2026-16535,DEPT-IT,Tầng 4 - Phòng IT - Ô 25,Trần Văn Nam,LOANED,12755030,2026-01-22,Tài sản mẫu kiểm thử số 189
+AST-00190,Máy Nén Khí Piston 15HP #190,Máy Móc Nhà Máy,Pegasus T-15,SN-2026-43597,DEPT-FACTORY,Xưởng Cơ Khí A2 - Ô 18,Hoàng Văn Thái,ACTIVE,35014890,2026-01-23,Tài sản mẫu kiểm thử số 190
+AST-00191,Bộ Máy Hàn TIG Điện Tử 250A #191,Dụng Cụ Công Nghiệp,Jasic TIG-250A,SN-2026-75346,DEPT-WAREHOUSE,Kho Dụng Cụ Kỹ Thuật - Ô 66,Nguyễn Văn Hùng,ACTIVE,12506620,2026-01-24,Tài sản mẫu kiểm thử số 191
+AST-00192,Máy Nén Khí Piston 15HP #192,Máy Móc Nhà Máy,Pegasus T-15,SN-2026-20242,DEPT-FACTORY,Xưởng Cơ Khí A2 - Ô 18,Nguyễn Văn Hùng,REPAIR,35027280,2026-01-25,Tài sản mẫu kiểm thử số 192
+AST-00193,Pallet Nhựa Đen 1200x1000mm #193,Pallet Nhựa,1200x1000x150mm,SN-2026-25264,DEPT-WAREHOUSE,Kho Vật Tư Tổng - Dãy A - Ô 18,Nguyễn Văn Hùng,ACTIVE,471480,2026-01-26,Tài sản mẫu kiểm thử số 193
+AST-00194,Bộ Máy Hàn TIG Điện Tử 250A #194,Dụng Cụ Công Nghiệp,Jasic TIG-250A,SN-2026-20164,DEPT-WAREHOUSE,Kho Dụng Cụ Kỹ Thuật - Ô 99,Hoàng Văn Thái,ACTIVE,12465000,2026-01-27,Tài sản mẫu kiểm thử số 194
+AST-00195,Ghế Xoay Lưới Công Trình Ergonomic #195,Thiết Bị Văn Phòng,Hòa Phát EG-01,SN-2026-94718,DEPT-OFFICE,Tầng 5 - Khối Văn Phòng - Ô 16,Hoàng Văn Thái,ACTIVE,1803280,2026-01-28,Tài sản mẫu kiểm thử số 195
+AST-00196,Bộ Máy Hàn TIG Điện Tử 250A #196,Dụng Cụ Công Nghiệp,Jasic TIG-250A,SN-2026-62229,DEPT-WAREHOUSE,Kho Dụng Cụ Kỹ Thuật - Ô 92,Hoàng Văn Thái,SPARE,12544020,2026-01-01,Tài sản mẫu kiểm thử số 196
+AST-00197,Xe Nâng Điện Toyota 2.5 Tấn #197,Máy Móc Nhà Máy,Toyota 8FBN25,SN-2026-48245,DEPT-FACTORY,Nhà Máy A1 - Cầu Cảng - Ô 61,Phạm Minh Đức,ACTIVE,420049330,2026-01-02,Tài sản mẫu kiểm thử số 197
+AST-00198,Máy In Tem Nhãn QR Code Thermal #198,Thiết Bị IT,Xprinter XP-420B,SN-2026-41675,DEPT-IT,Tầng 4 - Phòng IT - Ô 93,Hoàng Văn Thái,ACTIVE,2758680,2026-01-03,Tài sản mẫu kiểm thử số 198
+AST-00199,Máy In Tem Nhãn QR Code Thermal #199,Thiết Bị IT,Xprinter XP-420B,SN-2026-88127,DEPT-IT,Tầng 4 - Phòng IT - Ô 1,Nguyễn Văn Hùng,ACTIVE,2809110,2026-01-04,Tài sản mẫu kiểm thử số 199
+AST-00200,Bộ Máy Hàn TIG Điện Tử 250A #200,Dụng Cụ Công Nghiệp,Jasic TIG-250A,SN-2026-34223,DEPT-WAREHOUSE,Kho Dụng Cụ Kỹ Thuật - Ô 33,Phạm Minh Đức,ACTIVE,12545660,2026-01-05,Tài sản mẫu kiểm thử số 200
+AST-00201,Màn Hình Dell UltraSharp 27 inch 4K #201,Thiết Bị IT,U2723QE,SN-2026-95908,DEPT-IT,Tầng 4 - Phòng IT - Ô 31,Trần Văn Nam,REPAIR,12781180,2026-01-06,Tài sản mẫu kiểm thử số 201
+AST-00202,Pallet Nhựa Đen 1200x1000mm #202,Pallet Nhựa,1200x1000x150mm,SN-2026-18014,DEPT-WAREHOUSE,Kho Vật Tư Tổng - Dãy A - Ô 89,Trần Văn Nam,ACTIVE,482980,2026-01-07,Tài sản mẫu kiểm thử số 202
+AST-00203,Ghế Xoay Lưới Công Trình Ergonomic #203,Thiết Bị Văn Phòng,Hòa Phát EG-01,SN-2026-24857,DEPT-OFFICE,Tầng 5 - Khối Văn Phòng - Ô 14,Trần Văn Nam,LOANED,1878820,2026-01-08,Tài sản mẫu kiểm thử số 203
+AST-00204,Pallet Nhựa Xanh Lót Sàn #204,Pallet Nhựa,1100x1100x120mm,SN-2026-21747,DEPT-WAREHOUSE,Kho Vật Tư Tổng - Dãy B - Ô 26,Nguyễn Thị Hoa,SPARE,383610,2026-01-09,Tài sản mẫu kiểm thử số 204
+AST-00205,Bộ Máy Hàn TIG Điện Tử 250A #205,Dụng Cụ Công Nghiệp,Jasic TIG-250A,SN-2026-31832,DEPT-WAREHOUSE,Kho Dụng Cụ Kỹ Thuật - Ô 98,Hoàng Văn Thái,ACTIVE,12469800,2026-01-10,Tài sản mẫu kiểm thử số 205
+AST-00206,Laptop Dell Latitude 5440 i7 #206,Thiết Bị IT,Core i7 16GB 512GB,SN-2026-97467,DEPT-IT,Tầng 4 - Phòng IT - Ô 70,Nguyễn Thị Hoa,ACTIVE,22471390,2026-01-11,Tài sản mẫu kiểm thử số 206
+AST-00207,Laptop Dell Latitude 5440 i7 #207,Thiết Bị IT,Core i7 16GB 512GB,SN-2026-84064,DEPT-IT,Tầng 4 - Phòng IT - Ô 78,Lê Vũ Tường,LOANED,22460960,2026-01-12,Tài sản mẫu kiểm thử số 207
+AST-00208,Xe Nâng Điện Toyota 2.5 Tấn #208,Máy Móc Nhà Máy,Toyota 8FBN25,SN-2026-73678,DEPT-FACTORY,Nhà Máy A1 - Cầu Cảng - Ô 86,Phạm Minh Đức,LOANED,420025470,2026-01-13,Tài sản mẫu kiểm thử số 208
+AST-00209,Máy Điều Hòa Âm Trần Daikin 36000BTU #209,Thiết Bị Văn Phòng,FCNQ36MV1,SN-2026-18763,DEPT-OFFICE,Tầng 5 - Phòng Họp Lớn - Ô 54,Trần Văn Nam,ACTIVE,38008660,2026-01-14,Tài sản mẫu kiểm thử số 209
+AST-00210,Máy Điều Hòa Âm Trần Daikin 36000BTU #210,Thiết Bị Văn Phòng,FCNQ36MV1,SN-2026-17552,DEPT-OFFICE,Tầng 5 - Phòng Họp Lớn - Ô 56,Trần Văn Nam,LOANED,37976170,2026-01-15,Tài sản mẫu kiểm thử số 210
+AST-00211,Ghế Xoay Lưới Công Trình Ergonomic #211,Thiết Bị Văn Phòng,Hòa Phát EG-01,SN-2026-63305,DEPT-OFFICE,Tầng 5 - Khối Văn Phòng - Ô 92,Lê Vũ Tường,ACTIVE,1827030,2026-01-16,Tài sản mẫu kiểm thử số 211
+AST-00212,Bộ Máy Hàn TIG Điện Tử 250A #212,Dụng Cụ Công Nghiệp,Jasic TIG-250A,SN-2026-36437,DEPT-WAREHOUSE,Kho Dụng Cụ Kỹ Thuật - Ô 1,Nguyễn Văn Hùng,ACTIVE,12546150,2026-01-17,Tài sản mẫu kiểm thử số 212
+AST-00213,Xe Nâng Điện Toyota 2.5 Tấn #213,Máy Móc Nhà Máy,Toyota 8FBN25,SN-2026-15140,DEPT-FACTORY,Nhà Máy A1 - Cầu Cảng - Ô 52,Nguyễn Thị Hoa,ACTIVE,419989010,2026-01-18,Tài sản mẫu kiểm thử số 213
+AST-00214,Pallet Nhựa Đen 1200x1000mm #214,Pallet Nhựa,1200x1000x150mm,SN-2026-45457,DEPT-WAREHOUSE,Kho Vật Tư Tổng - Dãy A - Ô 22,Nguyễn Thị Hoa,ACTIVE,490690,2026-01-19,Tài sản mẫu kiểm thử số 214
+AST-00215,Pallet Nhựa 2 Mặt Tải Trọng Nặng #215,Pallet Nhựa,1200x1200x160mm,SN-2026-10711,DEPT-WAREHOUSE,Kho Hàng A1 - Kệ Heavy Duty - Ô 6,Nguyễn Thị Hoa,SPARE,582720,2026-01-20,Tài sản mẫu kiểm thử số 215
+AST-00216,Laptop Dell Latitude 5440 i7 #216,Thiết Bị IT,Core i7 16GB 512GB,SN-2026-13521,DEPT-IT,Tầng 4 - Phòng IT - Ô 20,Nguyễn Văn Hùng,LOANED,22491090,2026-01-21,Tài sản mẫu kiểm thử số 216
+AST-00217,Pallet Nhựa 2 Mặt Tải Trọng Nặng #217,Pallet Nhựa,1200x1200x160mm,SN-2026-53696,DEPT-WAREHOUSE,Kho Hàng A1 - Kệ Heavy Duty - Ô 98,Hoàng Văn Thái,ACTIVE,580150,2026-01-22,Tài sản mẫu kiểm thử số 217
+AST-00218,Pallet Nhựa Xanh Lót Sàn #218,Pallet Nhựa,1100x1100x120mm,SN-2026-17803,DEPT-WAREHOUSE,Kho Vật Tư Tổng - Dãy B - Ô 95,Phạm Minh Đức,ACTIVE,359340,2026-01-23,Tài sản mẫu kiểm thử số 218
+AST-00219,Ghế Xoay Lưới Công Trình Ergonomic #219,Thiết Bị Văn Phòng,Hòa Phát EG-01,SN-2026-48118,DEPT-OFFICE,Tầng 5 - Khối Văn Phòng - Ô 90,Lê Vũ Tường,LOANED,1856560,2026-01-24,Tài sản mẫu kiểm thử số 219
+AST-00220,Ghế Xoay Lưới Công Trình Ergonomic #220,Thiết Bị Văn Phòng,Hòa Phát EG-01,SN-2026-98568,DEPT-OFFICE,Tầng 5 - Khối Văn Phòng - Ô 56,Hoàng Văn Thái,REPAIR,1816720,2026-01-25,Tài sản mẫu kiểm thử số 220
+AST-00221,Pallet Gỗ Thông Xuất Khẩu Euro #221,Pallet Gỗ,1200x800x144mm,SN-2026-20092,DEPT-WAREHOUSE,Kho Xuất Hàng C - Ô 6,Phạm Minh Đức,ACTIVE,263610,2026-01-26,Tài sản mẫu kiểm thử số 221
+AST-00222,Laptop Dell Latitude 5440 i7 #222,Thiết Bị IT,Core i7 16GB 512GB,SN-2026-48045,DEPT-IT,Tầng 4 - Phòng IT - Ô 1,Phạm Minh Đức,ACTIVE,22505600,2026-01-27,Tài sản mẫu kiểm thử số 222
+AST-00223,Máy In Tem Nhãn QR Code Thermal #223,Thiết Bị IT,Xprinter XP-420B,SN-2026-43356,DEPT-IT,Tầng 4 - Phòng IT - Ô 7,Lê Vũ Tường,ACTIVE,2781720,2026-01-28,Tài sản mẫu kiểm thử số 223
+AST-00224,Màn Hình Dell UltraSharp 27 inch 4K #224,Thiết Bị IT,U2723QE,SN-2026-43978,DEPT-IT,Tầng 4 - Phòng IT - Ô 31,Nguyễn Văn Hùng,SPARE,12839150,2026-01-01,Tài sản mẫu kiểm thử số 224
+AST-00225,Pallet Nhựa Xanh Lót Sàn #225,Pallet Nhựa,1100x1100x120mm,SN-2026-65748,DEPT-WAREHOUSE,Kho Vật Tư Tổng - Dãy B - Ô 74,Nguyễn Văn Hùng,ACTIVE,405730,2026-01-02,Tài sản mẫu kiểm thử số 225
+AST-00226,Máy Nén Khí Piston 15HP #226,Máy Móc Nhà Máy,Pegasus T-15,SN-2026-67389,DEPT-FACTORY,Xưởng Cơ Khí A2 - Ô 24,Phạm Thị Lan,ACTIVE,34967530,2026-01-03,Tài sản mẫu kiểm thử số 226
+AST-00227,Pallet Nhựa Đen 1200x1000mm #227,Pallet Nhựa,1200x1000x150mm,SN-2026-70756,DEPT-WAREHOUSE,Kho Vật Tư Tổng - Dãy A - Ô 73,Phạm Minh Đức,ACTIVE,460820,2026-01-04,Tài sản mẫu kiểm thử số 227
+AST-00228,Bộ Máy Hàn TIG Điện Tử 250A #228,Dụng Cụ Công Nghiệp,Jasic TIG-250A,SN-2026-81555,DEPT-WAREHOUSE,Kho Dụng Cụ Kỹ Thuật - Ô 64,Nguyễn Văn Hùng,ACTIVE,12490370,2026-01-05,Tài sản mẫu kiểm thử số 228
+AST-00229,Máy Nén Khí Piston 15HP #229,Máy Móc Nhà Máy,Pegasus T-15,SN-2026-82489,DEPT-FACTORY,Xưởng Cơ Khí A2 - Ô 98,Nguyễn Thị Hoa,SPARE,34993580,2026-01-06,Tài sản mẫu kiểm thử số 229
+AST-00230,Xe Nâng Điện Toyota 2.5 Tấn #230,Máy Móc Nhà Máy,Toyota 8FBN25,SN-2026-19855,DEPT-FACTORY,Nhà Máy A1 - Cầu Cảng - Ô 11,Phạm Thị Lan,SPARE,420002540,2026-01-07,Tài sản mẫu kiểm thử số 230
+AST-00231,Máy Nén Khí Piston 15HP #231,Máy Móc Nhà Máy,Pegasus T-15,SN-2026-48682,DEPT-FACTORY,Xưởng Cơ Khí A2 - Ô 91,Lê Vũ Tường,SPARE,34977970,2026-01-08,Tài sản mẫu kiểm thử số 231
+AST-00232,Máy Điều Hòa Âm Trần Daikin 36000BTU #232,Thiết Bị Văn Phòng,FCNQ36MV1,SN-2026-34100,DEPT-OFFICE,Tầng 5 - Phòng Họp Lớn - Ô 54,Lê Vũ Tường,SPARE,38039250,2026-01-09,Tài sản mẫu kiểm thử số 232
+AST-00233,Máy Nén Khí Piston 15HP #233,Máy Móc Nhà Máy,Pegasus T-15,SN-2026-16539,DEPT-FACTORY,Xưởng Cơ Khí A2 - Ô 67,Trần Văn Nam,LOANED,35040150,2026-01-10,Tài sản mẫu kiểm thử số 233
+AST-00234,Máy In Tem Nhãn QR Code Thermal #234,Thiết Bị IT,Xprinter XP-420B,SN-2026-81385,DEPT-IT,Tầng 4 - Phòng IT - Ô 11,Nguyễn Văn Hùng,REPAIR,2814250,2026-01-11,Tài sản mẫu kiểm thử số 234
+AST-00235,Pallet Gỗ Thông Xuất Khẩu Euro #235,Pallet Gỗ,1200x800x144mm,SN-2026-93362,DEPT-WAREHOUSE,Kho Xuất Hàng C - Ô 56,Nguyễn Thị Hoa,ACTIVE,298020,2026-01-12,Tài sản mẫu kiểm thử số 235
+AST-00236,Màn Hình Dell UltraSharp 27 inch 4K #236,Thiết Bị IT,U2723QE,SN-2026-68119,DEPT-IT,Tầng 4 - Phòng IT - Ô 66,Hoàng Văn Thái,ACTIVE,12817760,2026-01-13,Tài sản mẫu kiểm thử số 236
+AST-00237,Pallet Nhựa 2 Mặt Tải Trọng Nặng #237,Pallet Nhựa,1200x1200x160mm,SN-2026-69139,DEPT-WAREHOUSE,Kho Hàng A1 - Kệ Heavy Duty - Ô 93,Phạm Thị Lan,ACTIVE,649050,2026-01-14,Tài sản mẫu kiểm thử số 237
+AST-00238,Laptop Dell Latitude 5440 i7 #238,Thiết Bị IT,Core i7 16GB 512GB,SN-2026-94762,DEPT-IT,Tầng 4 - Phòng IT - Ô 18,Phạm Thị Lan,ACTIVE,22476140,2026-01-15,Tài sản mẫu kiểm thử số 238
+AST-00239,Màn Hình Dell UltraSharp 27 inch 4K #239,Thiết Bị IT,U2723QE,SN-2026-98374,DEPT-IT,Tầng 4 - Phòng IT - Ô 65,Nguyễn Thị Hoa,ACTIVE,12810960,2026-01-16,Tài sản mẫu kiểm thử số 239
+AST-00240,Ghế Xoay Lưới Công Trình Ergonomic #240,Thiết Bị Văn Phòng,Hòa Phát EG-01,SN-2026-34991,DEPT-OFFICE,Tầng 5 - Khối Văn Phòng - Ô 62,Phạm Thị Lan,ACTIVE,1832050,2026-01-17,Tài sản mẫu kiểm thử số 240
+AST-00241,Màn Hình Dell UltraSharp 27 inch 4K #241,Thiết Bị IT,U2723QE,SN-2026-86087,DEPT-IT,Tầng 4 - Phòng IT - Ô 10,Phạm Minh Đức,LOANED,12759210,2026-01-18,Tài sản mẫu kiểm thử số 241
+AST-00242,Màn Hình Dell UltraSharp 27 inch 4K #242,Thiết Bị IT,U2723QE,SN-2026-17347,DEPT-IT,Tầng 4 - Phòng IT - Ô 23,Phạm Minh Đức,LOANED,12778890,2026-01-19,Tài sản mẫu kiểm thử số 242
+AST-00243,Màn Hình Dell UltraSharp 27 inch 4K #243,Thiết Bị IT,U2723QE,SN-2026-19025,DEPT-IT,Tầng 4 - Phòng IT - Ô 13,Phạm Thị Lan,LOANED,12822540,2026-01-20,Tài sản mẫu kiểm thử số 243
+AST-00244,Máy In Tem Nhãn QR Code Thermal #244,Thiết Bị IT,Xprinter XP-420B,SN-2026-56216,DEPT-IT,Tầng 4 - Phòng IT - Ô 94,Nguyễn Văn Hùng,REPAIR,2774070,2026-01-21,Tài sản mẫu kiểm thử số 244
+AST-00245,Pallet Nhựa 2 Mặt Tải Trọng Nặng #245,Pallet Nhựa,1200x1200x160mm,SN-2026-98609,DEPT-WAREHOUSE,Kho Hàng A1 - Kệ Heavy Duty - Ô 46,Phạm Thị Lan,SPARE,586010,2026-01-22,Tài sản mẫu kiểm thử số 245
+AST-00246,Bộ Máy Hàn TIG Điện Tử 250A #246,Dụng Cụ Công Nghiệp,Jasic TIG-250A,SN-2026-18847,DEPT-WAREHOUSE,Kho Dụng Cụ Kỹ Thuật - Ô 30,Nguyễn Thị Hoa,LOANED,12482890,2026-01-23,Tài sản mẫu kiểm thử số 246
+AST-00247,Màn Hình Dell UltraSharp 27 inch 4K #247,Thiết Bị IT,U2723QE,SN-2026-25197,DEPT-IT,Tầng 4 - Phòng IT - Ô 15,Nguyễn Thị Hoa,SPARE,12797130,2026-01-24,Tài sản mẫu kiểm thử số 247
+AST-00248,Pallet Nhựa Xanh Lót Sàn #248,Pallet Nhựa,1100x1100x120mm,SN-2026-27411,DEPT-WAREHOUSE,Kho Vật Tư Tổng - Dãy B - Ô 9,Nguyễn Văn Hùng,ACTIVE,349970,2026-01-25,Tài sản mẫu kiểm thử số 248
+AST-00249,Máy Nén Khí Piston 15HP #249,Máy Móc Nhà Máy,Pegasus T-15,SN-2026-35858,DEPT-FACTORY,Xưởng Cơ Khí A2 - Ô 12,Hoàng Văn Thái,ACTIVE,35044360,2026-01-26,Tài sản mẫu kiểm thử số 249
+AST-00250,Màn Hình Dell UltraSharp 27 inch 4K #250,Thiết Bị IT,U2723QE,SN-2026-34027,DEPT-IT,Tầng 4 - Phòng IT - Ô 78,Trần Văn Nam,LOANED,12793690,2026-01-27,Tài sản mẫu kiểm thử số 250
+AST-00251,Xe Nâng Điện Toyota 2.5 Tấn #251,Máy Móc Nhà Máy,Toyota 8FBN25,SN-2026-70365,DEPT-FACTORY,Nhà Máy A1 - Cầu Cảng - Ô 35,Hoàng Văn Thái,SPARE,420030460,2026-01-28,Tài sản mẫu kiểm thử số 251
+AST-00252,Xe Nâng Điện Toyota 2.5 Tấn #252,Máy Móc Nhà Máy,Toyota 8FBN25,SN-2026-50354,DEPT-FACTORY,Nhà Máy A1 - Cầu Cảng - Ô 29,Hoàng Văn Thái,REPAIR,419954880,2026-01-01,Tài sản mẫu kiểm thử số 252
+AST-00253,Xe Nâng Điện Toyota 2.5 Tấn #253,Máy Móc Nhà Máy,Toyota 8FBN25,SN-2026-58828,DEPT-FACTORY,Nhà Máy A1 - Cầu Cảng - Ô 48,Nguyễn Văn Hùng,SPARE,419969760,2026-01-02,Tài sản mẫu kiểm thử số 253
+AST-00254,Máy Nén Khí Piston 15HP #254,Máy Móc Nhà Máy,Pegasus T-15,SN-2026-50081,DEPT-FACTORY,Xưởng Cơ Khí A2 - Ô 35,Nguyễn Văn Hùng,ACTIVE,34991560,2026-01-03,Tài sản mẫu kiểm thử số 254
+AST-00255,Bộ Máy Hàn TIG Điện Tử 250A #255,Dụng Cụ Công Nghiệp,Jasic TIG-250A,SN-2026-46108,DEPT-WAREHOUSE,Kho Dụng Cụ Kỹ Thuật - Ô 21,Trần Văn Nam,ACTIVE,12492670,2026-01-04,Tài sản mẫu kiểm thử số 255
+AST-00256,Pallet Nhựa Xanh Lót Sàn #256,Pallet Nhựa,1100x1100x120mm,SN-2026-17655,DEPT-WAREHOUSE,Kho Vật Tư Tổng - Dãy B - Ô 35,Nguyễn Thị Hoa,REPAIR,359460,2026-01-05,Tài sản mẫu kiểm thử số 256
+AST-00257,Pallet Gỗ Thông Xuất Khẩu Euro #257,Pallet Gỗ,1200x800x144mm,SN-2026-43223,DEPT-WAREHOUSE,Kho Xuất Hàng C - Ô 6,Phạm Minh Đức,ACTIVE,208450,2026-01-06,Tài sản mẫu kiểm thử số 257
+AST-00258,Pallet Gỗ Thông Xuất Khẩu Euro #258,Pallet Gỗ,1200x800x144mm,SN-2026-25673,DEPT-WAREHOUSE,Kho Xuất Hàng C - Ô 68,Trần Văn Nam,ACTIVE,237940,2026-01-07,Tài sản mẫu kiểm thử số 258
+AST-00259,Ghế Xoay Lưới Công Trình Ergonomic #259,Thiết Bị Văn Phòng,Hòa Phát EG-01,SN-2026-60990,DEPT-OFFICE,Tầng 5 - Khối Văn Phòng - Ô 76,Nguyễn Thị Hoa,SPARE,1848040,2026-01-08,Tài sản mẫu kiểm thử số 259
+AST-00260,Máy Điều Hòa Âm Trần Daikin 36000BTU #260,Thiết Bị Văn Phòng,FCNQ36MV1,SN-2026-74021,DEPT-OFFICE,Tầng 5 - Phòng Họp Lớn - Ô 51,Hoàng Văn Thái,LOANED,37997760,2026-01-09,Tài sản mẫu kiểm thử số 260
+AST-00261,Ghế Xoay Lưới Công Trình Ergonomic #261,Thiết Bị Văn Phòng,Hòa Phát EG-01,SN-2026-60901,DEPT-OFFICE,Tầng 5 - Khối Văn Phòng - Ô 27,Nguyễn Văn Hùng,ACTIVE,1840210,2026-01-10,Tài sản mẫu kiểm thử số 261
+AST-00262,Máy In Tem Nhãn QR Code Thermal #262,Thiết Bị IT,Xprinter XP-420B,SN-2026-59478,DEPT-IT,Tầng 4 - Phòng IT - Ô 39,Phạm Thị Lan,ACTIVE,2781220,2026-01-11,Tài sản mẫu kiểm thử số 262
+AST-00263,Máy Điều Hòa Âm Trần Daikin 36000BTU #263,Thiết Bị Văn Phòng,FCNQ36MV1,SN-2026-65782,DEPT-OFFICE,Tầng 5 - Phòng Họp Lớn - Ô 8,Nguyễn Văn Hùng,REPAIR,38038090,2026-01-12,Tài sản mẫu kiểm thử số 263
+AST-00264,Xe Nâng Điện Toyota 2.5 Tấn #264,Máy Móc Nhà Máy,Toyota 8FBN25,SN-2026-33855,DEPT-FACTORY,Nhà Máy A1 - Cầu Cảng - Ô 47,Trần Văn Nam,REPAIR,420007020,2026-01-13,Tài sản mẫu kiểm thử số 264
+AST-00265,Bộ Máy Hàn TIG Điện Tử 250A #265,Dụng Cụ Công Nghiệp,Jasic TIG-250A,SN-2026-50374,DEPT-WAREHOUSE,Kho Dụng Cụ Kỹ Thuật - Ô 50,Lê Vũ Tường,ACTIVE,12507730,2026-01-14,Tài sản mẫu kiểm thử số 265
+AST-00266,Laptop Dell Latitude 5440 i7 #266,Thiết Bị IT,Core i7 16GB 512GB,SN-2026-44075,DEPT-IT,Tầng 4 - Phòng IT - Ô 35,Hoàng Văn Thái,SPARE,22473600,2026-01-15,Tài sản mẫu kiểm thử số 266
+AST-00267,Pallet Nhựa 2 Mặt Tải Trọng Nặng #267,Pallet Nhựa,1200x1200x160mm,SN-2026-19189,DEPT-WAREHOUSE,Kho Hàng A1 - Kệ Heavy Duty - Ô 51,Trần Văn Nam,ACTIVE,658370,2026-01-16,Tài sản mẫu kiểm thử số 267
+AST-00268,Bộ Máy Hàn TIG Điện Tử 250A #268,Dụng Cụ Công Nghiệp,Jasic TIG-250A,SN-2026-37558,DEPT-WAREHOUSE,Kho Dụng Cụ Kỹ Thuật - Ô 92,Nguyễn Văn Hùng,ACTIVE,12503490,2026-01-17,Tài sản mẫu kiểm thử số 268
+AST-00269,Laptop Dell Latitude 5440 i7 #269,Thiết Bị IT,Core i7 16GB 512GB,SN-2026-64156,DEPT-IT,Tầng 4 - Phòng IT - Ô 66,Nguyễn Văn Hùng,SPARE,22537420,2026-01-18,Tài sản mẫu kiểm thử số 269
+AST-00270,Máy In Tem Nhãn QR Code Thermal #270,Thiết Bị IT,Xprinter XP-420B,SN-2026-50301,DEPT-IT,Tầng 4 - Phòng IT - Ô 15,Phạm Minh Đức,ACTIVE,2773980,2026-01-19,Tài sản mẫu kiểm thử số 270
+AST-00271,Pallet Gỗ Thông Xuất Khẩu Euro #271,Pallet Gỗ,1200x800x144mm,SN-2026-32816,DEPT-WAREHOUSE,Kho Xuất Hàng C - Ô 36,Trần Văn Nam,REPAIR,215620,2026-01-20,Tài sản mẫu kiểm thử số 271
+AST-00272,Máy Điều Hòa Âm Trần Daikin 36000BTU #272,Thiết Bị Văn Phòng,FCNQ36MV1,SN-2026-46066,DEPT-OFFICE,Tầng 5 - Phòng Họp Lớn - Ô 45,Trần Văn Nam,SPARE,38038450,2026-01-21,Tài sản mẫu kiểm thử số 272
+AST-00273,Pallet Nhựa Đen 1200x1000mm #273,Pallet Nhựa,1200x1000x150mm,SN-2026-51867,DEPT-WAREHOUSE,Kho Vật Tư Tổng - Dãy A - Ô 9,Trần Văn Nam,ACTIVE,452900,2026-01-22,Tài sản mẫu kiểm thử số 273
+AST-00274,Pallet Gỗ Thông Xuất Khẩu Euro #274,Pallet Gỗ,1200x800x144mm,SN-2026-69064,DEPT-WAREHOUSE,Kho Xuất Hàng C - Ô 11,Phạm Thị Lan,ACTIVE,258460,2026-01-23,Tài sản mẫu kiểm thử số 274
+AST-00275,Bộ Máy Hàn TIG Điện Tử 250A #275,Dụng Cụ Công Nghiệp,Jasic TIG-250A,SN-2026-68084,DEPT-WAREHOUSE,Kho Dụng Cụ Kỹ Thuật - Ô 28,Hoàng Văn Thái,LOANED,12526160,2026-01-24,Tài sản mẫu kiểm thử số 275
+AST-00276,Máy In Tem Nhãn QR Code Thermal #276,Thiết Bị IT,Xprinter XP-420B,SN-2026-56012,DEPT-IT,Tầng 4 - Phòng IT - Ô 54,Trần Văn Nam,ACTIVE,2751870,2026-01-25,Tài sản mẫu kiểm thử số 276
+AST-00277,Bộ Máy Hàn TIG Điện Tử 250A #277,Dụng Cụ Công Nghiệp,Jasic TIG-250A,SN-2026-10361,DEPT-WAREHOUSE,Kho Dụng Cụ Kỹ Thuật - Ô 24,Nguyễn Thị Hoa,ACTIVE,12475400,2026-01-26,Tài sản mẫu kiểm thử số 277
+AST-00278,Ghế Xoay Lưới Công Trình Ergonomic #278,Thiết Bị Văn Phòng,Hòa Phát EG-01,SN-2026-71666,DEPT-OFFICE,Tầng 5 - Khối Văn Phòng - Ô 10,Nguyễn Văn Hùng,LOANED,1828840,2026-01-27,Tài sản mẫu kiểm thử số 278
+AST-00279,Máy In Tem Nhãn QR Code Thermal #279,Thiết Bị IT,Xprinter XP-420B,SN-2026-91015,DEPT-IT,Tầng 4 - Phòng IT - Ô 92,Hoàng Văn Thái,SPARE,2833650,2026-01-28,Tài sản mẫu kiểm thử số 279
+AST-00280,Màn Hình Dell UltraSharp 27 inch 4K #280,Thiết Bị IT,U2723QE,SN-2026-21219,DEPT-IT,Tầng 4 - Phòng IT - Ô 7,Phạm Minh Đức,ACTIVE,12756540,2026-01-01,Tài sản mẫu kiểm thử số 280
+AST-00281,Máy Nén Khí Piston 15HP #281,Máy Móc Nhà Máy,Pegasus T-15,SN-2026-35927,DEPT-FACTORY,Xưởng Cơ Khí A2 - Ô 52,Trần Văn Nam,ACTIVE,34993340,2026-01-02,Tài sản mẫu kiểm thử số 281
+AST-00282,Xe Nâng Điện Toyota 2.5 Tấn #282,Máy Móc Nhà Máy,Toyota 8FBN25,SN-2026-81974,DEPT-FACTORY,Nhà Máy A1 - Cầu Cảng - Ô 8,Phạm Minh Đức,REPAIR,420011170,2026-01-03,Tài sản mẫu kiểm thử số 282
+AST-00283,Máy Nén Khí Piston 15HP #283,Máy Móc Nhà Máy,Pegasus T-15,SN-2026-66661,DEPT-FACTORY,Xưởng Cơ Khí A2 - Ô 92,Trần Văn Nam,LOANED,35006640,2026-01-04,Tài sản mẫu kiểm thử số 283
+AST-00284,Laptop Dell Latitude 5440 i7 #284,Thiết Bị IT,Core i7 16GB 512GB,SN-2026-69578,DEPT-IT,Tầng 4 - Phòng IT - Ô 19,Phạm Minh Đức,ACTIVE,22453610,2026-01-05,Tài sản mẫu kiểm thử số 284
+AST-00285,Bộ Máy Hàn TIG Điện Tử 250A #285,Dụng Cụ Công Nghiệp,Jasic TIG-250A,SN-2026-15533,DEPT-WAREHOUSE,Kho Dụng Cụ Kỹ Thuật - Ô 12,Phạm Thị Lan,REPAIR,12541190,2026-01-06,Tài sản mẫu kiểm thử số 285
+AST-00286,Máy Điều Hòa Âm Trần Daikin 36000BTU #286,Thiết Bị Văn Phòng,FCNQ36MV1,SN-2026-71897,DEPT-OFFICE,Tầng 5 - Phòng Họp Lớn - Ô 64,Lê Vũ Tường,ACTIVE,38004230,2026-01-07,Tài sản mẫu kiểm thử số 286
+AST-00287,Pallet Nhựa 2 Mặt Tải Trọng Nặng #287,Pallet Nhựa,1200x1200x160mm,SN-2026-69734,DEPT-WAREHOUSE,Kho Hàng A1 - Kệ Heavy Duty - Ô 76,Hoàng Văn Thái,REPAIR,637190,2026-01-08,Tài sản mẫu kiểm thử số 287
+AST-00288,Laptop Dell Latitude 5440 i7 #288,Thiết Bị IT,Core i7 16GB 512GB,SN-2026-24740,DEPT-IT,Tầng 4 - Phòng IT - Ô 86,Phạm Thị Lan,ACTIVE,22514580,2026-01-09,Tài sản mẫu kiểm thử số 288
+AST-00289,Pallet Nhựa Đen 1200x1000mm #289,Pallet Nhựa,1200x1000x150mm,SN-2026-73503,DEPT-WAREHOUSE,Kho Vật Tư Tổng - Dãy A - Ô 21,Phạm Thị Lan,ACTIVE,415350,2026-01-10,Tài sản mẫu kiểm thử số 289
+AST-00290,Màn Hình Dell UltraSharp 27 inch 4K #290,Thiết Bị IT,U2723QE,SN-2026-72979,DEPT-IT,Tầng 4 - Phòng IT - Ô 14,Trần Văn Nam,ACTIVE,12841330,2026-01-11,Tài sản mẫu kiểm thử số 290
+AST-00291,Pallet Nhựa Đen 1200x1000mm #291,Pallet Nhựa,1200x1000x150mm,SN-2026-53506,DEPT-WAREHOUSE,Kho Vật Tư Tổng - Dãy A - Ô 49,Phạm Thị Lan,ACTIVE,449080,2026-01-12,Tài sản mẫu kiểm thử số 291
+AST-00292,Máy Điều Hòa Âm Trần Daikin 36000BTU #292,Thiết Bị Văn Phòng,FCNQ36MV1,SN-2026-66635,DEPT-OFFICE,Tầng 5 - Phòng Họp Lớn - Ô 79,Phạm Thị Lan,LOANED,37970210,2026-01-13,Tài sản mẫu kiểm thử số 292
+AST-00293,Máy Nén Khí Piston 15HP #293,Máy Móc Nhà Máy,Pegasus T-15,SN-2026-43804,DEPT-FACTORY,Xưởng Cơ Khí A2 - Ô 30,Lê Vũ Tường,ACTIVE,34987440,2026-01-14,Tài sản mẫu kiểm thử số 293
+AST-00294,Pallet Nhựa Đen 1200x1000mm #294,Pallet Nhựa,1200x1000x150mm,SN-2026-55760,DEPT-WAREHOUSE,Kho Vật Tư Tổng - Dãy A - Ô 8,Phạm Minh Đức,ACTIVE,443080,2026-01-15,Tài sản mẫu kiểm thử số 294
+AST-00295,Pallet Nhựa Đen 1200x1000mm #295,Pallet Nhựa,1200x1000x150mm,SN-2026-14519,DEPT-WAREHOUSE,Kho Vật Tư Tổng - Dãy A - Ô 74,Lê Vũ Tường,ACTIVE,435840,2026-01-16,Tài sản mẫu kiểm thử số 295
+AST-00296,Laptop Dell Latitude 5440 i7 #296,Thiết Bị IT,Core i7 16GB 512GB,SN-2026-70341,DEPT-IT,Tầng 4 - Phòng IT - Ô 70,Phạm Thị Lan,REPAIR,22460760,2026-01-17,Tài sản mẫu kiểm thử số 296
+AST-00297,Xe Nâng Điện Toyota 2.5 Tấn #297,Máy Móc Nhà Máy,Toyota 8FBN25,SN-2026-51439,DEPT-FACTORY,Nhà Máy A1 - Cầu Cảng - Ô 86,Phạm Thị Lan,ACTIVE,419999850,2026-01-18,Tài sản mẫu kiểm thử số 297
+AST-00298,Màn Hình Dell UltraSharp 27 inch 4K #298,Thiết Bị IT,U2723QE,SN-2026-13169,DEPT-IT,Tầng 4 - Phòng IT - Ô 2,Phạm Thị Lan,ACTIVE,12824840,2026-01-19,Tài sản mẫu kiểm thử số 298
+AST-00299,Ghế Xoay Lưới Công Trình Ergonomic #299,Thiết Bị Văn Phòng,Hòa Phát EG-01,SN-2026-93041,DEPT-OFFICE,Tầng 5 - Khối Văn Phòng - Ô 60,Nguyễn Văn Hùng,ACTIVE,1823290,2026-01-20,Tài sản mẫu kiểm thử số 299
+AST-00300,Bộ Máy Hàn TIG Điện Tử 250A #300,Dụng Cụ Công Nghiệp,Jasic TIG-250A,SN-2026-39181,DEPT-WAREHOUSE,Kho Dụng Cụ Kỹ Thuật - Ô 21,Phạm Thị Lan,REPAIR,12490170,2026-01-21,Tài sản mẫu kiểm thử số 300
+AST-00301,Pallet Nhựa Xanh Lót Sàn #301,Pallet Nhựa,1100x1100x120mm,SN-2026-50237,DEPT-WAREHOUSE,Kho Vật Tư Tổng - Dãy B - Ô 23,Trần Văn Nam,ACTIVE,390530,2026-01-22,Tài sản mẫu kiểm thử số 301
+AST-00302,Máy Điều Hòa Âm Trần Daikin 36000BTU #302,Thiết Bị Văn Phòng,FCNQ36MV1,SN-2026-90297,DEPT-OFFICE,Tầng 5 - Phòng Họp Lớn - Ô 5,Nguyễn Thị Hoa,ACTIVE,37966320,2026-01-23,Tài sản mẫu kiểm thử số 302
+AST-00303,Màn Hình Dell UltraSharp 27 inch 4K #303,Thiết Bị IT,U2723QE,SN-2026-11752,DEPT-IT,Tầng 4 - Phòng IT - Ô 5,Nguyễn Thị Hoa,ACTIVE,12750450,2026-01-24,Tài sản mẫu kiểm thử số 303
+AST-00304,Máy Nén Khí Piston 15HP #304,Máy Móc Nhà Máy,Pegasus T-15,SN-2026-28161,DEPT-FACTORY,Xưởng Cơ Khí A2 - Ô 29,Phạm Minh Đức,ACTIVE,35038850,2026-01-25,Tài sản mẫu kiểm thử số 304
+AST-00305,Pallet Nhựa 2 Mặt Tải Trọng Nặng #305,Pallet Nhựa,1200x1200x160mm,SN-2026-51519,DEPT-WAREHOUSE,Kho Hàng A1 - Kệ Heavy Duty - Ô 39,Lê Vũ Tường,SPARE,640490,2026-01-26,Tài sản mẫu kiểm thử số 305
+AST-00306,Pallet Nhựa Đen 1200x1000mm #306,Pallet Nhựa,1200x1000x150mm,SN-2026-29756,DEPT-WAREHOUSE,Kho Vật Tư Tổng - Dãy A - Ô 84,Phạm Minh Đức,LOANED,449640,2026-01-27,Tài sản mẫu kiểm thử số 306
+AST-00307,Pallet Nhựa 2 Mặt Tải Trọng Nặng #307,Pallet Nhựa,1200x1200x160mm,SN-2026-38264,DEPT-WAREHOUSE,Kho Hàng A1 - Kệ Heavy Duty - Ô 56,Phạm Minh Đức,REPAIR,628350,2026-01-28,Tài sản mẫu kiểm thử số 307
+AST-00308,Pallet Nhựa Đen 1200x1000mm #308,Pallet Nhựa,1200x1000x150mm,SN-2026-42284,DEPT-WAREHOUSE,Kho Vật Tư Tổng - Dãy A - Ô 47,Nguyễn Văn Hùng,REPAIR,414160,2026-01-01,Tài sản mẫu kiểm thử số 308
+AST-00309,Máy Nén Khí Piston 15HP #309,Máy Móc Nhà Máy,Pegasus T-15,SN-2026-48830,DEPT-FACTORY,Xưởng Cơ Khí A2 - Ô 9,Nguyễn Văn Hùng,ACTIVE,35023570,2026-01-02,Tài sản mẫu kiểm thử số 309
+AST-00310,Pallet Nhựa 2 Mặt Tải Trọng Nặng #310,Pallet Nhựa,1200x1200x160mm,SN-2026-33389,DEPT-WAREHOUSE,Kho Hàng A1 - Kệ Heavy Duty - Ô 36,Nguyễn Văn Hùng,LOANED,662650,2026-01-03,Tài sản mẫu kiểm thử số 310
+AST-00311,Máy Điều Hòa Âm Trần Daikin 36000BTU #311,Thiết Bị Văn Phòng,FCNQ36MV1,SN-2026-64153,DEPT-OFFICE,Tầng 5 - Phòng Họp Lớn - Ô 33,Trần Văn Nam,REPAIR,37995460,2026-01-04,Tài sản mẫu kiểm thử số 311
+AST-00312,Pallet Nhựa Đen 1200x1000mm #312,Pallet Nhựa,1200x1000x150mm,SN-2026-44475,DEPT-WAREHOUSE,Kho Vật Tư Tổng - Dãy A - Ô 51,Phạm Minh Đức,SPARE,438800,2026-01-05,Tài sản mẫu kiểm thử số 312
+AST-00313,Pallet Nhựa 2 Mặt Tải Trọng Nặng #313,Pallet Nhựa,1200x1200x160mm,SN-2026-17035,DEPT-WAREHOUSE,Kho Hàng A1 - Kệ Heavy Duty - Ô 8,Lê Vũ Tường,ACTIVE,669180,2026-01-06,Tài sản mẫu kiểm thử số 313
+AST-00314,Pallet Nhựa Đen 1200x1000mm #314,Pallet Nhựa,1200x1000x150mm,SN-2026-45314,DEPT-WAREHOUSE,Kho Vật Tư Tổng - Dãy A - Ô 74,Lê Vũ Tường,ACTIVE,466170,2026-01-07,Tài sản mẫu kiểm thử số 314
+AST-00315,Máy In Tem Nhãn QR Code Thermal #315,Thiết Bị IT,Xprinter XP-420B,SN-2026-43653,DEPT-IT,Tầng 4 - Phòng IT - Ô 98,Lê Vũ Tường,ACTIVE,2836420,2026-01-08,Tài sản mẫu kiểm thử số 315
+AST-00316,Bộ Máy Hàn TIG Điện Tử 250A #316,Dụng Cụ Công Nghiệp,Jasic TIG-250A,SN-2026-99722,DEPT-WAREHOUSE,Kho Dụng Cụ Kỹ Thuật - Ô 42,Phạm Thị Lan,ACTIVE,12532910,2026-01-09,Tài sản mẫu kiểm thử số 316
+AST-00317,Ghế Xoay Lưới Công Trình Ergonomic #317,Thiết Bị Văn Phòng,Hòa Phát EG-01,SN-2026-28582,DEPT-OFFICE,Tầng 5 - Khối Văn Phòng - Ô 74,Trần Văn Nam,ACTIVE,1897320,2026-01-10,Tài sản mẫu kiểm thử số 317
+AST-00318,Máy Nén Khí Piston 15HP #318,Máy Móc Nhà Máy,Pegasus T-15,SN-2026-60404,DEPT-FACTORY,Xưởng Cơ Khí A2 - Ô 88,Phạm Thị Lan,REPAIR,35022750,2026-01-11,Tài sản mẫu kiểm thử số 318
+AST-00319,Màn Hình Dell UltraSharp 27 inch 4K #319,Thiết Bị IT,U2723QE,SN-2026-10588,DEPT-IT,Tầng 4 - Phòng IT - Ô 53,Phạm Minh Đức,LOANED,12824100,2026-01-12,Tài sản mẫu kiểm thử số 319
+AST-00320,Máy Điều Hòa Âm Trần Daikin 36000BTU #320,Thiết Bị Văn Phòng,FCNQ36MV1,SN-2026-87643,DEPT-OFFICE,Tầng 5 - Phòng Họp Lớn - Ô 62,Lê Vũ Tường,ACTIVE,37979820,2026-01-13,Tài sản mẫu kiểm thử số 320
+AST-00321,Máy Nén Khí Piston 15HP #321,Máy Móc Nhà Máy,Pegasus T-15,SN-2026-28986,DEPT-FACTORY,Xưởng Cơ Khí A2 - Ô 52,Phạm Thị Lan,ACTIVE,34950030,2026-01-14,Tài sản mẫu kiểm thử số 321
+AST-00322,Bộ Máy Hàn TIG Điện Tử 250A #322,Dụng Cụ Công Nghiệp,Jasic TIG-250A,SN-2026-49057,DEPT-WAREHOUSE,Kho Dụng Cụ Kỹ Thuật - Ô 12,Nguyễn Thị Hoa,SPARE,12484940,2026-01-15,Tài sản mẫu kiểm thử số 322
+AST-00323,Máy Nén Khí Piston 15HP #323,Máy Móc Nhà Máy,Pegasus T-15,SN-2026-37938,DEPT-FACTORY,Xưởng Cơ Khí A2 - Ô 68,Lê Vũ Tường,LOANED,35001750,2026-01-16,Tài sản mẫu kiểm thử số 323
+AST-00324,Pallet Nhựa Đen 1200x1000mm #324,Pallet Nhựa,1200x1000x150mm,SN-2026-22745,DEPT-WAREHOUSE,Kho Vật Tư Tổng - Dãy A - Ô 72,Trần Văn Nam,ACTIVE,487380,2026-01-17,Tài sản mẫu kiểm thử số 324
+AST-00325,Máy In Tem Nhãn QR Code Thermal #325,Thiết Bị IT,Xprinter XP-420B,SN-2026-94297,DEPT-IT,Tầng 4 - Phòng IT - Ô 54,Nguyễn Thị Hoa,ACTIVE,2784740,2026-01-18,Tài sản mẫu kiểm thử số 325
+AST-00326,Máy Điều Hòa Âm Trần Daikin 36000BTU #326,Thiết Bị Văn Phòng,FCNQ36MV1,SN-2026-77271,DEPT-OFFICE,Tầng 5 - Phòng Họp Lớn - Ô 36,Trần Văn Nam,ACTIVE,38020800,2026-01-19,Tài sản mẫu kiểm thử số 326
+AST-00327,Pallet Gỗ Thông Xuất Khẩu Euro #327,Pallet Gỗ,1200x800x144mm,SN-2026-61591,DEPT-WAREHOUSE,Kho Xuất Hàng C - Ô 31,Lê Vũ Tường,ACTIVE,273440,2026-01-20,Tài sản mẫu kiểm thử số 327
+AST-00328,Ghế Xoay Lưới Công Trình Ergonomic #328,Thiết Bị Văn Phòng,Hòa Phát EG-01,SN-2026-51832,DEPT-OFFICE,Tầng 5 - Khối Văn Phòng - Ô 94,Nguyễn Thị Hoa,ACTIVE,1807420,2026-01-21,Tài sản mẫu kiểm thử số 328
+AST-00329,Ghế Xoay Lưới Công Trình Ergonomic #329,Thiết Bị Văn Phòng,Hòa Phát EG-01,SN-2026-90127,DEPT-OFFICE,Tầng 5 - Khối Văn Phòng - Ô 66,Phạm Thị Lan,ACTIVE,1819800,2026-01-22,Tài sản mẫu kiểm thử số 329
+AST-00330,Máy Nén Khí Piston 15HP #330,Máy Móc Nhà Máy,Pegasus T-15,SN-2026-70687,DEPT-FACTORY,Xưởng Cơ Khí A2 - Ô 82,Phạm Thị Lan,LOANED,35008630,2026-01-23,Tài sản mẫu kiểm thử số 330
+AST-00331,Laptop Dell Latitude 5440 i7 #331,Thiết Bị IT,Core i7 16GB 512GB,SN-2026-45937,DEPT-IT,Tầng 4 - Phòng IT - Ô 12,Nguyễn Văn Hùng,ACTIVE,22466580,2026-01-24,Tài sản mẫu kiểm thử số 331
+AST-00332,Pallet Nhựa Xanh Lót Sàn #332,Pallet Nhựa,1100x1100x120mm,SN-2026-63946,DEPT-WAREHOUSE,Kho Vật Tư Tổng - Dãy B - Ô 6,Phạm Thị Lan,REPAIR,349490,2026-01-25,Tài sản mẫu kiểm thử số 332
+AST-00333,Xe Nâng Điện Toyota 2.5 Tấn #333,Máy Móc Nhà Máy,Toyota 8FBN25,SN-2026-79372,DEPT-FACTORY,Nhà Máy A1 - Cầu Cảng - Ô 49,Nguyễn Thị Hoa,REPAIR,420049120,2026-01-26,Tài sản mẫu kiểm thử số 333
+AST-00334,Máy Điều Hòa Âm Trần Daikin 36000BTU #334,Thiết Bị Văn Phòng,FCNQ36MV1,SN-2026-46738,DEPT-OFFICE,Tầng 5 - Phòng Họp Lớn - Ô 30,Hoàng Văn Thái,SPARE,38034470,2026-01-27,Tài sản mẫu kiểm thử số 334
+AST-00335,Xe Nâng Điện Toyota 2.5 Tấn #335,Máy Móc Nhà Máy,Toyota 8FBN25,SN-2026-80466,DEPT-FACTORY,Nhà Máy A1 - Cầu Cảng - Ô 6,Hoàng Văn Thái,ACTIVE,419987980,2026-01-28,Tài sản mẫu kiểm thử số 335
+AST-00336,Pallet Nhựa Đen 1200x1000mm #336,Pallet Nhựa,1200x1000x150mm,SN-2026-55494,DEPT-WAREHOUSE,Kho Vật Tư Tổng - Dãy A - Ô 5,Trần Văn Nam,ACTIVE,417570,2026-01-01,Tài sản mẫu kiểm thử số 336
+AST-00337,Laptop Dell Latitude 5440 i7 #337,Thiết Bị IT,Core i7 16GB 512GB,SN-2026-66438,DEPT-IT,Tầng 4 - Phòng IT - Ô 4,Lê Vũ Tường,ACTIVE,22489170,2026-01-02,Tài sản mẫu kiểm thử số 337
+AST-00338,Pallet Nhựa 2 Mặt Tải Trọng Nặng #338,Pallet Nhựa,1200x1200x160mm,SN-2026-49914,DEPT-WAREHOUSE,Kho Hàng A1 - Kệ Heavy Duty - Ô 90,Lê Vũ Tường,SPARE,659370,2026-01-03,Tài sản mẫu kiểm thử số 338
+AST-00339,Bộ Máy Hàn TIG Điện Tử 250A #339,Dụng Cụ Công Nghiệp,Jasic TIG-250A,SN-2026-61156,DEPT-WAREHOUSE,Kho Dụng Cụ Kỹ Thuật - Ô 29,Phạm Thị Lan,SPARE,12542490,2026-01-04,Tài sản mẫu kiểm thử số 339
+AST-00340,Bộ Máy Hàn TIG Điện Tử 250A #340,Dụng Cụ Công Nghiệp,Jasic TIG-250A,SN-2026-93790,DEPT-WAREHOUSE,Kho Dụng Cụ Kỹ Thuật - Ô 51,Nguyễn Văn Hùng,REPAIR,12502140,2026-01-05,Tài sản mẫu kiểm thử số 340
+AST-00341,Ghế Xoay Lưới Công Trình Ergonomic #341,Thiết Bị Văn Phòng,Hòa Phát EG-01,SN-2026-27474,DEPT-OFFICE,Tầng 5 - Khối Văn Phòng - Ô 69,Hoàng Văn Thái,SPARE,1828110,2026-01-06,Tài sản mẫu kiểm thử số 341
+AST-00342,Xe Nâng Điện Toyota 2.5 Tấn #342,Máy Móc Nhà Máy,Toyota 8FBN25,SN-2026-30798,DEPT-FACTORY,Nhà Máy A1 - Cầu Cảng - Ô 48,Lê Vũ Tường,ACTIVE,420018390,2026-01-07,Tài sản mẫu kiểm thử số 342
+AST-00343,Xe Nâng Điện Toyota 2.5 Tấn #343,Máy Móc Nhà Máy,Toyota 8FBN25,SN-2026-23860,DEPT-FACTORY,Nhà Máy A1 - Cầu Cảng - Ô 20,Nguyễn Thị Hoa,ACTIVE,419950490,2026-01-08,Tài sản mẫu kiểm thử số 343
+AST-00344,Màn Hình Dell UltraSharp 27 inch 4K #344,Thiết Bị IT,U2723QE,SN-2026-74218,DEPT-IT,Tầng 4 - Phòng IT - Ô 43,Phạm Thị Lan,ACTIVE,12826230,2026-01-09,Tài sản mẫu kiểm thử số 344
+AST-00345,Bộ Máy Hàn TIG Điện Tử 250A #345,Dụng Cụ Công Nghiệp,Jasic TIG-250A,SN-2026-49100,DEPT-WAREHOUSE,Kho Dụng Cụ Kỹ Thuật - Ô 76,Hoàng Văn Thái,ACTIVE,12494720,2026-01-10,Tài sản mẫu kiểm thử số 345
+AST-00346,Ghế Xoay Lưới Công Trình Ergonomic #346,Thiết Bị Văn Phòng,Hòa Phát EG-01,SN-2026-23238,DEPT-OFFICE,Tầng 5 - Khối Văn Phòng - Ô 19,Lê Vũ Tường,LOANED,1865190,2026-01-11,Tài sản mẫu kiểm thử số 346
+AST-00347,Pallet Nhựa 2 Mặt Tải Trọng Nặng #347,Pallet Nhựa,1200x1200x160mm,SN-2026-40373,DEPT-WAREHOUSE,Kho Hàng A1 - Kệ Heavy Duty - Ô 67,Trần Văn Nam,ACTIVE,613450,2026-01-12,Tài sản mẫu kiểm thử số 347
+AST-00348,Pallet Nhựa 2 Mặt Tải Trọng Nặng #348,Pallet Nhựa,1200x1200x160mm,SN-2026-12655,DEPT-WAREHOUSE,Kho Hàng A1 - Kệ Heavy Duty - Ô 6,Nguyễn Văn Hùng,ACTIVE,585460,2026-01-13,Tài sản mẫu kiểm thử số 348
+AST-00349,Máy In Tem Nhãn QR Code Thermal #349,Thiết Bị IT,Xprinter XP-420B,SN-2026-45168,DEPT-IT,Tầng 4 - Phòng IT - Ô 61,Nguyễn Văn Hùng,ACTIVE,2842200,2026-01-14,Tài sản mẫu kiểm thử số 349
+AST-00350,Xe Nâng Điện Toyota 2.5 Tấn #350,Máy Móc Nhà Máy,Toyota 8FBN25,SN-2026-40373,DEPT-FACTORY,Nhà Máy A1 - Cầu Cảng - Ô 41,Hoàng Văn Thái,LOANED,419977640,2026-01-15,Tài sản mẫu kiểm thử số 350
+AST-00351,Ghế Xoay Lưới Công Trình Ergonomic #351,Thiết Bị Văn Phòng,Hòa Phát EG-01,SN-2026-10326,DEPT-OFFICE,Tầng 5 - Khối Văn Phòng - Ô 89,Nguyễn Văn Hùng,ACTIVE,1883780,2026-01-16,Tài sản mẫu kiểm thử số 351
+AST-00352,Xe Nâng Điện Toyota 2.5 Tấn #352,Máy Móc Nhà Máy,Toyota 8FBN25,SN-2026-54060,DEPT-FACTORY,Nhà Máy A1 - Cầu Cảng - Ô 84,Phạm Minh Đức,ACTIVE,420045380,2026-01-17,Tài sản mẫu kiểm thử số 352
+AST-00353,Pallet Nhựa Xanh Lót Sàn #353,Pallet Nhựa,1100x1100x120mm,SN-2026-81241,DEPT-WAREHOUSE,Kho Vật Tư Tổng - Dãy B - Ô 41,Nguyễn Thị Hoa,ACTIVE,335460,2026-01-18,Tài sản mẫu kiểm thử số 353
+AST-00354,Pallet Nhựa Xanh Lót Sàn #354,Pallet Nhựa,1100x1100x120mm,SN-2026-73779,DEPT-WAREHOUSE,Kho Vật Tư Tổng - Dãy B - Ô 26,Phạm Thị Lan,LOANED,360020,2026-01-19,Tài sản mẫu kiểm thử số 354
+AST-00355,Pallet Nhựa Đen 1200x1000mm #355,Pallet Nhựa,1200x1000x150mm,SN-2026-99660,DEPT-WAREHOUSE,Kho Vật Tư Tổng - Dãy A - Ô 93,Lê Vũ Tường,LOANED,455820,2026-01-20,Tài sản mẫu kiểm thử số 355
+AST-00356,Ghế Xoay Lưới Công Trình Ergonomic #356,Thiết Bị Văn Phòng,Hòa Phát EG-01,SN-2026-61546,DEPT-OFFICE,Tầng 5 - Khối Văn Phòng - Ô 74,Nguyễn Thị Hoa,ACTIVE,1862870,2026-01-21,Tài sản mẫu kiểm thử số 356
+AST-00357,Pallet Gỗ Thông Xuất Khẩu Euro #357,Pallet Gỗ,1200x800x144mm,SN-2026-99851,DEPT-WAREHOUSE,Kho Xuất Hàng C - Ô 71,Phạm Thị Lan,ACTIVE,219540,2026-01-22,Tài sản mẫu kiểm thử số 357
+AST-00358,Máy Điều Hòa Âm Trần Daikin 36000BTU #358,Thiết Bị Văn Phòng,FCNQ36MV1,SN-2026-76282,DEPT-OFFICE,Tầng 5 - Phòng Họp Lớn - Ô 86,Phạm Thị Lan,LOANED,37999960,2026-01-23,Tài sản mẫu kiểm thử số 358
+AST-00359,Máy Nén Khí Piston 15HP #359,Máy Móc Nhà Máy,Pegasus T-15,SN-2026-11927,DEPT-FACTORY,Xưởng Cơ Khí A2 - Ô 57,Trần Văn Nam,SPARE,35010130,2026-01-24,Tài sản mẫu kiểm thử số 359
+AST-00360,Ghế Xoay Lưới Công Trình Ergonomic #360,Thiết Bị Văn Phòng,Hòa Phát EG-01,SN-2026-67596,DEPT-OFFICE,Tầng 5 - Khối Văn Phòng - Ô 26,Trần Văn Nam,ACTIVE,1841870,2026-01-25,Tài sản mẫu kiểm thử số 360
+AST-00361,Máy In Tem Nhãn QR Code Thermal #361,Thiết Bị IT,Xprinter XP-420B,SN-2026-69606,DEPT-IT,Tầng 4 - Phòng IT - Ô 51,Trần Văn Nam,LOANED,2785490,2026-01-26,Tài sản mẫu kiểm thử số 361
+AST-00362,Pallet Nhựa Đen 1200x1000mm #362,Pallet Nhựa,1200x1000x150mm,SN-2026-19218,DEPT-WAREHOUSE,Kho Vật Tư Tổng - Dãy A - Ô 84,Hoàng Văn Thái,ACTIVE,458210,2026-01-27,Tài sản mẫu kiểm thử số 362
+AST-00363,Bộ Máy Hàn TIG Điện Tử 250A #363,Dụng Cụ Công Nghiệp,Jasic TIG-250A,SN-2026-34614,DEPT-WAREHOUSE,Kho Dụng Cụ Kỹ Thuật - Ô 31,Nguyễn Văn Hùng,ACTIVE,12529760,2026-01-28,Tài sản mẫu kiểm thử số 363
+AST-00364,Máy Điều Hòa Âm Trần Daikin 36000BTU #364,Thiết Bị Văn Phòng,FCNQ36MV1,SN-2026-60705,DEPT-OFFICE,Tầng 5 - Phòng Họp Lớn - Ô 1,Hoàng Văn Thái,ACTIVE,38016420,2026-01-01,Tài sản mẫu kiểm thử số 364
+AST-00365,Máy Nén Khí Piston 15HP #365,Máy Móc Nhà Máy,Pegasus T-15,SN-2026-81243,DEPT-FACTORY,Xưởng Cơ Khí A2 - Ô 4,Trần Văn Nam,ACTIVE,35047970,2026-01-02,Tài sản mẫu kiểm thử số 365
+AST-00366,Laptop Dell Latitude 5440 i7 #366,Thiết Bị IT,Core i7 16GB 512GB,SN-2026-64904,DEPT-IT,Tầng 4 - Phòng IT - Ô 52,Lê Vũ Tường,ACTIVE,22534430,2026-01-03,Tài sản mẫu kiểm thử số 366
+AST-00367,Pallet Nhựa 2 Mặt Tải Trọng Nặng #367,Pallet Nhựa,1200x1200x160mm,SN-2026-23746,DEPT-WAREHOUSE,Kho Hàng A1 - Kệ Heavy Duty - Ô 4,Phạm Minh Đức,ACTIVE,623230,2026-01-04,Tài sản mẫu kiểm thử số 367
+AST-00368,Máy Nén Khí Piston 15HP #368,Máy Móc Nhà Máy,Pegasus T-15,SN-2026-24326,DEPT-FACTORY,Xưởng Cơ Khí A2 - Ô 55,Phạm Thị Lan,ACTIVE,35006620,2026-01-05,Tài sản mẫu kiểm thử số 368
+AST-00369,Máy Nén Khí Piston 15HP #369,Máy Móc Nhà Máy,Pegasus T-15,SN-2026-69327,DEPT-FACTORY,Xưởng Cơ Khí A2 - Ô 93,Lê Vũ Tường,REPAIR,35023490,2026-01-06,Tài sản mẫu kiểm thử số 369
+AST-00370,Pallet Gỗ Thông Xuất Khẩu Euro #370,Pallet Gỗ,1200x800x144mm,SN-2026-88133,DEPT-WAREHOUSE,Kho Xuất Hàng C - Ô 81,Hoàng Văn Thái,SPARE,228120,2026-01-07,Tài sản mẫu kiểm thử số 370
+AST-00371,Pallet Gỗ Thông Xuất Khẩu Euro #371,Pallet Gỗ,1200x800x144mm,SN-2026-28759,DEPT-WAREHOUSE,Kho Xuất Hàng C - Ô 33,Phạm Minh Đức,ACTIVE,257540,2026-01-08,Tài sản mẫu kiểm thử số 371
+AST-00372,Pallet Nhựa Đen 1200x1000mm #372,Pallet Nhựa,1200x1000x150mm,SN-2026-82397,DEPT-WAREHOUSE,Kho Vật Tư Tổng - Dãy A - Ô 79,Nguyễn Thị Hoa,ACTIVE,416770,2026-01-09,Tài sản mẫu kiểm thử số 372
+AST-00373,Laptop Dell Latitude 5440 i7 #373,Thiết Bị IT,Core i7 16GB 512GB,SN-2026-16707,DEPT-IT,Tầng 4 - Phòng IT - Ô 51,Nguyễn Thị Hoa,REPAIR,22496420,2026-01-10,Tài sản mẫu kiểm thử số 373
+AST-00374,Pallet Nhựa Xanh Lót Sàn #374,Pallet Nhựa,1100x1100x120mm,SN-2026-36951,DEPT-WAREHOUSE,Kho Vật Tư Tổng - Dãy B - Ô 73,Hoàng Văn Thái,ACTIVE,400650,2026-01-11,Tài sản mẫu kiểm thử số 374
+AST-00375,Máy Nén Khí Piston 15HP #375,Máy Móc Nhà Máy,Pegasus T-15,SN-2026-85486,DEPT-FACTORY,Xưởng Cơ Khí A2 - Ô 100,Trần Văn Nam,LOANED,34991860,2026-01-12,Tài sản mẫu kiểm thử số 375
+AST-00376,Pallet Nhựa Đen 1200x1000mm #376,Pallet Nhựa,1200x1000x150mm,SN-2026-47206,DEPT-WAREHOUSE,Kho Vật Tư Tổng - Dãy A - Ô 82,Lê Vũ Tường,ACTIVE,468410,2026-01-13,Tài sản mẫu kiểm thử số 376
+AST-00377,Máy Điều Hòa Âm Trần Daikin 36000BTU #377,Thiết Bị Văn Phòng,FCNQ36MV1,SN-2026-68937,DEPT-OFFICE,Tầng 5 - Phòng Họp Lớn - Ô 43,Trần Văn Nam,REPAIR,38003530,2026-01-14,Tài sản mẫu kiểm thử số 377
+AST-00378,Máy Điều Hòa Âm Trần Daikin 36000BTU #378,Thiết Bị Văn Phòng,FCNQ36MV1,SN-2026-63410,DEPT-OFFICE,Tầng 5 - Phòng Họp Lớn - Ô 28,Phạm Minh Đức,LOANED,38005640,2026-01-15,Tài sản mẫu kiểm thử số 378
+AST-00379,Máy Nén Khí Piston 15HP #379,Máy Móc Nhà Máy,Pegasus T-15,SN-2026-69377,DEPT-FACTORY,Xưởng Cơ Khí A2 - Ô 20,Hoàng Văn Thái,ACTIVE,34991140,2026-01-16,Tài sản mẫu kiểm thử số 379
+AST-00380,Xe Nâng Điện Toyota 2.5 Tấn #380,Máy Móc Nhà Máy,Toyota 8FBN25,SN-2026-51008,DEPT-FACTORY,Nhà Máy A1 - Cầu Cảng - Ô 17,Hoàng Văn Thái,SPARE,420038550,2026-01-17,Tài sản mẫu kiểm thử số 380
+AST-00381,Pallet Nhựa Đen 1200x1000mm #381,Pallet Nhựa,1200x1000x150mm,SN-2026-44284,DEPT-WAREHOUSE,Kho Vật Tư Tổng - Dãy A - Ô 43,Nguyễn Thị Hoa,ACTIVE,470650,2026-01-18,Tài sản mẫu kiểm thử số 381
+AST-00382,Màn Hình Dell UltraSharp 27 inch 4K #382,Thiết Bị IT,U2723QE,SN-2026-37515,DEPT-IT,Tầng 4 - Phòng IT - Ô 76,Phạm Thị Lan,REPAIR,12790890,2026-01-19,Tài sản mẫu kiểm thử số 382
+AST-00383,Bộ Máy Hàn TIG Điện Tử 250A #383,Dụng Cụ Công Nghiệp,Jasic TIG-250A,SN-2026-33659,DEPT-WAREHOUSE,Kho Dụng Cụ Kỹ Thuật - Ô 36,Nguyễn Văn Hùng,SPARE,12533790,2026-01-20,Tài sản mẫu kiểm thử số 383
+AST-00384,Bộ Máy Hàn TIG Điện Tử 250A #384,Dụng Cụ Công Nghiệp,Jasic TIG-250A,SN-2026-26600,DEPT-WAREHOUSE,Kho Dụng Cụ Kỹ Thuật - Ô 78,Phạm Minh Đức,REPAIR,12548540,2026-01-21,Tài sản mẫu kiểm thử số 384
+AST-00385,Máy Nén Khí Piston 15HP #385,Máy Móc Nhà Máy,Pegasus T-15,SN-2026-89343,DEPT-FACTORY,Xưởng Cơ Khí A2 - Ô 48,Hoàng Văn Thái,REPAIR,34969200,2026-01-22,Tài sản mẫu kiểm thử số 385
+AST-00386,Pallet Gỗ Thông Xuất Khẩu Euro #386,Pallet Gỗ,1200x800x144mm,SN-2026-26149,DEPT-WAREHOUSE,Kho Xuất Hàng C - Ô 43,Lê Vũ Tường,ACTIVE,208700,2026-01-23,Tài sản mẫu kiểm thử số 386
+AST-00387,Bộ Máy Hàn TIG Điện Tử 250A #387,Dụng Cụ Công Nghiệp,Jasic TIG-250A,SN-2026-40057,DEPT-WAREHOUSE,Kho Dụng Cụ Kỹ Thuật - Ô 4,Hoàng Văn Thái,REPAIR,12454970,2026-01-24,Tài sản mẫu kiểm thử số 387
+AST-00388,Máy Điều Hòa Âm Trần Daikin 36000BTU #388,Thiết Bị Văn Phòng,FCNQ36MV1,SN-2026-58882,DEPT-OFFICE,Tầng 5 - Phòng Họp Lớn - Ô 33,Hoàng Văn Thái,LOANED,37950410,2026-01-25,Tài sản mẫu kiểm thử số 388
+AST-00389,Pallet Nhựa Đen 1200x1000mm #389,Pallet Nhựa,1200x1000x150mm,SN-2026-80508,DEPT-WAREHOUSE,Kho Vật Tư Tổng - Dãy A - Ô 100,Nguyễn Văn Hùng,ACTIVE,430370,2026-01-26,Tài sản mẫu kiểm thử số 389
+AST-00390,Laptop Dell Latitude 5440 i7 #390,Thiết Bị IT,Core i7 16GB 512GB,SN-2026-77400,DEPT-IT,Tầng 4 - Phòng IT - Ô 15,Nguyễn Thị Hoa,SPARE,22472930,2026-01-27,Tài sản mẫu kiểm thử số 390
+AST-00391,Pallet Nhựa 2 Mặt Tải Trọng Nặng #391,Pallet Nhựa,1200x1200x160mm,SN-2026-16478,DEPT-WAREHOUSE,Kho Hàng A1 - Kệ Heavy Duty - Ô 86,Trần Văn Nam,ACTIVE,574080,2026-01-28,Tài sản mẫu kiểm thử số 391
+AST-00392,Pallet Nhựa Xanh Lót Sàn #392,Pallet Nhựa,1100x1100x120mm,SN-2026-78229,DEPT-WAREHOUSE,Kho Vật Tư Tổng - Dãy B - Ô 29,Phạm Thị Lan,LOANED,354870,2026-01-01,Tài sản mẫu kiểm thử số 392
+AST-00393,Pallet Gỗ Thông Xuất Khẩu Euro #393,Pallet Gỗ,1200x800x144mm,SN-2026-91244,DEPT-WAREHOUSE,Kho Xuất Hàng C - Ô 91,Nguyễn Thị Hoa,ACTIVE,243570,2026-01-02,Tài sản mẫu kiểm thử số 393
+AST-00394,Máy Điều Hòa Âm Trần Daikin 36000BTU #394,Thiết Bị Văn Phòng,FCNQ36MV1,SN-2026-35817,DEPT-OFFICE,Tầng 5 - Phòng Họp Lớn - Ô 41,Phạm Minh Đức,ACTIVE,38040550,2026-01-03,Tài sản mẫu kiểm thử số 394
+AST-00395,Ghế Xoay Lưới Công Trình Ergonomic #395,Thiết Bị Văn Phòng,Hòa Phát EG-01,SN-2026-48870,DEPT-OFFICE,Tầng 5 - Khối Văn Phòng - Ô 7,Hoàng Văn Thái,ACTIVE,1881660,2026-01-04,Tài sản mẫu kiểm thử số 395
+AST-00396,Máy Điều Hòa Âm Trần Daikin 36000BTU #396,Thiết Bị Văn Phòng,FCNQ36MV1,SN-2026-87154,DEPT-OFFICE,Tầng 5 - Phòng Họp Lớn - Ô 10,Lê Vũ Tường,ACTIVE,38003040,2026-01-05,Tài sản mẫu kiểm thử số 396
+AST-00397,Màn Hình Dell UltraSharp 27 inch 4K #397,Thiết Bị IT,U2723QE,SN-2026-50393,DEPT-IT,Tầng 4 - Phòng IT - Ô 92,Nguyễn Văn Hùng,ACTIVE,12828750,2026-01-06,Tài sản mẫu kiểm thử số 397
+AST-00398,Ghế Xoay Lưới Công Trình Ergonomic #398,Thiết Bị Văn Phòng,Hòa Phát EG-01,SN-2026-35722,DEPT-OFFICE,Tầng 5 - Khối Văn Phòng - Ô 73,Hoàng Văn Thái,ACTIVE,1827470,2026-01-07,Tài sản mẫu kiểm thử số 398
+AST-00399,Pallet Nhựa Đen 1200x1000mm #399,Pallet Nhựa,1200x1000x150mm,SN-2026-65111,DEPT-WAREHOUSE,Kho Vật Tư Tổng - Dãy A - Ô 17,Nguyễn Thị Hoa,ACTIVE,464540,2026-01-08,Tài sản mẫu kiểm thử số 399
+AST-00400,Pallet Nhựa 2 Mặt Tải Trọng Nặng #400,Pallet Nhựa,1200x1200x160mm,SN-2026-43495,DEPT-WAREHOUSE,Kho Hàng A1 - Kệ Heavy Duty - Ô 75,Hoàng Văn Thái,LOANED,669150,2026-01-09,Tài sản mẫu kiểm thử số 400
+AST-00401,Máy In Tem Nhãn QR Code Thermal #401,Thiết Bị IT,Xprinter XP-420B,SN-2026-78841,DEPT-IT,Tầng 4 - Phòng IT - Ô 26,Nguyễn Văn Hùng,ACTIVE,2796860,2026-01-10,Tài sản mẫu kiểm thử số 401
+AST-00402,Pallet Gỗ Thông Xuất Khẩu Euro #402,Pallet Gỗ,1200x800x144mm,SN-2026-53420,DEPT-WAREHOUSE,Kho Xuất Hàng C - Ô 1,Hoàng Văn Thái,REPAIR,291030,2026-01-11,Tài sản mẫu kiểm thử số 402
+AST-00403,Pallet Nhựa Đen 1200x1000mm #403,Pallet Nhựa,1200x1000x150mm,SN-2026-41066,DEPT-WAREHOUSE,Kho Vật Tư Tổng - Dãy A - Ô 35,Lê Vũ Tường,ACTIVE,403030,2026-01-12,Tài sản mẫu kiểm thử số 403
+AST-00404,Máy Điều Hòa Âm Trần Daikin 36000BTU #404,Thiết Bị Văn Phòng,FCNQ36MV1,SN-2026-75680,DEPT-OFFICE,Tầng 5 - Phòng Họp Lớn - Ô 64,Phạm Thị Lan,REPAIR,38016000,2026-01-13,Tài sản mẫu kiểm thử số 404
+AST-00405,Laptop Dell Latitude 5440 i7 #405,Thiết Bị IT,Core i7 16GB 512GB,SN-2026-78540,DEPT-IT,Tầng 4 - Phòng IT - Ô 27,Nguyễn Văn Hùng,LOANED,22487370,2026-01-14,Tài sản mẫu kiểm thử số 405
+AST-00406,Máy In Tem Nhãn QR Code Thermal #406,Thiết Bị IT,Xprinter XP-420B,SN-2026-80218,DEPT-IT,Tầng 4 - Phòng IT - Ô 7,Phạm Thị Lan,ACTIVE,2849250,2026-01-15,Tài sản mẫu kiểm thử số 406
+AST-00407,Máy In Tem Nhãn QR Code Thermal #407,Thiết Bị IT,Xprinter XP-420B,SN-2026-73501,DEPT-IT,Tầng 4 - Phòng IT - Ô 49,Phạm Thị Lan,REPAIR,2836590,2026-01-16,Tài sản mẫu kiểm thử số 407
+AST-00408,Máy Nén Khí Piston 15HP #408,Máy Móc Nhà Máy,Pegasus T-15,SN-2026-65460,DEPT-FACTORY,Xưởng Cơ Khí A2 - Ô 97,Nguyễn Văn Hùng,ACTIVE,35033390,2026-01-17,Tài sản mẫu kiểm thử số 408
+AST-00409,Máy Điều Hòa Âm Trần Daikin 36000BTU #409,Thiết Bị Văn Phòng,FCNQ36MV1,SN-2026-64599,DEPT-OFFICE,Tầng 5 - Phòng Họp Lớn - Ô 53,Phạm Thị Lan,SPARE,38046920,2026-01-18,Tài sản mẫu kiểm thử số 409
+AST-00410,Bộ Máy Hàn TIG Điện Tử 250A #410,Dụng Cụ Công Nghiệp,Jasic TIG-250A,SN-2026-95394,DEPT-WAREHOUSE,Kho Dụng Cụ Kỹ Thuật - Ô 29,Nguyễn Văn Hùng,SPARE,12485850,2026-01-19,Tài sản mẫu kiểm thử số 410
+AST-00411,Bộ Máy Hàn TIG Điện Tử 250A #411,Dụng Cụ Công Nghiệp,Jasic TIG-250A,SN-2026-54313,DEPT-WAREHOUSE,Kho Dụng Cụ Kỹ Thuật - Ô 78,Hoàng Văn Thái,ACTIVE,12468980,2026-01-20,Tài sản mẫu kiểm thử số 411
+AST-00412,Pallet Gỗ Thông Xuất Khẩu Euro #412,Pallet Gỗ,1200x800x144mm,SN-2026-16350,DEPT-WAREHOUSE,Kho Xuất Hàng C - Ô 53,Nguyễn Văn Hùng,ACTIVE,209580,2026-01-21,Tài sản mẫu kiểm thử số 412
+AST-00413,Máy In Tem Nhãn QR Code Thermal #413,Thiết Bị IT,Xprinter XP-420B,SN-2026-96768,DEPT-IT,Tầng 4 - Phòng IT - Ô 39,Lê Vũ Tường,ACTIVE,2822110,2026-01-22,Tài sản mẫu kiểm thử số 413
+AST-00414,Pallet Nhựa Đen 1200x1000mm #414,Pallet Nhựa,1200x1000x150mm,SN-2026-54489,DEPT-WAREHOUSE,Kho Vật Tư Tổng - Dãy A - Ô 76,Nguyễn Văn Hùng,REPAIR,441220,2026-01-23,Tài sản mẫu kiểm thử số 414
+AST-00415,Pallet Nhựa Xanh Lót Sàn #415,Pallet Nhựa,1100x1100x120mm,SN-2026-14546,DEPT-WAREHOUSE,Kho Vật Tư Tổng - Dãy B - Ô 85,Nguyễn Văn Hùng,ACTIVE,335900,2026-01-24,Tài sản mẫu kiểm thử số 415
+AST-00416,Máy Nén Khí Piston 15HP #416,Máy Móc Nhà Máy,Pegasus T-15,SN-2026-47849,DEPT-FACTORY,Xưởng Cơ Khí A2 - Ô 95,Hoàng Văn Thái,ACTIVE,34954060,2026-01-25,Tài sản mẫu kiểm thử số 416
+AST-00417,Pallet Nhựa Đen 1200x1000mm #417,Pallet Nhựa,1200x1000x150mm,SN-2026-16674,DEPT-WAREHOUSE,Kho Vật Tư Tổng - Dãy A - Ô 98,Phạm Thị Lan,ACTIVE,471930,2026-01-26,Tài sản mẫu kiểm thử số 417
+AST-00418,Pallet Nhựa Xanh Lót Sàn #418,Pallet Nhựa,1100x1100x120mm,SN-2026-97627,DEPT-WAREHOUSE,Kho Vật Tư Tổng - Dãy B - Ô 65,Nguyễn Văn Hùng,LOANED,339550,2026-01-27,Tài sản mẫu kiểm thử số 418
+AST-00419,Màn Hình Dell UltraSharp 27 inch 4K #419,Thiết Bị IT,U2723QE,SN-2026-20308,DEPT-IT,Tầng 4 - Phòng IT - Ô 19,Hoàng Văn Thái,ACTIVE,12842480,2026-01-28,Tài sản mẫu kiểm thử số 419
+AST-00420,Pallet Nhựa Xanh Lót Sàn #420,Pallet Nhựa,1100x1100x120mm,SN-2026-87138,DEPT-WAREHOUSE,Kho Vật Tư Tổng - Dãy B - Ô 35,Phạm Thị Lan,SPARE,361820,2026-01-01,Tài sản mẫu kiểm thử số 420
+AST-00421,Laptop Dell Latitude 5440 i7 #421,Thiết Bị IT,Core i7 16GB 512GB,SN-2026-61212,DEPT-IT,Tầng 4 - Phòng IT - Ô 49,Phạm Thị Lan,ACTIVE,22530690,2026-01-02,Tài sản mẫu kiểm thử số 421
+AST-00422,Máy Điều Hòa Âm Trần Daikin 36000BTU #422,Thiết Bị Văn Phòng,FCNQ36MV1,SN-2026-63989,DEPT-OFFICE,Tầng 5 - Phòng Họp Lớn - Ô 19,Lê Vũ Tường,REPAIR,38000750,2026-01-03,Tài sản mẫu kiểm thử số 422
+AST-00423,Pallet Nhựa Đen 1200x1000mm #423,Pallet Nhựa,1200x1000x150mm,SN-2026-93370,DEPT-WAREHOUSE,Kho Vật Tư Tổng - Dãy A - Ô 92,Phạm Thị Lan,LOANED,414510,2026-01-04,Tài sản mẫu kiểm thử số 423
+AST-00424,Pallet Nhựa 2 Mặt Tải Trọng Nặng #424,Pallet Nhựa,1200x1200x160mm,SN-2026-64353,DEPT-WAREHOUSE,Kho Hàng A1 - Kệ Heavy Duty - Ô 36,Phạm Thị Lan,ACTIVE,642900,2026-01-05,Tài sản mẫu kiểm thử số 424
+AST-00425,Xe Nâng Điện Toyota 2.5 Tấn #425,Máy Móc Nhà Máy,Toyota 8FBN25,SN-2026-27226,DEPT-FACTORY,Nhà Máy A1 - Cầu Cảng - Ô 72,Phạm Thị Lan,ACTIVE,420045590,2026-01-06,Tài sản mẫu kiểm thử số 425
+AST-00426,Xe Nâng Điện Toyota 2.5 Tấn #426,Máy Móc Nhà Máy,Toyota 8FBN25,SN-2026-98991,DEPT-FACTORY,Nhà Máy A1 - Cầu Cảng - Ô 62,Phạm Thị Lan,SPARE,420012850,2026-01-07,Tài sản mẫu kiểm thử số 426
+AST-00427,Pallet Nhựa 2 Mặt Tải Trọng Nặng #427,Pallet Nhựa,1200x1200x160mm,SN-2026-46670,DEPT-WAREHOUSE,Kho Hàng A1 - Kệ Heavy Duty - Ô 56,Lê Vũ Tường,SPARE,627840,2026-01-08,Tài sản mẫu kiểm thử số 427
+AST-00428,Xe Nâng Điện Toyota 2.5 Tấn #428,Máy Móc Nhà Máy,Toyota 8FBN25,SN-2026-80195,DEPT-FACTORY,Nhà Máy A1 - Cầu Cảng - Ô 85,Nguyễn Văn Hùng,ACTIVE,419965700,2026-01-09,Tài sản mẫu kiểm thử số 428
+AST-00429,Bộ Máy Hàn TIG Điện Tử 250A #429,Dụng Cụ Công Nghiệp,Jasic TIG-250A,SN-2026-32227,DEPT-WAREHOUSE,Kho Dụng Cụ Kỹ Thuật - Ô 56,Nguyễn Thị Hoa,ACTIVE,12539030,2026-01-10,Tài sản mẫu kiểm thử số 429
+AST-00430,Pallet Nhựa Xanh Lót Sàn #430,Pallet Nhựa,1100x1100x120mm,SN-2026-79799,DEPT-WAREHOUSE,Kho Vật Tư Tổng - Dãy B - Ô 85,Nguyễn Văn Hùng,ACTIVE,342330,2026-01-11,Tài sản mẫu kiểm thử số 430
+AST-00431,Xe Nâng Điện Toyota 2.5 Tấn #431,Máy Móc Nhà Máy,Toyota 8FBN25,SN-2026-61839,DEPT-FACTORY,Nhà Máy A1 - Cầu Cảng - Ô 43,Phạm Minh Đức,LOANED,420016730,2026-01-12,Tài sản mẫu kiểm thử số 431
+AST-00432,Xe Nâng Điện Toyota 2.5 Tấn #432,Máy Móc Nhà Máy,Toyota 8FBN25,SN-2026-66339,DEPT-FACTORY,Nhà Máy A1 - Cầu Cảng - Ô 87,Nguyễn Thị Hoa,SPARE,419962370,2026-01-13,Tài sản mẫu kiểm thử số 432
+AST-00433,Máy Nén Khí Piston 15HP #433,Máy Móc Nhà Máy,Pegasus T-15,SN-2026-75414,DEPT-FACTORY,Xưởng Cơ Khí A2 - Ô 6,Phạm Minh Đức,ACTIVE,35010210,2026-01-14,Tài sản mẫu kiểm thử số 433
+AST-00434,Ghế Xoay Lưới Công Trình Ergonomic #434,Thiết Bị Văn Phòng,Hòa Phát EG-01,SN-2026-50419,DEPT-OFFICE,Tầng 5 - Khối Văn Phòng - Ô 20,Lê Vũ Tường,ACTIVE,1821150,2026-01-15,Tài sản mẫu kiểm thử số 434
+AST-00435,Xe Nâng Điện Toyota 2.5 Tấn #435,Máy Móc Nhà Máy,Toyota 8FBN25,SN-2026-98261,DEPT-FACTORY,Nhà Máy A1 - Cầu Cảng - Ô 100,Nguyễn Thị Hoa,REPAIR,419952040,2026-01-16,Tài sản mẫu kiểm thử số 435
+AST-00436,Máy In Tem Nhãn QR Code Thermal #436,Thiết Bị IT,Xprinter XP-420B,SN-2026-50547,DEPT-IT,Tầng 4 - Phòng IT - Ô 45,Lê Vũ Tường,SPARE,2824810,2026-01-17,Tài sản mẫu kiểm thử số 436
+AST-00437,Máy In Tem Nhãn QR Code Thermal #437,Thiết Bị IT,Xprinter XP-420B,SN-2026-44119,DEPT-IT,Tầng 4 - Phòng IT - Ô 55,Trần Văn Nam,ACTIVE,2756270,2026-01-18,Tài sản mẫu kiểm thử số 437
+AST-00438,Máy In Tem Nhãn QR Code Thermal #438,Thiết Bị IT,Xprinter XP-420B,SN-2026-37129,DEPT-IT,Tầng 4 - Phòng IT - Ô 39,Phạm Minh Đức,ACTIVE,2803800,2026-01-19,Tài sản mẫu kiểm thử số 438
+AST-00439,Pallet Nhựa 2 Mặt Tải Trọng Nặng #439,Pallet Nhựa,1200x1200x160mm,SN-2026-72845,DEPT-WAREHOUSE,Kho Hàng A1 - Kệ Heavy Duty - Ô 17,Hoàng Văn Thái,ACTIVE,636010,2026-01-20,Tài sản mẫu kiểm thử số 439
+AST-00440,Pallet Nhựa Đen 1200x1000mm #440,Pallet Nhựa,1200x1000x150mm,SN-2026-52050,DEPT-WAREHOUSE,Kho Vật Tư Tổng - Dãy A - Ô 45,Phạm Thị Lan,ACTIVE,487210,2026-01-21,Tài sản mẫu kiểm thử số 440
+AST-00441,Bộ Máy Hàn TIG Điện Tử 250A #441,Dụng Cụ Công Nghiệp,Jasic TIG-250A,SN-2026-41534,DEPT-WAREHOUSE,Kho Dụng Cụ Kỹ Thuật - Ô 80,Trần Văn Nam,ACTIVE,12481560,2026-01-22,Tài sản mẫu kiểm thử số 441
+AST-00442,Bộ Máy Hàn TIG Điện Tử 250A #442,Dụng Cụ Công Nghiệp,Jasic TIG-250A,SN-2026-18951,DEPT-WAREHOUSE,Kho Dụng Cụ Kỹ Thuật - Ô 48,Hoàng Văn Thái,ACTIVE,12464630,2026-01-23,Tài sản mẫu kiểm thử số 442
+AST-00443,Màn Hình Dell UltraSharp 27 inch 4K #443,Thiết Bị IT,U2723QE,SN-2026-43483,DEPT-IT,Tầng 4 - Phòng IT - Ô 14,Nguyễn Thị Hoa,REPAIR,12761480,2026-01-24,Tài sản mẫu kiểm thử số 443
+AST-00444,Laptop Dell Latitude 5440 i7 #444,Thiết Bị IT,Core i7 16GB 512GB,SN-2026-94699,DEPT-IT,Tầng 4 - Phòng IT - Ô 74,Hoàng Văn Thái,SPARE,22478720,2026-01-25,Tài sản mẫu kiểm thử số 444
+AST-00445,Máy Nén Khí Piston 15HP #445,Máy Móc Nhà Máy,Pegasus T-15,SN-2026-80839,DEPT-FACTORY,Xưởng Cơ Khí A2 - Ô 23,Lê Vũ Tường,ACTIVE,34970160,2026-01-26,Tài sản mẫu kiểm thử số 445
+AST-00446,Pallet Nhựa 2 Mặt Tải Trọng Nặng #446,Pallet Nhựa,1200x1200x160mm,SN-2026-66541,DEPT-WAREHOUSE,Kho Hàng A1 - Kệ Heavy Duty - Ô 24,Trần Văn Nam,ACTIVE,622060,2026-01-27,Tài sản mẫu kiểm thử số 446
+AST-00447,Màn Hình Dell UltraSharp 27 inch 4K #447,Thiết Bị IT,U2723QE,SN-2026-32509,DEPT-IT,Tầng 4 - Phòng IT - Ô 80,Trần Văn Nam,LOANED,12769070,2026-01-28,Tài sản mẫu kiểm thử số 447
+AST-00448,Pallet Gỗ Thông Xuất Khẩu Euro #448,Pallet Gỗ,1200x800x144mm,SN-2026-23935,DEPT-WAREHOUSE,Kho Xuất Hàng C - Ô 82,Nguyễn Thị Hoa,ACTIVE,251890,2026-01-01,Tài sản mẫu kiểm thử số 448
+AST-00449,Pallet Nhựa Đen 1200x1000mm #449,Pallet Nhựa,1200x1000x150mm,SN-2026-66399,DEPT-WAREHOUSE,Kho Vật Tư Tổng - Dãy A - Ô 98,Nguyễn Thị Hoa,ACTIVE,464010,2026-01-02,Tài sản mẫu kiểm thử số 449
+AST-00450,Pallet Gỗ Thông Xuất Khẩu Euro #450,Pallet Gỗ,1200x800x144mm,SN-2026-70930,DEPT-WAREHOUSE,Kho Xuất Hàng C - Ô 26,Nguyễn Văn Hùng,ACTIVE,253200,2026-01-03,Tài sản mẫu kiểm thử số 450
+AST-00451,Máy In Tem Nhãn QR Code Thermal #451,Thiết Bị IT,Xprinter XP-420B,SN-2026-61608,DEPT-IT,Tầng 4 - Phòng IT - Ô 100,Trần Văn Nam,LOANED,2809440,2026-01-04,Tài sản mẫu kiểm thử số 451
+AST-00452,Ghế Xoay Lưới Công Trình Ergonomic #452,Thiết Bị Văn Phòng,Hòa Phát EG-01,SN-2026-36000,DEPT-OFFICE,Tầng 5 - Khối Văn Phòng - Ô 26,Phạm Thị Lan,ACTIVE,1829310,2026-01-05,Tài sản mẫu kiểm thử số 452
+AST-00453,Pallet Nhựa Xanh Lót Sàn #453,Pallet Nhựa,1100x1100x120mm,SN-2026-15205,DEPT-WAREHOUSE,Kho Vật Tư Tổng - Dãy B - Ô 60,Trần Văn Nam,ACTIVE,368720,2026-01-06,Tài sản mẫu kiểm thử số 453
+AST-00454,Máy In Tem Nhãn QR Code Thermal #454,Thiết Bị IT,Xprinter XP-420B,SN-2026-22172,DEPT-IT,Tầng 4 - Phòng IT - Ô 16,Lê Vũ Tường,ACTIVE,2844520,2026-01-07,Tài sản mẫu kiểm thử số 454
+AST-00455,Ghế Xoay Lưới Công Trình Ergonomic #455,Thiết Bị Văn Phòng,Hòa Phát EG-01,SN-2026-24296,DEPT-OFFICE,Tầng 5 - Khối Văn Phòng - Ô 59,Hoàng Văn Thái,REPAIR,1889970,2026-01-08,Tài sản mẫu kiểm thử số 455
+AST-00456,Laptop Dell Latitude 5440 i7 #456,Thiết Bị IT,Core i7 16GB 512GB,SN-2026-98798,DEPT-IT,Tầng 4 - Phòng IT - Ô 69,Nguyễn Thị Hoa,ACTIVE,22450660,2026-01-09,Tài sản mẫu kiểm thử số 456
+AST-00457,Pallet Nhựa 2 Mặt Tải Trọng Nặng #457,Pallet Nhựa,1200x1200x160mm,SN-2026-16579,DEPT-WAREHOUSE,Kho Hàng A1 - Kệ Heavy Duty - Ô 60,Nguyễn Thị Hoa,ACTIVE,645570,2026-01-10,Tài sản mẫu kiểm thử số 457
+AST-00458,Pallet Gỗ Thông Xuất Khẩu Euro #458,Pallet Gỗ,1200x800x144mm,SN-2026-20317,DEPT-WAREHOUSE,Kho Xuất Hàng C - Ô 42,Hoàng Văn Thái,LOANED,250710,2026-01-11,Tài sản mẫu kiểm thử số 458
+AST-00459,Máy Nén Khí Piston 15HP #459,Máy Móc Nhà Máy,Pegasus T-15,SN-2026-85717,DEPT-FACTORY,Xưởng Cơ Khí A2 - Ô 64,Nguyễn Văn Hùng,ACTIVE,34973720,2026-01-12,Tài sản mẫu kiểm thử số 459
+AST-00460,Máy Điều Hòa Âm Trần Daikin 36000BTU #460,Thiết Bị Văn Phòng,FCNQ36MV1,SN-2026-59494,DEPT-OFFICE,Tầng 5 - Phòng Họp Lớn - Ô 85,Nguyễn Văn Hùng,ACTIVE,38029980,2026-01-13,Tài sản mẫu kiểm thử số 460
+AST-00461,Màn Hình Dell UltraSharp 27 inch 4K #461,Thiết Bị IT,U2723QE,SN-2026-27250,DEPT-IT,Tầng 4 - Phòng IT - Ô 99,Lê Vũ Tường,ACTIVE,12798550,2026-01-14,Tài sản mẫu kiểm thử số 461
+AST-00462,Xe Nâng Điện Toyota 2.5 Tấn #462,Máy Móc Nhà Máy,Toyota 8FBN25,SN-2026-24123,DEPT-FACTORY,Nhà Máy A1 - Cầu Cảng - Ô 29,Nguyễn Thị Hoa,ACTIVE,420012310,2026-01-15,Tài sản mẫu kiểm thử số 462
+AST-00463,Laptop Dell Latitude 5440 i7 #463,Thiết Bị IT,Core i7 16GB 512GB,SN-2026-90114,DEPT-IT,Tầng 4 - Phòng IT - Ô 60,Phạm Thị Lan,ACTIVE,22540650,2026-01-16,Tài sản mẫu kiểm thử số 463
+AST-00464,Ghế Xoay Lưới Công Trình Ergonomic #464,Thiết Bị Văn Phòng,Hòa Phát EG-01,SN-2026-23671,DEPT-OFFICE,Tầng 5 - Khối Văn Phòng - Ô 10,Trần Văn Nam,ACTIVE,1837780,2026-01-17,Tài sản mẫu kiểm thử số 464
+AST-00465,Xe Nâng Điện Toyota 2.5 Tấn #465,Máy Móc Nhà Máy,Toyota 8FBN25,SN-2026-87981,DEPT-FACTORY,Nhà Máy A1 - Cầu Cảng - Ô 32,Phạm Minh Đức,LOANED,420042850,2026-01-18,Tài sản mẫu kiểm thử số 465
+AST-00466,Pallet Gỗ Thông Xuất Khẩu Euro #466,Pallet Gỗ,1200x800x144mm,SN-2026-96567,DEPT-WAREHOUSE,Kho Xuất Hàng C - Ô 92,Lê Vũ Tường,ACTIVE,242780,2026-01-19,Tài sản mẫu kiểm thử số 466
+AST-00467,Xe Nâng Điện Toyota 2.5 Tấn #467,Máy Móc Nhà Máy,Toyota 8FBN25,SN-2026-61819,DEPT-FACTORY,Nhà Máy A1 - Cầu Cảng - Ô 82,Trần Văn Nam,ACTIVE,419985970,2026-01-20,Tài sản mẫu kiểm thử số 467
+AST-00468,Màn Hình Dell UltraSharp 27 inch 4K #468,Thiết Bị IT,U2723QE,SN-2026-41905,DEPT-IT,Tầng 4 - Phòng IT - Ô 43,Nguyễn Thị Hoa,ACTIVE,12813160,2026-01-21,Tài sản mẫu kiểm thử số 468
+AST-00469,Xe Nâng Điện Toyota 2.5 Tấn #469,Máy Móc Nhà Máy,Toyota 8FBN25,SN-2026-85074,DEPT-FACTORY,Nhà Máy A1 - Cầu Cảng - Ô 96,Phạm Minh Đức,SPARE,419992200,2026-01-22,Tài sản mẫu kiểm thử số 469
+AST-00470,Máy Điều Hòa Âm Trần Daikin 36000BTU #470,Thiết Bị Văn Phòng,FCNQ36MV1,SN-2026-26346,DEPT-OFFICE,Tầng 5 - Phòng Họp Lớn - Ô 87,Nguyễn Thị Hoa,ACTIVE,38036610,2026-01-23,Tài sản mẫu kiểm thử số 470
+AST-00471,Bộ Máy Hàn TIG Điện Tử 250A #471,Dụng Cụ Công Nghiệp,Jasic TIG-250A,SN-2026-53303,DEPT-WAREHOUSE,Kho Dụng Cụ Kỹ Thuật - Ô 5,Nguyễn Văn Hùng,SPARE,12450070,2026-01-24,Tài sản mẫu kiểm thử số 471
+AST-00472,Pallet Nhựa Xanh Lót Sàn #472,Pallet Nhựa,1100x1100x120mm,SN-2026-38352,DEPT-WAREHOUSE,Kho Vật Tư Tổng - Dãy B - Ô 18,Lê Vũ Tường,ACTIVE,357770,2026-01-25,Tài sản mẫu kiểm thử số 472
+AST-00473,Pallet Gỗ Thông Xuất Khẩu Euro #473,Pallet Gỗ,1200x800x144mm,SN-2026-34829,DEPT-WAREHOUSE,Kho Xuất Hàng C - Ô 48,Lê Vũ Tường,ACTIVE,298610,2026-01-26,Tài sản mẫu kiểm thử số 473
+AST-00474,Pallet Nhựa 2 Mặt Tải Trọng Nặng #474,Pallet Nhựa,1200x1200x160mm,SN-2026-38072,DEPT-WAREHOUSE,Kho Hàng A1 - Kệ Heavy Duty - Ô 36,Phạm Thị Lan,SPARE,610580,2026-01-27,Tài sản mẫu kiểm thử số 474
+AST-00475,Bộ Máy Hàn TIG Điện Tử 250A #475,Dụng Cụ Công Nghiệp,Jasic TIG-250A,SN-2026-18399,DEPT-WAREHOUSE,Kho Dụng Cụ Kỹ Thuật - Ô 86,Nguyễn Thị Hoa,SPARE,12507640,2026-01-28,Tài sản mẫu kiểm thử số 475
+AST-00476,Ghế Xoay Lưới Công Trình Ergonomic #476,Thiết Bị Văn Phòng,Hòa Phát EG-01,SN-2026-50408,DEPT-OFFICE,Tầng 5 - Khối Văn Phòng - Ô 87,Phạm Minh Đức,ACTIVE,1888150,2026-01-01,Tài sản mẫu kiểm thử số 476
+AST-00477,Màn Hình Dell UltraSharp 27 inch 4K #477,Thiết Bị IT,U2723QE,SN-2026-24676,DEPT-IT,Tầng 4 - Phòng IT - Ô 67,Nguyễn Thị Hoa,LOANED,12776440,2026-01-02,Tài sản mẫu kiểm thử số 477
+AST-00478,Máy Điều Hòa Âm Trần Daikin 36000BTU #478,Thiết Bị Văn Phòng,FCNQ36MV1,SN-2026-44832,DEPT-OFFICE,Tầng 5 - Phòng Họp Lớn - Ô 96,Trần Văn Nam,ACTIVE,37998960,2026-01-03,Tài sản mẫu kiểm thử số 478
+AST-00479,Pallet Gỗ Thông Xuất Khẩu Euro #479,Pallet Gỗ,1200x800x144mm,SN-2026-11746,DEPT-WAREHOUSE,Kho Xuất Hàng C - Ô 97,Nguyễn Thị Hoa,ACTIVE,256030,2026-01-04,Tài sản mẫu kiểm thử số 479
+AST-00480,Bộ Máy Hàn TIG Điện Tử 250A #480,Dụng Cụ Công Nghiệp,Jasic TIG-250A,SN-2026-32945,DEPT-WAREHOUSE,Kho Dụng Cụ Kỹ Thuật - Ô 1,Hoàng Văn Thái,ACTIVE,12494450,2026-01-05,Tài sản mẫu kiểm thử số 480
+AST-00481,Pallet Nhựa 2 Mặt Tải Trọng Nặng #481,Pallet Nhựa,1200x1200x160mm,SN-2026-41870,DEPT-WAREHOUSE,Kho Hàng A1 - Kệ Heavy Duty - Ô 52,Trần Văn Nam,ACTIVE,640600,2026-01-06,Tài sản mẫu kiểm thử số 481
+AST-00482,Pallet Nhựa 2 Mặt Tải Trọng Nặng #482,Pallet Nhựa,1200x1200x160mm,SN-2026-46543,DEPT-WAREHOUSE,Kho Hàng A1 - Kệ Heavy Duty - Ô 13,Hoàng Văn Thái,ACTIVE,624190,2026-01-07,Tài sản mẫu kiểm thử số 482
+AST-00483,Xe Nâng Điện Toyota 2.5 Tấn #483,Máy Móc Nhà Máy,Toyota 8FBN25,SN-2026-21434,DEPT-FACTORY,Nhà Máy A1 - Cầu Cảng - Ô 37,Hoàng Văn Thái,ACTIVE,419973920,2026-01-08,Tài sản mẫu kiểm thử số 483
+AST-00484,Laptop Dell Latitude 5440 i7 #484,Thiết Bị IT,Core i7 16GB 512GB,SN-2026-11511,DEPT-IT,Tầng 4 - Phòng IT - Ô 52,Nguyễn Thị Hoa,ACTIVE,22492040,2026-01-09,Tài sản mẫu kiểm thử số 484
+AST-00485,Ghế Xoay Lưới Công Trình Ergonomic #485,Thiết Bị Văn Phòng,Hòa Phát EG-01,SN-2026-33596,DEPT-OFFICE,Tầng 5 - Khối Văn Phòng - Ô 77,Trần Văn Nam,ACTIVE,1816050,2026-01-10,Tài sản mẫu kiểm thử số 485
+AST-00486,Xe Nâng Điện Toyota 2.5 Tấn #486,Máy Móc Nhà Máy,Toyota 8FBN25,SN-2026-29649,DEPT-FACTORY,Nhà Máy A1 - Cầu Cảng - Ô 1,Lê Vũ Tường,REPAIR,419980950,2026-01-11,Tài sản mẫu kiểm thử số 486
+AST-00487,Pallet Nhựa Xanh Lót Sàn #487,Pallet Nhựa,1100x1100x120mm,SN-2026-47020,DEPT-WAREHOUSE,Kho Vật Tư Tổng - Dãy B - Ô 44,Lê Vũ Tường,REPAIR,384090,2026-01-12,Tài sản mẫu kiểm thử số 487
+AST-00488,Pallet Gỗ Thông Xuất Khẩu Euro #488,Pallet Gỗ,1200x800x144mm,SN-2026-13788,DEPT-WAREHOUSE,Kho Xuất Hàng C - Ô 34,Hoàng Văn Thái,ACTIVE,222090,2026-01-13,Tài sản mẫu kiểm thử số 488
+AST-00489,Pallet Nhựa Đen 1200x1000mm #489,Pallet Nhựa,1200x1000x150mm,SN-2026-94155,DEPT-WAREHOUSE,Kho Vật Tư Tổng - Dãy A - Ô 54,Phạm Thị Lan,ACTIVE,498830,2026-01-14,Tài sản mẫu kiểm thử số 489
+AST-00490,Pallet Nhựa Đen 1200x1000mm #490,Pallet Nhựa,1200x1000x150mm,SN-2026-75096,DEPT-WAREHOUSE,Kho Vật Tư Tổng - Dãy A - Ô 83,Nguyễn Văn Hùng,ACTIVE,479720,2026-01-15,Tài sản mẫu kiểm thử số 490
+AST-00491,Laptop Dell Latitude 5440 i7 #491,Thiết Bị IT,Core i7 16GB 512GB,SN-2026-43796,DEPT-IT,Tầng 4 - Phòng IT - Ô 32,Lê Vũ Tường,LOANED,22512170,2026-01-16,Tài sản mẫu kiểm thử số 491
+AST-00492,Màn Hình Dell UltraSharp 27 inch 4K #492,Thiết Bị IT,U2723QE,SN-2026-34284,DEPT-IT,Tầng 4 - Phòng IT - Ô 18,Trần Văn Nam,ACTIVE,12769350,2026-01-17,Tài sản mẫu kiểm thử số 492
+AST-00493,Laptop Dell Latitude 5440 i7 #493,Thiết Bị IT,Core i7 16GB 512GB,SN-2026-96161,DEPT-IT,Tầng 4 - Phòng IT - Ô 7,Nguyễn Thị Hoa,ACTIVE,22523170,2026-01-18,Tài sản mẫu kiểm thử số 493
+AST-00494,Pallet Nhựa Xanh Lót Sàn #494,Pallet Nhựa,1100x1100x120mm,SN-2026-18220,DEPT-WAREHOUSE,Kho Vật Tư Tổng - Dãy B - Ô 47,Phạm Thị Lan,ACTIVE,390890,2026-01-19,Tài sản mẫu kiểm thử số 494
+AST-00495,Pallet Nhựa Đen 1200x1000mm #495,Pallet Nhựa,1200x1000x150mm,SN-2026-75346,DEPT-WAREHOUSE,Kho Vật Tư Tổng - Dãy A - Ô 37,Phạm Thị Lan,SPARE,465220,2026-01-20,Tài sản mẫu kiểm thử số 495
+AST-00496,Pallet Gỗ Thông Xuất Khẩu Euro #496,Pallet Gỗ,1200x800x144mm,SN-2026-71021,DEPT-WAREHOUSE,Kho Xuất Hàng C - Ô 46,Nguyễn Văn Hùng,REPAIR,214980,2026-01-21,Tài sản mẫu kiểm thử số 496
+AST-00497,Ghế Xoay Lưới Công Trình Ergonomic #497,Thiết Bị Văn Phòng,Hòa Phát EG-01,SN-2026-51233,DEPT-OFFICE,Tầng 5 - Khối Văn Phòng - Ô 43,Trần Văn Nam,REPAIR,1888000,2026-01-22,Tài sản mẫu kiểm thử số 497
+AST-00498,Pallet Nhựa Đen 1200x1000mm #498,Pallet Nhựa,1200x1000x150mm,SN-2026-51832,DEPT-WAREHOUSE,Kho Vật Tư Tổng - Dãy A - Ô 78,Nguyễn Thị Hoa,ACTIVE,411510,2026-01-23,Tài sản mẫu kiểm thử số 498
+AST-00499,Ghế Xoay Lưới Công Trình Ergonomic #499,Thiết Bị Văn Phòng,Hòa Phát EG-01,SN-2026-97536,DEPT-OFFICE,Tầng 5 - Khối Văn Phòng - Ô 29,Lê Vũ Tường,ACTIVE,1850760,2026-01-24,Tài sản mẫu kiểm thử số 499
+AST-00500,Laptop Dell Latitude 5440 i7 #500,Thiết Bị IT,Core i7 16GB 512GB,SN-2026-36630,DEPT-IT,Tầng 4 - Phòng IT - Ô 99,Phạm Minh Đức,ACTIVE,22540730,2026-01-25,Tài sản mẫu kiểm thử số 500
+AST-00501,Ghế Xoay Lưới Công Trình Ergonomic #501,Thiết Bị Văn Phòng,Hòa Phát EG-01,SN-2026-68571,DEPT-OFFICE,Tầng 5 - Khối Văn Phòng - Ô 93,Phạm Thị Lan,ACTIVE,1859160,2026-01-26,Tài sản mẫu kiểm thử số 501
+AST-00502,Xe Nâng Điện Toyota 2.5 Tấn #502,Máy Móc Nhà Máy,Toyota 8FBN25,SN-2026-24566,DEPT-FACTORY,Nhà Máy A1 - Cầu Cảng - Ô 40,Phạm Thị Lan,ACTIVE,420041090,2026-01-27,Tài sản mẫu kiểm thử số 502
+AST-00503,Pallet Nhựa 2 Mặt Tải Trọng Nặng #503,Pallet Nhựa,1200x1200x160mm,SN-2026-10621,DEPT-WAREHOUSE,Kho Hàng A1 - Kệ Heavy Duty - Ô 24,Nguyễn Thị Hoa,ACTIVE,657820,2026-01-28,Tài sản mẫu kiểm thử số 503
+AST-00504,Xe Nâng Điện Toyota 2.5 Tấn #504,Máy Móc Nhà Máy,Toyota 8FBN25,SN-2026-25896,DEPT-FACTORY,Nhà Máy A1 - Cầu Cảng - Ô 13,Nguyễn Văn Hùng,ACTIVE,420016060,2026-01-01,Tài sản mẫu kiểm thử số 504
+AST-00505,Máy In Tem Nhãn QR Code Thermal #505,Thiết Bị IT,Xprinter XP-420B,SN-2026-16178,DEPT-IT,Tầng 4 - Phòng IT - Ô 72,Lê Vũ Tường,SPARE,2844610,2026-01-02,Tài sản mẫu kiểm thử số 505
+AST-00506,Pallet Nhựa Đen 1200x1000mm #506,Pallet Nhựa,1200x1000x150mm,SN-2026-13572,DEPT-WAREHOUSE,Kho Vật Tư Tổng - Dãy A - Ô 15,Nguyễn Văn Hùng,LOANED,489470,2026-01-03,Tài sản mẫu kiểm thử số 506
+AST-00507,Pallet Gỗ Thông Xuất Khẩu Euro #507,Pallet Gỗ,1200x800x144mm,SN-2026-40096,DEPT-WAREHOUSE,Kho Xuất Hàng C - Ô 1,Nguyễn Thị Hoa,ACTIVE,232070,2026-01-04,Tài sản mẫu kiểm thử số 507
+AST-00508,Màn Hình Dell UltraSharp 27 inch 4K #508,Thiết Bị IT,U2723QE,SN-2026-14564,DEPT-IT,Tầng 4 - Phòng IT - Ô 15,Hoàng Văn Thái,ACTIVE,12762070,2026-01-05,Tài sản mẫu kiểm thử số 508
+AST-00509,Laptop Dell Latitude 5440 i7 #509,Thiết Bị IT,Core i7 16GB 512GB,SN-2026-67358,DEPT-IT,Tầng 4 - Phòng IT - Ô 10,Phạm Thị Lan,ACTIVE,22534150,2026-01-06,Tài sản mẫu kiểm thử số 509
+AST-00510,Máy In Tem Nhãn QR Code Thermal #510,Thiết Bị IT,Xprinter XP-420B,SN-2026-62399,DEPT-IT,Tầng 4 - Phòng IT - Ô 4,Trần Văn Nam,LOANED,2757830,2026-01-07,Tài sản mẫu kiểm thử số 510
+AST-00511,Máy Điều Hòa Âm Trần Daikin 36000BTU #511,Thiết Bị Văn Phòng,FCNQ36MV1,SN-2026-38965,DEPT-OFFICE,Tầng 5 - Phòng Họp Lớn - Ô 53,Lê Vũ Tường,LOANED,38009480,2026-01-08,Tài sản mẫu kiểm thử số 511
+AST-00512,Bộ Máy Hàn TIG Điện Tử 250A #512,Dụng Cụ Công Nghiệp,Jasic TIG-250A,SN-2026-29978,DEPT-WAREHOUSE,Kho Dụng Cụ Kỹ Thuật - Ô 41,Phạm Thị Lan,LOANED,12525460,2026-01-09,Tài sản mẫu kiểm thử số 512
+AST-00513,Máy Điều Hòa Âm Trần Daikin 36000BTU #513,Thiết Bị Văn Phòng,FCNQ36MV1,SN-2026-92559,DEPT-OFFICE,Tầng 5 - Phòng Họp Lớn - Ô 68,Nguyễn Văn Hùng,ACTIVE,38049700,2026-01-10,Tài sản mẫu kiểm thử số 513
+AST-00514,Bộ Máy Hàn TIG Điện Tử 250A #514,Dụng Cụ Công Nghiệp,Jasic TIG-250A,SN-2026-44211,DEPT-WAREHOUSE,Kho Dụng Cụ Kỹ Thuật - Ô 100,Lê Vũ Tường,ACTIVE,12514780,2026-01-11,Tài sản mẫu kiểm thử số 514
+AST-00515,Laptop Dell Latitude 5440 i7 #515,Thiết Bị IT,Core i7 16GB 512GB,SN-2026-21825,DEPT-IT,Tầng 4 - Phòng IT - Ô 75,Nguyễn Văn Hùng,LOANED,22500860,2026-01-12,Tài sản mẫu kiểm thử số 515
+AST-00516,Bộ Máy Hàn TIG Điện Tử 250A #516,Dụng Cụ Công Nghiệp,Jasic TIG-250A,SN-2026-74651,DEPT-WAREHOUSE,Kho Dụng Cụ Kỹ Thuật - Ô 67,Lê Vũ Tường,REPAIR,12485730,2026-01-13,Tài sản mẫu kiểm thử số 516
+AST-00517,Ghế Xoay Lưới Công Trình Ergonomic #517,Thiết Bị Văn Phòng,Hòa Phát EG-01,SN-2026-64238,DEPT-OFFICE,Tầng 5 - Khối Văn Phòng - Ô 93,Phạm Minh Đức,ACTIVE,1843820,2026-01-14,Tài sản mẫu kiểm thử số 517
+AST-00518,Máy Nén Khí Piston 15HP #518,Máy Móc Nhà Máy,Pegasus T-15,SN-2026-69087,DEPT-FACTORY,Xưởng Cơ Khí A2 - Ô 48,Trần Văn Nam,ACTIVE,34978940,2026-01-15,Tài sản mẫu kiểm thử số 518
+AST-00519,Bộ Máy Hàn TIG Điện Tử 250A #519,Dụng Cụ Công Nghiệp,Jasic TIG-250A,SN-2026-82817,DEPT-WAREHOUSE,Kho Dụng Cụ Kỹ Thuật - Ô 49,Trần Văn Nam,ACTIVE,12500480,2026-01-16,Tài sản mẫu kiểm thử số 519
+AST-00520,Xe Nâng Điện Toyota 2.5 Tấn #520,Máy Móc Nhà Máy,Toyota 8FBN25,SN-2026-25469,DEPT-FACTORY,Nhà Máy A1 - Cầu Cảng - Ô 36,Lê Vũ Tường,ACTIVE,419986140,2026-01-17,Tài sản mẫu kiểm thử số 520
+AST-00521,Máy In Tem Nhãn QR Code Thermal #521,Thiết Bị IT,Xprinter XP-420B,SN-2026-59588,DEPT-IT,Tầng 4 - Phòng IT - Ô 70,Hoàng Văn Thái,ACTIVE,2801280,2026-01-18,Tài sản mẫu kiểm thử số 521
+AST-00522,Máy Điều Hòa Âm Trần Daikin 36000BTU #522,Thiết Bị Văn Phòng,FCNQ36MV1,SN-2026-92959,DEPT-OFFICE,Tầng 5 - Phòng Họp Lớn - Ô 55,Phạm Minh Đức,ACTIVE,37976670,2026-01-19,Tài sản mẫu kiểm thử số 522
+AST-00523,Xe Nâng Điện Toyota 2.5 Tấn #523,Máy Móc Nhà Máy,Toyota 8FBN25,SN-2026-94851,DEPT-FACTORY,Nhà Máy A1 - Cầu Cảng - Ô 24,Nguyễn Thị Hoa,REPAIR,420045220,2026-01-20,Tài sản mẫu kiểm thử số 523
+AST-00524,Pallet Gỗ Thông Xuất Khẩu Euro #524,Pallet Gỗ,1200x800x144mm,SN-2026-18330,DEPT-WAREHOUSE,Kho Xuất Hàng C - Ô 5,Lê Vũ Tường,LOANED,244830,2026-01-21,Tài sản mẫu kiểm thử số 524
+AST-00525,Xe Nâng Điện Toyota 2.5 Tấn #525,Máy Móc Nhà Máy,Toyota 8FBN25,SN-2026-49548,DEPT-FACTORY,Nhà Máy A1 - Cầu Cảng - Ô 59,Trần Văn Nam,LOANED,419969630,2026-01-22,Tài sản mẫu kiểm thử số 525
+AST-00526,Bộ Máy Hàn TIG Điện Tử 250A #526,Dụng Cụ Công Nghiệp,Jasic TIG-250A,SN-2026-96274,DEPT-WAREHOUSE,Kho Dụng Cụ Kỹ Thuật - Ô 61,Nguyễn Văn Hùng,SPARE,12479630,2026-01-23,Tài sản mẫu kiểm thử số 526
+AST-00527,Máy Điều Hòa Âm Trần Daikin 36000BTU #527,Thiết Bị Văn Phòng,FCNQ36MV1,SN-2026-96687,DEPT-OFFICE,Tầng 5 - Phòng Họp Lớn - Ô 22,Hoàng Văn Thái,ACTIVE,38033710,2026-01-24,Tài sản mẫu kiểm thử số 527
+AST-00528,Pallet Gỗ Thông Xuất Khẩu Euro #528,Pallet Gỗ,1200x800x144mm,SN-2026-68143,DEPT-WAREHOUSE,Kho Xuất Hàng C - Ô 22,Phạm Thị Lan,ACTIVE,209740,2026-01-25,Tài sản mẫu kiểm thử số 528
+AST-00529,Máy Nén Khí Piston 15HP #529,Máy Móc Nhà Máy,Pegasus T-15,SN-2026-76645,DEPT-FACTORY,Xưởng Cơ Khí A2 - Ô 39,Trần Văn Nam,SPARE,35003710,2026-01-26,Tài sản mẫu kiểm thử số 529
+AST-00530,Máy Nén Khí Piston 15HP #530,Máy Móc Nhà Máy,Pegasus T-15,SN-2026-81866,DEPT-FACTORY,Xưởng Cơ Khí A2 - Ô 10,Nguyễn Văn Hùng,ACTIVE,35032210,2026-01-27,Tài sản mẫu kiểm thử số 530
+AST-00531,Pallet Gỗ Thông Xuất Khẩu Euro #531,Pallet Gỗ,1200x800x144mm,SN-2026-63680,DEPT-WAREHOUSE,Kho Xuất Hàng C - Ô 80,Trần Văn Nam,ACTIVE,246160,2026-01-28,Tài sản mẫu kiểm thử số 531
+AST-00532,Pallet Nhựa 2 Mặt Tải Trọng Nặng #532,Pallet Nhựa,1200x1200x160mm,SN-2026-53646,DEPT-WAREHOUSE,Kho Hàng A1 - Kệ Heavy Duty - Ô 17,Phạm Thị Lan,ACTIVE,645350,2026-01-01,Tài sản mẫu kiểm thử số 532
+AST-00533,Laptop Dell Latitude 5440 i7 #533,Thiết Bị IT,Core i7 16GB 512GB,SN-2026-28363,DEPT-IT,Tầng 4 - Phòng IT - Ô 49,Nguyễn Văn Hùng,ACTIVE,22466970,2026-01-02,Tài sản mẫu kiểm thử số 533
+AST-00534,Ghế Xoay Lưới Công Trình Ergonomic #534,Thiết Bị Văn Phòng,Hòa Phát EG-01,SN-2026-81798,DEPT-OFFICE,Tầng 5 - Khối Văn Phòng - Ô 90,Phạm Minh Đức,LOANED,1835260,2026-01-03,Tài sản mẫu kiểm thử số 534
+AST-00535,Bộ Máy Hàn TIG Điện Tử 250A #535,Dụng Cụ Công Nghiệp,Jasic TIG-250A,SN-2026-74324,DEPT-WAREHOUSE,Kho Dụng Cụ Kỹ Thuật - Ô 15,Hoàng Văn Thái,SPARE,12543270,2026-01-04,Tài sản mẫu kiểm thử số 535
+AST-00536,Pallet Nhựa 2 Mặt Tải Trọng Nặng #536,Pallet Nhựa,1200x1200x160mm,SN-2026-92967,DEPT-WAREHOUSE,Kho Hàng A1 - Kệ Heavy Duty - Ô 93,Trần Văn Nam,ACTIVE,625180,2026-01-05,Tài sản mẫu kiểm thử số 536
+AST-00537,Laptop Dell Latitude 5440 i7 #537,Thiết Bị IT,Core i7 16GB 512GB,SN-2026-38876,DEPT-IT,Tầng 4 - Phòng IT - Ô 44,Lê Vũ Tường,ACTIVE,22532150,2026-01-06,Tài sản mẫu kiểm thử số 537
+AST-00538,Máy Nén Khí Piston 15HP #538,Máy Móc Nhà Máy,Pegasus T-15,SN-2026-85675,DEPT-FACTORY,Xưởng Cơ Khí A2 - Ô 21,Lê Vũ Tường,ACTIVE,34999600,2026-01-07,Tài sản mẫu kiểm thử số 538
+AST-00539,Máy Nén Khí Piston 15HP #539,Máy Móc Nhà Máy,Pegasus T-15,SN-2026-16353,DEPT-FACTORY,Xưởng Cơ Khí A2 - Ô 48,Phạm Thị Lan,ACTIVE,34974410,2026-01-08,Tài sản mẫu kiểm thử số 539
+AST-00540,Máy Nén Khí Piston 15HP #540,Máy Móc Nhà Máy,Pegasus T-15,SN-2026-88786,DEPT-FACTORY,Xưởng Cơ Khí A2 - Ô 86,Trần Văn Nam,ACTIVE,34962970,2026-01-09,Tài sản mẫu kiểm thử số 540
+AST-00541,Màn Hình Dell UltraSharp 27 inch 4K #541,Thiết Bị IT,U2723QE,SN-2026-47342,DEPT-IT,Tầng 4 - Phòng IT - Ô 16,Nguyễn Thị Hoa,SPARE,12847240,2026-01-10,Tài sản mẫu kiểm thử số 541
+AST-00542,Bộ Máy Hàn TIG Điện Tử 250A #542,Dụng Cụ Công Nghiệp,Jasic TIG-250A,SN-2026-54377,DEPT-WAREHOUSE,Kho Dụng Cụ Kỹ Thuật - Ô 57,Nguyễn Văn Hùng,LOANED,12531350,2026-01-11,Tài sản mẫu kiểm thử số 542
+AST-00543,Laptop Dell Latitude 5440 i7 #543,Thiết Bị IT,Core i7 16GB 512GB,SN-2026-44954,DEPT-IT,Tầng 4 - Phòng IT - Ô 92,Hoàng Văn Thái,REPAIR,22493030,2026-01-12,Tài sản mẫu kiểm thử số 543
+AST-00544,Pallet Nhựa 2 Mặt Tải Trọng Nặng #544,Pallet Nhựa,1200x1200x160mm,SN-2026-13305,DEPT-WAREHOUSE,Kho Hàng A1 - Kệ Heavy Duty - Ô 9,Hoàng Văn Thái,ACTIVE,659030,2026-01-13,Tài sản mẫu kiểm thử số 544
+AST-00545,Bộ Máy Hàn TIG Điện Tử 250A #545,Dụng Cụ Công Nghiệp,Jasic TIG-250A,SN-2026-36301,DEPT-WAREHOUSE,Kho Dụng Cụ Kỹ Thuật - Ô 82,Lê Vũ Tường,LOANED,12524480,2026-01-14,Tài sản mẫu kiểm thử số 545
+AST-00546,Pallet Gỗ Thông Xuất Khẩu Euro #546,Pallet Gỗ,1200x800x144mm,SN-2026-85291,DEPT-WAREHOUSE,Kho Xuất Hàng C - Ô 3,Phạm Thị Lan,ACTIVE,241340,2026-01-15,Tài sản mẫu kiểm thử số 546
+AST-00547,Máy In Tem Nhãn QR Code Thermal #547,Thiết Bị IT,Xprinter XP-420B,SN-2026-30592,DEPT-IT,Tầng 4 - Phòng IT - Ô 70,Nguyễn Thị Hoa,SPARE,2785230,2026-01-16,Tài sản mẫu kiểm thử số 547
+AST-00548,Pallet Gỗ Thông Xuất Khẩu Euro #548,Pallet Gỗ,1200x800x144mm,SN-2026-61467,DEPT-WAREHOUSE,Kho Xuất Hàng C - Ô 24,Phạm Minh Đức,REPAIR,213700,2026-01-17,Tài sản mẫu kiểm thử số 548
+AST-00549,Pallet Gỗ Thông Xuất Khẩu Euro #549,Pallet Gỗ,1200x800x144mm,SN-2026-11562,DEPT-WAREHOUSE,Kho Xuất Hàng C - Ô 42,Nguyễn Thị Hoa,LOANED,270110,2026-01-18,Tài sản mẫu kiểm thử số 549
+AST-00550,Màn Hình Dell UltraSharp 27 inch 4K #550,Thiết Bị IT,U2723QE,SN-2026-10105,DEPT-IT,Tầng 4 - Phòng IT - Ô 48,Phạm Thị Lan,ACTIVE,12847340,2026-01-19,Tài sản mẫu kiểm thử số 550
+AST-00551,Bộ Máy Hàn TIG Điện Tử 250A #551,Dụng Cụ Công Nghiệp,Jasic TIG-250A,SN-2026-58040,DEPT-WAREHOUSE,Kho Dụng Cụ Kỹ Thuật - Ô 3,Nguyễn Văn Hùng,ACTIVE,12494060,2026-01-20,Tài sản mẫu kiểm thử số 551
+AST-00552,Pallet Nhựa Xanh Lót Sàn #552,Pallet Nhựa,1100x1100x120mm,SN-2026-98122,DEPT-WAREHOUSE,Kho Vật Tư Tổng - Dãy B - Ô 89,Trần Văn Nam,SPARE,408180,2026-01-21,Tài sản mẫu kiểm thử số 552
+AST-00553,Ghế Xoay Lưới Công Trình Ergonomic #553,Thiết Bị Văn Phòng,Hòa Phát EG-01,SN-2026-69913,DEPT-OFFICE,Tầng 5 - Khối Văn Phòng - Ô 90,Nguyễn Văn Hùng,ACTIVE,1821860,2026-01-22,Tài sản mẫu kiểm thử số 553
+AST-00554,Pallet Nhựa 2 Mặt Tải Trọng Nặng #554,Pallet Nhựa,1200x1200x160mm,SN-2026-65944,DEPT-WAREHOUSE,Kho Hàng A1 - Kệ Heavy Duty - Ô 16,Trần Văn Nam,SPARE,615070,2026-01-23,Tài sản mẫu kiểm thử số 554
+AST-00555,Pallet Gỗ Thông Xuất Khẩu Euro #555,Pallet Gỗ,1200x800x144mm,SN-2026-50857,DEPT-WAREHOUSE,Kho Xuất Hàng C - Ô 24,Lê Vũ Tường,ACTIVE,280100,2026-01-24,Tài sản mẫu kiểm thử số 555
+AST-00556,Laptop Dell Latitude 5440 i7 #556,Thiết Bị IT,Core i7 16GB 512GB,SN-2026-32463,DEPT-IT,Tầng 4 - Phòng IT - Ô 46,Hoàng Văn Thái,LOANED,22524440,2026-01-25,Tài sản mẫu kiểm thử số 556
+AST-00557,Ghế Xoay Lưới Công Trình Ergonomic #557,Thiết Bị Văn Phòng,Hòa Phát EG-01,SN-2026-66739,DEPT-OFFICE,Tầng 5 - Khối Văn Phòng - Ô 59,Nguyễn Thị Hoa,ACTIVE,1874120,2026-01-26,Tài sản mẫu kiểm thử số 557
+AST-00558,Màn Hình Dell UltraSharp 27 inch 4K #558,Thiết Bị IT,U2723QE,SN-2026-50747,DEPT-IT,Tầng 4 - Phòng IT - Ô 52,Trần Văn Nam,ACTIVE,12794110,2026-01-27,Tài sản mẫu kiểm thử số 558
+AST-00559,Pallet Nhựa Đen 1200x1000mm #559,Pallet Nhựa,1200x1000x150mm,SN-2026-42183,DEPT-WAREHOUSE,Kho Vật Tư Tổng - Dãy A - Ô 67,Phạm Minh Đức,ACTIVE,495080,2026-01-28,Tài sản mẫu kiểm thử số 559
+AST-00560,Bộ Máy Hàn TIG Điện Tử 250A #560,Dụng Cụ Công Nghiệp,Jasic TIG-250A,SN-2026-72898,DEPT-WAREHOUSE,Kho Dụng Cụ Kỹ Thuật - Ô 43,Nguyễn Thị Hoa,REPAIR,12496320,2026-01-01,Tài sản mẫu kiểm thử số 560
+AST-00561,Bộ Máy Hàn TIG Điện Tử 250A #561,Dụng Cụ Công Nghiệp,Jasic TIG-250A,SN-2026-16771,DEPT-WAREHOUSE,Kho Dụng Cụ Kỹ Thuật - Ô 40,Hoàng Văn Thái,ACTIVE,12545640,2026-01-02,Tài sản mẫu kiểm thử số 561
+AST-00562,Màn Hình Dell UltraSharp 27 inch 4K #562,Thiết Bị IT,U2723QE,SN-2026-51336,DEPT-IT,Tầng 4 - Phòng IT - Ô 14,Nguyễn Văn Hùng,ACTIVE,12791440,2026-01-03,Tài sản mẫu kiểm thử số 562
+AST-00563,Pallet Nhựa Xanh Lót Sàn #563,Pallet Nhựa,1100x1100x120mm,SN-2026-41889,DEPT-WAREHOUSE,Kho Vật Tư Tổng - Dãy B - Ô 20,Nguyễn Thị Hoa,ACTIVE,422470,2026-01-04,Tài sản mẫu kiểm thử số 563
+AST-00564,Máy In Tem Nhãn QR Code Thermal #564,Thiết Bị IT,Xprinter XP-420B,SN-2026-55193,DEPT-IT,Tầng 4 - Phòng IT - Ô 82,Phạm Minh Đức,ACTIVE,2791950,2026-01-05,Tài sản mẫu kiểm thử số 564
+AST-00565,Pallet Nhựa Xanh Lót Sàn #565,Pallet Nhựa,1100x1100x120mm,SN-2026-84894,DEPT-WAREHOUSE,Kho Vật Tư Tổng - Dãy B - Ô 38,Trần Văn Nam,SPARE,370850,2026-01-06,Tài sản mẫu kiểm thử số 565
+AST-00566,Pallet Nhựa Đen 1200x1000mm #566,Pallet Nhựa,1200x1000x150mm,SN-2026-61570,DEPT-WAREHOUSE,Kho Vật Tư Tổng - Dãy A - Ô 10,Phạm Thị Lan,REPAIR,459380,2026-01-07,Tài sản mẫu kiểm thử số 566
+AST-00567,Máy In Tem Nhãn QR Code Thermal #567,Thiết Bị IT,Xprinter XP-420B,SN-2026-46339,DEPT-IT,Tầng 4 - Phòng IT - Ô 93,Lê Vũ Tường,LOANED,2808350,2026-01-08,Tài sản mẫu kiểm thử số 567
+AST-00568,Máy Điều Hòa Âm Trần Daikin 36000BTU #568,Thiết Bị Văn Phòng,FCNQ36MV1,SN-2026-34726,DEPT-OFFICE,Tầng 5 - Phòng Họp Lớn - Ô 76,Phạm Thị Lan,ACTIVE,38015170,2026-01-09,Tài sản mẫu kiểm thử số 568
+AST-00569,Ghế Xoay Lưới Công Trình Ergonomic #569,Thiết Bị Văn Phòng,Hòa Phát EG-01,SN-2026-17567,DEPT-OFFICE,Tầng 5 - Khối Văn Phòng - Ô 56,Trần Văn Nam,ACTIVE,1833200,2026-01-10,Tài sản mẫu kiểm thử số 569
+AST-00570,Màn Hình Dell UltraSharp 27 inch 4K #570,Thiết Bị IT,U2723QE,SN-2026-32430,DEPT-IT,Tầng 4 - Phòng IT - Ô 53,Trần Văn Nam,LOANED,12830040,2026-01-11,Tài sản mẫu kiểm thử số 570
+AST-00571,Máy Nén Khí Piston 15HP #571,Máy Móc Nhà Máy,Pegasus T-15,SN-2026-67383,DEPT-FACTORY,Xưởng Cơ Khí A2 - Ô 3,Trần Văn Nam,REPAIR,34955280,2026-01-12,Tài sản mẫu kiểm thử số 571
+AST-00572,Xe Nâng Điện Toyota 2.5 Tấn #572,Máy Móc Nhà Máy,Toyota 8FBN25,SN-2026-52897,DEPT-FACTORY,Nhà Máy A1 - Cầu Cảng - Ô 34,Phạm Minh Đức,ACTIVE,419965480,2026-01-13,Tài sản mẫu kiểm thử số 572
+AST-00573,Máy Nén Khí Piston 15HP #573,Máy Móc Nhà Máy,Pegasus T-15,SN-2026-70593,DEPT-FACTORY,Xưởng Cơ Khí A2 - Ô 78,Lê Vũ Tường,REPAIR,34958500,2026-01-14,Tài sản mẫu kiểm thử số 573
+AST-00574,Máy Điều Hòa Âm Trần Daikin 36000BTU #574,Thiết Bị Văn Phòng,FCNQ36MV1,SN-2026-33081,DEPT-OFFICE,Tầng 5 - Phòng Họp Lớn - Ô 63,Nguyễn Văn Hùng,ACTIVE,37960210,2026-01-15,Tài sản mẫu kiểm thử số 574
+AST-00575,Laptop Dell Latitude 5440 i7 #575,Thiết Bị IT,Core i7 16GB 512GB,SN-2026-61982,DEPT-IT,Tầng 4 - Phòng IT - Ô 83,Phạm Minh Đức,ACTIVE,22472410,2026-01-16,Tài sản mẫu kiểm thử số 575
+AST-00576,Pallet Nhựa 2 Mặt Tải Trọng Nặng #576,Pallet Nhựa,1200x1200x160mm,SN-2026-87145,DEPT-WAREHOUSE,Kho Hàng A1 - Kệ Heavy Duty - Ô 12,Nguyễn Văn Hùng,ACTIVE,586380,2026-01-17,Tài sản mẫu kiểm thử số 576
+AST-00577,Pallet Nhựa Đen 1200x1000mm #577,Pallet Nhựa,1200x1000x150mm,SN-2026-36996,DEPT-WAREHOUSE,Kho Vật Tư Tổng - Dãy A - Ô 37,Nguyễn Thị Hoa,REPAIR,484290,2026-01-18,Tài sản mẫu kiểm thử số 577
+AST-00578,Máy Nén Khí Piston 15HP #578,Máy Móc Nhà Máy,Pegasus T-15,SN-2026-42090,DEPT-FACTORY,Xưởng Cơ Khí A2 - Ô 36,Lê Vũ Tường,ACTIVE,35035720,2026-01-19,Tài sản mẫu kiểm thử số 578
+AST-00579,Màn Hình Dell UltraSharp 27 inch 4K #579,Thiết Bị IT,U2723QE,SN-2026-78447,DEPT-IT,Tầng 4 - Phòng IT - Ô 10,Hoàng Văn Thái,ACTIVE,12815940,2026-01-20,Tài sản mẫu kiểm thử số 579
+AST-00580,Máy Nén Khí Piston 15HP #580,Máy Móc Nhà Máy,Pegasus T-15,SN-2026-57237,DEPT-FACTORY,Xưởng Cơ Khí A2 - Ô 7,Hoàng Văn Thái,ACTIVE,35047210,2026-01-21,Tài sản mẫu kiểm thử số 580
+AST-00581,Laptop Dell Latitude 5440 i7 #581,Thiết Bị IT,Core i7 16GB 512GB,SN-2026-95535,DEPT-IT,Tầng 4 - Phòng IT - Ô 34,Phạm Thị Lan,SPARE,22465910,2026-01-22,Tài sản mẫu kiểm thử số 581
+AST-00582,Xe Nâng Điện Toyota 2.5 Tấn #582,Máy Móc Nhà Máy,Toyota 8FBN25,SN-2026-61638,DEPT-FACTORY,Nhà Máy A1 - Cầu Cảng - Ô 97,Nguyễn Thị Hoa,LOANED,419960720,2026-01-23,Tài sản mẫu kiểm thử số 582
+AST-00583,Pallet Nhựa Xanh Lót Sàn #583,Pallet Nhựa,1100x1100x120mm,SN-2026-39301,DEPT-WAREHOUSE,Kho Vật Tư Tổng - Dãy B - Ô 18,Lê Vũ Tường,LOANED,395720,2026-01-24,Tài sản mẫu kiểm thử số 583
+AST-00584,Máy In Tem Nhãn QR Code Thermal #584,Thiết Bị IT,Xprinter XP-420B,SN-2026-46058,DEPT-IT,Tầng 4 - Phòng IT - Ô 69,Trần Văn Nam,ACTIVE,2774830,2026-01-25,Tài sản mẫu kiểm thử số 584
+AST-00585,Bộ Máy Hàn TIG Điện Tử 250A #585,Dụng Cụ Công Nghiệp,Jasic TIG-250A,SN-2026-43439,DEPT-WAREHOUSE,Kho Dụng Cụ Kỹ Thuật - Ô 69,Nguyễn Thị Hoa,ACTIVE,12494390,2026-01-26,Tài sản mẫu kiểm thử số 585
+AST-00586,Máy Điều Hòa Âm Trần Daikin 36000BTU #586,Thiết Bị Văn Phòng,FCNQ36MV1,SN-2026-61854,DEPT-OFFICE,Tầng 5 - Phòng Họp Lớn - Ô 64,Lê Vũ Tường,ACTIVE,38043640,2026-01-27,Tài sản mẫu kiểm thử số 586
+AST-00587,Máy In Tem Nhãn QR Code Thermal #587,Thiết Bị IT,Xprinter XP-420B,SN-2026-58126,DEPT-IT,Tầng 4 - Phòng IT - Ô 6,Phạm Thị Lan,ACTIVE,2814410,2026-01-28,Tài sản mẫu kiểm thử số 587
+AST-00588,Máy Nén Khí Piston 15HP #588,Máy Móc Nhà Máy,Pegasus T-15,SN-2026-64760,DEPT-FACTORY,Xưởng Cơ Khí A2 - Ô 98,Nguyễn Văn Hùng,SPARE,34966390,2026-01-01,Tài sản mẫu kiểm thử số 588
+AST-00589,Xe Nâng Điện Toyota 2.5 Tấn #589,Máy Móc Nhà Máy,Toyota 8FBN25,SN-2026-26986,DEPT-FACTORY,Nhà Máy A1 - Cầu Cảng - Ô 21,Nguyễn Thị Hoa,ACTIVE,419954550,2026-01-02,Tài sản mẫu kiểm thử số 589
+AST-00590,Pallet Nhựa Đen 1200x1000mm #590,Pallet Nhựa,1200x1000x150mm,SN-2026-60941,DEPT-WAREHOUSE,Kho Vật Tư Tổng - Dãy A - Ô 22,Nguyễn Thị Hoa,REPAIR,499760,2026-01-03,Tài sản mẫu kiểm thử số 590
+AST-00591,Xe Nâng Điện Toyota 2.5 Tấn #591,Máy Móc Nhà Máy,Toyota 8FBN25,SN-2026-26009,DEPT-FACTORY,Nhà Máy A1 - Cầu Cảng - Ô 85,Hoàng Văn Thái,REPAIR,419993660,2026-01-04,Tài sản mẫu kiểm thử số 591
+AST-00592,Pallet Nhựa Đen 1200x1000mm #592,Pallet Nhựa,1200x1000x150mm,SN-2026-52587,DEPT-WAREHOUSE,Kho Vật Tư Tổng - Dãy A - Ô 6,Nguyễn Thị Hoa,SPARE,497100,2026-01-05,Tài sản mẫu kiểm thử số 592
+AST-00593,Ghế Xoay Lưới Công Trình Ergonomic #593,Thiết Bị Văn Phòng,Hòa Phát EG-01,SN-2026-83935,DEPT-OFFICE,Tầng 5 - Khối Văn Phòng - Ô 44,Phạm Minh Đức,REPAIR,1881260,2026-01-06,Tài sản mẫu kiểm thử số 593
+AST-00594,Xe Nâng Điện Toyota 2.5 Tấn #594,Máy Móc Nhà Máy,Toyota 8FBN25,SN-2026-43134,DEPT-FACTORY,Nhà Máy A1 - Cầu Cảng - Ô 15,Phạm Thị Lan,ACTIVE,419965690,2026-01-07,Tài sản mẫu kiểm thử số 594
+AST-00595,Pallet Nhựa Đen 1200x1000mm #595,Pallet Nhựa,1200x1000x150mm,SN-2026-11215,DEPT-WAREHOUSE,Kho Vật Tư Tổng - Dãy A - Ô 3,Lê Vũ Tường,ACTIVE,452800,2026-01-08,Tài sản mẫu kiểm thử số 595
+AST-00596,Máy Điều Hòa Âm Trần Daikin 36000BTU #596,Thiết Bị Văn Phòng,FCNQ36MV1,SN-2026-17359,DEPT-OFFICE,Tầng 5 - Phòng Họp Lớn - Ô 99,Lê Vũ Tường,SPARE,38023200,2026-01-09,Tài sản mẫu kiểm thử số 596
+AST-00597,Bộ Máy Hàn TIG Điện Tử 250A #597,Dụng Cụ Công Nghiệp,Jasic TIG-250A,SN-2026-66501,DEPT-WAREHOUSE,Kho Dụng Cụ Kỹ Thuật - Ô 44,Phạm Thị Lan,SPARE,12484440,2026-01-10,Tài sản mẫu kiểm thử số 597
+AST-00598,Bộ Máy Hàn TIG Điện Tử 250A #598,Dụng Cụ Công Nghiệp,Jasic TIG-250A,SN-2026-41830,DEPT-WAREHOUSE,Kho Dụng Cụ Kỹ Thuật - Ô 32,Phạm Minh Đức,ACTIVE,12510340,2026-01-11,Tài sản mẫu kiểm thử số 598
+AST-00599,Bộ Máy Hàn TIG Điện Tử 250A #599,Dụng Cụ Công Nghiệp,Jasic TIG-250A,SN-2026-34662,DEPT-WAREHOUSE,Kho Dụng Cụ Kỹ Thuật - Ô 19,Lê Vũ Tường,ACTIVE,12535830,2026-01-12,Tài sản mẫu kiểm thử số 599
+AST-00600,Pallet Nhựa 2 Mặt Tải Trọng Nặng #600,Pallet Nhựa,1200x1200x160mm,SN-2026-70288,DEPT-WAREHOUSE,Kho Hàng A1 - Kệ Heavy Duty - Ô 42,Nguyễn Thị Hoa,ACTIVE,656460,2026-01-13,Tài sản mẫu kiểm thử số 600
+AST-00601,Màn Hình Dell UltraSharp 27 inch 4K #601,Thiết Bị IT,U2723QE,SN-2026-98940,DEPT-IT,Tầng 4 - Phòng IT - Ô 29,Nguyễn Văn Hùng,REPAIR,12801820,2026-01-14,Tài sản mẫu kiểm thử số 601
+AST-00602,Ghế Xoay Lưới Công Trình Ergonomic #602,Thiết Bị Văn Phòng,Hòa Phát EG-01,SN-2026-88133,DEPT-OFFICE,Tầng 5 - Khối Văn Phòng - Ô 80,Lê Vũ Tường,ACTIVE,1811490,2026-01-15,Tài sản mẫu kiểm thử số 602
+AST-00603,Pallet Nhựa Đen 1200x1000mm #603,Pallet Nhựa,1200x1000x150mm,SN-2026-81051,DEPT-WAREHOUSE,Kho Vật Tư Tổng - Dãy A - Ô 29,Nguyễn Văn Hùng,LOANED,440490,2026-01-16,Tài sản mẫu kiểm thử số 603
+AST-00604,Ghế Xoay Lưới Công Trình Ergonomic #604,Thiết Bị Văn Phòng,Hòa Phát EG-01,SN-2026-88296,DEPT-OFFICE,Tầng 5 - Khối Văn Phòng - Ô 93,Hoàng Văn Thái,ACTIVE,1851660,2026-01-17,Tài sản mẫu kiểm thử số 604
+AST-00605,Xe Nâng Điện Toyota 2.5 Tấn #605,Máy Móc Nhà Máy,Toyota 8FBN25,SN-2026-65081,DEPT-FACTORY,Nhà Máy A1 - Cầu Cảng - Ô 62,Nguyễn Thị Hoa,REPAIR,419952530,2026-01-18,Tài sản mẫu kiểm thử số 605
+AST-00606,Pallet Nhựa 2 Mặt Tải Trọng Nặng #606,Pallet Nhựa,1200x1200x160mm,SN-2026-32045,DEPT-WAREHOUSE,Kho Hàng A1 - Kệ Heavy Duty - Ô 26,Phạm Thị Lan,ACTIVE,648440,2026-01-19,Tài sản mẫu kiểm thử số 606
+AST-00607,Xe Nâng Điện Toyota 2.5 Tấn #607,Máy Móc Nhà Máy,Toyota 8FBN25,SN-2026-57167,DEPT-FACTORY,Nhà Máy A1 - Cầu Cảng - Ô 12,Phạm Minh Đức,ACTIVE,420005020,2026-01-20,Tài sản mẫu kiểm thử số 607
+AST-00608,Pallet Nhựa 2 Mặt Tải Trọng Nặng #608,Pallet Nhựa,1200x1200x160mm,SN-2026-55127,DEPT-WAREHOUSE,Kho Hàng A1 - Kệ Heavy Duty - Ô 16,Lê Vũ Tường,LOANED,640930,2026-01-21,Tài sản mẫu kiểm thử số 608
+AST-00609,Ghế Xoay Lưới Công Trình Ergonomic #609,Thiết Bị Văn Phòng,Hòa Phát EG-01,SN-2026-14200,DEPT-OFFICE,Tầng 5 - Khối Văn Phòng - Ô 5,Phạm Thị Lan,SPARE,1815650,2026-01-22,Tài sản mẫu kiểm thử số 609
+AST-00610,Ghế Xoay Lưới Công Trình Ergonomic #610,Thiết Bị Văn Phòng,Hòa Phát EG-01,SN-2026-48094,DEPT-OFFICE,Tầng 5 - Khối Văn Phòng - Ô 53,Hoàng Văn Thái,LOANED,1870210,2026-01-23,Tài sản mẫu kiểm thử số 610
+AST-00611,Pallet Nhựa Đen 1200x1000mm #611,Pallet Nhựa,1200x1000x150mm,SN-2026-11370,DEPT-WAREHOUSE,Kho Vật Tư Tổng - Dãy A - Ô 3,Phạm Minh Đức,ACTIVE,417280,2026-01-24,Tài sản mẫu kiểm thử số 611
+AST-00612,Pallet Nhựa 2 Mặt Tải Trọng Nặng #612,Pallet Nhựa,1200x1200x160mm,SN-2026-18721,DEPT-WAREHOUSE,Kho Hàng A1 - Kệ Heavy Duty - Ô 40,Phạm Thị Lan,SPARE,589750,2026-01-25,Tài sản mẫu kiểm thử số 612
+AST-00613,Màn Hình Dell UltraSharp 27 inch 4K #613,Thiết Bị IT,U2723QE,SN-2026-23215,DEPT-IT,Tầng 4 - Phòng IT - Ô 56,Lê Vũ Tường,ACTIVE,12819660,2026-01-26,Tài sản mẫu kiểm thử số 613
+AST-00614,Máy Điều Hòa Âm Trần Daikin 36000BTU #614,Thiết Bị Văn Phòng,FCNQ36MV1,SN-2026-81918,DEPT-OFFICE,Tầng 5 - Phòng Họp Lớn - Ô 71,Trần Văn Nam,REPAIR,38000620,2026-01-27,Tài sản mẫu kiểm thử số 614
+AST-00615,Máy Nén Khí Piston 15HP #615,Máy Móc Nhà Máy,Pegasus T-15,SN-2026-29238,DEPT-FACTORY,Xưởng Cơ Khí A2 - Ô 84,Lê Vũ Tường,ACTIVE,34955200,2026-01-28,Tài sản mẫu kiểm thử số 615
+AST-00616,Pallet Nhựa Xanh Lót Sàn #616,Pallet Nhựa,1100x1100x120mm,SN-2026-92865,DEPT-WAREHOUSE,Kho Vật Tư Tổng - Dãy B - Ô 60,Nguyễn Văn Hùng,ACTIVE,421540,2026-01-01,Tài sản mẫu kiểm thử số 616
+AST-00617,Xe Nâng Điện Toyota 2.5 Tấn #617,Máy Móc Nhà Máy,Toyota 8FBN25,SN-2026-49413,DEPT-FACTORY,Nhà Máy A1 - Cầu Cảng - Ô 7,Phạm Thị Lan,SPARE,419960810,2026-01-02,Tài sản mẫu kiểm thử số 617
+AST-00618,Pallet Nhựa Đen 1200x1000mm #618,Pallet Nhựa,1200x1000x150mm,SN-2026-50704,DEPT-WAREHOUSE,Kho Vật Tư Tổng - Dãy A - Ô 44,Nguyễn Văn Hùng,REPAIR,406420,2026-01-03,Tài sản mẫu kiểm thử số 618
+AST-00619,Bộ Máy Hàn TIG Điện Tử 250A #619,Dụng Cụ Công Nghiệp,Jasic TIG-250A,SN-2026-25878,DEPT-WAREHOUSE,Kho Dụng Cụ Kỹ Thuật - Ô 97,Nguyễn Thị Hoa,LOANED,12506460,2026-01-04,Tài sản mẫu kiểm thử số 619
+AST-00620,Máy In Tem Nhãn QR Code Thermal #620,Thiết Bị IT,Xprinter XP-420B,SN-2026-56124,DEPT-IT,Tầng 4 - Phòng IT - Ô 72,Nguyễn Thị Hoa,REPAIR,2763740,2026-01-05,Tài sản mẫu kiểm thử số 620
+AST-00621,Máy Điều Hòa Âm Trần Daikin 36000BTU #621,Thiết Bị Văn Phòng,FCNQ36MV1,SN-2026-87705,DEPT-OFFICE,Tầng 5 - Phòng Họp Lớn - Ô 31,Nguyễn Văn Hùng,LOANED,38003950,2026-01-06,Tài sản mẫu kiểm thử số 621
+AST-00622,Laptop Dell Latitude 5440 i7 #622,Thiết Bị IT,Core i7 16GB 512GB,SN-2026-56921,DEPT-IT,Tầng 4 - Phòng IT - Ô 82,Phạm Minh Đức,ACTIVE,22471520,2026-01-07,Tài sản mẫu kiểm thử số 622
+AST-00623,Máy Điều Hòa Âm Trần Daikin 36000BTU #623,Thiết Bị Văn Phòng,FCNQ36MV1,SN-2026-51066,DEPT-OFFICE,Tầng 5 - Phòng Họp Lớn - Ô 35,Phạm Thị Lan,ACTIVE,37963480,2026-01-08,Tài sản mẫu kiểm thử số 623
+AST-00624,Pallet Nhựa Xanh Lót Sàn #624,Pallet Nhựa,1100x1100x120mm,SN-2026-74017,DEPT-WAREHOUSE,Kho Vật Tư Tổng - Dãy B - Ô 22,Hoàng Văn Thái,LOANED,410020,2026-01-09,Tài sản mẫu kiểm thử số 624
+AST-00625,Bộ Máy Hàn TIG Điện Tử 250A #625,Dụng Cụ Công Nghiệp,Jasic TIG-250A,SN-2026-10512,DEPT-WAREHOUSE,Kho Dụng Cụ Kỹ Thuật - Ô 56,Trần Văn Nam,ACTIVE,12464470,2026-01-10,Tài sản mẫu kiểm thử số 625
+AST-00626,Xe Nâng Điện Toyota 2.5 Tấn #626,Máy Móc Nhà Máy,Toyota 8FBN25,SN-2026-61007,DEPT-FACTORY,Nhà Máy A1 - Cầu Cảng - Ô 51,Lê Vũ Tường,ACTIVE,420001230,2026-01-11,Tài sản mẫu kiểm thử số 626
+AST-00627,Ghế Xoay Lưới Công Trình Ergonomic #627,Thiết Bị Văn Phòng,Hòa Phát EG-01,SN-2026-12380,DEPT-OFFICE,Tầng 5 - Khối Văn Phòng - Ô 74,Phạm Minh Đức,SPARE,1874410,2026-01-12,Tài sản mẫu kiểm thử số 627
+AST-00628,Laptop Dell Latitude 5440 i7 #628,Thiết Bị IT,Core i7 16GB 512GB,SN-2026-95624,DEPT-IT,Tầng 4 - Phòng IT - Ô 56,Nguyễn Văn Hùng,LOANED,22469240,2026-01-13,Tài sản mẫu kiểm thử số 628
+AST-00629,Pallet Nhựa Xanh Lót Sàn #629,Pallet Nhựa,1100x1100x120mm,SN-2026-26295,DEPT-WAREHOUSE,Kho Vật Tư Tổng - Dãy B - Ô 75,Phạm Minh Đức,LOANED,394390,2026-01-14,Tài sản mẫu kiểm thử số 629
+AST-00630,Ghế Xoay Lưới Công Trình Ergonomic #630,Thiết Bị Văn Phòng,Hòa Phát EG-01,SN-2026-38054,DEPT-OFFICE,Tầng 5 - Khối Văn Phòng - Ô 8,Phạm Thị Lan,ACTIVE,1819360,2026-01-15,Tài sản mẫu kiểm thử số 630
+AST-00631,Máy Điều Hòa Âm Trần Daikin 36000BTU #631,Thiết Bị Văn Phòng,FCNQ36MV1,SN-2026-71692,DEPT-OFFICE,Tầng 5 - Phòng Họp Lớn - Ô 88,Nguyễn Thị Hoa,ACTIVE,38006020,2026-01-16,Tài sản mẫu kiểm thử số 631
+AST-00632,Máy Nén Khí Piston 15HP #632,Máy Móc Nhà Máy,Pegasus T-15,SN-2026-82824,DEPT-FACTORY,Xưởng Cơ Khí A2 - Ô 97,Hoàng Văn Thái,LOANED,34976130,2026-01-17,Tài sản mẫu kiểm thử số 632
+AST-00633,Ghế Xoay Lưới Công Trình Ergonomic #633,Thiết Bị Văn Phòng,Hòa Phát EG-01,SN-2026-30257,DEPT-OFFICE,Tầng 5 - Khối Văn Phòng - Ô 47,Nguyễn Văn Hùng,SPARE,1897800,2026-01-18,Tài sản mẫu kiểm thử số 633
+AST-00634,Ghế Xoay Lưới Công Trình Ergonomic #634,Thiết Bị Văn Phòng,Hòa Phát EG-01,SN-2026-94767,DEPT-OFFICE,Tầng 5 - Khối Văn Phòng - Ô 7,Phạm Minh Đức,ACTIVE,1858380,2026-01-19,Tài sản mẫu kiểm thử số 634
+AST-00635,Pallet Gỗ Thông Xuất Khẩu Euro #635,Pallet Gỗ,1200x800x144mm,SN-2026-99555,DEPT-WAREHOUSE,Kho Xuất Hàng C - Ô 19,Phạm Minh Đức,ACTIVE,231140,2026-01-20,Tài sản mẫu kiểm thử số 635
+AST-00636,Màn Hình Dell UltraSharp 27 inch 4K #636,Thiết Bị IT,U2723QE,SN-2026-61281,DEPT-IT,Tầng 4 - Phòng IT - Ô 71,Nguyễn Thị Hoa,ACTIVE,12769120,2026-01-21,Tài sản mẫu kiểm thử số 636
+AST-00637,Xe Nâng Điện Toyota 2.5 Tấn #637,Máy Móc Nhà Máy,Toyota 8FBN25,SN-2026-42648,DEPT-FACTORY,Nhà Máy A1 - Cầu Cảng - Ô 13,Nguyễn Thị Hoa,ACTIVE,419966580,2026-01-22,Tài sản mẫu kiểm thử số 637
+AST-00638,Laptop Dell Latitude 5440 i7 #638,Thiết Bị IT,Core i7 16GB 512GB,SN-2026-87273,DEPT-IT,Tầng 4 - Phòng IT - Ô 23,Lê Vũ Tường,REPAIR,22504420,2026-01-23,Tài sản mẫu kiểm thử số 638
+AST-00639,Pallet Nhựa Đen 1200x1000mm #639,Pallet Nhựa,1200x1000x150mm,SN-2026-65844,DEPT-WAREHOUSE,Kho Vật Tư Tổng - Dãy A - Ô 66,Phạm Thị Lan,ACTIVE,493940,2026-01-24,Tài sản mẫu kiểm thử số 639
+AST-00640,Máy Điều Hòa Âm Trần Daikin 36000BTU #640,Thiết Bị Văn Phòng,FCNQ36MV1,SN-2026-99311,DEPT-OFFICE,Tầng 5 - Phòng Họp Lớn - Ô 9,Phạm Thị Lan,SPARE,37990630,2026-01-25,Tài sản mẫu kiểm thử số 640
+AST-00641,Máy In Tem Nhãn QR Code Thermal #641,Thiết Bị IT,Xprinter XP-420B,SN-2026-16184,DEPT-IT,Tầng 4 - Phòng IT - Ô 1,Phạm Thị Lan,ACTIVE,2835430,2026-01-26,Tài sản mẫu kiểm thử số 641
+AST-00642,Pallet Nhựa Xanh Lót Sàn #642,Pallet Nhựa,1100x1100x120mm,SN-2026-94522,DEPT-WAREHOUSE,Kho Vật Tư Tổng - Dãy B - Ô 26,Nguyễn Văn Hùng,ACTIVE,412050,2026-01-27,Tài sản mẫu kiểm thử số 642
+AST-00643,Màn Hình Dell UltraSharp 27 inch 4K #643,Thiết Bị IT,U2723QE,SN-2026-96253,DEPT-IT,Tầng 4 - Phòng IT - Ô 67,Lê Vũ Tường,ACTIVE,12784300,2026-01-28,Tài sản mẫu kiểm thử số 643
+AST-00644,Máy Nén Khí Piston 15HP #644,Máy Móc Nhà Máy,Pegasus T-15,SN-2026-44291,DEPT-FACTORY,Xưởng Cơ Khí A2 - Ô 53,Lê Vũ Tường,LOANED,35010130,2026-01-01,Tài sản mẫu kiểm thử số 644
+AST-00645,Pallet Nhựa 2 Mặt Tải Trọng Nặng #645,Pallet Nhựa,1200x1200x160mm,SN-2026-48559,DEPT-WAREHOUSE,Kho Hàng A1 - Kệ Heavy Duty - Ô 5,Hoàng Văn Thái,LOANED,590690,2026-01-02,Tài sản mẫu kiểm thử số 645
+AST-00646,Pallet Nhựa 2 Mặt Tải Trọng Nặng #646,Pallet Nhựa,1200x1200x160mm,SN-2026-75946,DEPT-WAREHOUSE,Kho Hàng A1 - Kệ Heavy Duty - Ô 72,Phạm Minh Đức,SPARE,578050,2026-01-03,Tài sản mẫu kiểm thử số 646
+AST-00647,Pallet Nhựa Xanh Lót Sàn #647,Pallet Nhựa,1100x1100x120mm,SN-2026-54380,DEPT-WAREHOUSE,Kho Vật Tư Tổng - Dãy B - Ô 82,Phạm Thị Lan,ACTIVE,425440,2026-01-04,Tài sản mẫu kiểm thử số 647
+AST-00648,Pallet Nhựa Xanh Lót Sàn #648,Pallet Nhựa,1100x1100x120mm,SN-2026-79508,DEPT-WAREHOUSE,Kho Vật Tư Tổng - Dãy B - Ô 86,Lê Vũ Tường,ACTIVE,421120,2026-01-05,Tài sản mẫu kiểm thử số 648
+AST-00649,Máy Nén Khí Piston 15HP #649,Máy Móc Nhà Máy,Pegasus T-15,SN-2026-77618,DEPT-FACTORY,Xưởng Cơ Khí A2 - Ô 36,Nguyễn Thị Hoa,ACTIVE,35004990,2026-01-06,Tài sản mẫu kiểm thử số 649
+AST-00650,Ghế Xoay Lưới Công Trình Ergonomic #650,Thiết Bị Văn Phòng,Hòa Phát EG-01,SN-2026-55681,DEPT-OFFICE,Tầng 5 - Khối Văn Phòng - Ô 33,Trần Văn Nam,ACTIVE,1800400,2026-01-07,Tài sản mẫu kiểm thử số 650
+AST-00651,Màn Hình Dell UltraSharp 27 inch 4K #651,Thiết Bị IT,U2723QE,SN-2026-69196,DEPT-IT,Tầng 4 - Phòng IT - Ô 62,Nguyễn Thị Hoa,ACTIVE,12750980,2026-01-08,Tài sản mẫu kiểm thử số 651
+AST-00652,Bộ Máy Hàn TIG Điện Tử 250A #652,Dụng Cụ Công Nghiệp,Jasic TIG-250A,SN-2026-52173,DEPT-WAREHOUSE,Kho Dụng Cụ Kỹ Thuật - Ô 16,Lê Vũ Tường,ACTIVE,12540080,2026-01-09,Tài sản mẫu kiểm thử số 652
+AST-00653,Pallet Gỗ Thông Xuất Khẩu Euro #653,Pallet Gỗ,1200x800x144mm,SN-2026-25753,DEPT-WAREHOUSE,Kho Xuất Hàng C - Ô 64,Nguyễn Thị Hoa,ACTIVE,226470,2026-01-10,Tài sản mẫu kiểm thử số 653
+AST-00654,Máy Điều Hòa Âm Trần Daikin 36000BTU #654,Thiết Bị Văn Phòng,FCNQ36MV1,SN-2026-98670,DEPT-OFFICE,Tầng 5 - Phòng Họp Lớn - Ô 91,Hoàng Văn Thái,ACTIVE,37992680,2026-01-11,Tài sản mẫu kiểm thử số 654
+AST-00655,Ghế Xoay Lưới Công Trình Ergonomic #655,Thiết Bị Văn Phòng,Hòa Phát EG-01,SN-2026-66949,DEPT-OFFICE,Tầng 5 - Khối Văn Phòng - Ô 63,Lê Vũ Tường,LOANED,1832570,2026-01-12,Tài sản mẫu kiểm thử số 655
+AST-00656,Pallet Nhựa Đen 1200x1000mm #656,Pallet Nhựa,1200x1000x150mm,SN-2026-18701,DEPT-WAREHOUSE,Kho Vật Tư Tổng - Dãy A - Ô 1,Hoàng Văn Thái,SPARE,432690,2026-01-13,Tài sản mẫu kiểm thử số 656
+AST-00657,Màn Hình Dell UltraSharp 27 inch 4K #657,Thiết Bị IT,U2723QE,SN-2026-93591,DEPT-IT,Tầng 4 - Phòng IT - Ô 1,Nguyễn Thị Hoa,ACTIVE,12833990,2026-01-14,Tài sản mẫu kiểm thử số 657
+AST-00658,Máy Điều Hòa Âm Trần Daikin 36000BTU #658,Thiết Bị Văn Phòng,FCNQ36MV1,SN-2026-98881,DEPT-OFFICE,Tầng 5 - Phòng Họp Lớn - Ô 54,Nguyễn Thị Hoa,ACTIVE,38039020,2026-01-15,Tài sản mẫu kiểm thử số 658
+AST-00659,Máy Nén Khí Piston 15HP #659,Máy Móc Nhà Máy,Pegasus T-15,SN-2026-22459,DEPT-FACTORY,Xưởng Cơ Khí A2 - Ô 55,Hoàng Văn Thái,SPARE,35036950,2026-01-16,Tài sản mẫu kiểm thử số 659
+AST-00660,Bộ Máy Hàn TIG Điện Tử 250A #660,Dụng Cụ Công Nghiệp,Jasic TIG-250A,SN-2026-31853,DEPT-WAREHOUSE,Kho Dụng Cụ Kỹ Thuật - Ô 42,Hoàng Văn Thái,ACTIVE,12534850,2026-01-17,Tài sản mẫu kiểm thử số 660
+AST-00661,Pallet Gỗ Thông Xuất Khẩu Euro #661,Pallet Gỗ,1200x800x144mm,SN-2026-11948,DEPT-WAREHOUSE,Kho Xuất Hàng C - Ô 96,Trần Văn Nam,ACTIVE,257090,2026-01-18,Tài sản mẫu kiểm thử số 661
+AST-00662,Máy Nén Khí Piston 15HP #662,Máy Móc Nhà Máy,Pegasus T-15,SN-2026-98709,DEPT-FACTORY,Xưởng Cơ Khí A2 - Ô 71,Lê Vũ Tường,REPAIR,34969060,2026-01-19,Tài sản mẫu kiểm thử số 662
+AST-00663,Màn Hình Dell UltraSharp 27 inch 4K #663,Thiết Bị IT,U2723QE,SN-2026-88532,DEPT-IT,Tầng 4 - Phòng IT - Ô 61,Nguyễn Thị Hoa,ACTIVE,12813080,2026-01-20,Tài sản mẫu kiểm thử số 663
+AST-00664,Laptop Dell Latitude 5440 i7 #664,Thiết Bị IT,Core i7 16GB 512GB,SN-2026-27856,DEPT-IT,Tầng 4 - Phòng IT - Ô 11,Hoàng Văn Thái,REPAIR,22514260,2026-01-21,Tài sản mẫu kiểm thử số 664
+AST-00665,Pallet Nhựa 2 Mặt Tải Trọng Nặng #665,Pallet Nhựa,1200x1200x160mm,SN-2026-19236,DEPT-WAREHOUSE,Kho Hàng A1 - Kệ Heavy Duty - Ô 48,Nguyễn Thị Hoa,REPAIR,616150,2026-01-22,Tài sản mẫu kiểm thử số 665
+AST-00666,Laptop Dell Latitude 5440 i7 #666,Thiết Bị IT,Core i7 16GB 512GB,SN-2026-10866,DEPT-IT,Tầng 4 - Phòng IT - Ô 93,Nguyễn Văn Hùng,ACTIVE,22465190,2026-01-23,Tài sản mẫu kiểm thử số 666
+AST-00667,Laptop Dell Latitude 5440 i7 #667,Thiết Bị IT,Core i7 16GB 512GB,SN-2026-20169,DEPT-IT,Tầng 4 - Phòng IT - Ô 67,Hoàng Văn Thái,ACTIVE,22502750,2026-01-24,Tài sản mẫu kiểm thử số 667
+AST-00668,Ghế Xoay Lưới Công Trình Ergonomic #668,Thiết Bị Văn Phòng,Hòa Phát EG-01,SN-2026-34166,DEPT-OFFICE,Tầng 5 - Khối Văn Phòng - Ô 57,Phạm Minh Đức,ACTIVE,1850370,2026-01-25,Tài sản mẫu kiểm thử số 668
+AST-00669,Bộ Máy Hàn TIG Điện Tử 250A #669,Dụng Cụ Công Nghiệp,Jasic TIG-250A,SN-2026-76799,DEPT-WAREHOUSE,Kho Dụng Cụ Kỹ Thuật - Ô 22,Trần Văn Nam,SPARE,12461110,2026-01-26,Tài sản mẫu kiểm thử số 669
+AST-00670,Ghế Xoay Lưới Công Trình Ergonomic #670,Thiết Bị Văn Phòng,Hòa Phát EG-01,SN-2026-73468,DEPT-OFFICE,Tầng 5 - Khối Văn Phòng - Ô 51,Hoàng Văn Thái,ACTIVE,1850770,2026-01-27,Tài sản mẫu kiểm thử số 670
+AST-00671,Ghế Xoay Lưới Công Trình Ergonomic #671,Thiết Bị Văn Phòng,Hòa Phát EG-01,SN-2026-26190,DEPT-OFFICE,Tầng 5 - Khối Văn Phòng - Ô 37,Nguyễn Thị Hoa,REPAIR,1827640,2026-01-28,Tài sản mẫu kiểm thử số 671
+AST-00672,Màn Hình Dell UltraSharp 27 inch 4K #672,Thiết Bị IT,U2723QE,SN-2026-67284,DEPT-IT,Tầng 4 - Phòng IT - Ô 19,Nguyễn Thị Hoa,ACTIVE,12813570,2026-01-01,Tài sản mẫu kiểm thử số 672
+AST-00673,Máy Nén Khí Piston 15HP #673,Máy Móc Nhà Máy,Pegasus T-15,SN-2026-44463,DEPT-FACTORY,Xưởng Cơ Khí A2 - Ô 47,Trần Văn Nam,LOANED,35005710,2026-01-02,Tài sản mẫu kiểm thử số 673
+AST-00674,Pallet Nhựa 2 Mặt Tải Trọng Nặng #674,Pallet Nhựa,1200x1200x160mm,SN-2026-56094,DEPT-WAREHOUSE,Kho Hàng A1 - Kệ Heavy Duty - Ô 78,Phạm Thị Lan,ACTIVE,642610,2026-01-03,Tài sản mẫu kiểm thử số 674
+AST-00675,Xe Nâng Điện Toyota 2.5 Tấn #675,Máy Móc Nhà Máy,Toyota 8FBN25,SN-2026-57612,DEPT-FACTORY,Nhà Máy A1 - Cầu Cảng - Ô 44,Phạm Minh Đức,ACTIVE,420025920,2026-01-04,Tài sản mẫu kiểm thử số 675
+AST-00676,Ghế Xoay Lưới Công Trình Ergonomic #676,Thiết Bị Văn Phòng,Hòa Phát EG-01,SN-2026-97274,DEPT-OFFICE,Tầng 5 - Khối Văn Phòng - Ô 29,Trần Văn Nam,ACTIVE,1846660,2026-01-05,Tài sản mẫu kiểm thử số 676
+AST-00677,Xe Nâng Điện Toyota 2.5 Tấn #677,Máy Móc Nhà Máy,Toyota 8FBN25,SN-2026-40428,DEPT-FACTORY,Nhà Máy A1 - Cầu Cảng - Ô 74,Nguyễn Văn Hùng,ACTIVE,419969430,2026-01-06,Tài sản mẫu kiểm thử số 677
+AST-00678,Pallet Nhựa 2 Mặt Tải Trọng Nặng #678,Pallet Nhựa,1200x1200x160mm,SN-2026-47500,DEPT-WAREHOUSE,Kho Hàng A1 - Kệ Heavy Duty - Ô 87,Lê Vũ Tường,ACTIVE,653860,2026-01-07,Tài sản mẫu kiểm thử số 678
+AST-00679,Màn Hình Dell UltraSharp 27 inch 4K #679,Thiết Bị IT,U2723QE,SN-2026-66569,DEPT-IT,Tầng 4 - Phòng IT - Ô 56,Hoàng Văn Thái,LOANED,12769900,2026-01-08,Tài sản mẫu kiểm thử số 679
+AST-00680,Pallet Nhựa Đen 1200x1000mm #680,Pallet Nhựa,1200x1000x150mm,SN-2026-37449,DEPT-WAREHOUSE,Kho Vật Tư Tổng - Dãy A - Ô 84,Trần Văn Nam,REPAIR,425020,2026-01-09,Tài sản mẫu kiểm thử số 680
+AST-00681,Laptop Dell Latitude 5440 i7 #681,Thiết Bị IT,Core i7 16GB 512GB,SN-2026-76234,DEPT-IT,Tầng 4 - Phòng IT - Ô 82,Hoàng Văn Thái,REPAIR,22539820,2026-01-10,Tài sản mẫu kiểm thử số 681
+AST-00682,Pallet Nhựa Đen 1200x1000mm #682,Pallet Nhựa,1200x1000x150mm,SN-2026-37985,DEPT-WAREHOUSE,Kho Vật Tư Tổng - Dãy A - Ô 24,Phạm Thị Lan,ACTIVE,497630,2026-01-11,Tài sản mẫu kiểm thử số 682
+AST-00683,Màn Hình Dell UltraSharp 27 inch 4K #683,Thiết Bị IT,U2723QE,SN-2026-14240,DEPT-IT,Tầng 4 - Phòng IT - Ô 44,Trần Văn Nam,ACTIVE,12823750,2026-01-12,Tài sản mẫu kiểm thử số 683
+AST-00684,Laptop Dell Latitude 5440 i7 #684,Thiết Bị IT,Core i7 16GB 512GB,SN-2026-37904,DEPT-IT,Tầng 4 - Phòng IT - Ô 63,Hoàng Văn Thái,LOANED,22476900,2026-01-13,Tài sản mẫu kiểm thử số 684
+AST-00685,Ghế Xoay Lưới Công Trình Ergonomic #685,Thiết Bị Văn Phòng,Hòa Phát EG-01,SN-2026-39882,DEPT-OFFICE,Tầng 5 - Khối Văn Phòng - Ô 41,Trần Văn Nam,ACTIVE,1879130,2026-01-14,Tài sản mẫu kiểm thử số 685
+AST-00686,Màn Hình Dell UltraSharp 27 inch 4K #686,Thiết Bị IT,U2723QE,SN-2026-71969,DEPT-IT,Tầng 4 - Phòng IT - Ô 21,Nguyễn Thị Hoa,LOANED,12773580,2026-01-15,Tài sản mẫu kiểm thử số 686
+AST-00687,Pallet Nhựa Xanh Lót Sàn #687,Pallet Nhựa,1100x1100x120mm,SN-2026-69374,DEPT-WAREHOUSE,Kho Vật Tư Tổng - Dãy B - Ô 8,Lê Vũ Tường,ACTIVE,386970,2026-01-16,Tài sản mẫu kiểm thử số 687
+AST-00688,Pallet Nhựa Đen 1200x1000mm #688,Pallet Nhựa,1200x1000x150mm,SN-2026-18878,DEPT-WAREHOUSE,Kho Vật Tư Tổng - Dãy A - Ô 38,Nguyễn Thị Hoa,REPAIR,455370,2026-01-17,Tài sản mẫu kiểm thử số 688
+AST-00689,Bộ Máy Hàn TIG Điện Tử 250A #689,Dụng Cụ Công Nghiệp,Jasic TIG-250A,SN-2026-98487,DEPT-WAREHOUSE,Kho Dụng Cụ Kỹ Thuật - Ô 63,Nguyễn Văn Hùng,LOANED,12509990,2026-01-18,Tài sản mẫu kiểm thử số 689
+AST-00690,Pallet Nhựa Đen 1200x1000mm #690,Pallet Nhựa,1200x1000x150mm,SN-2026-50991,DEPT-WAREHOUSE,Kho Vật Tư Tổng - Dãy A - Ô 74,Hoàng Văn Thái,ACTIVE,458510,2026-01-19,Tài sản mẫu kiểm thử số 690
+AST-00691,Máy In Tem Nhãn QR Code Thermal #691,Thiết Bị IT,Xprinter XP-420B,SN-2026-62277,DEPT-IT,Tầng 4 - Phòng IT - Ô 97,Phạm Thị Lan,SPARE,2827100,2026-01-20,Tài sản mẫu kiểm thử số 691
+AST-00692,Ghế Xoay Lưới Công Trình Ergonomic #692,Thiết Bị Văn Phòng,Hòa Phát EG-01,SN-2026-64495,DEPT-OFFICE,Tầng 5 - Khối Văn Phòng - Ô 70,Trần Văn Nam,REPAIR,1823700,2026-01-21,Tài sản mẫu kiểm thử số 692
+AST-00693,Ghế Xoay Lưới Công Trình Ergonomic #693,Thiết Bị Văn Phòng,Hòa Phát EG-01,SN-2026-84851,DEPT-OFFICE,Tầng 5 - Khối Văn Phòng - Ô 15,Trần Văn Nam,ACTIVE,1829560,2026-01-22,Tài sản mẫu kiểm thử số 693
+AST-00694,Pallet Nhựa 2 Mặt Tải Trọng Nặng #694,Pallet Nhựa,1200x1200x160mm,SN-2026-72613,DEPT-WAREHOUSE,Kho Hàng A1 - Kệ Heavy Duty - Ô 23,Phạm Thị Lan,ACTIVE,589320,2026-01-23,Tài sản mẫu kiểm thử số 694
+AST-00695,Máy Điều Hòa Âm Trần Daikin 36000BTU #695,Thiết Bị Văn Phòng,FCNQ36MV1,SN-2026-61811,DEPT-OFFICE,Tầng 5 - Phòng Họp Lớn - Ô 6,Nguyễn Thị Hoa,ACTIVE,37951750,2026-01-24,Tài sản mẫu kiểm thử số 695
+AST-00696,Bộ Máy Hàn TIG Điện Tử 250A #696,Dụng Cụ Công Nghiệp,Jasic TIG-250A,SN-2026-89318,DEPT-WAREHOUSE,Kho Dụng Cụ Kỹ Thuật - Ô 98,Lê Vũ Tường,ACTIVE,12532550,2026-01-25,Tài sản mẫu kiểm thử số 696
+AST-00697,Ghế Xoay Lưới Công Trình Ergonomic #697,Thiết Bị Văn Phòng,Hòa Phát EG-01,SN-2026-27871,DEPT-OFFICE,Tầng 5 - Khối Văn Phòng - Ô 28,Lê Vũ Tường,ACTIVE,1896760,2026-01-26,Tài sản mẫu kiểm thử số 697
+AST-00698,Laptop Dell Latitude 5440 i7 #698,Thiết Bị IT,Core i7 16GB 512GB,SN-2026-57753,DEPT-IT,Tầng 4 - Phòng IT - Ô 8,Phạm Thị Lan,LOANED,22466130,2026-01-27,Tài sản mẫu kiểm thử số 698
+AST-00699,Máy In Tem Nhãn QR Code Thermal #699,Thiết Bị IT,Xprinter XP-420B,SN-2026-63967,DEPT-IT,Tầng 4 - Phòng IT - Ô 59,Trần Văn Nam,ACTIVE,2752940,2026-01-28,Tài sản mẫu kiểm thử số 699
+AST-00700,Máy Nén Khí Piston 15HP #700,Máy Móc Nhà Máy,Pegasus T-15,SN-2026-93143,DEPT-FACTORY,Xưởng Cơ Khí A2 - Ô 75,Nguyễn Văn Hùng,ACTIVE,34993110,2026-01-01,Tài sản mẫu kiểm thử số 700
+AST-00701,Bộ Máy Hàn TIG Điện Tử 250A #701,Dụng Cụ Công Nghiệp,Jasic TIG-250A,SN-2026-62753,DEPT-WAREHOUSE,Kho Dụng Cụ Kỹ Thuật - Ô 44,Hoàng Văn Thái,ACTIVE,12494570,2026-01-02,Tài sản mẫu kiểm thử số 701
+AST-00702,Màn Hình Dell UltraSharp 27 inch 4K #702,Thiết Bị IT,U2723QE,SN-2026-25381,DEPT-IT,Tầng 4 - Phòng IT - Ô 55,Lê Vũ Tường,SPARE,12813750,2026-01-03,Tài sản mẫu kiểm thử số 702
+AST-00703,Màn Hình Dell UltraSharp 27 inch 4K #703,Thiết Bị IT,U2723QE,SN-2026-60532,DEPT-IT,Tầng 4 - Phòng IT - Ô 21,Hoàng Văn Thái,SPARE,12780330,2026-01-04,Tài sản mẫu kiểm thử số 703
+AST-00704,Máy Điều Hòa Âm Trần Daikin 36000BTU #704,Thiết Bị Văn Phòng,FCNQ36MV1,SN-2026-92802,DEPT-OFFICE,Tầng 5 - Phòng Họp Lớn - Ô 47,Phạm Minh Đức,SPARE,37990880,2026-01-05,Tài sản mẫu kiểm thử số 704
+AST-00705,Máy Điều Hòa Âm Trần Daikin 36000BTU #705,Thiết Bị Văn Phòng,FCNQ36MV1,SN-2026-39716,DEPT-OFFICE,Tầng 5 - Phòng Họp Lớn - Ô 63,Nguyễn Văn Hùng,ACTIVE,37950500,2026-01-06,Tài sản mẫu kiểm thử số 705
+AST-00706,Ghế Xoay Lưới Công Trình Ergonomic #706,Thiết Bị Văn Phòng,Hòa Phát EG-01,SN-2026-96134,DEPT-OFFICE,Tầng 5 - Khối Văn Phòng - Ô 58,Nguyễn Văn Hùng,ACTIVE,1821870,2026-01-07,Tài sản mẫu kiểm thử số 706
+AST-00707,Máy Điều Hòa Âm Trần Daikin 36000BTU #707,Thiết Bị Văn Phòng,FCNQ36MV1,SN-2026-74810,DEPT-OFFICE,Tầng 5 - Phòng Họp Lớn - Ô 75,Phạm Minh Đức,ACTIVE,38037460,2026-01-08,Tài sản mẫu kiểm thử số 707
+AST-00708,Laptop Dell Latitude 5440 i7 #708,Thiết Bị IT,Core i7 16GB 512GB,SN-2026-91789,DEPT-IT,Tầng 4 - Phòng IT - Ô 2,Nguyễn Văn Hùng,ACTIVE,22523930,2026-01-09,Tài sản mẫu kiểm thử số 708
+AST-00709,Laptop Dell Latitude 5440 i7 #709,Thiết Bị IT,Core i7 16GB 512GB,SN-2026-50377,DEPT-IT,Tầng 4 - Phòng IT - Ô 10,Nguyễn Thị Hoa,ACTIVE,22515320,2026-01-10,Tài sản mẫu kiểm thử số 709
+AST-00710,Pallet Gỗ Thông Xuất Khẩu Euro #710,Pallet Gỗ,1200x800x144mm,SN-2026-24162,DEPT-WAREHOUSE,Kho Xuất Hàng C - Ô 99,Hoàng Văn Thái,LOANED,297970,2026-01-11,Tài sản mẫu kiểm thử số 710
+AST-00711,Laptop Dell Latitude 5440 i7 #711,Thiết Bị IT,Core i7 16GB 512GB,SN-2026-15679,DEPT-IT,Tầng 4 - Phòng IT - Ô 50,Phạm Minh Đức,REPAIR,22502510,2026-01-12,Tài sản mẫu kiểm thử số 711
+AST-00712,Pallet Nhựa 2 Mặt Tải Trọng Nặng #712,Pallet Nhựa,1200x1200x160mm,SN-2026-35289,DEPT-WAREHOUSE,Kho Hàng A1 - Kệ Heavy Duty - Ô 5,Phạm Thị Lan,ACTIVE,592250,2026-01-13,Tài sản mẫu kiểm thử số 712
+AST-00713,Máy In Tem Nhãn QR Code Thermal #713,Thiết Bị IT,Xprinter XP-420B,SN-2026-98755,DEPT-IT,Tầng 4 - Phòng IT - Ô 95,Hoàng Văn Thái,SPARE,2763190,2026-01-14,Tài sản mẫu kiểm thử số 713
+AST-00714,Máy In Tem Nhãn QR Code Thermal #714,Thiết Bị IT,Xprinter XP-420B,SN-2026-90169,DEPT-IT,Tầng 4 - Phòng IT - Ô 3,Phạm Minh Đức,ACTIVE,2792980,2026-01-15,Tài sản mẫu kiểm thử số 714
+AST-00715,Pallet Nhựa Xanh Lót Sàn #715,Pallet Nhựa,1100x1100x120mm,SN-2026-17636,DEPT-WAREHOUSE,Kho Vật Tư Tổng - Dãy B - Ô 10,Phạm Thị Lan,ACTIVE,399460,2026-01-16,Tài sản mẫu kiểm thử số 715
+AST-00716,Máy In Tem Nhãn QR Code Thermal #716,Thiết Bị IT,Xprinter XP-420B,SN-2026-61199,DEPT-IT,Tầng 4 - Phòng IT - Ô 17,Lê Vũ Tường,LOANED,2806420,2026-01-17,Tài sản mẫu kiểm thử số 716
+AST-00717,Ghế Xoay Lưới Công Trình Ergonomic #717,Thiết Bị Văn Phòng,Hòa Phát EG-01,SN-2026-49905,DEPT-OFFICE,Tầng 5 - Khối Văn Phòng - Ô 28,Nguyễn Thị Hoa,ACTIVE,1813050,2026-01-18,Tài sản mẫu kiểm thử số 717
+AST-00718,Máy In Tem Nhãn QR Code Thermal #718,Thiết Bị IT,Xprinter XP-420B,SN-2026-64194,DEPT-IT,Tầng 4 - Phòng IT - Ô 64,Lê Vũ Tường,ACTIVE,2763900,2026-01-19,Tài sản mẫu kiểm thử số 718
+AST-00719,Pallet Nhựa Xanh Lót Sàn #719,Pallet Nhựa,1100x1100x120mm,SN-2026-78231,DEPT-WAREHOUSE,Kho Vật Tư Tổng - Dãy B - Ô 19,Phạm Minh Đức,ACTIVE,400990,2026-01-20,Tài sản mẫu kiểm thử số 719
+AST-00720,Máy In Tem Nhãn QR Code Thermal #720,Thiết Bị IT,Xprinter XP-420B,SN-2026-10425,DEPT-IT,Tầng 4 - Phòng IT - Ô 41,Trần Văn Nam,ACTIVE,2767420,2026-01-21,Tài sản mẫu kiểm thử số 720
+AST-00721,Màn Hình Dell UltraSharp 27 inch 4K #721,Thiết Bị IT,U2723QE,SN-2026-39048,DEPT-IT,Tầng 4 - Phòng IT - Ô 91,Phạm Thị Lan,ACTIVE,12842730,2026-01-22,Tài sản mẫu kiểm thử số 721
+AST-00722,Pallet Nhựa 2 Mặt Tải Trọng Nặng #722,Pallet Nhựa,1200x1200x160mm,SN-2026-82902,DEPT-WAREHOUSE,Kho Hàng A1 - Kệ Heavy Duty - Ô 39,Phạm Thị Lan,ACTIVE,641220,2026-01-23,Tài sản mẫu kiểm thử số 722
+AST-00723,Máy In Tem Nhãn QR Code Thermal #723,Thiết Bị IT,Xprinter XP-420B,SN-2026-36694,DEPT-IT,Tầng 4 - Phòng IT - Ô 2,Nguyễn Thị Hoa,REPAIR,2822360,2026-01-24,Tài sản mẫu kiểm thử số 723
+AST-00724,Pallet Nhựa Đen 1200x1000mm #724,Pallet Nhựa,1200x1000x150mm,SN-2026-51086,DEPT-WAREHOUSE,Kho Vật Tư Tổng - Dãy A - Ô 26,Trần Văn Nam,ACTIVE,485830,2026-01-25,Tài sản mẫu kiểm thử số 724
+AST-00725,Pallet Gỗ Thông Xuất Khẩu Euro #725,Pallet Gỗ,1200x800x144mm,SN-2026-78441,DEPT-WAREHOUSE,Kho Xuất Hàng C - Ô 21,Lê Vũ Tường,LOANED,237820,2026-01-26,Tài sản mẫu kiểm thử số 725
+AST-00726,Bộ Máy Hàn TIG Điện Tử 250A #726,Dụng Cụ Công Nghiệp,Jasic TIG-250A,SN-2026-36493,DEPT-WAREHOUSE,Kho Dụng Cụ Kỹ Thuật - Ô 53,Phạm Thị Lan,REPAIR,12451250,2026-01-27,Tài sản mẫu kiểm thử số 726
+AST-00727,Bộ Máy Hàn TIG Điện Tử 250A #727,Dụng Cụ Công Nghiệp,Jasic TIG-250A,SN-2026-40043,DEPT-WAREHOUSE,Kho Dụng Cụ Kỹ Thuật - Ô 39,Trần Văn Nam,REPAIR,12476270,2026-01-28,Tài sản mẫu kiểm thử số 727
+AST-00728,Pallet Nhựa 2 Mặt Tải Trọng Nặng #728,Pallet Nhựa,1200x1200x160mm,SN-2026-73812,DEPT-WAREHOUSE,Kho Hàng A1 - Kệ Heavy Duty - Ô 81,Lê Vũ Tường,ACTIVE,587720,2026-01-01,Tài sản mẫu kiểm thử số 728
+AST-00729,Bộ Máy Hàn TIG Điện Tử 250A #729,Dụng Cụ Công Nghiệp,Jasic TIG-250A,SN-2026-55516,DEPT-WAREHOUSE,Kho Dụng Cụ Kỹ Thuật - Ô 86,Nguyễn Văn Hùng,ACTIVE,12461630,2026-01-02,Tài sản mẫu kiểm thử số 729
+AST-00730,Pallet Gỗ Thông Xuất Khẩu Euro #730,Pallet Gỗ,1200x800x144mm,SN-2026-99083,DEPT-WAREHOUSE,Kho Xuất Hàng C - Ô 77,Phạm Minh Đức,ACTIVE,289430,2026-01-03,Tài sản mẫu kiểm thử số 730
+AST-00731,Máy In Tem Nhãn QR Code Thermal #731,Thiết Bị IT,Xprinter XP-420B,SN-2026-25486,DEPT-IT,Tầng 4 - Phòng IT - Ô 72,Hoàng Văn Thái,ACTIVE,2815200,2026-01-04,Tài sản mẫu kiểm thử số 731
+AST-00732,Màn Hình Dell UltraSharp 27 inch 4K #732,Thiết Bị IT,U2723QE,SN-2026-77515,DEPT-IT,Tầng 4 - Phòng IT - Ô 61,Lê Vũ Tường,ACTIVE,12822010,2026-01-05,Tài sản mẫu kiểm thử số 732
+AST-00733,Bộ Máy Hàn TIG Điện Tử 250A #733,Dụng Cụ Công Nghiệp,Jasic TIG-250A,SN-2026-89965,DEPT-WAREHOUSE,Kho Dụng Cụ Kỹ Thuật - Ô 82,Phạm Minh Đức,ACTIVE,12469360,2026-01-06,Tài sản mẫu kiểm thử số 733
+AST-00734,Xe Nâng Điện Toyota 2.5 Tấn #734,Máy Móc Nhà Máy,Toyota 8FBN25,SN-2026-59452,DEPT-FACTORY,Nhà Máy A1 - Cầu Cảng - Ô 52,Phạm Minh Đức,ACTIVE,419967650,2026-01-07,Tài sản mẫu kiểm thử số 734
+AST-00735,Pallet Nhựa Đen 1200x1000mm #735,Pallet Nhựa,1200x1000x150mm,SN-2026-71804,DEPT-WAREHOUSE,Kho Vật Tư Tổng - Dãy A - Ô 12,Phạm Minh Đức,ACTIVE,486760,2026-01-08,Tài sản mẫu kiểm thử số 735
+AST-00736,Pallet Gỗ Thông Xuất Khẩu Euro #736,Pallet Gỗ,1200x800x144mm,SN-2026-47428,DEPT-WAREHOUSE,Kho Xuất Hàng C - Ô 64,Hoàng Văn Thái,LOANED,251780,2026-01-09,Tài sản mẫu kiểm thử số 736
+AST-00737,Pallet Nhựa Xanh Lót Sàn #737,Pallet Nhựa,1100x1100x120mm,SN-2026-75635,DEPT-WAREHOUSE,Kho Vật Tư Tổng - Dãy B - Ô 27,Nguyễn Thị Hoa,ACTIVE,376650,2026-01-10,Tài sản mẫu kiểm thử số 737
+AST-00738,Màn Hình Dell UltraSharp 27 inch 4K #738,Thiết Bị IT,U2723QE,SN-2026-31828,DEPT-IT,Tầng 4 - Phòng IT - Ô 42,Phạm Thị Lan,SPARE,12821530,2026-01-11,Tài sản mẫu kiểm thử số 738
+AST-00739,Xe Nâng Điện Toyota 2.5 Tấn #739,Máy Móc Nhà Máy,Toyota 8FBN25,SN-2026-15888,DEPT-FACTORY,Nhà Máy A1 - Cầu Cảng - Ô 85,Lê Vũ Tường,ACTIVE,419982370,2026-01-12,Tài sản mẫu kiểm thử số 739
+AST-00740,Máy Nén Khí Piston 15HP #740,Máy Móc Nhà Máy,Pegasus T-15,SN-2026-29763,DEPT-FACTORY,Xưởng Cơ Khí A2 - Ô 86,Phạm Thị Lan,REPAIR,35019530,2026-01-13,Tài sản mẫu kiểm thử số 740
+AST-00741,Ghế Xoay Lưới Công Trình Ergonomic #741,Thiết Bị Văn Phòng,Hòa Phát EG-01,SN-2026-61945,DEPT-OFFICE,Tầng 5 - Khối Văn Phòng - Ô 93,Nguyễn Thị Hoa,REPAIR,1880680,2026-01-14,Tài sản mẫu kiểm thử số 741
+AST-00742,Pallet Nhựa Đen 1200x1000mm #742,Pallet Nhựa,1200x1000x150mm,SN-2026-83285,DEPT-WAREHOUSE,Kho Vật Tư Tổng - Dãy A - Ô 19,Lê Vũ Tường,LOANED,419680,2026-01-15,Tài sản mẫu kiểm thử số 742
+AST-00743,Pallet Nhựa 2 Mặt Tải Trọng Nặng #743,Pallet Nhựa,1200x1200x160mm,SN-2026-51967,DEPT-WAREHOUSE,Kho Hàng A1 - Kệ Heavy Duty - Ô 56,Phạm Minh Đức,REPAIR,651620,2026-01-16,Tài sản mẫu kiểm thử số 743
+AST-00744,Máy In Tem Nhãn QR Code Thermal #744,Thiết Bị IT,Xprinter XP-420B,SN-2026-27043,DEPT-IT,Tầng 4 - Phòng IT - Ô 21,Nguyễn Văn Hùng,ACTIVE,2806330,2026-01-17,Tài sản mẫu kiểm thử số 744
+AST-00745,Xe Nâng Điện Toyota 2.5 Tấn #745,Máy Móc Nhà Máy,Toyota 8FBN25,SN-2026-68135,DEPT-FACTORY,Nhà Máy A1 - Cầu Cảng - Ô 5,Phạm Thị Lan,SPARE,420014950,2026-01-18,Tài sản mẫu kiểm thử số 745
+AST-00746,Xe Nâng Điện Toyota 2.5 Tấn #746,Máy Móc Nhà Máy,Toyota 8FBN25,SN-2026-19106,DEPT-FACTORY,Nhà Máy A1 - Cầu Cảng - Ô 35,Hoàng Văn Thái,REPAIR,419976540,2026-01-19,Tài sản mẫu kiểm thử số 746
+AST-00747,Laptop Dell Latitude 5440 i7 #747,Thiết Bị IT,Core i7 16GB 512GB,SN-2026-37622,DEPT-IT,Tầng 4 - Phòng IT - Ô 9,Nguyễn Văn Hùng,ACTIVE,22529220,2026-01-20,Tài sản mẫu kiểm thử số 747
+AST-00748,Pallet Nhựa 2 Mặt Tải Trọng Nặng #748,Pallet Nhựa,1200x1200x160mm,SN-2026-19219,DEPT-WAREHOUSE,Kho Hàng A1 - Kệ Heavy Duty - Ô 22,Nguyễn Thị Hoa,SPARE,638740,2026-01-21,Tài sản mẫu kiểm thử số 748
+AST-00749,Xe Nâng Điện Toyota 2.5 Tấn #749,Máy Móc Nhà Máy,Toyota 8FBN25,SN-2026-51126,DEPT-FACTORY,Nhà Máy A1 - Cầu Cảng - Ô 64,Nguyễn Văn Hùng,ACTIVE,420033400,2026-01-22,Tài sản mẫu kiểm thử số 749
+AST-00750,Máy In Tem Nhãn QR Code Thermal #750,Thiết Bị IT,Xprinter XP-420B,SN-2026-13157,DEPT-IT,Tầng 4 - Phòng IT - Ô 94,Nguyễn Văn Hùng,ACTIVE,2789110,2026-01-23,Tài sản mẫu kiểm thử số 750
+AST-00751,Máy Điều Hòa Âm Trần Daikin 36000BTU #751,Thiết Bị Văn Phòng,FCNQ36MV1,SN-2026-22676,DEPT-OFFICE,Tầng 5 - Phòng Họp Lớn - Ô 15,Phạm Thị Lan,ACTIVE,38042050,2026-01-24,Tài sản mẫu kiểm thử số 751
+AST-00752,Máy Nén Khí Piston 15HP #752,Máy Móc Nhà Máy,Pegasus T-15,SN-2026-88222,DEPT-FACTORY,Xưởng Cơ Khí A2 - Ô 24,Trần Văn Nam,LOANED,35002850,2026-01-25,Tài sản mẫu kiểm thử số 752
+AST-00753,Ghế Xoay Lưới Công Trình Ergonomic #753,Thiết Bị Văn Phòng,Hòa Phát EG-01,SN-2026-69924,DEPT-OFFICE,Tầng 5 - Khối Văn Phòng - Ô 77,Nguyễn Thị Hoa,ACTIVE,1850160,2026-01-26,Tài sản mẫu kiểm thử số 753
+AST-00754,Bộ Máy Hàn TIG Điện Tử 250A #754,Dụng Cụ Công Nghiệp,Jasic TIG-250A,SN-2026-98611,DEPT-WAREHOUSE,Kho Dụng Cụ Kỹ Thuật - Ô 96,Phạm Minh Đức,ACTIVE,12523760,2026-01-27,Tài sản mẫu kiểm thử số 754
+AST-00755,Màn Hình Dell UltraSharp 27 inch 4K #755,Thiết Bị IT,U2723QE,SN-2026-66396,DEPT-IT,Tầng 4 - Phòng IT - Ô 10,Nguyễn Văn Hùng,ACTIVE,12848470,2026-01-28,Tài sản mẫu kiểm thử số 755
+AST-00756,Máy Điều Hòa Âm Trần Daikin 36000BTU #756,Thiết Bị Văn Phòng,FCNQ36MV1,SN-2026-23797,DEPT-OFFICE,Tầng 5 - Phòng Họp Lớn - Ô 57,Phạm Thị Lan,ACTIVE,37980380,2026-01-01,Tài sản mẫu kiểm thử số 756
+AST-00757,Pallet Gỗ Thông Xuất Khẩu Euro #757,Pallet Gỗ,1200x800x144mm,SN-2026-30986,DEPT-WAREHOUSE,Kho Xuất Hàng C - Ô 85,Nguyễn Thị Hoa,ACTIVE,209710,2026-01-02,Tài sản mẫu kiểm thử số 757
+AST-00758,Laptop Dell Latitude 5440 i7 #758,Thiết Bị IT,Core i7 16GB 512GB,SN-2026-18861,DEPT-IT,Tầng 4 - Phòng IT - Ô 97,Hoàng Văn Thái,REPAIR,22547440,2026-01-03,Tài sản mẫu kiểm thử số 758
+AST-00759,Máy Điều Hòa Âm Trần Daikin 36000BTU #759,Thiết Bị Văn Phòng,FCNQ36MV1,SN-2026-40520,DEPT-OFFICE,Tầng 5 - Phòng Họp Lớn - Ô 2,Nguyễn Văn Hùng,SPARE,38041300,2026-01-04,Tài sản mẫu kiểm thử số 759
+AST-00760,Pallet Nhựa 2 Mặt Tải Trọng Nặng #760,Pallet Nhựa,1200x1200x160mm,SN-2026-79634,DEPT-WAREHOUSE,Kho Hàng A1 - Kệ Heavy Duty - Ô 42,Nguyễn Thị Hoa,SPARE,629490,2026-01-05,Tài sản mẫu kiểm thử số 760
+AST-00761,Pallet Nhựa Đen 1200x1000mm #761,Pallet Nhựa,1200x1000x150mm,SN-2026-98222,DEPT-WAREHOUSE,Kho Vật Tư Tổng - Dãy A - Ô 3,Lê Vũ Tường,ACTIVE,417740,2026-01-06,Tài sản mẫu kiểm thử số 761
+AST-00762,Máy Nén Khí Piston 15HP #762,Máy Móc Nhà Máy,Pegasus T-15,SN-2026-39159,DEPT-FACTORY,Xưởng Cơ Khí A2 - Ô 66,Phạm Minh Đức,REPAIR,35047640,2026-01-07,Tài sản mẫu kiểm thử số 762
+AST-00763,Pallet Gỗ Thông Xuất Khẩu Euro #763,Pallet Gỗ,1200x800x144mm,SN-2026-74276,DEPT-WAREHOUSE,Kho Xuất Hàng C - Ô 96,Phạm Minh Đức,SPARE,241650,2026-01-08,Tài sản mẫu kiểm thử số 763
+AST-00764,Ghế Xoay Lưới Công Trình Ergonomic #764,Thiết Bị Văn Phòng,Hòa Phát EG-01,SN-2026-64907,DEPT-OFFICE,Tầng 5 - Khối Văn Phòng - Ô 72,Hoàng Văn Thái,LOANED,1893260,2026-01-09,Tài sản mẫu kiểm thử số 764
+AST-00765,Laptop Dell Latitude 5440 i7 #765,Thiết Bị IT,Core i7 16GB 512GB,SN-2026-48145,DEPT-IT,Tầng 4 - Phòng IT - Ô 37,Lê Vũ Tường,LOANED,22535100,2026-01-10,Tài sản mẫu kiểm thử số 765
+AST-00766,Ghế Xoay Lưới Công Trình Ergonomic #766,Thiết Bị Văn Phòng,Hòa Phát EG-01,SN-2026-20410,DEPT-OFFICE,Tầng 5 - Khối Văn Phòng - Ô 68,Phạm Minh Đức,REPAIR,1821290,2026-01-11,Tài sản mẫu kiểm thử số 766
+AST-00767,Máy In Tem Nhãn QR Code Thermal #767,Thiết Bị IT,Xprinter XP-420B,SN-2026-77282,DEPT-IT,Tầng 4 - Phòng IT - Ô 72,Lê Vũ Tường,LOANED,2801880,2026-01-12,Tài sản mẫu kiểm thử số 767
+AST-00768,Máy Nén Khí Piston 15HP #768,Máy Móc Nhà Máy,Pegasus T-15,SN-2026-54410,DEPT-FACTORY,Xưởng Cơ Khí A2 - Ô 22,Phạm Thị Lan,ACTIVE,35049420,2026-01-13,Tài sản mẫu kiểm thử số 768
+AST-00769,Máy Nén Khí Piston 15HP #769,Máy Móc Nhà Máy,Pegasus T-15,SN-2026-98825,DEPT-FACTORY,Xưởng Cơ Khí A2 - Ô 16,Phạm Thị Lan,SPARE,35027170,2026-01-14,Tài sản mẫu kiểm thử số 769
+AST-00770,Pallet Nhựa Đen 1200x1000mm #770,Pallet Nhựa,1200x1000x150mm,SN-2026-85253,DEPT-WAREHOUSE,Kho Vật Tư Tổng - Dãy A - Ô 86,Phạm Minh Đức,ACTIVE,415780,2026-01-15,Tài sản mẫu kiểm thử số 770
+AST-00771,Pallet Nhựa 2 Mặt Tải Trọng Nặng #771,Pallet Nhựa,1200x1200x160mm,SN-2026-69406,DEPT-WAREHOUSE,Kho Hàng A1 - Kệ Heavy Duty - Ô 52,Nguyễn Văn Hùng,ACTIVE,631540,2026-01-16,Tài sản mẫu kiểm thử số 771
+AST-00772,Pallet Gỗ Thông Xuất Khẩu Euro #772,Pallet Gỗ,1200x800x144mm,SN-2026-33619,DEPT-WAREHOUSE,Kho Xuất Hàng C - Ô 99,Phạm Thị Lan,SPARE,281940,2026-01-17,Tài sản mẫu kiểm thử số 772
+AST-00773,Máy Nén Khí Piston 15HP #773,Máy Móc Nhà Máy,Pegasus T-15,SN-2026-15538,DEPT-FACTORY,Xưởng Cơ Khí A2 - Ô 25,Phạm Minh Đức,ACTIVE,34950870,2026-01-18,Tài sản mẫu kiểm thử số 773
+AST-00774,Laptop Dell Latitude 5440 i7 #774,Thiết Bị IT,Core i7 16GB 512GB,SN-2026-71348,DEPT-IT,Tầng 4 - Phòng IT - Ô 21,Lê Vũ Tường,ACTIVE,22549580,2026-01-19,Tài sản mẫu kiểm thử số 774
+AST-00775,Xe Nâng Điện Toyota 2.5 Tấn #775,Máy Móc Nhà Máy,Toyota 8FBN25,SN-2026-55391,DEPT-FACTORY,Nhà Máy A1 - Cầu Cảng - Ô 56,Trần Văn Nam,ACTIVE,419995680,2026-01-20,Tài sản mẫu kiểm thử số 775
+AST-00776,Máy Điều Hòa Âm Trần Daikin 36000BTU #776,Thiết Bị Văn Phòng,FCNQ36MV1,SN-2026-53228,DEPT-OFFICE,Tầng 5 - Phòng Họp Lớn - Ô 67,Nguyễn Văn Hùng,ACTIVE,38028160,2026-01-21,Tài sản mẫu kiểm thử số 776
+AST-00777,Màn Hình Dell UltraSharp 27 inch 4K #777,Thiết Bị IT,U2723QE,SN-2026-70110,DEPT-IT,Tầng 4 - Phòng IT - Ô 56,Lê Vũ Tường,ACTIVE,12802610,2026-01-22,Tài sản mẫu kiểm thử số 777
+AST-00778,Pallet Nhựa Đen 1200x1000mm #778,Pallet Nhựa,1200x1000x150mm,SN-2026-18368,DEPT-WAREHOUSE,Kho Vật Tư Tổng - Dãy A - Ô 35,Nguyễn Văn Hùng,ACTIVE,460250,2026-01-23,Tài sản mẫu kiểm thử số 778
+AST-00779,Máy Nén Khí Piston 15HP #779,Máy Móc Nhà Máy,Pegasus T-15,SN-2026-43742,DEPT-FACTORY,Xưởng Cơ Khí A2 - Ô 11,Lê Vũ Tường,LOANED,34973570,2026-01-24,Tài sản mẫu kiểm thử số 779
+AST-00780,Xe Nâng Điện Toyota 2.5 Tấn #780,Máy Móc Nhà Máy,Toyota 8FBN25,SN-2026-68853,DEPT-FACTORY,Nhà Máy A1 - Cầu Cảng - Ô 86,Nguyễn Văn Hùng,ACTIVE,419984520,2026-01-25,Tài sản mẫu kiểm thử số 780
+AST-00781,Máy Nén Khí Piston 15HP #781,Máy Móc Nhà Máy,Pegasus T-15,SN-2026-27511,DEPT-FACTORY,Xưởng Cơ Khí A2 - Ô 90,Nguyễn Văn Hùng,LOANED,35032840,2026-01-26,Tài sản mẫu kiểm thử số 781
+AST-00782,Máy In Tem Nhãn QR Code Thermal #782,Thiết Bị IT,Xprinter XP-420B,SN-2026-39208,DEPT-IT,Tầng 4 - Phòng IT - Ô 47,Phạm Minh Đức,ACTIVE,2845690,2026-01-27,Tài sản mẫu kiểm thử số 782
+AST-00783,Máy In Tem Nhãn QR Code Thermal #783,Thiết Bị IT,Xprinter XP-420B,SN-2026-48732,DEPT-IT,Tầng 4 - Phòng IT - Ô 27,Hoàng Văn Thái,LOANED,2820050,2026-01-28,Tài sản mẫu kiểm thử số 783
+AST-00784,Laptop Dell Latitude 5440 i7 #784,Thiết Bị IT,Core i7 16GB 512GB,SN-2026-83780,DEPT-IT,Tầng 4 - Phòng IT - Ô 83,Trần Văn Nam,SPARE,22495830,2026-01-01,Tài sản mẫu kiểm thử số 784
+AST-00785,Xe Nâng Điện Toyota 2.5 Tấn #785,Máy Móc Nhà Máy,Toyota 8FBN25,SN-2026-11094,DEPT-FACTORY,Nhà Máy A1 - Cầu Cảng - Ô 25,Nguyễn Thị Hoa,REPAIR,419977140,2026-01-02,Tài sản mẫu kiểm thử số 785
+AST-00786,Pallet Nhựa Đen 1200x1000mm #786,Pallet Nhựa,1200x1000x150mm,SN-2026-27363,DEPT-WAREHOUSE,Kho Vật Tư Tổng - Dãy A - Ô 96,Lê Vũ Tường,LOANED,425430,2026-01-03,Tài sản mẫu kiểm thử số 786
+AST-00787,Pallet Nhựa 2 Mặt Tải Trọng Nặng #787,Pallet Nhựa,1200x1200x160mm,SN-2026-30686,DEPT-WAREHOUSE,Kho Hàng A1 - Kệ Heavy Duty - Ô 45,Trần Văn Nam,ACTIVE,596020,2026-01-04,Tài sản mẫu kiểm thử số 787
+AST-00788,Máy In Tem Nhãn QR Code Thermal #788,Thiết Bị IT,Xprinter XP-420B,SN-2026-34330,DEPT-IT,Tầng 4 - Phòng IT - Ô 22,Trần Văn Nam,ACTIVE,2780900,2026-01-05,Tài sản mẫu kiểm thử số 788
+AST-00789,Máy Nén Khí Piston 15HP #789,Máy Móc Nhà Máy,Pegasus T-15,SN-2026-51532,DEPT-FACTORY,Xưởng Cơ Khí A2 - Ô 31,Phạm Minh Đức,REPAIR,34989440,2026-01-06,Tài sản mẫu kiểm thử số 789
+AST-00790,Pallet Gỗ Thông Xuất Khẩu Euro #790,Pallet Gỗ,1200x800x144mm,SN-2026-84350,DEPT-WAREHOUSE,Kho Xuất Hàng C - Ô 84,Lê Vũ Tường,LOANED,224690,2026-01-07,Tài sản mẫu kiểm thử số 790
+AST-00791,Máy Nén Khí Piston 15HP #791,Máy Móc Nhà Máy,Pegasus T-15,SN-2026-86373,DEPT-FACTORY,Xưởng Cơ Khí A2 - Ô 18,Phạm Thị Lan,ACTIVE,35041120,2026-01-08,Tài sản mẫu kiểm thử số 791
+AST-00792,Bộ Máy Hàn TIG Điện Tử 250A #792,Dụng Cụ Công Nghiệp,Jasic TIG-250A,SN-2026-50796,DEPT-WAREHOUSE,Kho Dụng Cụ Kỹ Thuật - Ô 97,Nguyễn Thị Hoa,ACTIVE,12515750,2026-01-09,Tài sản mẫu kiểm thử số 792
+AST-00793,Pallet Nhựa Xanh Lót Sàn #793,Pallet Nhựa,1100x1100x120mm,SN-2026-67988,DEPT-WAREHOUSE,Kho Vật Tư Tổng - Dãy B - Ô 45,Hoàng Văn Thái,ACTIVE,335500,2026-01-10,Tài sản mẫu kiểm thử số 793
+AST-00794,Màn Hình Dell UltraSharp 27 inch 4K #794,Thiết Bị IT,U2723QE,SN-2026-50261,DEPT-IT,Tầng 4 - Phòng IT - Ô 82,Phạm Minh Đức,ACTIVE,12762710,2026-01-11,Tài sản mẫu kiểm thử số 794
+AST-00795,Xe Nâng Điện Toyota 2.5 Tấn #795,Máy Móc Nhà Máy,Toyota 8FBN25,SN-2026-44881,DEPT-FACTORY,Nhà Máy A1 - Cầu Cảng - Ô 64,Phạm Thị Lan,REPAIR,419956570,2026-01-12,Tài sản mẫu kiểm thử số 795
+AST-00796,Laptop Dell Latitude 5440 i7 #796,Thiết Bị IT,Core i7 16GB 512GB,SN-2026-27084,DEPT-IT,Tầng 4 - Phòng IT - Ô 55,Hoàng Văn Thái,LOANED,22506550,2026-01-13,Tài sản mẫu kiểm thử số 796
+AST-00797,Laptop Dell Latitude 5440 i7 #797,Thiết Bị IT,Core i7 16GB 512GB,SN-2026-70653,DEPT-IT,Tầng 4 - Phòng IT - Ô 41,Nguyễn Văn Hùng,REPAIR,22518500,2026-01-14,Tài sản mẫu kiểm thử số 797
+AST-00798,Xe Nâng Điện Toyota 2.5 Tấn #798,Máy Móc Nhà Máy,Toyota 8FBN25,SN-2026-89816,DEPT-FACTORY,Nhà Máy A1 - Cầu Cảng - Ô 17,Nguyễn Thị Hoa,LOANED,420021570,2026-01-15,Tài sản mẫu kiểm thử số 798
+AST-00799,Máy Điều Hòa Âm Trần Daikin 36000BTU #799,Thiết Bị Văn Phòng,FCNQ36MV1,SN-2026-90510,DEPT-OFFICE,Tầng 5 - Phòng Họp Lớn - Ô 8,Nguyễn Thị Hoa,LOANED,38046230,2026-01-16,Tài sản mẫu kiểm thử số 799
+AST-00800,Máy Điều Hòa Âm Trần Daikin 36000BTU #800,Thiết Bị Văn Phòng,FCNQ36MV1,SN-2026-70620,DEPT-OFFICE,Tầng 5 - Phòng Họp Lớn - Ô 17,Phạm Minh Đức,ACTIVE,38004570,2026-01-17,Tài sản mẫu kiểm thử số 800
+AST-00801,Pallet Nhựa Xanh Lót Sàn #801,Pallet Nhựa,1100x1100x120mm,SN-2026-69334,DEPT-WAREHOUSE,Kho Vật Tư Tổng - Dãy B - Ô 97,Nguyễn Thị Hoa,REPAIR,403900,2026-01-18,Tài sản mẫu kiểm thử số 801
+AST-00802,Pallet Nhựa 2 Mặt Tải Trọng Nặng #802,Pallet Nhựa,1200x1200x160mm,SN-2026-11706,DEPT-WAREHOUSE,Kho Hàng A1 - Kệ Heavy Duty - Ô 49,Nguyễn Thị Hoa,LOANED,572150,2026-01-19,Tài sản mẫu kiểm thử số 802
+AST-00803,Pallet Nhựa Đen 1200x1000mm #803,Pallet Nhựa,1200x1000x150mm,SN-2026-59601,DEPT-WAREHOUSE,Kho Vật Tư Tổng - Dãy A - Ô 20,Phạm Minh Đức,ACTIVE,400420,2026-01-20,Tài sản mẫu kiểm thử số 803
+AST-00804,Ghế Xoay Lưới Công Trình Ergonomic #804,Thiết Bị Văn Phòng,Hòa Phát EG-01,SN-2026-23880,DEPT-OFFICE,Tầng 5 - Khối Văn Phòng - Ô 51,Hoàng Văn Thái,ACTIVE,1848310,2026-01-21,Tài sản mẫu kiểm thử số 804
+AST-00805,Máy Điều Hòa Âm Trần Daikin 36000BTU #805,Thiết Bị Văn Phòng,FCNQ36MV1,SN-2026-55444,DEPT-OFFICE,Tầng 5 - Phòng Họp Lớn - Ô 20,Phạm Minh Đức,LOANED,37979030,2026-01-22,Tài sản mẫu kiểm thử số 805
+AST-00806,Ghế Xoay Lưới Công Trình Ergonomic #806,Thiết Bị Văn Phòng,Hòa Phát EG-01,SN-2026-95883,DEPT-OFFICE,Tầng 5 - Khối Văn Phòng - Ô 26,Nguyễn Thị Hoa,ACTIVE,1807720,2026-01-23,Tài sản mẫu kiểm thử số 806
+AST-00807,Máy Điều Hòa Âm Trần Daikin 36000BTU #807,Thiết Bị Văn Phòng,FCNQ36MV1,SN-2026-13901,DEPT-OFFICE,Tầng 5 - Phòng Họp Lớn - Ô 93,Hoàng Văn Thái,SPARE,37964900,2026-01-24,Tài sản mẫu kiểm thử số 807
+AST-00808,Màn Hình Dell UltraSharp 27 inch 4K #808,Thiết Bị IT,U2723QE,SN-2026-87462,DEPT-IT,Tầng 4 - Phòng IT - Ô 10,Phạm Minh Đức,LOANED,12817980,2026-01-25,Tài sản mẫu kiểm thử số 808
+AST-00809,Pallet Gỗ Thông Xuất Khẩu Euro #809,Pallet Gỗ,1200x800x144mm,SN-2026-84608,DEPT-WAREHOUSE,Kho Xuất Hàng C - Ô 77,Phạm Minh Đức,LOANED,227280,2026-01-26,Tài sản mẫu kiểm thử số 809
+AST-00810,Máy Điều Hòa Âm Trần Daikin 36000BTU #810,Thiết Bị Văn Phòng,FCNQ36MV1,SN-2026-33443,DEPT-OFFICE,Tầng 5 - Phòng Họp Lớn - Ô 30,Nguyễn Thị Hoa,REPAIR,38047200,2026-01-27,Tài sản mẫu kiểm thử số 810
+AST-00811,Pallet Nhựa 2 Mặt Tải Trọng Nặng #811,Pallet Nhựa,1200x1200x160mm,SN-2026-55118,DEPT-WAREHOUSE,Kho Hàng A1 - Kệ Heavy Duty - Ô 71,Phạm Thị Lan,ACTIVE,579040,2026-01-28,Tài sản mẫu kiểm thử số 811
+AST-00812,Máy In Tem Nhãn QR Code Thermal #812,Thiết Bị IT,Xprinter XP-420B,SN-2026-71232,DEPT-IT,Tầng 4 - Phòng IT - Ô 51,Nguyễn Văn Hùng,ACTIVE,2766130,2026-01-01,Tài sản mẫu kiểm thử số 812
+AST-00813,Pallet Nhựa 2 Mặt Tải Trọng Nặng #813,Pallet Nhựa,1200x1200x160mm,SN-2026-14509,DEPT-WAREHOUSE,Kho Hàng A1 - Kệ Heavy Duty - Ô 62,Nguyễn Thị Hoa,ACTIVE,580570,2026-01-02,Tài sản mẫu kiểm thử số 813
+AST-00814,Xe Nâng Điện Toyota 2.5 Tấn #814,Máy Móc Nhà Máy,Toyota 8FBN25,SN-2026-34942,DEPT-FACTORY,Nhà Máy A1 - Cầu Cảng - Ô 28,Trần Văn Nam,SPARE,420017640,2026-01-03,Tài sản mẫu kiểm thử số 814
+AST-00815,Bộ Máy Hàn TIG Điện Tử 250A #815,Dụng Cụ Công Nghiệp,Jasic TIG-250A,SN-2026-62873,DEPT-WAREHOUSE,Kho Dụng Cụ Kỹ Thuật - Ô 92,Phạm Thị Lan,ACTIVE,12456870,2026-01-04,Tài sản mẫu kiểm thử số 815
+AST-00816,Xe Nâng Điện Toyota 2.5 Tấn #816,Máy Móc Nhà Máy,Toyota 8FBN25,SN-2026-18361,DEPT-FACTORY,Nhà Máy A1 - Cầu Cảng - Ô 59,Hoàng Văn Thái,LOANED,419972000,2026-01-05,Tài sản mẫu kiểm thử số 816
+AST-00817,Ghế Xoay Lưới Công Trình Ergonomic #817,Thiết Bị Văn Phòng,Hòa Phát EG-01,SN-2026-34153,DEPT-OFFICE,Tầng 5 - Khối Văn Phòng - Ô 70,Trần Văn Nam,ACTIVE,1868840,2026-01-06,Tài sản mẫu kiểm thử số 817
+AST-00818,Pallet Nhựa Đen 1200x1000mm #818,Pallet Nhựa,1200x1000x150mm,SN-2026-87216,DEPT-WAREHOUSE,Kho Vật Tư Tổng - Dãy A - Ô 10,Phạm Thị Lan,SPARE,419210,2026-01-07,Tài sản mẫu kiểm thử số 818
+AST-00819,Pallet Nhựa 2 Mặt Tải Trọng Nặng #819,Pallet Nhựa,1200x1200x160mm,SN-2026-29890,DEPT-WAREHOUSE,Kho Hàng A1 - Kệ Heavy Duty - Ô 11,Nguyễn Thị Hoa,SPARE,629670,2026-01-08,Tài sản mẫu kiểm thử số 819
+AST-00820,Pallet Gỗ Thông Xuất Khẩu Euro #820,Pallet Gỗ,1200x800x144mm,SN-2026-40568,DEPT-WAREHOUSE,Kho Xuất Hàng C - Ô 81,Nguyễn Văn Hùng,ACTIVE,231170,2026-01-09,Tài sản mẫu kiểm thử số 820
+AST-00821,Máy Nén Khí Piston 15HP #821,Máy Móc Nhà Máy,Pegasus T-15,SN-2026-60306,DEPT-FACTORY,Xưởng Cơ Khí A2 - Ô 71,Trần Văn Nam,ACTIVE,34982150,2026-01-10,Tài sản mẫu kiểm thử số 821
+AST-00822,Pallet Nhựa 2 Mặt Tải Trọng Nặng #822,Pallet Nhựa,1200x1200x160mm,SN-2026-49757,DEPT-WAREHOUSE,Kho Hàng A1 - Kệ Heavy Duty - Ô 12,Trần Văn Nam,ACTIVE,623930,2026-01-11,Tài sản mẫu kiểm thử số 822
+AST-00823,Pallet Nhựa Xanh Lót Sàn #823,Pallet Nhựa,1100x1100x120mm,SN-2026-93574,DEPT-WAREHOUSE,Kho Vật Tư Tổng - Dãy B - Ô 47,Phạm Minh Đức,LOANED,353400,2026-01-12,Tài sản mẫu kiểm thử số 823
+AST-00824,Pallet Nhựa 2 Mặt Tải Trọng Nặng #824,Pallet Nhựa,1200x1200x160mm,SN-2026-93461,DEPT-WAREHOUSE,Kho Hàng A1 - Kệ Heavy Duty - Ô 97,Trần Văn Nam,REPAIR,581930,2026-01-13,Tài sản mẫu kiểm thử số 824
+AST-00825,Pallet Nhựa 2 Mặt Tải Trọng Nặng #825,Pallet Nhựa,1200x1200x160mm,SN-2026-28626,DEPT-WAREHOUSE,Kho Hàng A1 - Kệ Heavy Duty - Ô 25,Phạm Thị Lan,ACTIVE,586330,2026-01-14,Tài sản mẫu kiểm thử số 825
+AST-00826,Xe Nâng Điện Toyota 2.5 Tấn #826,Máy Móc Nhà Máy,Toyota 8FBN25,SN-2026-90690,DEPT-FACTORY,Nhà Máy A1 - Cầu Cảng - Ô 42,Trần Văn Nam,ACTIVE,419975730,2026-01-15,Tài sản mẫu kiểm thử số 826
+AST-00827,Bộ Máy Hàn TIG Điện Tử 250A #827,Dụng Cụ Công Nghiệp,Jasic TIG-250A,SN-2026-90482,DEPT-WAREHOUSE,Kho Dụng Cụ Kỹ Thuật - Ô 87,Phạm Thị Lan,LOANED,12517630,2026-01-16,Tài sản mẫu kiểm thử số 827
+AST-00828,Pallet Nhựa 2 Mặt Tải Trọng Nặng #828,Pallet Nhựa,1200x1200x160mm,SN-2026-22120,DEPT-WAREHOUSE,Kho Hàng A1 - Kệ Heavy Duty - Ô 10,Nguyễn Thị Hoa,SPARE,599570,2026-01-17,Tài sản mẫu kiểm thử số 828
+AST-00829,Máy Nén Khí Piston 15HP #829,Máy Móc Nhà Máy,Pegasus T-15,SN-2026-14537,DEPT-FACTORY,Xưởng Cơ Khí A2 - Ô 20,Trần Văn Nam,REPAIR,34996940,2026-01-18,Tài sản mẫu kiểm thử số 829
+AST-00830,Pallet Nhựa 2 Mặt Tải Trọng Nặng #830,Pallet Nhựa,1200x1200x160mm,SN-2026-66641,DEPT-WAREHOUSE,Kho Hàng A1 - Kệ Heavy Duty - Ô 7,Phạm Minh Đức,ACTIVE,611450,2026-01-19,Tài sản mẫu kiểm thử số 830
+AST-00831,Máy In Tem Nhãn QR Code Thermal #831,Thiết Bị IT,Xprinter XP-420B,SN-2026-61072,DEPT-IT,Tầng 4 - Phòng IT - Ô 54,Lê Vũ Tường,ACTIVE,2794100,2026-01-20,Tài sản mẫu kiểm thử số 831
+AST-00832,Pallet Nhựa Đen 1200x1000mm #832,Pallet Nhựa,1200x1000x150mm,SN-2026-22055,DEPT-WAREHOUSE,Kho Vật Tư Tổng - Dãy A - Ô 92,Trần Văn Nam,ACTIVE,461500,2026-01-21,Tài sản mẫu kiểm thử số 832
+AST-00833,Bộ Máy Hàn TIG Điện Tử 250A #833,Dụng Cụ Công Nghiệp,Jasic TIG-250A,SN-2026-66972,DEPT-WAREHOUSE,Kho Dụng Cụ Kỹ Thuật - Ô 97,Phạm Thị Lan,ACTIVE,12477520,2026-01-22,Tài sản mẫu kiểm thử số 833
+AST-00834,Máy Nén Khí Piston 15HP #834,Máy Móc Nhà Máy,Pegasus T-15,SN-2026-23724,DEPT-FACTORY,Xưởng Cơ Khí A2 - Ô 31,Hoàng Văn Thái,ACTIVE,34987510,2026-01-23,Tài sản mẫu kiểm thử số 834
+AST-00835,Màn Hình Dell UltraSharp 27 inch 4K #835,Thiết Bị IT,U2723QE,SN-2026-11055,DEPT-IT,Tầng 4 - Phòng IT - Ô 6,Trần Văn Nam,ACTIVE,12783170,2026-01-24,Tài sản mẫu kiểm thử số 835
+AST-00836,Xe Nâng Điện Toyota 2.5 Tấn #836,Máy Móc Nhà Máy,Toyota 8FBN25,SN-2026-33952,DEPT-FACTORY,Nhà Máy A1 - Cầu Cảng - Ô 100,Trần Văn Nam,SPARE,420003460,2026-01-25,Tài sản mẫu kiểm thử số 836
+AST-00837,Xe Nâng Điện Toyota 2.5 Tấn #837,Máy Móc Nhà Máy,Toyota 8FBN25,SN-2026-77981,DEPT-FACTORY,Nhà Máy A1 - Cầu Cảng - Ô 8,Trần Văn Nam,LOANED,420002290,2026-01-26,Tài sản mẫu kiểm thử số 837
+AST-00838,Pallet Nhựa 2 Mặt Tải Trọng Nặng #838,Pallet Nhựa,1200x1200x160mm,SN-2026-45712,DEPT-WAREHOUSE,Kho Hàng A1 - Kệ Heavy Duty - Ô 58,Lê Vũ Tường,SPARE,662940,2026-01-27,Tài sản mẫu kiểm thử số 838
+AST-00839,Pallet Nhựa 2 Mặt Tải Trọng Nặng #839,Pallet Nhựa,1200x1200x160mm,SN-2026-99675,DEPT-WAREHOUSE,Kho Hàng A1 - Kệ Heavy Duty - Ô 76,Trần Văn Nam,LOANED,635850,2026-01-28,Tài sản mẫu kiểm thử số 839
+AST-00840,Pallet Nhựa Xanh Lót Sàn #840,Pallet Nhựa,1100x1100x120mm,SN-2026-27957,DEPT-WAREHOUSE,Kho Vật Tư Tổng - Dãy B - Ô 31,Nguyễn Thị Hoa,ACTIVE,378150,2026-01-01,Tài sản mẫu kiểm thử số 840
+AST-00841,Máy Nén Khí Piston 15HP #841,Máy Móc Nhà Máy,Pegasus T-15,SN-2026-47037,DEPT-FACTORY,Xưởng Cơ Khí A2 - Ô 96,Trần Văn Nam,ACTIVE,35038550,2026-01-02,Tài sản mẫu kiểm thử số 841
+AST-00842,Màn Hình Dell UltraSharp 27 inch 4K #842,Thiết Bị IT,U2723QE,SN-2026-40756,DEPT-IT,Tầng 4 - Phòng IT - Ô 95,Nguyễn Thị Hoa,ACTIVE,12770990,2026-01-03,Tài sản mẫu kiểm thử số 842
+AST-00843,Ghế Xoay Lưới Công Trình Ergonomic #843,Thiết Bị Văn Phòng,Hòa Phát EG-01,SN-2026-89803,DEPT-OFFICE,Tầng 5 - Khối Văn Phòng - Ô 38,Phạm Minh Đức,LOANED,1818490,2026-01-04,Tài sản mẫu kiểm thử số 843
+AST-00844,Pallet Nhựa Đen 1200x1000mm #844,Pallet Nhựa,1200x1000x150mm,SN-2026-20161,DEPT-WAREHOUSE,Kho Vật Tư Tổng - Dãy A - Ô 45,Phạm Minh Đức,ACTIVE,434580,2026-01-05,Tài sản mẫu kiểm thử số 844
+AST-00845,Laptop Dell Latitude 5440 i7 #845,Thiết Bị IT,Core i7 16GB 512GB,SN-2026-20337,DEPT-IT,Tầng 4 - Phòng IT - Ô 98,Lê Vũ Tường,ACTIVE,22545690,2026-01-06,Tài sản mẫu kiểm thử số 845
+AST-00846,Pallet Nhựa Xanh Lót Sàn #846,Pallet Nhựa,1100x1100x120mm,SN-2026-26424,DEPT-WAREHOUSE,Kho Vật Tư Tổng - Dãy B - Ô 24,Phạm Thị Lan,SPARE,402390,2026-01-07,Tài sản mẫu kiểm thử số 846
+AST-00847,Máy Điều Hòa Âm Trần Daikin 36000BTU #847,Thiết Bị Văn Phòng,FCNQ36MV1,SN-2026-65753,DEPT-OFFICE,Tầng 5 - Phòng Họp Lớn - Ô 63,Trần Văn Nam,ACTIVE,37959260,2026-01-08,Tài sản mẫu kiểm thử số 847
+AST-00848,Máy Nén Khí Piston 15HP #848,Máy Móc Nhà Máy,Pegasus T-15,SN-2026-89691,DEPT-FACTORY,Xưởng Cơ Khí A2 - Ô 5,Lê Vũ Tường,REPAIR,35016770,2026-01-09,Tài sản mẫu kiểm thử số 848
+AST-00849,Pallet Gỗ Thông Xuất Khẩu Euro #849,Pallet Gỗ,1200x800x144mm,SN-2026-37094,DEPT-WAREHOUSE,Kho Xuất Hàng C - Ô 9,Phạm Thị Lan,ACTIVE,289460,2026-01-10,Tài sản mẫu kiểm thử số 849
+AST-00850,Máy Điều Hòa Âm Trần Daikin 36000BTU #850,Thiết Bị Văn Phòng,FCNQ36MV1,SN-2026-41198,DEPT-OFFICE,Tầng 5 - Phòng Họp Lớn - Ô 81,Phạm Minh Đức,SPARE,37978920,2026-01-11,Tài sản mẫu kiểm thử số 850
+AST-00851,Pallet Nhựa 2 Mặt Tải Trọng Nặng #851,Pallet Nhựa,1200x1200x160mm,SN-2026-96228,DEPT-WAREHOUSE,Kho Hàng A1 - Kệ Heavy Duty - Ô 94,Hoàng Văn Thái,SPARE,661140,2026-01-12,Tài sản mẫu kiểm thử số 851
+AST-00852,Xe Nâng Điện Toyota 2.5 Tấn #852,Máy Móc Nhà Máy,Toyota 8FBN25,SN-2026-21969,DEPT-FACTORY,Nhà Máy A1 - Cầu Cảng - Ô 44,Phạm Thị Lan,ACTIVE,420010660,2026-01-13,Tài sản mẫu kiểm thử số 852
+AST-00853,Màn Hình Dell UltraSharp 27 inch 4K #853,Thiết Bị IT,U2723QE,SN-2026-17112,DEPT-IT,Tầng 4 - Phòng IT - Ô 69,Lê Vũ Tường,LOANED,12778500,2026-01-14,Tài sản mẫu kiểm thử số 853
+AST-00854,Máy Điều Hòa Âm Trần Daikin 36000BTU #854,Thiết Bị Văn Phòng,FCNQ36MV1,SN-2026-64078,DEPT-OFFICE,Tầng 5 - Phòng Họp Lớn - Ô 3,Trần Văn Nam,ACTIVE,38014660,2026-01-15,Tài sản mẫu kiểm thử số 854
+AST-00855,Máy Nén Khí Piston 15HP #855,Máy Móc Nhà Máy,Pegasus T-15,SN-2026-37299,DEPT-FACTORY,Xưởng Cơ Khí A2 - Ô 12,Nguyễn Văn Hùng,LOANED,34966370,2026-01-16,Tài sản mẫu kiểm thử số 855
+AST-00856,Máy In Tem Nhãn QR Code Thermal #856,Thiết Bị IT,Xprinter XP-420B,SN-2026-84946,DEPT-IT,Tầng 4 - Phòng IT - Ô 72,Phạm Thị Lan,ACTIVE,2841870,2026-01-17,Tài sản mẫu kiểm thử số 856
+AST-00857,Pallet Gỗ Thông Xuất Khẩu Euro #857,Pallet Gỗ,1200x800x144mm,SN-2026-56370,DEPT-WAREHOUSE,Kho Xuất Hàng C - Ô 62,Phạm Thị Lan,ACTIVE,275150,2026-01-18,Tài sản mẫu kiểm thử số 857
+AST-00858,Pallet Nhựa Xanh Lót Sàn #858,Pallet Nhựa,1100x1100x120mm,SN-2026-70302,DEPT-WAREHOUSE,Kho Vật Tư Tổng - Dãy B - Ô 81,Phạm Thị Lan,ACTIVE,338990,2026-01-19,Tài sản mẫu kiểm thử số 858
+AST-00859,Bộ Máy Hàn TIG Điện Tử 250A #859,Dụng Cụ Công Nghiệp,Jasic TIG-250A,SN-2026-69583,DEPT-WAREHOUSE,Kho Dụng Cụ Kỹ Thuật - Ô 49,Hoàng Văn Thái,SPARE,12496580,2026-01-20,Tài sản mẫu kiểm thử số 859
+AST-00860,Pallet Nhựa Xanh Lót Sàn #860,Pallet Nhựa,1100x1100x120mm,SN-2026-89814,DEPT-WAREHOUSE,Kho Vật Tư Tổng - Dãy B - Ô 1,Hoàng Văn Thái,ACTIVE,422640,2026-01-21,Tài sản mẫu kiểm thử số 860
+AST-00861,Pallet Nhựa 2 Mặt Tải Trọng Nặng #861,Pallet Nhựa,1200x1200x160mm,SN-2026-77368,DEPT-WAREHOUSE,Kho Hàng A1 - Kệ Heavy Duty - Ô 90,Nguyễn Văn Hùng,REPAIR,580760,2026-01-22,Tài sản mẫu kiểm thử số 861
+AST-00862,Pallet Nhựa Xanh Lót Sàn #862,Pallet Nhựa,1100x1100x120mm,SN-2026-22738,DEPT-WAREHOUSE,Kho Vật Tư Tổng - Dãy B - Ô 19,Hoàng Văn Thái,SPARE,336700,2026-01-23,Tài sản mẫu kiểm thử số 862
+AST-00863,Pallet Nhựa 2 Mặt Tải Trọng Nặng #863,Pallet Nhựa,1200x1200x160mm,SN-2026-66899,DEPT-WAREHOUSE,Kho Hàng A1 - Kệ Heavy Duty - Ô 79,Lê Vũ Tường,ACTIVE,604710,2026-01-24,Tài sản mẫu kiểm thử số 863
+AST-00864,Máy Nén Khí Piston 15HP #864,Máy Móc Nhà Máy,Pegasus T-15,SN-2026-97457,DEPT-FACTORY,Xưởng Cơ Khí A2 - Ô 14,Trần Văn Nam,ACTIVE,35010110,2026-01-25,Tài sản mẫu kiểm thử số 864
+AST-00865,Bộ Máy Hàn TIG Điện Tử 250A #865,Dụng Cụ Công Nghiệp,Jasic TIG-250A,SN-2026-81338,DEPT-WAREHOUSE,Kho Dụng Cụ Kỹ Thuật - Ô 24,Hoàng Văn Thái,SPARE,12537630,2026-01-26,Tài sản mẫu kiểm thử số 865
+AST-00866,Máy Nén Khí Piston 15HP #866,Máy Móc Nhà Máy,Pegasus T-15,SN-2026-68666,DEPT-FACTORY,Xưởng Cơ Khí A2 - Ô 53,Nguyễn Văn Hùng,ACTIVE,35023860,2026-01-27,Tài sản mẫu kiểm thử số 866
+AST-00867,Pallet Gỗ Thông Xuất Khẩu Euro #867,Pallet Gỗ,1200x800x144mm,SN-2026-47054,DEPT-WAREHOUSE,Kho Xuất Hàng C - Ô 41,Trần Văn Nam,LOANED,226180,2026-01-28,Tài sản mẫu kiểm thử số 867
+AST-00868,Ghế Xoay Lưới Công Trình Ergonomic #868,Thiết Bị Văn Phòng,Hòa Phát EG-01,SN-2026-57620,DEPT-OFFICE,Tầng 5 - Khối Văn Phòng - Ô 54,Nguyễn Thị Hoa,ACTIVE,1821720,2026-01-01,Tài sản mẫu kiểm thử số 868
+AST-00869,Pallet Nhựa Đen 1200x1000mm #869,Pallet Nhựa,1200x1000x150mm,SN-2026-31356,DEPT-WAREHOUSE,Kho Vật Tư Tổng - Dãy A - Ô 31,Nguyễn Văn Hùng,ACTIVE,489750,2026-01-02,Tài sản mẫu kiểm thử số 869
+AST-00870,Xe Nâng Điện Toyota 2.5 Tấn #870,Máy Móc Nhà Máy,Toyota 8FBN25,SN-2026-44886,DEPT-FACTORY,Nhà Máy A1 - Cầu Cảng - Ô 78,Nguyễn Thị Hoa,LOANED,420044920,2026-01-03,Tài sản mẫu kiểm thử số 870
+AST-00871,Laptop Dell Latitude 5440 i7 #871,Thiết Bị IT,Core i7 16GB 512GB,SN-2026-14991,DEPT-IT,Tầng 4 - Phòng IT - Ô 22,Lê Vũ Tường,LOANED,22528060,2026-01-04,Tài sản mẫu kiểm thử số 871
+AST-00872,Ghế Xoay Lưới Công Trình Ergonomic #872,Thiết Bị Văn Phòng,Hòa Phát EG-01,SN-2026-54447,DEPT-OFFICE,Tầng 5 - Khối Văn Phòng - Ô 4,Lê Vũ Tường,LOANED,1837530,2026-01-05,Tài sản mẫu kiểm thử số 872
+AST-00873,Máy In Tem Nhãn QR Code Thermal #873,Thiết Bị IT,Xprinter XP-420B,SN-2026-57115,DEPT-IT,Tầng 4 - Phòng IT - Ô 69,Phạm Minh Đức,REPAIR,2816100,2026-01-06,Tài sản mẫu kiểm thử số 873
+AST-00874,Ghế Xoay Lưới Công Trình Ergonomic #874,Thiết Bị Văn Phòng,Hòa Phát EG-01,SN-2026-46062,DEPT-OFFICE,Tầng 5 - Khối Văn Phòng - Ô 51,Hoàng Văn Thái,ACTIVE,1869540,2026-01-07,Tài sản mẫu kiểm thử số 874
+AST-00875,Màn Hình Dell UltraSharp 27 inch 4K #875,Thiết Bị IT,U2723QE,SN-2026-34551,DEPT-IT,Tầng 4 - Phòng IT - Ô 80,Trần Văn Nam,ACTIVE,12843090,2026-01-08,Tài sản mẫu kiểm thử số 875
+AST-00876,Bộ Máy Hàn TIG Điện Tử 250A #876,Dụng Cụ Công Nghiệp,Jasic TIG-250A,SN-2026-56683,DEPT-WAREHOUSE,Kho Dụng Cụ Kỹ Thuật - Ô 19,Nguyễn Văn Hùng,SPARE,12466950,2026-01-09,Tài sản mẫu kiểm thử số 876
+AST-00877,Pallet Nhựa Đen 1200x1000mm #877,Pallet Nhựa,1200x1000x150mm,SN-2026-95131,DEPT-WAREHOUSE,Kho Vật Tư Tổng - Dãy A - Ô 70,Lê Vũ Tường,REPAIR,454380,2026-01-10,Tài sản mẫu kiểm thử số 877
+AST-00878,Máy Điều Hòa Âm Trần Daikin 36000BTU #878,Thiết Bị Văn Phòng,FCNQ36MV1,SN-2026-91879,DEPT-OFFICE,Tầng 5 - Phòng Họp Lớn - Ô 79,Trần Văn Nam,ACTIVE,38023660,2026-01-11,Tài sản mẫu kiểm thử số 878
+AST-00879,Ghế Xoay Lưới Công Trình Ergonomic #879,Thiết Bị Văn Phòng,Hòa Phát EG-01,SN-2026-37837,DEPT-OFFICE,Tầng 5 - Khối Văn Phòng - Ô 23,Lê Vũ Tường,ACTIVE,1837060,2026-01-12,Tài sản mẫu kiểm thử số 879
+AST-00880,Pallet Gỗ Thông Xuất Khẩu Euro #880,Pallet Gỗ,1200x800x144mm,SN-2026-82895,DEPT-WAREHOUSE,Kho Xuất Hàng C - Ô 6,Phạm Thị Lan,ACTIVE,248120,2026-01-13,Tài sản mẫu kiểm thử số 880
+AST-00881,Pallet Gỗ Thông Xuất Khẩu Euro #881,Pallet Gỗ,1200x800x144mm,SN-2026-80552,DEPT-WAREHOUSE,Kho Xuất Hàng C - Ô 9,Trần Văn Nam,ACTIVE,242630,2026-01-14,Tài sản mẫu kiểm thử số 881
+AST-00882,Máy Nén Khí Piston 15HP #882,Máy Móc Nhà Máy,Pegasus T-15,SN-2026-67800,DEPT-FACTORY,Xưởng Cơ Khí A2 - Ô 48,Nguyễn Văn Hùng,ACTIVE,34992490,2026-01-15,Tài sản mẫu kiểm thử số 882
+AST-00883,Pallet Nhựa 2 Mặt Tải Trọng Nặng #883,Pallet Nhựa,1200x1200x160mm,SN-2026-23961,DEPT-WAREHOUSE,Kho Hàng A1 - Kệ Heavy Duty - Ô 80,Nguyễn Văn Hùng,SPARE,606550,2026-01-16,Tài sản mẫu kiểm thử số 883
+AST-00884,Xe Nâng Điện Toyota 2.5 Tấn #884,Máy Móc Nhà Máy,Toyota 8FBN25,SN-2026-97723,DEPT-FACTORY,Nhà Máy A1 - Cầu Cảng - Ô 84,Nguyễn Văn Hùng,ACTIVE,420006470,2026-01-17,Tài sản mẫu kiểm thử số 884
+AST-00885,Pallet Nhựa 2 Mặt Tải Trọng Nặng #885,Pallet Nhựa,1200x1200x160mm,SN-2026-21681,DEPT-WAREHOUSE,Kho Hàng A1 - Kệ Heavy Duty - Ô 94,Phạm Thị Lan,SPARE,609290,2026-01-18,Tài sản mẫu kiểm thử số 885
+AST-00886,Xe Nâng Điện Toyota 2.5 Tấn #886,Máy Móc Nhà Máy,Toyota 8FBN25,SN-2026-66261,DEPT-FACTORY,Nhà Máy A1 - Cầu Cảng - Ô 31,Lê Vũ Tường,ACTIVE,420042670,2026-01-19,Tài sản mẫu kiểm thử số 886
+AST-00887,Laptop Dell Latitude 5440 i7 #887,Thiết Bị IT,Core i7 16GB 512GB,SN-2026-89467,DEPT-IT,Tầng 4 - Phòng IT - Ô 65,Phạm Minh Đức,LOANED,22527370,2026-01-20,Tài sản mẫu kiểm thử số 887
+AST-00888,Laptop Dell Latitude 5440 i7 #888,Thiết Bị IT,Core i7 16GB 512GB,SN-2026-94427,DEPT-IT,Tầng 4 - Phòng IT - Ô 94,Phạm Thị Lan,ACTIVE,22516550,2026-01-21,Tài sản mẫu kiểm thử số 888
+AST-00889,Pallet Nhựa 2 Mặt Tải Trọng Nặng #889,Pallet Nhựa,1200x1200x160mm,SN-2026-75295,DEPT-WAREHOUSE,Kho Hàng A1 - Kệ Heavy Duty - Ô 23,Nguyễn Văn Hùng,LOANED,589150,2026-01-22,Tài sản mẫu kiểm thử số 889
+AST-00890,Pallet Gỗ Thông Xuất Khẩu Euro #890,Pallet Gỗ,1200x800x144mm,SN-2026-47343,DEPT-WAREHOUSE,Kho Xuất Hàng C - Ô 62,Nguyễn Văn Hùng,LOANED,252850,2026-01-23,Tài sản mẫu kiểm thử số 890
+AST-00891,Pallet Gỗ Thông Xuất Khẩu Euro #891,Pallet Gỗ,1200x800x144mm,SN-2026-41469,DEPT-WAREHOUSE,Kho Xuất Hàng C - Ô 48,Lê Vũ Tường,ACTIVE,295750,2026-01-24,Tài sản mẫu kiểm thử số 891
+AST-00892,Pallet Gỗ Thông Xuất Khẩu Euro #892,Pallet Gỗ,1200x800x144mm,SN-2026-88009,DEPT-WAREHOUSE,Kho Xuất Hàng C - Ô 46,Nguyễn Văn Hùng,ACTIVE,297770,2026-01-25,Tài sản mẫu kiểm thử số 892
+AST-00893,Bộ Máy Hàn TIG Điện Tử 250A #893,Dụng Cụ Công Nghiệp,Jasic TIG-250A,SN-2026-70817,DEPT-WAREHOUSE,Kho Dụng Cụ Kỹ Thuật - Ô 24,Phạm Minh Đức,ACTIVE,12490580,2026-01-26,Tài sản mẫu kiểm thử số 893
+AST-00894,Bộ Máy Hàn TIG Điện Tử 250A #894,Dụng Cụ Công Nghiệp,Jasic TIG-250A,SN-2026-39539,DEPT-WAREHOUSE,Kho Dụng Cụ Kỹ Thuật - Ô 97,Nguyễn Văn Hùng,ACTIVE,12526330,2026-01-27,Tài sản mẫu kiểm thử số 894
+AST-00895,Máy Điều Hòa Âm Trần Daikin 36000BTU #895,Thiết Bị Văn Phòng,FCNQ36MV1,SN-2026-72903,DEPT-OFFICE,Tầng 5 - Phòng Họp Lớn - Ô 80,Phạm Thị Lan,LOANED,37954910,2026-01-28,Tài sản mẫu kiểm thử số 895
+AST-00896,Pallet Nhựa 2 Mặt Tải Trọng Nặng #896,Pallet Nhựa,1200x1200x160mm,SN-2026-98970,DEPT-WAREHOUSE,Kho Hàng A1 - Kệ Heavy Duty - Ô 31,Phạm Minh Đức,ACTIVE,647520,2026-01-01,Tài sản mẫu kiểm thử số 896
+AST-00897,Màn Hình Dell UltraSharp 27 inch 4K #897,Thiết Bị IT,U2723QE,SN-2026-99829,DEPT-IT,Tầng 4 - Phòng IT - Ô 48,Nguyễn Thị Hoa,REPAIR,12829750,2026-01-02,Tài sản mẫu kiểm thử số 897
+AST-00898,Máy Nén Khí Piston 15HP #898,Máy Móc Nhà Máy,Pegasus T-15,SN-2026-86001,DEPT-FACTORY,Xưởng Cơ Khí A2 - Ô 72,Lê Vũ Tường,ACTIVE,35037310,2026-01-03,Tài sản mẫu kiểm thử số 898
+AST-00899,Pallet Nhựa 2 Mặt Tải Trọng Nặng #899,Pallet Nhựa,1200x1200x160mm,SN-2026-69821,DEPT-WAREHOUSE,Kho Hàng A1 - Kệ Heavy Duty - Ô 77,Phạm Thị Lan,LOANED,602370,2026-01-04,Tài sản mẫu kiểm thử số 899
+AST-00900,Pallet Nhựa 2 Mặt Tải Trọng Nặng #900,Pallet Nhựa,1200x1200x160mm,SN-2026-37718,DEPT-WAREHOUSE,Kho Hàng A1 - Kệ Heavy Duty - Ô 1,Trần Văn Nam,ACTIVE,654940,2026-01-05,Tài sản mẫu kiểm thử số 900
+AST-00901,Máy In Tem Nhãn QR Code Thermal #901,Thiết Bị IT,Xprinter XP-420B,SN-2026-67864,DEPT-IT,Tầng 4 - Phòng IT - Ô 39,Nguyễn Thị Hoa,ACTIVE,2848050,2026-01-06,Tài sản mẫu kiểm thử số 901
+AST-00902,Pallet Gỗ Thông Xuất Khẩu Euro #902,Pallet Gỗ,1200x800x144mm,SN-2026-85963,DEPT-WAREHOUSE,Kho Xuất Hàng C - Ô 72,Lê Vũ Tường,ACTIVE,246200,2026-01-07,Tài sản mẫu kiểm thử số 902
+AST-00903,Màn Hình Dell UltraSharp 27 inch 4K #903,Thiết Bị IT,U2723QE,SN-2026-49468,DEPT-IT,Tầng 4 - Phòng IT - Ô 70,Phạm Minh Đức,ACTIVE,12752090,2026-01-08,Tài sản mẫu kiểm thử số 903
+AST-00904,Pallet Nhựa Xanh Lót Sàn #904,Pallet Nhựa,1100x1100x120mm,SN-2026-16943,DEPT-WAREHOUSE,Kho Vật Tư Tổng - Dãy B - Ô 80,Phạm Thị Lan,SPARE,363750,2026-01-09,Tài sản mẫu kiểm thử số 904
+AST-00905,Pallet Gỗ Thông Xuất Khẩu Euro #905,Pallet Gỗ,1200x800x144mm,SN-2026-44050,DEPT-WAREHOUSE,Kho Xuất Hàng C - Ô 4,Lê Vũ Tường,ACTIVE,242330,2026-01-10,Tài sản mẫu kiểm thử số 905
+AST-00906,Laptop Dell Latitude 5440 i7 #906,Thiết Bị IT,Core i7 16GB 512GB,SN-2026-62546,DEPT-IT,Tầng 4 - Phòng IT - Ô 59,Lê Vũ Tường,ACTIVE,22505720,2026-01-11,Tài sản mẫu kiểm thử số 906
+AST-00907,Pallet Nhựa Đen 1200x1000mm #907,Pallet Nhựa,1200x1000x150mm,SN-2026-32697,DEPT-WAREHOUSE,Kho Vật Tư Tổng - Dãy A - Ô 66,Hoàng Văn Thái,SPARE,485630,2026-01-12,Tài sản mẫu kiểm thử số 907
+AST-00908,Pallet Nhựa Đen 1200x1000mm #908,Pallet Nhựa,1200x1000x150mm,SN-2026-13696,DEPT-WAREHOUSE,Kho Vật Tư Tổng - Dãy A - Ô 23,Phạm Minh Đức,ACTIVE,404410,2026-01-13,Tài sản mẫu kiểm thử số 908
+AST-00909,Pallet Nhựa 2 Mặt Tải Trọng Nặng #909,Pallet Nhựa,1200x1200x160mm,SN-2026-59867,DEPT-WAREHOUSE,Kho Hàng A1 - Kệ Heavy Duty - Ô 92,Nguyễn Thị Hoa,LOANED,588640,2026-01-14,Tài sản mẫu kiểm thử số 909
+AST-00910,Màn Hình Dell UltraSharp 27 inch 4K #910,Thiết Bị IT,U2723QE,SN-2026-46770,DEPT-IT,Tầng 4 - Phòng IT - Ô 10,Hoàng Văn Thái,ACTIVE,12767400,2026-01-15,Tài sản mẫu kiểm thử số 910
+AST-00911,Ghế Xoay Lưới Công Trình Ergonomic #911,Thiết Bị Văn Phòng,Hòa Phát EG-01,SN-2026-15390,DEPT-OFFICE,Tầng 5 - Khối Văn Phòng - Ô 73,Hoàng Văn Thái,ACTIVE,1840190,2026-01-16,Tài sản mẫu kiểm thử số 911
+AST-00912,Máy In Tem Nhãn QR Code Thermal #912,Thiết Bị IT,Xprinter XP-420B,SN-2026-79278,DEPT-IT,Tầng 4 - Phòng IT - Ô 43,Nguyễn Thị Hoa,ACTIVE,2798550,2026-01-17,Tài sản mẫu kiểm thử số 912
+AST-00913,Bộ Máy Hàn TIG Điện Tử 250A #913,Dụng Cụ Công Nghiệp,Jasic TIG-250A,SN-2026-12130,DEPT-WAREHOUSE,Kho Dụng Cụ Kỹ Thuật - Ô 57,Nguyễn Thị Hoa,ACTIVE,12524430,2026-01-18,Tài sản mẫu kiểm thử số 913
+AST-00914,Laptop Dell Latitude 5440 i7 #914,Thiết Bị IT,Core i7 16GB 512GB,SN-2026-35593,DEPT-IT,Tầng 4 - Phòng IT - Ô 38,Nguyễn Thị Hoa,LOANED,22517740,2026-01-19,Tài sản mẫu kiểm thử số 914
+AST-00915,Pallet Nhựa Đen 1200x1000mm #915,Pallet Nhựa,1200x1000x150mm,SN-2026-47585,DEPT-WAREHOUSE,Kho Vật Tư Tổng - Dãy A - Ô 48,Hoàng Văn Thái,ACTIVE,463210,2026-01-20,Tài sản mẫu kiểm thử số 915
+AST-00916,Xe Nâng Điện Toyota 2.5 Tấn #916,Máy Móc Nhà Máy,Toyota 8FBN25,SN-2026-54891,DEPT-FACTORY,Nhà Máy A1 - Cầu Cảng - Ô 70,Phạm Minh Đức,ACTIVE,420010090,2026-01-21,Tài sản mẫu kiểm thử số 916
+AST-00917,Laptop Dell Latitude 5440 i7 #917,Thiết Bị IT,Core i7 16GB 512GB,SN-2026-67925,DEPT-IT,Tầng 4 - Phòng IT - Ô 93,Phạm Minh Đức,ACTIVE,22532490,2026-01-22,Tài sản mẫu kiểm thử số 917
+AST-00918,Pallet Nhựa Đen 1200x1000mm #918,Pallet Nhựa,1200x1000x150mm,SN-2026-59741,DEPT-WAREHOUSE,Kho Vật Tư Tổng - Dãy A - Ô 81,Phạm Minh Đức,REPAIR,472830,2026-01-23,Tài sản mẫu kiểm thử số 918
+AST-00919,Pallet Nhựa 2 Mặt Tải Trọng Nặng #919,Pallet Nhựa,1200x1200x160mm,SN-2026-71704,DEPT-WAREHOUSE,Kho Hàng A1 - Kệ Heavy Duty - Ô 21,Trần Văn Nam,ACTIVE,618180,2026-01-24,Tài sản mẫu kiểm thử số 919
+AST-00920,Laptop Dell Latitude 5440 i7 #920,Thiết Bị IT,Core i7 16GB 512GB,SN-2026-56996,DEPT-IT,Tầng 4 - Phòng IT - Ô 48,Trần Văn Nam,ACTIVE,22517600,2026-01-25,Tài sản mẫu kiểm thử số 920
+AST-00921,Máy Điều Hòa Âm Trần Daikin 36000BTU #921,Thiết Bị Văn Phòng,FCNQ36MV1,SN-2026-95059,DEPT-OFFICE,Tầng 5 - Phòng Họp Lớn - Ô 89,Lê Vũ Tường,ACTIVE,37971810,2026-01-26,Tài sản mẫu kiểm thử số 921
+AST-00922,Laptop Dell Latitude 5440 i7 #922,Thiết Bị IT,Core i7 16GB 512GB,SN-2026-63853,DEPT-IT,Tầng 4 - Phòng IT - Ô 88,Nguyễn Thị Hoa,ACTIVE,22469870,2026-01-27,Tài sản mẫu kiểm thử số 922
+AST-00923,Pallet Nhựa Xanh Lót Sàn #923,Pallet Nhựa,1100x1100x120mm,SN-2026-80073,DEPT-WAREHOUSE,Kho Vật Tư Tổng - Dãy B - Ô 8,Phạm Minh Đức,ACTIVE,397960,2026-01-28,Tài sản mẫu kiểm thử số 923
+AST-00924,Xe Nâng Điện Toyota 2.5 Tấn #924,Máy Móc Nhà Máy,Toyota 8FBN25,SN-2026-53502,DEPT-FACTORY,Nhà Máy A1 - Cầu Cảng - Ô 35,Nguyễn Thị Hoa,ACTIVE,420012920,2026-01-01,Tài sản mẫu kiểm thử số 924
+AST-00925,Pallet Nhựa 2 Mặt Tải Trọng Nặng #925,Pallet Nhựa,1200x1200x160mm,SN-2026-42260,DEPT-WAREHOUSE,Kho Hàng A1 - Kệ Heavy Duty - Ô 33,Phạm Thị Lan,ACTIVE,615190,2026-01-02,Tài sản mẫu kiểm thử số 925
+AST-00926,Pallet Gỗ Thông Xuất Khẩu Euro #926,Pallet Gỗ,1200x800x144mm,SN-2026-35190,DEPT-WAREHOUSE,Kho Xuất Hàng C - Ô 60,Nguyễn Văn Hùng,SPARE,205520,2026-01-03,Tài sản mẫu kiểm thử số 926
+AST-00927,Pallet Nhựa Đen 1200x1000mm #927,Pallet Nhựa,1200x1000x150mm,SN-2026-66206,DEPT-WAREHOUSE,Kho Vật Tư Tổng - Dãy A - Ô 88,Nguyễn Thị Hoa,ACTIVE,491960,2026-01-04,Tài sản mẫu kiểm thử số 927
+AST-00928,Pallet Gỗ Thông Xuất Khẩu Euro #928,Pallet Gỗ,1200x800x144mm,SN-2026-67075,DEPT-WAREHOUSE,Kho Xuất Hàng C - Ô 19,Hoàng Văn Thái,ACTIVE,201970,2026-01-05,Tài sản mẫu kiểm thử số 928
+AST-00929,Bộ Máy Hàn TIG Điện Tử 250A #929,Dụng Cụ Công Nghiệp,Jasic TIG-250A,SN-2026-14691,DEPT-WAREHOUSE,Kho Dụng Cụ Kỹ Thuật - Ô 82,Lê Vũ Tường,ACTIVE,12486540,2026-01-06,Tài sản mẫu kiểm thử số 929
+AST-00930,Pallet Nhựa 2 Mặt Tải Trọng Nặng #930,Pallet Nhựa,1200x1200x160mm,SN-2026-53889,DEPT-WAREHOUSE,Kho Hàng A1 - Kệ Heavy Duty - Ô 24,Nguyễn Thị Hoa,LOANED,628940,2026-01-07,Tài sản mẫu kiểm thử số 930
+AST-00931,Pallet Nhựa 2 Mặt Tải Trọng Nặng #931,Pallet Nhựa,1200x1200x160mm,SN-2026-13337,DEPT-WAREHOUSE,Kho Hàng A1 - Kệ Heavy Duty - Ô 90,Nguyễn Văn Hùng,LOANED,599720,2026-01-08,Tài sản mẫu kiểm thử số 931
+AST-00932,Pallet Gỗ Thông Xuất Khẩu Euro #932,Pallet Gỗ,1200x800x144mm,SN-2026-59112,DEPT-WAREHOUSE,Kho Xuất Hàng C - Ô 50,Phạm Thị Lan,LOANED,283150,2026-01-09,Tài sản mẫu kiểm thử số 932
+AST-00933,Pallet Nhựa Đen 1200x1000mm #933,Pallet Nhựa,1200x1000x150mm,SN-2026-10282,DEPT-WAREHOUSE,Kho Vật Tư Tổng - Dãy A - Ô 29,Phạm Minh Đức,ACTIVE,477480,2026-01-10,Tài sản mẫu kiểm thử số 933
+AST-00934,Máy Điều Hòa Âm Trần Daikin 36000BTU #934,Thiết Bị Văn Phòng,FCNQ36MV1,SN-2026-95894,DEPT-OFFICE,Tầng 5 - Phòng Họp Lớn - Ô 5,Trần Văn Nam,REPAIR,38030710,2026-01-11,Tài sản mẫu kiểm thử số 934
+AST-00935,Máy In Tem Nhãn QR Code Thermal #935,Thiết Bị IT,Xprinter XP-420B,SN-2026-76303,DEPT-IT,Tầng 4 - Phòng IT - Ô 33,Hoàng Văn Thái,REPAIR,2765740,2026-01-12,Tài sản mẫu kiểm thử số 935
+AST-00936,Pallet Nhựa Đen 1200x1000mm #936,Pallet Nhựa,1200x1000x150mm,SN-2026-73173,DEPT-WAREHOUSE,Kho Vật Tư Tổng - Dãy A - Ô 56,Nguyễn Thị Hoa,ACTIVE,424940,2026-01-13,Tài sản mẫu kiểm thử số 936
+AST-00937,Máy Điều Hòa Âm Trần Daikin 36000BTU #937,Thiết Bị Văn Phòng,FCNQ36MV1,SN-2026-91331,DEPT-OFFICE,Tầng 5 - Phòng Họp Lớn - Ô 50,Phạm Minh Đức,ACTIVE,38035850,2026-01-14,Tài sản mẫu kiểm thử số 937
+AST-00938,Bộ Máy Hàn TIG Điện Tử 250A #938,Dụng Cụ Công Nghiệp,Jasic TIG-250A,SN-2026-99072,DEPT-WAREHOUSE,Kho Dụng Cụ Kỹ Thuật - Ô 53,Trần Văn Nam,REPAIR,12474440,2026-01-15,Tài sản mẫu kiểm thử số 938
+AST-00939,Pallet Nhựa 2 Mặt Tải Trọng Nặng #939,Pallet Nhựa,1200x1200x160mm,SN-2026-40117,DEPT-WAREHOUSE,Kho Hàng A1 - Kệ Heavy Duty - Ô 43,Phạm Minh Đức,ACTIVE,640800,2026-01-16,Tài sản mẫu kiểm thử số 939
+AST-00940,Laptop Dell Latitude 5440 i7 #940,Thiết Bị IT,Core i7 16GB 512GB,SN-2026-26130,DEPT-IT,Tầng 4 - Phòng IT - Ô 88,Hoàng Văn Thái,LOANED,22489470,2026-01-17,Tài sản mẫu kiểm thử số 940
+AST-00941,Xe Nâng Điện Toyota 2.5 Tấn #941,Máy Móc Nhà Máy,Toyota 8FBN25,SN-2026-37566,DEPT-FACTORY,Nhà Máy A1 - Cầu Cảng - Ô 21,Hoàng Văn Thái,ACTIVE,420046560,2026-01-18,Tài sản mẫu kiểm thử số 941
+AST-00942,Ghế Xoay Lưới Công Trình Ergonomic #942,Thiết Bị Văn Phòng,Hòa Phát EG-01,SN-2026-89197,DEPT-OFFICE,Tầng 5 - Khối Văn Phòng - Ô 66,Nguyễn Thị Hoa,ACTIVE,1802240,2026-01-19,Tài sản mẫu kiểm thử số 942
+AST-00943,Ghế Xoay Lưới Công Trình Ergonomic #943,Thiết Bị Văn Phòng,Hòa Phát EG-01,SN-2026-73659,DEPT-OFFICE,Tầng 5 - Khối Văn Phòng - Ô 22,Phạm Thị Lan,ACTIVE,1888340,2026-01-20,Tài sản mẫu kiểm thử số 943
+AST-00944,Pallet Gỗ Thông Xuất Khẩu Euro #944,Pallet Gỗ,1200x800x144mm,SN-2026-72521,DEPT-WAREHOUSE,Kho Xuất Hàng C - Ô 23,Hoàng Văn Thái,ACTIVE,230390,2026-01-21,Tài sản mẫu kiểm thử số 944
+AST-00945,Máy In Tem Nhãn QR Code Thermal #945,Thiết Bị IT,Xprinter XP-420B,SN-2026-46168,DEPT-IT,Tầng 4 - Phòng IT - Ô 51,Hoàng Văn Thái,LOANED,2823280,2026-01-22,Tài sản mẫu kiểm thử số 945
+AST-00946,Máy In Tem Nhãn QR Code Thermal #946,Thiết Bị IT,Xprinter XP-420B,SN-2026-80992,DEPT-IT,Tầng 4 - Phòng IT - Ô 74,Trần Văn Nam,REPAIR,2758030,2026-01-23,Tài sản mẫu kiểm thử số 946
+AST-00947,Laptop Dell Latitude 5440 i7 #947,Thiết Bị IT,Core i7 16GB 512GB,SN-2026-40109,DEPT-IT,Tầng 4 - Phòng IT - Ô 11,Lê Vũ Tường,ACTIVE,22529880,2026-01-24,Tài sản mẫu kiểm thử số 947
+AST-00948,Pallet Gỗ Thông Xuất Khẩu Euro #948,Pallet Gỗ,1200x800x144mm,SN-2026-78337,DEPT-WAREHOUSE,Kho Xuất Hàng C - Ô 43,Nguyễn Văn Hùng,ACTIVE,200520,2026-01-25,Tài sản mẫu kiểm thử số 948
+AST-00949,Màn Hình Dell UltraSharp 27 inch 4K #949,Thiết Bị IT,U2723QE,SN-2026-25848,DEPT-IT,Tầng 4 - Phòng IT - Ô 76,Phạm Minh Đức,ACTIVE,12817150,2026-01-26,Tài sản mẫu kiểm thử số 949
+AST-00950,Ghế Xoay Lưới Công Trình Ergonomic #950,Thiết Bị Văn Phòng,Hòa Phát EG-01,SN-2026-95260,DEPT-OFFICE,Tầng 5 - Khối Văn Phòng - Ô 96,Nguyễn Văn Hùng,LOANED,1899270,2026-01-27,Tài sản mẫu kiểm thử số 950
+AST-00951,Pallet Nhựa 2 Mặt Tải Trọng Nặng #951,Pallet Nhựa,1200x1200x160mm,SN-2026-88182,DEPT-WAREHOUSE,Kho Hàng A1 - Kệ Heavy Duty - Ô 69,Hoàng Văn Thái,ACTIVE,579260,2026-01-28,Tài sản mẫu kiểm thử số 951
+AST-00952,Ghế Xoay Lưới Công Trình Ergonomic #952,Thiết Bị Văn Phòng,Hòa Phát EG-01,SN-2026-29681,DEPT-OFFICE,Tầng 5 - Khối Văn Phòng - Ô 16,Nguyễn Văn Hùng,SPARE,1805490,2026-01-01,Tài sản mẫu kiểm thử số 952
+AST-00953,Laptop Dell Latitude 5440 i7 #953,Thiết Bị IT,Core i7 16GB 512GB,SN-2026-25453,DEPT-IT,Tầng 4 - Phòng IT - Ô 45,Lê Vũ Tường,ACTIVE,22542210,2026-01-02,Tài sản mẫu kiểm thử số 953
+AST-00954,Bộ Máy Hàn TIG Điện Tử 250A #954,Dụng Cụ Công Nghiệp,Jasic TIG-250A,SN-2026-43505,DEPT-WAREHOUSE,Kho Dụng Cụ Kỹ Thuật - Ô 51,Phạm Thị Lan,ACTIVE,12516480,2026-01-03,Tài sản mẫu kiểm thử số 954
+AST-00955,Bộ Máy Hàn TIG Điện Tử 250A #955,Dụng Cụ Công Nghiệp,Jasic TIG-250A,SN-2026-98267,DEPT-WAREHOUSE,Kho Dụng Cụ Kỹ Thuật - Ô 42,Lê Vũ Tường,REPAIR,12458000,2026-01-04,Tài sản mẫu kiểm thử số 955
+AST-00956,Laptop Dell Latitude 5440 i7 #956,Thiết Bị IT,Core i7 16GB 512GB,SN-2026-39842,DEPT-IT,Tầng 4 - Phòng IT - Ô 21,Trần Văn Nam,ACTIVE,22534430,2026-01-05,Tài sản mẫu kiểm thử số 956
+AST-00957,Pallet Nhựa Đen 1200x1000mm #957,Pallet Nhựa,1200x1000x150mm,SN-2026-30034,DEPT-WAREHOUSE,Kho Vật Tư Tổng - Dãy A - Ô 48,Lê Vũ Tường,ACTIVE,478500,2026-01-06,Tài sản mẫu kiểm thử số 957
+AST-00958,Pallet Nhựa Xanh Lót Sàn #958,Pallet Nhựa,1100x1100x120mm,SN-2026-52782,DEPT-WAREHOUSE,Kho Vật Tư Tổng - Dãy B - Ô 27,Phạm Thị Lan,ACTIVE,366190,2026-01-07,Tài sản mẫu kiểm thử số 958
+AST-00959,Máy In Tem Nhãn QR Code Thermal #959,Thiết Bị IT,Xprinter XP-420B,SN-2026-77713,DEPT-IT,Tầng 4 - Phòng IT - Ô 50,Hoàng Văn Thái,ACTIVE,2787910,2026-01-08,Tài sản mẫu kiểm thử số 959
+AST-00960,Máy Điều Hòa Âm Trần Daikin 36000BTU #960,Thiết Bị Văn Phòng,FCNQ36MV1,SN-2026-67385,DEPT-OFFICE,Tầng 5 - Phòng Họp Lớn - Ô 23,Phạm Minh Đức,SPARE,37983080,2026-01-09,Tài sản mẫu kiểm thử số 960
+AST-00961,Laptop Dell Latitude 5440 i7 #961,Thiết Bị IT,Core i7 16GB 512GB,SN-2026-92992,DEPT-IT,Tầng 4 - Phòng IT - Ô 72,Hoàng Văn Thái,ACTIVE,22499470,2026-01-10,Tài sản mẫu kiểm thử số 961
+AST-00962,Xe Nâng Điện Toyota 2.5 Tấn #962,Máy Móc Nhà Máy,Toyota 8FBN25,SN-2026-15743,DEPT-FACTORY,Nhà Máy A1 - Cầu Cảng - Ô 91,Phạm Thị Lan,ACTIVE,419960050,2026-01-11,Tài sản mẫu kiểm thử số 962
+AST-00963,Pallet Gỗ Thông Xuất Khẩu Euro #963,Pallet Gỗ,1200x800x144mm,SN-2026-26074,DEPT-WAREHOUSE,Kho Xuất Hàng C - Ô 87,Nguyễn Thị Hoa,SPARE,281650,2026-01-12,Tài sản mẫu kiểm thử số 963
+AST-00964,Máy Nén Khí Piston 15HP #964,Máy Móc Nhà Máy,Pegasus T-15,SN-2026-10856,DEPT-FACTORY,Xưởng Cơ Khí A2 - Ô 73,Nguyễn Văn Hùng,SPARE,35001200,2026-01-13,Tài sản mẫu kiểm thử số 964
+AST-00965,Máy In Tem Nhãn QR Code Thermal #965,Thiết Bị IT,Xprinter XP-420B,SN-2026-46187,DEPT-IT,Tầng 4 - Phòng IT - Ô 38,Phạm Minh Đức,ACTIVE,2849600,2026-01-14,Tài sản mẫu kiểm thử số 965
+AST-00966,Ghế Xoay Lưới Công Trình Ergonomic #966,Thiết Bị Văn Phòng,Hòa Phát EG-01,SN-2026-16330,DEPT-OFFICE,Tầng 5 - Khối Văn Phòng - Ô 53,Nguyễn Thị Hoa,ACTIVE,1853640,2026-01-15,Tài sản mẫu kiểm thử số 966
+AST-00967,Máy In Tem Nhãn QR Code Thermal #967,Thiết Bị IT,Xprinter XP-420B,SN-2026-94167,DEPT-IT,Tầng 4 - Phòng IT - Ô 49,Phạm Minh Đức,REPAIR,2759630,2026-01-16,Tài sản mẫu kiểm thử số 967
+AST-00968,Máy Điều Hòa Âm Trần Daikin 36000BTU #968,Thiết Bị Văn Phòng,FCNQ36MV1,SN-2026-16243,DEPT-OFFICE,Tầng 5 - Phòng Họp Lớn - Ô 40,Hoàng Văn Thái,SPARE,37990920,2026-01-17,Tài sản mẫu kiểm thử số 968
+AST-00969,Pallet Gỗ Thông Xuất Khẩu Euro #969,Pallet Gỗ,1200x800x144mm,SN-2026-10665,DEPT-WAREHOUSE,Kho Xuất Hàng C - Ô 99,Phạm Thị Lan,ACTIVE,272360,2026-01-18,Tài sản mẫu kiểm thử số 969
+AST-00970,Màn Hình Dell UltraSharp 27 inch 4K #970,Thiết Bị IT,U2723QE,SN-2026-83373,DEPT-IT,Tầng 4 - Phòng IT - Ô 40,Trần Văn Nam,ACTIVE,12813030,2026-01-19,Tài sản mẫu kiểm thử số 970
+AST-00971,Pallet Nhựa 2 Mặt Tải Trọng Nặng #971,Pallet Nhựa,1200x1200x160mm,SN-2026-69499,DEPT-WAREHOUSE,Kho Hàng A1 - Kệ Heavy Duty - Ô 41,Trần Văn Nam,LOANED,649910,2026-01-20,Tài sản mẫu kiểm thử số 971
+AST-00972,Laptop Dell Latitude 5440 i7 #972,Thiết Bị IT,Core i7 16GB 512GB,SN-2026-81753,DEPT-IT,Tầng 4 - Phòng IT - Ô 7,Lê Vũ Tường,LOANED,22489670,2026-01-21,Tài sản mẫu kiểm thử số 972
+AST-00973,Bộ Máy Hàn TIG Điện Tử 250A #973,Dụng Cụ Công Nghiệp,Jasic TIG-250A,SN-2026-27257,DEPT-WAREHOUSE,Kho Dụng Cụ Kỹ Thuật - Ô 88,Lê Vũ Tường,ACTIVE,12507080,2026-01-22,Tài sản mẫu kiểm thử số 973
+AST-00974,Máy In Tem Nhãn QR Code Thermal #974,Thiết Bị IT,Xprinter XP-420B,SN-2026-71317,DEPT-IT,Tầng 4 - Phòng IT - Ô 94,Nguyễn Văn Hùng,ACTIVE,2840640,2026-01-23,Tài sản mẫu kiểm thử số 974
+AST-00975,Máy Nén Khí Piston 15HP #975,Máy Móc Nhà Máy,Pegasus T-15,SN-2026-97305,DEPT-FACTORY,Xưởng Cơ Khí A2 - Ô 95,Trần Văn Nam,ACTIVE,35012820,2026-01-24,Tài sản mẫu kiểm thử số 975
+AST-00976,Pallet Nhựa Đen 1200x1000mm #976,Pallet Nhựa,1200x1000x150mm,SN-2026-46775,DEPT-WAREHOUSE,Kho Vật Tư Tổng - Dãy A - Ô 83,Phạm Thị Lan,REPAIR,404970,2026-01-25,Tài sản mẫu kiểm thử số 976
+AST-00977,Bộ Máy Hàn TIG Điện Tử 250A #977,Dụng Cụ Công Nghiệp,Jasic TIG-250A,SN-2026-15423,DEPT-WAREHOUSE,Kho Dụng Cụ Kỹ Thuật - Ô 9,Hoàng Văn Thái,REPAIR,12458980,2026-01-26,Tài sản mẫu kiểm thử số 977
+AST-00978,Pallet Nhựa 2 Mặt Tải Trọng Nặng #978,Pallet Nhựa,1200x1200x160mm,SN-2026-82935,DEPT-WAREHOUSE,Kho Hàng A1 - Kệ Heavy Duty - Ô 28,Nguyễn Thị Hoa,SPARE,614610,2026-01-27,Tài sản mẫu kiểm thử số 978
+AST-00979,Pallet Gỗ Thông Xuất Khẩu Euro #979,Pallet Gỗ,1200x800x144mm,SN-2026-93561,DEPT-WAREHOUSE,Kho Xuất Hàng C - Ô 29,Phạm Thị Lan,ACTIVE,243170,2026-01-28,Tài sản mẫu kiểm thử số 979
+AST-00980,Laptop Dell Latitude 5440 i7 #980,Thiết Bị IT,Core i7 16GB 512GB,SN-2026-28808,DEPT-IT,Tầng 4 - Phòng IT - Ô 38,Hoàng Văn Thái,ACTIVE,22474700,2026-01-01,Tài sản mẫu kiểm thử số 980
+AST-00981,Bộ Máy Hàn TIG Điện Tử 250A #981,Dụng Cụ Công Nghiệp,Jasic TIG-250A,SN-2026-31384,DEPT-WAREHOUSE,Kho Dụng Cụ Kỹ Thuật - Ô 95,Phạm Thị Lan,ACTIVE,12542210,2026-01-02,Tài sản mẫu kiểm thử số 981
+AST-00982,Máy In Tem Nhãn QR Code Thermal #982,Thiết Bị IT,Xprinter XP-420B,SN-2026-25332,DEPT-IT,Tầng 4 - Phòng IT - Ô 31,Lê Vũ Tường,ACTIVE,2829390,2026-01-03,Tài sản mẫu kiểm thử số 982
+AST-00983,Laptop Dell Latitude 5440 i7 #983,Thiết Bị IT,Core i7 16GB 512GB,SN-2026-50644,DEPT-IT,Tầng 4 - Phòng IT - Ô 45,Hoàng Văn Thái,REPAIR,22521480,2026-01-04,Tài sản mẫu kiểm thử số 983
+AST-00984,Laptop Dell Latitude 5440 i7 #984,Thiết Bị IT,Core i7 16GB 512GB,SN-2026-53884,DEPT-IT,Tầng 4 - Phòng IT - Ô 48,Phạm Thị Lan,SPARE,22468180,2026-01-05,Tài sản mẫu kiểm thử số 984
+AST-00985,Bộ Máy Hàn TIG Điện Tử 250A #985,Dụng Cụ Công Nghiệp,Jasic TIG-250A,SN-2026-59202,DEPT-WAREHOUSE,Kho Dụng Cụ Kỹ Thuật - Ô 80,Phạm Minh Đức,SPARE,12489270,2026-01-06,Tài sản mẫu kiểm thử số 985
+AST-00986,Máy In Tem Nhãn QR Code Thermal #986,Thiết Bị IT,Xprinter XP-420B,SN-2026-30508,DEPT-IT,Tầng 4 - Phòng IT - Ô 9,Phạm Minh Đức,ACTIVE,2783000,2026-01-07,Tài sản mẫu kiểm thử số 986
+AST-00987,Pallet Gỗ Thông Xuất Khẩu Euro #987,Pallet Gỗ,1200x800x144mm,SN-2026-10541,DEPT-WAREHOUSE,Kho Xuất Hàng C - Ô 88,Nguyễn Thị Hoa,ACTIVE,203890,2026-01-08,Tài sản mẫu kiểm thử số 987
+AST-00988,Xe Nâng Điện Toyota 2.5 Tấn #988,Máy Móc Nhà Máy,Toyota 8FBN25,SN-2026-54388,DEPT-FACTORY,Nhà Máy A1 - Cầu Cảng - Ô 22,Lê Vũ Tường,LOANED,419986660,2026-01-09,Tài sản mẫu kiểm thử số 988
+AST-00989,Máy Nén Khí Piston 15HP #989,Máy Móc Nhà Máy,Pegasus T-15,SN-2026-81513,DEPT-FACTORY,Xưởng Cơ Khí A2 - Ô 74,Trần Văn Nam,ACTIVE,35027990,2026-01-10,Tài sản mẫu kiểm thử số 989
+AST-00990,Màn Hình Dell UltraSharp 27 inch 4K #990,Thiết Bị IT,U2723QE,SN-2026-87750,DEPT-IT,Tầng 4 - Phòng IT - Ô 52,Nguyễn Thị Hoa,ACTIVE,12826640,2026-01-11,Tài sản mẫu kiểm thử số 990
+AST-00991,Máy Điều Hòa Âm Trần Daikin 36000BTU #991,Thiết Bị Văn Phòng,FCNQ36MV1,SN-2026-41924,DEPT-OFFICE,Tầng 5 - Phòng Họp Lớn - Ô 100,Phạm Minh Đức,ACTIVE,38040590,2026-01-12,Tài sản mẫu kiểm thử số 991
+AST-00992,Màn Hình Dell UltraSharp 27 inch 4K #992,Thiết Bị IT,U2723QE,SN-2026-14102,DEPT-IT,Tầng 4 - Phòng IT - Ô 92,Hoàng Văn Thái,ACTIVE,12814900,2026-01-13,Tài sản mẫu kiểm thử số 992
+AST-00993,Bộ Máy Hàn TIG Điện Tử 250A #993,Dụng Cụ Công Nghiệp,Jasic TIG-250A,SN-2026-81479,DEPT-WAREHOUSE,Kho Dụng Cụ Kỹ Thuật - Ô 27,Lê Vũ Tường,LOANED,12498520,2026-01-14,Tài sản mẫu kiểm thử số 993
+AST-00994,Máy Điều Hòa Âm Trần Daikin 36000BTU #994,Thiết Bị Văn Phòng,FCNQ36MV1,SN-2026-89253,DEPT-OFFICE,Tầng 5 - Phòng Họp Lớn - Ô 72,Nguyễn Thị Hoa,ACTIVE,38040940,2026-01-15,Tài sản mẫu kiểm thử số 994
+AST-00995,Pallet Nhựa 2 Mặt Tải Trọng Nặng #995,Pallet Nhựa,1200x1200x160mm,SN-2026-16092,DEPT-WAREHOUSE,Kho Hàng A1 - Kệ Heavy Duty - Ô 72,Hoàng Văn Thái,ACTIVE,588810,2026-01-16,Tài sản mẫu kiểm thử số 995
+AST-00996,Pallet Nhựa Xanh Lót Sàn #996,Pallet Nhựa,1100x1100x120mm,SN-2026-51987,DEPT-WAREHOUSE,Kho Vật Tư Tổng - Dãy B - Ô 72,Nguyễn Văn Hùng,ACTIVE,419690,2026-01-17,Tài sản mẫu kiểm thử số 996
+AST-00997,Màn Hình Dell UltraSharp 27 inch 4K #997,Thiết Bị IT,U2723QE,SN-2026-35844,DEPT-IT,Tầng 4 - Phòng IT - Ô 39,Phạm Minh Đức,ACTIVE,12810000,2026-01-18,Tài sản mẫu kiểm thử số 997
+AST-00998,Xe Nâng Điện Toyota 2.5 Tấn #998,Máy Móc Nhà Máy,Toyota 8FBN25,SN-2026-91659,DEPT-FACTORY,Nhà Máy A1 - Cầu Cảng - Ô 88,Nguyễn Thị Hoa,ACTIVE,420005210,2026-01-19,Tài sản mẫu kiểm thử số 998
+AST-00999,Pallet Nhựa Đen 1200x1000mm #999,Pallet Nhựa,1200x1000x150mm,SN-2026-18199,DEPT-WAREHOUSE,Kho Vật Tư Tổng - Dãy A - Ô 58,Lê Vũ Tường,ACTIVE,407480,2026-01-20,Tài sản mẫu kiểm thử số 999
+AST-01000,Xe Nâng Điện Toyota 2.5 Tấn #1000,Máy Móc Nhà Máy,Toyota 8FBN25,SN-2026-76976,DEPT-FACTORY,Nhà Máy A1 - Cầu Cảng - Ô 62,Nguyễn Thị Hoa,REPAIR,419952620,2026-01-21,Tài sản mẫu kiểm thử số 1000

@@ -1,0 +1,426 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Enterprise Fixed Asset & Label Printer QR Manager</title>
+  
+  <!-- Tailwind CSS & FontAwesome Icons -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Outfit:wght@600;700;800&display=swap" rel="stylesheet">
+  
+  <!-- CSS Design System -->
+  <link rel="stylesheet" href="css/styles.css">
+
+  <!-- SheetJS (Excel Parser), HTML5 QR Code & QRCode.js Libraries -->
+  <script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html5-qrcode/2.3.8/html5-qrcode.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+
+  <style>
+    .modal-overlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(15, 23, 42, 0.6);
+      backdrop-filter: blur(12px);
+      z-index: 1000;
+      align-items: center;
+      justify-content: center;
+      padding: 1rem;
+    }
+    .modal-overlay.active { display: flex; }
+    
+    .tab-btn.active {
+      background: #2563eb;
+      color: #ffffff;
+      box-shadow: 0 4px 12px rgba(37, 99, 235, 0.3);
+    }
+
+    .step-number {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      background: #2563eb;
+      color: #fff;
+      font-weight: 800;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.9rem;
+      flex-shrink: 0;
+    }
+  </style>
+</head>
+<body class="bg-[#f8fafc] text-slate-900 selection:bg-blue-500 selection:text-white min-h-screen flex flex-col justify-between">
+
+  <!-- Top Navbar Header -->
+  <header class="bg-white border-b border-slate-200 px-4 sm:px-8 py-3.5 flex items-center justify-between sticky top-0 z-50 shadow-sm">
+    <div class="flex items-center gap-3">
+      <div class="w-10 h-10 bg-gradient-to-br from-blue-600 to-indigo-700 rounded-xl flex items-center justify-center text-white text-xl font-black shadow-md shadow-blue-500/20">
+        🏢
+      </div>
+      <div>
+        <h1 class="text-base sm:text-lg font-bold text-slate-900 font-heading leading-tight">Enterprise Asset & Label Printer QR Manager</h1>
+        <p class="text-[11px] text-blue-600 font-semibold">Hệ Thống Quản Lý Tài Sản Doanh Nghiệp & Máy In Tem Nhãn Nhiệt QR</p>
+      </div>
+    </div>
+
+    <!-- Navigation Tabs -->
+    <div class="flex gap-1.5 bg-slate-100 p-1 rounded-xl border border-slate-200">
+      <button class="tab-btn active px-3 sm:px-4 py-1.5 rounded-lg text-xs font-bold text-slate-600 hover:text-slate-900 transition flex items-center gap-1.5" data-target="pane-directory">
+        📋 Danh Sách Tài Sản
+      </button>
+      <button class="tab-btn px-3 sm:px-4 py-1.5 rounded-lg text-xs font-bold text-slate-600 hover:text-slate-900 transition flex items-center gap-1.5" data-target="pane-printer">
+        🖨️ Studio In Tem Nhãn QR
+      </button>
+      <button class="tab-btn px-3 sm:px-4 py-1.5 rounded-lg text-xs font-bold text-slate-600 hover:text-slate-900 transition flex items-center gap-1.5" data-target="pane-scan">
+        📷 Quét QR Camera
+      </button>
+      <button class="tab-btn px-3 sm:px-4 py-1.5 rounded-lg text-xs font-bold text-slate-600 hover:text-slate-900 transition flex items-center gap-1.5 bg-amber-50 text-amber-700 border border-amber-200" data-target="pane-guide">
+        📖 Hướng Dẫn Sử Dụng
+      </button>
+    </div>
+  </header>
+
+  <!-- Metric KPI Bar -->
+  <div class="max-w-7xl mx-auto w-full px-4 sm:px-8 pt-6">
+    <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+      <div class="glass-card p-4 rounded-2xl border-l-4 border-blue-600 flex items-center gap-3">
+        <div class="text-blue-600 text-2xl">📦</div>
+        <div>
+          <span class="text-[11px] text-slate-500 font-semibold block uppercase">Tổng Tài Sản Cố Định</span>
+          <span class="text-xl font-extrabold text-slate-900 font-heading" id="kpi-total-assets">0</span>
+        </div>
+      </div>
+
+      <div class="glass-card p-4 rounded-2xl border-l-4 border-emerald-600 flex items-center gap-3">
+        <div class="text-emerald-600 text-2xl">💰</div>
+        <div>
+          <span class="text-[11px] text-slate-500 font-semibold block uppercase">Tổng Nguyên Giá (VNĐ)</span>
+          <span class="text-xl font-extrabold text-slate-900 font-heading" id="kpi-total-valuation">0 Tỷ đ</span>
+        </div>
+      </div>
+
+      <div class="glass-card p-4 rounded-2xl border-l-4 border-cyan-600 flex items-center gap-3">
+        <div class="text-cyan-600 text-2xl">🔵</div>
+        <div>
+          <span class="text-[11px] text-slate-500 font-semibold block uppercase">Dự Phòng Trong Kho</span>
+          <span class="text-xl font-extrabold text-slate-900 font-heading" id="kpi-spare-count">0</span>
+        </div>
+      </div>
+
+      <div class="glass-card p-4 rounded-2xl border-l-4 border-rose-600 flex items-center gap-3">
+        <div class="text-rose-600 text-2xl">🔴</div>
+        <div>
+          <span class="text-[11px] text-slate-500 font-semibold block uppercase">Bảo Trì / Sửa Chữa</span>
+          <span class="text-xl font-extrabold text-slate-900 font-heading" id="kpi-repair-count">0</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Main Content Layout -->
+  <main class="max-w-7xl mx-auto w-full p-4 sm:p-8 flex-1">
+
+    <!-- Pane 1: Asset Directory -->
+    <div class="tab-pane active" id="pane-directory">
+      
+      <!-- Top Action Toolbar -->
+      <div class="glass-card p-4 rounded-2xl mb-4 flex flex-col md:flex-row gap-3 justify-between items-center">
+        <!-- Search & Filter Inputs -->
+        <div class="flex flex-1 gap-3 w-full md:w-auto">
+          <input type="text" id="search-input" placeholder="Gõ tên tài sản, mã AST, số serial, người quản lý..." class="flex-1 bg-slate-50 border border-slate-300 rounded-xl px-4 py-2 text-xs text-slate-900 outline-none focus:border-blue-500 font-medium">
+          
+          <select id="filter-dept" class="bg-slate-50 border border-slate-300 rounded-xl px-3 py-2 text-xs font-semibold text-slate-700 outline-none">
+            <option value="ALL">Tất cả phòng ban</option>
+          </select>
+
+          <select id="filter-status" class="bg-slate-50 border border-slate-300 rounded-xl px-3 py-2 text-xs font-semibold text-slate-700 outline-none">
+            <option value="ALL">Tất cả trạng thái</option>
+            <option value="ACTIVE">🟢 Đang sử dụng</option>
+            <option value="SPARE">🔵 Dự phòng trong kho</option>
+            <option value="LOANED">🟡 Cho mượn / Luân chuyển</option>
+            <option value="REPAIR">🔴 Đang bảo trì</option>
+            <option value="DISPOSED">⚪ Đã thanh lý</option>
+          </select>
+        </div>
+
+        <!-- Action Buttons (Bulk Upload, Load 1000 Sample, Download Template, Add Asset, Wipe Data) -->
+        <div class="flex flex-wrap gap-2 w-full md:w-auto justify-end">
+          <button class="bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-xs px-3.5 py-2 rounded-xl transition shadow-sm flex items-center gap-1.5" id="btn-trigger-import">
+            📥 Nạp Excel
+          </button>
+          <button class="bg-amber-500 hover:bg-amber-600 text-white font-bold text-xs px-3.5 py-2 rounded-xl transition shadow-sm flex items-center gap-1.5" id="btn-load-1000" title="Nạp nhanh 1.000 mã tài sản mẫu để thử nghiệm mượt mà">
+            ⚡ Nạp Mẫu 1.000 Mã
+          </button>
+          <button class="bg-slate-100 hover:bg-slate-200 text-slate-700 border border-slate-300 font-bold text-xs px-3 py-2 rounded-xl transition flex items-center gap-1" id="btn-download-template">
+            📄 File Mẫu
+          </button>
+          <button class="bg-blue-600 hover:bg-blue-700 text-white font-bold text-xs px-3.5 py-2 rounded-xl transition shadow-sm flex items-center gap-1.5" id="btn-export-csv">
+            📊 Xuất Excel
+          </button>
+          <button class="bg-blue-700 hover:bg-blue-800 text-white font-bold text-xs px-3.5 py-2 rounded-xl transition shadow-sm flex items-center gap-1.5" id="btn-add-asset">
+            + Thêm Mới
+          </button>
+          <button class="bg-rose-50 hover:bg-rose-100 text-rose-700 border border-rose-300 font-bold text-xs px-3 py-2 rounded-xl transition flex items-center gap-1" id="btn-wipe-data" title="Xóa toàn bộ dữ liệu để bàn giao công ty mới">
+            🗑️ Xóa Trắng
+          </button>
+        </div>
+
+        <!-- Hidden File Input for Excel -->
+        <input type="file" id="file-excel-input" accept=".xlsx, .xls, .csv" style="display:none;" />
+      </div>
+
+      <!-- Assets Data Table -->
+      <div class="glass-card rounded-2xl overflow-hidden mb-4">
+        <div class="overflow-x-auto">
+          <table class="w-full text-left text-xs">
+            <thead>
+              <tr class="bg-slate-100 border-b border-slate-200 text-slate-600 font-bold uppercase tracking-wider">
+                <th style="padding: 0.85rem 1rem;">Mã Tài Sản</th>
+                <th style="padding: 0.85rem 1rem;">Tên Thiết Bị & Model</th>
+                <th style="padding: 0.85rem 1rem;">Phòng Ban & Vị Trí</th>
+                <th style="padding: 0.85rem 1rem;">Người Quản Lý</th>
+                <th style="padding: 0.85rem 1rem;">Trạng Thái</th>
+                <th style="padding: 0.85rem 1rem; text-align: right;">Nguyên Giá (VNĐ)</th>
+                <th style="padding: 0.85rem 1rem; text-align: center;">In Tem QR</th>
+              </tr>
+            </thead>
+            <tbody id="assets-table-body">
+              <!-- Dynamic rows -->
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- Pagination Toolbar -->
+      <div class="glass-card p-3 rounded-2xl flex justify-between items-center text-xs">
+        <span class="text-slate-600 font-semibold" id="page-info">Trang 1 / 1</span>
+        <div class="flex gap-2">
+          <button class="px-3 py-1.5 bg-slate-100 border border-slate-300 rounded-lg hover:bg-slate-200 font-bold text-slate-700" id="btn-prev-page">← Trang Trước</button>
+          <button class="px-3 py-1.5 bg-slate-100 border border-slate-300 rounded-lg hover:bg-slate-200 font-bold text-slate-700" id="btn-next-page">Trang Sau →</button>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Pane 2: Label Printer Studio -->
+    <div class="tab-pane" id="pane-printer">
+      <div class="glass-card p-6 rounded-2xl mb-6 flex flex-col md:flex-row justify-between items-center gap-4">
+        <div>
+          <h2 class="text-xl font-bold text-slate-900 font-heading">Studio In Tem Nhãn Máy In Nhiệt (Label Printer)</h2>
+          <p class="text-xs text-slate-500">Tương thích các dòng máy in tem nhãn Xprinter, TSC, Zebra, Brother, Godex...</p>
+        </div>
+
+        <div class="flex items-center gap-3">
+          <label class="text-xs font-bold text-slate-700">Chọn Khổ Tem In Nhãn:</label>
+          <select id="printer-size-select" class="bg-slate-50 border border-slate-300 rounded-xl px-4 py-2 text-xs font-bold text-slate-800 outline-none">
+            <option value="50x30">Tem Nhãn 50x30 mm (Chuẩn Máy In Tem Nhiệt)</option>
+            <option value="70x40">Tem Nhãn 70x40 mm (Trung Bình)</option>
+            <option value="100x50">Tem Nhãn 100x50 mm (Khổ Lớn)</option>
+          </select>
+
+          <button class="bg-blue-600 hover:bg-blue-700 text-white font-bold text-xs px-5 py-2.5 rounded-xl transition shadow-md flex items-center gap-2" id="btn-trigger-print">
+            🖨️ In Tem Ngay (Print Studio)
+          </button>
+        </div>
+      </div>
+
+      <div id="print-area">
+        <div id="print-area-preview">
+          <!-- Dynamic label previews -->
+        </div>
+      </div>
+    </div>
+
+    <!-- Pane 3: Camera QR Scanner -->
+    <div class="tab-pane" id="pane-scan">
+      <div class="max-w-xl mx-auto">
+        <div class="glass-card p-6 rounded-3xl text-center">
+          <h2 class="text-xl font-bold text-slate-900 font-heading mb-1">Quét Tem Nhãn QR Mã Tài Sản</h2>
+          <p class="text-xs text-slate-500 mb-6">Hướng Camera máy tính/điện thoại vào tem nhãn QR dán trên thiết bị để kiểm tra lịch sử</p>
+
+          <div id="camera-viewport" class="overflow-hidden rounded-2xl border-2 border-dashed border-blue-400 bg-slate-100 min-h-[300px] flex items-center justify-center">
+            <p class="text-xs text-slate-500">Đang khởi động Camera...</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Pane 4: Step-by-Step User Guide (Cực kỳ dễ hiểu cho người dùng phổ thông) -->
+    <div class="tab-pane" id="pane-guide">
+      <div class="max-w-4xl mx-auto space-y-6">
+        
+        <!-- Welcome Banner -->
+        <div class="bg-gradient-to-r from-blue-600 to-indigo-700 rounded-3xl p-6 text-white shadow-xl">
+          <h2 class="text-2xl font-black font-heading mb-2">📖 Hướng Dẫn Sử Dụng Hệ Thống Từ A Đến Z</h2>
+          <p class="text-xs text-blue-100 leading-relaxed">
+            Dành cho người dùng phổ thông, cán bộ kho và nhân viên văn phòng. Hãy làm theo từng bước cực kỳ đơn giản dưới đây để quản lý tài sản & in tem nhãn QR thành thạo chỉ trong 5 phút!
+          </p>
+        </div>
+
+        <!-- Section 1: Upload Excel -->
+        <div class="glass-card p-6 rounded-3xl space-y-4">
+          <div class="flex items-center gap-3 border-b border-slate-200 pb-3">
+            <span class="text-2xl">📥</span>
+            <div>
+              <h3 class="text-base font-bold text-slate-900 font-heading">PHẦN 1: Nạp Danh Sách Tài Sản / Pallet Từ Excel Vào Hệ Thống</h3>
+              <p class="text-xs text-slate-500">Áp dụng khi anh có sẵn file Excel chứa hàng trăm hoặc hàng ngàn tài sản (ví dụ: 11.000 Pallet nhựa)</p>
+            </div>
+          </div>
+
+          <div class="space-y-3 text-xs text-slate-700">
+            <div class="flex gap-3 items-start">
+              <div class="step-number">1</div>
+              <div>
+                <strong class="text-slate-900 text-sm">Bước 1: Tải File Excel Mẫu về máy</strong>
+                <p class="text-slate-500 mt-0.5">Bấm vào nút màu xám <span class="bg-slate-200 px-2 py-0.5 rounded font-bold">📄 File Mẫu</span> trên thanh công cụ để tải file mẫu chuẩn về máy tính.</p>
+              </div>
+            </div>
+
+            <div class="flex gap-3 items-start">
+              <div class="step-number">2</div>
+              <div>
+                <strong class="text-slate-900 text-sm">Bước 2: Điền thông tin đồ đạc / Pallet vào Excel</strong>
+                <p class="text-slate-500 mt-0.5">Mở file vừa tải bằng Excel, điền tên tài sản (VD: <em>Pallet Nhựa Đen</em>), mã tài sản, số serial, kho cất giữ, nguyên giá.</p>
+              </div>
+            </div>
+
+            <div class="flex gap-3 items-start">
+              <div class="step-number">3</div>
+              <div>
+                <strong class="text-slate-900 text-sm">Bước 3: Nạp file Excel lên hệ thống</strong>
+                <p class="text-slate-500 mt-0.5">Bấm nút màu xanh lá <span class="bg-emerald-600 text-white px-2 py-0.5 rounded font-bold">📥 Nạp Excel</span> -> Chọn file vừa điền. Hệ thống sẽ tự động nạp toàn bộ danh sách trong 1-2 giây!</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Section 2: Thermal Printing -->
+        <div class="glass-card p-6 rounded-3xl space-y-4">
+          <div class="flex items-center gap-3 border-b border-slate-200 pb-3">
+            <span class="text-2xl">🖨️</span>
+            <div>
+              <h3 class="text-base font-bold text-slate-900 font-heading">PHẦN 2: In Tem Nhãn QR Code Dán Lên Thùng / Pallet / Thiết Bị</h3>
+              <p class="text-xs text-slate-500">Tương thích với các dòng máy in tem nhãn decal nhiệt như Xprinter, TSC, Zebra, Brother, Godex...</p>
+            </div>
+          </div>
+
+          <div class="space-y-3 text-xs text-slate-700">
+            <div class="flex gap-3 items-start">
+              <div class="step-number">1</div>
+              <div>
+                <strong class="text-slate-900 text-sm">Bước 1: Chuyển sang Tab "🖨️ Studio In Tem Nhãn QR"</strong>
+                <p class="text-slate-500 mt-0.5">Bấm vào Tab <span class="bg-blue-600 text-white px-2 py-0.5 rounded font-bold">🖨️ Studio In Tem Nhãn QR</span> trên cùng của trang web.</p>
+              </div>
+            </div>
+
+            <div class="flex gap-3 items-start">
+              <div class="step-number">2</div>
+              <div>
+                <strong class="text-slate-900 text-sm">Bước 2: Chọn kích thước tem nhãn</strong>
+                <p class="text-slate-500 mt-0.5">Chọn khổ tem phù hợp với máy in của anh (VD: <em>Tem Nhãn 50x30 mm</em> là khổ chuẩn thông dụng nhất).</p>
+              </div>
+            </div>
+
+            <div class="flex gap-3 items-start">
+              <div class="step-number">3</div>
+              <div>
+                <strong class="text-slate-900 text-sm">Bước 3: Thực hiện In tem</strong>
+                <p class="text-slate-500 mt-0.5">Bấm nút <span class="bg-blue-600 text-white px-2 py-0.5 rounded font-bold">🖨️ In Tem Ngay</span> -> Màn hình in của máy tính sẽ hiện ra -> Bấm chọn Máy in tem nhiệt của anh và bấm <strong>IN (Print)</strong>.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Section 3: Camera QR Scanning -->
+        <div class="glass-card p-6 rounded-3xl space-y-4">
+          <div class="flex items-center gap-3 border-b border-slate-200 pb-3">
+            <span class="text-2xl">📷</span>
+            <div>
+              <h3 class="text-base font-bold text-slate-900 font-heading">PHẦN 3: Quét Tem Mã QR Bằng Điện Thoại / Máy Tính Để Kiểm Tra</h3>
+              <p class="text-xs text-slate-500">Giúp nhân viên kho kiểm tra nhanh lịch sử thiết bị và thông tin bảo trì tại chỗ</p>
+            </div>
+          </div>
+
+          <div class="space-y-3 text-xs text-slate-700">
+            <div class="flex gap-3 items-start">
+              <div class="step-number">1</div>
+              <div>
+                <strong class="text-slate-900 text-sm">Bước 1: Mở Tab "📷 Quét QR Camera"</strong>
+                <p class="text-slate-500 mt-0.5">Cho phép trình duyệt truy cập Camera nếu được hỏi (bấm <em>Allow / Cho phép</em>).</p>
+              </div>
+            </div>
+
+            <div class="flex gap-3 items-start">
+              <div class="step-number">2</div>
+              <div>
+                <strong class="text-slate-900 text-sm">Bước 2: Dơ Camera về phía tem nhãn QR</strong>
+                <p class="text-slate-500 mt-0.5">Khi Camera nhìn thấy tem nhãn QR dán trên Pallet/thiết bị, hệ thống sẽ kêu tiếng "Bíp" và tự động hiển thị màn hình thông tin chi tiết!</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Section 4: System Reset Wipe -->
+        <div class="glass-card p-6 rounded-3xl space-y-4">
+          <div class="flex items-center gap-3 border-b border-slate-200 pb-3">
+            <span class="text-2xl">🗑️</span>
+            <div>
+              <h3 class="text-base font-bold text-slate-900 font-heading">PHẦN 4: Xóa Trắng Dữ Liệu Khi Bàn Giao Cho Công Ty Khác</h3>
+              <p class="text-xs text-slate-500">Khi chuyển giao máy tính/ứng dụng cho đơn vị khác sử dụng ở nơi khác</p>
+            </div>
+          </div>
+
+          <div class="space-y-3 text-xs text-slate-700">
+            <div class="flex gap-3 items-start">
+              <div class="step-number">1</div>
+              <div>
+                <strong class="text-slate-900 text-sm">Bước 1: Bấm nút "🗑️ Xóa Trắng"</strong>
+                <p class="text-slate-500 mt-0.5">Nút màu đỏ nằm góc phải thanh công cụ <span class="bg-rose-100 text-rose-700 px-2 py-0.5 rounded font-bold">🗑️ Xóa Trắng</span>.</p>
+              </div>
+            </div>
+
+            <div class="flex gap-3 items-start">
+              <div class="step-number">2</div>
+              <div>
+                <strong class="text-slate-900 text-sm">Bước 2: Nhập mã xác nhận bảo mật</strong>
+                <p class="text-slate-500 mt-0.5">Nhập chữ <code class="bg-slate-200 px-1 py-0.5 rounded font-mono text-slate-900">CONFIRM</code> hoặc nhập PIN <code class="bg-slate-200 px-1 py-0.5 rounded font-mono text-slate-900">8888</code> -> Bấm OK. Toàn bộ dữ liệu cũ sẽ được làm sạch 100% để sẵn sàng nạp cho công ty mới!</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+  </main>
+
+  <!-- ASSET DETAIL MODAL -->
+  <div class="modal-overlay" id="asset-detail-modal">
+    <div class="bg-white p-6 rounded-3xl max-w-lg w-full relative max-h-[90vh] overflow-y-auto border border-slate-300 shadow-2xl">
+      <button onclick="closeModal('asset-detail-modal')" class="absolute top-4 right-4 text-slate-400 hover:text-slate-900 text-lg">✕</button>
+      <div id="asset-detail-content">
+        <!-- Dynamic content -->
+      </div>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <footer class="text-center text-xs text-slate-500 py-6 border-t border-slate-200 max-w-7xl mx-auto w-full mt-8">
+    © 2026 🏢 **Enterprise Fixed Asset & Label Printer QR Manager** • High Performance Bulk Excel Upload & System Reset
+  </footer>
+
+  <!-- JS Modules -->
+  <script src="js/storage.js"></script>
+  <script src="js/qr-label-printer.js"></script>
+  <script src="js/qr-scanner.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>
