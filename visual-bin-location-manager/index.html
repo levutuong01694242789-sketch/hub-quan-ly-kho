@@ -475,6 +475,11 @@
       return list;
     }
 
+    // Safely escape a string for use inside an HTML attribute value
+    function escAttr(str) {
+      return String(str||'').replace(/&/g,'&amp;').replace(/"/g,'&quot;').replace(/'/g,'&#39;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+    }
+
     function renderGrid() {
       filteredList = filterLocations();
       updateKPIs();
@@ -498,35 +503,47 @@
         return;
       }
 
+      // ⚠️ IMPORTANT: Do NOT embed photoBase64 (SVG data URLs contain double-quotes)
+      // directly in src="..." — it breaks HTML parsing and renders raw attribute text visibly.
+      // Use data-photoid instead, then assign src via JS after innerHTML is set.
       container.innerHTML = page.map(item => `
         <div class="photo-card flex flex-col justify-between">
           <div>
-            <div class="relative cursor-pointer overflow-hidden" onclick="openZoom('${item.id}')">
-              <img src="${item.photoBase64||''}" alt="${item.skuName}" class="w-full h-[190px] object-cover bg-slate-800" loading="lazy"
-                onerror="this.style.display='none'">
-              <span class="absolute top-2 right-2 bg-slate-900/90 text-amber-400 text-[10px] font-black px-2 py-0.5 rounded-full border border-amber-500">${item.id}</span>
+            <div class="relative cursor-pointer overflow-hidden" onclick="openZoom('${escAttr(item.id)}')">
+              <img data-photoid="${escAttr(item.id)}" alt="${escAttr(item.skuName)}" class="w-full h-[190px] object-cover bg-slate-800" loading="lazy">
+              <span class="absolute top-2 right-2 bg-slate-900/90 text-amber-400 text-[10px] font-black px-2 py-0.5 rounded-full border border-amber-500">${escAttr(item.id)}</span>
             </div>
 
             <div class="p-3 space-y-2">
               <div class="flex flex-wrap gap-1.5">
-                <span class="badge badge-blue"><i class="fa-solid fa-warehouse text-[9px]"></i> ${item.warehouse}</span>
-                <span class="badge badge-green"><i class="fa-solid fa-layer-group text-[9px]"></i> ${item.rack}</span>
+                <span class="badge badge-blue"><i class="fa-solid fa-warehouse text-[9px]"></i> ${escAttr(item.warehouse)}</span>
+                <span class="badge badge-green"><i class="fa-solid fa-layer-group text-[9px]"></i> ${escAttr(item.rack)}</span>
               </div>
-              <h3 class="font-black text-slate-950 text-[12px] leading-snug cursor-pointer hover:text-blue-700" onclick="openZoom('${item.id}')">${item.skuName}</h3>
+              <h3 class="font-black text-slate-950 text-[12px] leading-snug cursor-pointer hover:text-blue-700" onclick="openZoom('${escAttr(item.id)}')">${escAttr(item.skuName)}</h3>
               <div class="text-[11px] bg-slate-50 p-2 rounded-xl border border-slate-200 space-y-0.5 font-extrabold">
-                <div>📍 <span class="text-slate-500 font-bold">Vị Trí:</span> <span class="text-blue-700">${item.tier}</span></div>
-                <div>📦 <span class="text-slate-500 font-bold">Tồn:</span> <span class="text-slate-900">${item.qtyNote||'Chưa ghi'}</span></div>
-                ${item.note?`<div class="text-[10px] text-slate-600 border-t pt-0.5 mt-0.5">📝 ${item.note}</div>`:''}
+                <div>📍 <span class="text-slate-500 font-bold">Vị Trí:</span> <span class="text-blue-700">${escAttr(item.tier)}</span></div>
+                <div>📦 <span class="text-slate-500 font-bold">Tồn:</span> <span class="text-slate-900">${escAttr(item.qtyNote||'Chưa ghi')}</span></div>
+                ${item.note?`<div class="text-[10px] text-slate-600 border-t pt-0.5 mt-0.5">📝 ${escAttr(item.note)}</div>`:''}
               </div>
             </div>
           </div>
 
           <div class="px-3 py-2 bg-slate-50 border-t border-slate-200 flex justify-between items-center text-[10px] font-extrabold text-slate-600">
-            <span>👤 ${item.staffName||'Kho'} • ${item.updatedAt||''}</span>
-            <button onclick="handleDelete('${item.id}')" class="bg-rose-100 hover:bg-rose-200 text-rose-800 border border-rose-300 px-2 py-0.5 rounded font-black transition">🗑️</button>
+            <span>👤 ${escAttr(item.staffName||'Kho')} • ${escAttr(item.updatedAt||'')}</span>
+            <button onclick="handleDelete('${escAttr(item.id)}')" class="bg-rose-100 hover:bg-rose-200 text-rose-800 border border-rose-300 px-2 py-0.5 rounded font-black transition">🗑️</button>
           </div>
         </div>
       `).join('');
+
+      // Now safely assign photo src via JS (avoids SVG double-quote breaking HTML attributes)
+      const locMap = new Map(page.map(i=>[i.id,i]));
+      container.querySelectorAll('img[data-photoid]').forEach(img => {
+        const loc = locMap.get(img.getAttribute('data-photoid'));
+        if (loc && loc.photoBase64) {
+          img.src = loc.photoBase64;
+          img.onerror = () => { img.style.display = 'none'; };
+        }
+      });
     }
 
     // ─────────────────────────────────────────────────────────────────────────
