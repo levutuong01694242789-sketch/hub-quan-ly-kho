@@ -1,11 +1,12 @@
 /**
  * Enterprise Fixed Asset & Label Printer QR Manager - Main App Controller
- * Light Minimalist Theme, Bulk Excel Upload (11,000+ items), System Reset & Label Printer Studio.
+ * Light Minimalist Theme, Bulk Selection & Batch Label Printing Engine.
  */
 
 let currentPage = 1;
 const pageSize = 50;
 let currentFilteredAssets = [];
+let selectedAssetIds = new Set();
 
 document.addEventListener('DOMContentLoaded', () => {
   console.log('[App] Initializing Enterprise Fixed Asset & Label Printer QR Manager...');
@@ -52,6 +53,48 @@ document.addEventListener('DOMContentLoaded', () => {
 
   const labelSizeSelect = document.getElementById('printer-size-select');
   if (labelSizeSelect) labelSizeSelect.addEventListener('change', () => renderPrinterStudio());
+
+  // Master Checkbox Header
+  const masterCheckbox = document.getElementById('master-checkbox');
+  if (masterCheckbox) {
+    masterCheckbox.addEventListener('change', (e) => {
+      const isChecked = e.target.checked;
+      const startIdx = (currentPage - 1) * pageSize;
+      const pageAssets = currentFilteredAssets.slice(startIdx, startIdx + pageSize);
+
+      pageAssets.forEach(a => {
+        if (isChecked) selectedAssetIds.add(a.id);
+        else selectedAssetIds.delete(a.id);
+      });
+      renderAssetsDirectory();
+    });
+  }
+
+  // Selection Action Buttons
+  document.getElementById('btn-select-page')?.addEventListener('click', () => {
+    const startIdx = (currentPage - 1) * pageSize;
+    const pageAssets = currentFilteredAssets.slice(startIdx, startIdx + pageSize);
+    pageAssets.forEach(a => selectedAssetIds.add(a.id));
+    renderAssetsDirectory();
+  });
+
+  document.getElementById('btn-select-all-filtered')?.addEventListener('click', () => {
+    currentFilteredAssets.forEach(a => selectedAssetIds.add(a.id));
+    renderAssetsDirectory();
+  });
+
+  document.getElementById('btn-clear-selection')?.addEventListener('click', () => {
+    selectedAssetIds.clear();
+    renderAssetsDirectory();
+  });
+
+  document.getElementById('btn-print-selected')?.addEventListener('click', () => {
+    if (selectedAssetIds.size === 0) {
+      alert('Vui lòng tích chọn ít nhất 1 tài sản để in tem!');
+      return;
+    }
+    openBatchPrinterStudio();
+  });
 
   // Action Buttons
   const btnAddAsset = document.getElementById('btn-add-asset');
@@ -125,6 +168,21 @@ function updateKPIs() {
   }
 }
 
+function updateSelectionBarUI() {
+  const countEl = document.getElementById('selected-count-label');
+  const barEl = document.getElementById('selection-action-bar');
+  
+  if (countEl) countEl.textContent = selectedAssetIds.size.toLocaleString();
+  
+  if (barEl) {
+    if (selectedAssetIds.size > 0) {
+      barEl.classList.remove('hidden');
+    } else {
+      barEl.classList.add('hidden');
+    }
+  }
+}
+
 function renderAssetsDirectory() {
   const container = document.getElementById('assets-table-body');
   if (!container) return;
@@ -144,17 +202,26 @@ function renderAssetsDirectory() {
 
   const depts = EnterpriseStorage.getDepts();
 
-  // Update Pagination Info
+  // Update Pagination Info & Selection Bar
   document.getElementById('page-info').textContent = `Trang ${currentPage} / ${totalPages} (Tổng ${totalItems.toLocaleString()} tài sản)`;
+  updateSelectionBarUI();
+
+  // Update Master Checkbox State
+  const masterCheckbox = document.getElementById('master-checkbox');
+  if (masterCheckbox) {
+    const allPageSelected = pageAssets.length > 0 && pageAssets.every(a => selectedAssetIds.has(a.id));
+    masterCheckbox.checked = allPageSelected;
+  }
 
   if (pageAssets.length === 0) {
-    container.innerHTML = `<tr><td colspan="7" style="text-align:center; padding: 2.5rem; color: #64748b;">Chưa có tài sản nào trong hệ thống. Bấm "+ Nạp Excel Hàng Loạt" hoặc "⚡ Nạp Mẫu 1.000 Mã" để bắt đầu!</td></tr>`;
+    container.innerHTML = `<tr><td colspan="8" style="text-align:center; padding: 2.5rem; color: #64748b;">Chưa có tài sản nào trong hệ thống. Bấm "+ Nạp Excel Hàng Loạt" hoặc "⚡ Nạp Mẫu 1.000 Mã" để bắt đầu!</td></tr>`;
     return;
   }
 
-  container.innerHTML = pageAssets.map((a, idx) => {
+  container.innerHTML = pageAssets.map((a) => {
     const dept = depts.find(d => d.id === a.deptId);
     const deptName = dept ? dept.name : 'N/A';
+    const isChecked = selectedAssetIds.has(a.id);
 
     let statusBadge = '<span class="badge badge-active">🟢 Đang Sử Dụng</span>';
     if (a.status === 'SPARE') statusBadge = '<span class="badge badge-spare">🔵 Dự Phòng</span>';
@@ -163,18 +230,21 @@ function renderAssetsDirectory() {
     if (a.status === 'DISPOSED') statusBadge = '<span class="badge badge-disposed">⚪ Đã Thanh Lý</span>';
 
     return `
-      <tr style="border-bottom: 1px solid #f1f5f9; cursor: pointer;" onclick="openAssetDetailModal('${a.id}')">
-        <td style="padding: 0.85rem 1rem; font-weight: 800; color: #2563eb;">${a.id}</td>
-        <td style="padding: 0.85rem 1rem;">
+      <tr style="border-bottom: 1px solid #f1f5f9; ${isChecked ? 'background: #eff6ff;' : ''} cursor: pointer;" onclick="toggleSelectRow(event, '${a.id}')">
+        <td style="padding: 0.85rem 0.5rem; text-align: center;" onclick="event.stopPropagation();">
+          <input type="checkbox" class="w-4 h-4 rounded border-slate-300 text-blue-600 focus:ring-blue-500 cursor-pointer" ${isChecked ? 'checked' : ''} onchange="toggleAssetSelection('${a.id}', this.checked)" />
+        </td>
+        <td style="padding: 0.85rem 0.75rem; font-weight: 800; color: #2563eb;">${a.id}</td>
+        <td style="padding: 0.85rem 0.75rem;">
           <div style="font-weight: 700; color: #0f172a;">${a.name}</div>
           <div style="font-size: 0.75rem; color: #64748b;">Model/Size: ${a.brandModel || 'N/A'} | S/N: ${a.serialNo || 'N/A'}</div>
         </td>
-        <td style="padding: 0.85rem 1rem; font-size: 0.85rem; color: #334155;">${deptName}<br><small style="color: #64748b;">${a.location}</small></td>
-        <td style="padding: 0.85rem 1rem; font-size: 0.85rem; font-weight: 600;">${a.custodian || 'Chưa gán'}</td>
-        <td style="padding: 0.85rem 1rem;">${statusBadge}</td>
-        <td style="padding: 0.85rem 1rem; font-weight: 700; color: #0f172a; text-align: right;">${a.costVnd ? a.costVnd.toLocaleString() + ' đ' : '0 đ'}</td>
-        <td style="padding: 0.85rem 1rem; text-align: center;">
-          <button class="btn-secondary" style="padding: 0.3rem 0.6rem; font-size: 0.75rem;" onclick="event.stopPropagation(); printSingleAssetLabel('${a.id}')">🖨️ Tem QR</button>
+        <td style="padding: 0.85rem 0.75rem; font-size: 0.85rem; color: #334155;">${deptName}<br><small style="color: #64748b;">${a.location}</small></td>
+        <td style="padding: 0.85rem 0.75rem; font-size: 0.85rem; font-weight: 600;">${a.custodian || 'Chưa gán'}</td>
+        <td style="padding: 0.85rem 0.75rem;">${statusBadge}</td>
+        <td style="padding: 0.85rem 0.75rem; font-weight: 700; color: #0f172a; text-align: right;">${a.costVnd ? a.costVnd.toLocaleString() + ' đ' : '0 đ'}</td>
+        <td style="padding: 0.85rem 0.75rem; text-align: center;" onclick="event.stopPropagation();">
+          <button class="btn-secondary" style="padding: 0.3rem 0.6rem; font-size: 0.75rem;" onclick="printSingleAssetLabel('${a.id}')">🖨️ Tem QR</button>
         </td>
       </tr>
     `;
@@ -183,12 +253,26 @@ function renderAssetsDirectory() {
   updateKPIs();
 }
 
+function toggleAssetSelection(assetId, isChecked) {
+  if (isChecked) selectedAssetIds.add(assetId);
+  else selectedAssetIds.delete(assetId);
+
+  updateSelectionBarUI();
+  renderAssetsDirectory();
+}
+
+function toggleSelectRow(event, assetId) {
+  const isChecked = selectedAssetIds.has(assetId);
+  toggleAssetSelection(assetId, !isChecked);
+}
+
 function handleLoad1000Sample() {
   const count = EnterpriseStorage.generate1000SampleAssets();
   currentPage = 1;
+  selectedAssetIds.clear();
   renderAssetsDirectory();
   updateKPIs();
-  alert(`✓ Đã nạp thành công 1.000 tài sản mẫu vào hệ thống! Bạn có thể thử tìm kiếm, lọc phòng ban, phân trang hoặc in tem nhãn.`);
+  alert(`✓ Đã nạp thành công 1.000 tài sản mẫu vào hệ thống! Hãy thử tích chọn hàng loạt để in tem.`);
 }
 
 function handleExcelUpload(e) {
@@ -210,6 +294,7 @@ function handleExcelUpload(e) {
 
       const importedCount = EnterpriseStorage.bulkImportAssets(jsonData);
       currentPage = 1;
+      selectedAssetIds.clear();
       renderAssetsDirectory();
       updateKPIs();
       alert(`✓ Đã nạp thành công ${importedCount.toLocaleString()} tài sản từ file Excel vào hệ thống!`);
@@ -226,6 +311,7 @@ function handleWipeData() {
   if (confirmPin === 'CONFIRM' || confirmPin === '8888' || confirmPin === '1234') {
     EnterpriseStorage.clearAllData();
     currentPage = 1;
+    selectedAssetIds.clear();
     renderAssetsDirectory();
     updateKPIs();
     alert('✓ Đã XÓA TRẮNG toàn bộ dữ liệu thành công! Hệ thống sẵn sàng nạp dữ liệu cho công ty mới.');
@@ -234,12 +320,37 @@ function handleWipeData() {
   }
 }
 
+function openBatchPrinterStudio() {
+  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+  document.querySelectorAll('.tab-pane').forEach(p => p.classList.remove('active'));
+  
+  const printTabBtn = document.querySelector('[data-target="pane-printer"]');
+  if (printTabBtn) printTabBtn.classList.add('active');
+  const printPane = document.getElementById('pane-printer');
+  if (printPane) printPane.classList.add('active');
+
+  renderPrinterStudio();
+}
+
 function renderPrinterStudio() {
   const sizeSelect = document.getElementById('printer-size-select');
   const labelSize = sizeSelect ? sizeSelect.value : '50x30';
   
-  // Render current page assets for optimal printing performance
-  const assetsToPrint = currentFilteredAssets.slice(0, 100); 
+  let assetsToPrint = [];
+
+  if (selectedAssetIds.size > 0) {
+    const allAssets = EnterpriseStorage.getAssets();
+    assetsToPrint = allAssets.filter(a => selectedAssetIds.has(a.id));
+  } else {
+    // Fallback: print current page
+    const startIdx = (currentPage - 1) * pageSize;
+    assetsToPrint = currentFilteredAssets.slice(startIdx, startIdx + pageSize);
+  }
+
+  const printInfoEl = document.getElementById('print-batch-info');
+  if (printInfoEl) {
+    printInfoEl.textContent = `Đang tạo ${assetsToPrint.length.toLocaleString()} tem nhãn QR (${labelSize}mm) từ danh sách chọn...`;
+  }
 
   EnterpriseQRPrinter.renderLabelSheet('print-area-preview', assetsToPrint, labelSize);
 }
@@ -253,7 +364,6 @@ function printSingleAssetLabel(assetId) {
 
   EnterpriseQRPrinter.renderLabelSheet('print-area-preview', [asset], labelSize);
   
-  // Switch to print tab
   document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
   document.querySelectorAll('.tab-pane').forEach(p => p.classList.remove('active'));
   

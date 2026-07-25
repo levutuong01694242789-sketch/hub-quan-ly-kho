@@ -1,6 +1,6 @@
 /**
  * Enterprise Fixed Asset & Label Printer QR Manager - Data Storage Engine
- * High-performance storage with Bulk Excel Upload (11,000+ assets) and Data Wipe Reset.
+ * High-performance storage with Bulk Excel Upload (11,000+ assets), Data Wipe Reset and Selection State.
  */
 
 window.EnterpriseStorage = (function () {
@@ -165,11 +165,6 @@ window.EnterpriseStorage = (function () {
     localStorage.setItem(STORAGE_KEY_DEPTS, JSON.stringify(defaultDepts));
   }
 
-  function resetToDefaultData() {
-    localStorage.setItem(STORAGE_KEY_DEPTS, JSON.stringify(defaultDepts));
-    localStorage.setItem(STORAGE_KEY_ASSETS, JSON.stringify(defaultAssets));
-  }
-
   function deleteAsset(assetId) {
     const assets = getAssets().filter(a => a.id !== assetId);
     localStorage.setItem(STORAGE_KEY_ASSETS, JSON.stringify(assets));
@@ -259,7 +254,6 @@ window.EnterpriseStorage = (function () {
     bulkImportAssets,
     generate1000SampleAssets,
     clearAllData,
-    resetToDefaultData,
     downloadExcelTemplate,
     deleteAsset,
     searchAssets,
