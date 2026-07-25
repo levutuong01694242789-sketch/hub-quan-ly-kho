@@ -12,33 +12,33 @@
   <!-- Google Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Outfit:wght@600;700;800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Outfit:wght@600;700;800;900&display=swap" rel="stylesheet">
 
   <link rel="stylesheet" href="css/styles.css">
 </head>
-<body class="bg-[#f8fafc] text-slate-900 selection:bg-blue-500 selection:text-white min-h-screen flex flex-col justify-between">
+<body class="bg-[#f8fafc] text-slate-950 selection:bg-blue-600 selection:text-white min-h-screen flex flex-col justify-between">
 
   <!-- Header -->
-  <header class="bg-white border-b border-slate-200 px-4 sm:px-8 py-3.5 flex items-center justify-between sticky top-0 z-50 shadow-sm">
+  <header class="bg-white border-b border-slate-300 px-4 sm:px-8 py-3.5 flex items-center justify-between sticky top-0 z-50 shadow-sm">
     <div class="flex items-center gap-3">
-      <div class="w-10 h-10 bg-gradient-to-br from-blue-600 to-indigo-700 rounded-xl flex items-center justify-center text-white text-xl font-black shadow-md shadow-blue-500/20">
+      <div class="w-10 h-10 bg-gradient-to-br from-blue-700 to-indigo-900 rounded-xl flex items-center justify-center text-white text-xl font-black shadow-md shadow-blue-500/20">
         📷
       </div>
       <div>
-        <h1 class="text-base sm:text-lg font-bold text-slate-900 font-heading leading-tight">Visual Photo Bin Finder & Warehouse Location Manager</h1>
-        <p class="text-[11px] text-blue-600 font-semibold">Hệ Thống Tra Cứu Vị Trí Kho Bằng Hình Ảnh Trực Quan - Nén Ảnh Siêu Nhẹ 30KB</p>
+        <h1 class="text-base sm:text-lg font-black text-slate-950 font-heading leading-tight">Visual Photo Bin Finder & Location Manager</h1>
+        <p class="text-[11px] text-blue-700 font-extrabold">Hệ Thống Tra Cứu Vị Trí Kho Bằng Hình Ảnh Trực Quan - Dàn Trang 3.000+ Vị Trí 0ms Lag</p>
       </div>
     </div>
 
     <!-- Navigation Tabs -->
-    <div class="flex gap-1.5 bg-slate-100 p-1 rounded-xl border border-slate-200">
-      <button class="tab-btn active px-3 sm:px-4 py-1.5 rounded-lg text-xs font-bold text-slate-600 hover:text-slate-900 transition flex items-center gap-1.5" data-target="pane-grid">
+    <div class="flex gap-1.5 bg-slate-100 p-1 rounded-xl border border-slate-300">
+      <button class="tab-btn active px-3 sm:px-4 py-2 rounded-lg text-xs font-black text-slate-700 hover:text-slate-950 transition flex items-center gap-1.5" data-target="pane-grid">
         🔍 Tra Cứu Vị Trí
       </button>
-      <button class="tab-btn px-3 sm:px-4 py-1.5 rounded-lg text-xs font-bold text-slate-600 hover:text-slate-900 transition flex items-center gap-1.5" data-target="pane-add">
+      <button class="tab-btn px-3 sm:px-4 py-2 rounded-lg text-xs font-black text-slate-700 hover:text-slate-950 transition flex items-center gap-1.5" data-target="pane-add">
         📷 Chụp & Thêm Vị Trí
       </button>
-      <button class="tab-btn px-3 sm:px-4 py-1.5 rounded-lg text-xs font-bold text-slate-600 hover:text-slate-900 transition flex items-center gap-1.5 bg-amber-50 text-amber-700 border border-amber-200" data-target="pane-guide">
+      <button class="tab-btn px-3 sm:px-4 py-2 rounded-lg text-xs font-black text-slate-700 hover:text-slate-950 transition flex items-center gap-1.5 bg-amber-100 text-amber-900 border border-amber-300" data-target="pane-guide">
         📖 Hướng Dẫn Sử Dụng
       </button>
     </div>
@@ -47,27 +47,27 @@
   <!-- Metric KPI Bar -->
   <div class="max-w-7xl mx-auto w-full px-4 sm:px-8 pt-6">
     <div class="grid grid-cols-2 md:grid-cols-3 gap-4">
-      <div class="glass-card p-4 rounded-2xl border-l-4 border-blue-600 flex items-center gap-3">
-        <div class="text-blue-600 text-2xl">📦</div>
+      <div class="glass-card p-4 rounded-2xl border-l-4 border-blue-700 flex items-center gap-3">
+        <div class="text-blue-700 text-2xl">📦</div>
         <div>
-          <span class="text-[11px] text-slate-500 font-semibold block uppercase">Tổng Vị Trí Đã Lưu</span>
-          <span class="text-xl font-extrabold text-slate-900 font-heading" id="kpi-total-locations">0</span>
+          <span class="text-[11px] text-slate-600 font-extrabold block uppercase">Tổng Vị Trí Đã Lưu</span>
+          <span class="text-xl font-black text-slate-950 font-heading" id="kpi-total-locations">0</span>
         </div>
       </div>
 
-      <div class="glass-card p-4 rounded-2xl border-l-4 border-emerald-600 flex items-center gap-3">
-        <div class="text-emerald-600 text-2xl">🏢</div>
+      <div class="glass-card p-4 rounded-2xl border-l-4 border-emerald-700 flex items-center gap-3">
+        <div class="text-emerald-700 text-2xl">🏢</div>
         <div>
-          <span class="text-[11px] text-slate-500 font-semibold block uppercase">Tổng Số Kho / Khu Vực</span>
-          <span class="text-xl font-extrabold text-slate-900 font-heading" id="kpi-total-warehouses">0</span>
+          <span class="text-[11px] text-slate-600 font-extrabold block uppercase">Tổng Số Kho / Khu Vực</span>
+          <span class="text-xl font-black text-slate-950 font-heading" id="kpi-total-warehouses">0</span>
         </div>
       </div>
 
-      <div class="glass-card p-4 rounded-2xl border-l-4 border-amber-500 flex items-center gap-3">
-        <div class="text-amber-500 text-2xl">📷</div>
+      <div class="glass-card p-4 rounded-2xl border-l-4 border-amber-600 flex items-center gap-3">
+        <div class="text-amber-600 text-2xl">📷</div>
         <div>
-          <span class="text-[11px] text-slate-500 font-semibold block uppercase">Hình Ảnh Chụp Nén (~30KB)</span>
-          <span class="text-xl font-extrabold text-slate-900 font-heading" id="kpi-photos-count">0</span>
+          <span class="text-[11px] text-slate-600 font-extrabold block uppercase">Hình Ảnh Chụp Nén (~30KB)</span>
+          <span class="text-xl font-black text-slate-950 font-heading" id="kpi-photos-count">0</span>
         </div>
       </div>
     </div>
@@ -79,106 +79,127 @@
     <!-- Pane 1: Photo Grid Search -->
     <div class="tab-pane active" id="pane-grid">
       
-      <!-- Filter Toolbar -->
-      <div class="glass-card p-4 rounded-2xl mb-6 flex flex-col md:flex-row gap-3 justify-between items-center">
-        <div class="flex flex-1 gap-3 w-full md:w-auto">
-          <input type="text" id="search-input" placeholder="Gõ tên bao bì, mã hàng, dãy A, kệ K01, ô tầng..." class="flex-1 bg-slate-50 border border-slate-300 rounded-xl px-4 py-2 text-xs text-slate-900 outline-none focus:border-blue-500 font-medium">
-          
-          <select id="filter-warehouse" class="bg-slate-50 border border-slate-300 rounded-xl px-3 py-2 text-xs font-semibold text-slate-700 outline-none">
-            <option value="ALL">Tất cả Kho Vị Trí</option>
+      <!-- Multi-Dimensional Dynamic Filter Toolbar -->
+      <div class="glass-card p-4.5 rounded-2xl mb-6 space-y-3">
+        <!-- Search bar -->
+        <div class="flex gap-2">
+          <input type="text" id="search-input" placeholder="Gõ tên bao bì, mã hàng, dãy A, kệ K01, ô tầng..." class="flex-1 bg-white border-2 border-slate-300 rounded-xl px-4 py-2.5 text-xs text-slate-950 outline-none focus:border-blue-600 font-bold shadow-xs">
+          <button id="btn-reset-filters" class="bg-slate-200 hover:bg-slate-300 text-slate-900 text-xs font-black px-4 py-2.5 rounded-xl border border-slate-300">
+            Xóa Bộ Lọc
+          </button>
+        </div>
+
+        <!-- Cascading Multi-Level Filters -->
+        <div class="grid grid-cols-2 sm:grid-cols-4 gap-2.5">
+          <select id="filter-warehouse" class="bg-white border-2 border-slate-300 rounded-xl px-3 py-2 text-xs font-black text-blue-900 outline-none focus:border-blue-600">
+            <option value="ALL">🏢 Tất cả Kho (Toàn Bộ)</option>
+          </select>
+
+          <select id="filter-rack" class="bg-white border-2 border-slate-300 rounded-xl px-3 py-2 text-xs font-black text-emerald-900 outline-none focus:border-blue-600">
+            <option value="ALL">📦 Tất cả Dãy / Kệ</option>
+          </select>
+
+          <select id="filter-tier" class="bg-white border-2 border-slate-300 rounded-xl px-3 py-2 text-xs font-black text-amber-900 outline-none focus:border-blue-600">
+            <option value="ALL">📍 Tất cả Tầng / Ô Vị Trí</option>
+          </select>
+
+          <select id="filter-staff" class="bg-white border-2 border-slate-300 rounded-xl px-3 py-2 text-xs font-black text-slate-900 outline-none focus:border-blue-600">
+            <option value="ALL">👤 Tất cả Nhân Viên</option>
           </select>
         </div>
 
-        <div class="flex items-center gap-2 w-full md:w-auto justify-end">
-          <button class="bg-amber-500 hover:bg-amber-600 text-white font-bold text-xs px-3.5 py-2 rounded-xl transition shadow-sm flex items-center gap-1.5" id="btn-load-samples">
-            ⚡ Nạp Mẫu
+        <div class="flex justify-end gap-2 pt-2 border-t border-slate-200">
+          <button class="bg-amber-500 hover:bg-amber-600 text-white font-black text-xs px-4 py-2 rounded-xl transition shadow-sm flex items-center gap-1.5" id="btn-load-samples" title="Nạp nhanh 1.000 vị trí mẫu thử nghiệm dàn trang">
+            ⚡ Nạp Mẫu 1.000 Vị Trí
           </button>
-          <button class="bg-rose-50 hover:bg-rose-100 text-rose-700 border border-rose-300 font-bold text-xs px-3 py-2 rounded-xl transition flex items-center gap-1" id="btn-wipe-data">
+          <button class="bg-rose-100 hover:bg-rose-200 text-rose-800 border border-rose-300 font-black text-xs px-3.5 py-2 rounded-xl transition flex items-center gap-1" id="btn-wipe-data">
             🗑️ Xóa Trắng
           </button>
         </div>
       </div>
 
-      <!-- Location Cards Grid -->
-      <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-5" id="location-grid-container">
+      <!-- Location Cards Grid (Paginated 24/page) -->
+      <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-5 mb-6" id="location-grid-container">
         <!-- Dynamic cards -->
+      </div>
+
+      <!-- Pagination Toolbar -->
+      <div class="glass-card p-3.5 rounded-2xl flex justify-between items-center text-xs font-bold text-slate-800">
+        <span id="page-info">Trang 1 / 1 (Tổng 0 vị trí)</span>
+        <div class="flex gap-2">
+          <button class="px-4 py-2 bg-slate-200 border-2 border-slate-300 rounded-xl hover:bg-slate-300 font-black text-slate-900" id="btn-prev-page">← Trang Trước</button>
+          <button class="px-4 py-2 bg-slate-200 border-2 border-slate-300 rounded-xl hover:bg-slate-300 font-black text-slate-900" id="btn-next-page">Trang Sau →</button>
+        </div>
       </div>
 
     </div>
 
     <!-- Pane 2: Snap Camera / Add Location Form -->
-    <div class="tab-pane" id="pane-add">
+    <div class="tab-pane hidden" id="pane-add">
       <div class="max-w-2xl mx-auto">
         <div class="glass-card p-6 sm:p-8 rounded-3xl">
-          <h2 class="text-xl font-bold text-slate-900 font-heading mb-1">📷 Chụp Ảnh & Gán Vị Trí Hàng Hóa Mới</h2>
-          <p class="text-xs text-slate-500 mb-6">Chụp hình trực tiếp bằng Camera điện thoại. Hệ thống sẽ tự động nén ảnh siêu nhẹ (~30KB) để lưu mượt mà!</p>
+          <h2 class="text-xl font-black text-slate-950 font-heading mb-1">📷 Chụp Ảnh & Gán Vị Trí Hàng Hóa Mới</h2>
+          <p class="text-xs text-slate-600 font-bold mb-6">Chụp hình trực tiếp bằng Camera điện thoại. Hệ thống sẽ tự động nén ảnh siêu nhẹ (~30KB) để lưu mượt mà!</p>
 
-          <form id="form-add-location" class="space-y-4 text-xs">
+          <form id="form-add-location" class="space-y-4 text-xs font-bold">
             
-            <!-- Photo Upload Dropzone -->
             <div>
-              <label class="block font-bold text-slate-700 mb-1">1. Chụp Ảnh Hoặc Tải Ảnh Vị Trí Kho (*):</label>
-              <div class="border-2 border-dashed border-blue-300 bg-blue-50/50 hover:bg-blue-50 rounded-2xl p-6 text-center cursor-pointer transition relative" onclick="document.getElementById('new-photo-input').click()">
+              <label class="block font-black text-slate-900 mb-1">1. Chụp Ảnh Hoặc Tải Ảnh Vị Trí Kho (*):</label>
+              <div class="border-3 border-dashed border-blue-400 bg-blue-50/70 hover:bg-blue-100 rounded-2xl p-6 text-center cursor-pointer transition relative" onclick="document.getElementById('new-photo-input').click()">
                 <div class="text-3xl mb-1">📷</div>
-                <p class="font-bold text-blue-900">Bấm để Chụp Camera hoặc Chọn Ảnh Từ Thư Viện</p>
-                <p class="text-[11px] text-slate-500 mt-0.5">Tự động nén ảnh 800px WebP siêu nhẹ 0ms lag</p>
+                <p class="font-black text-blue-900 text-sm">Bấm để Chụp Camera hoặc Chọn Ảnh Từ Thư Viện</p>
+                <p class="text-[11px] text-slate-600 font-bold mt-0.5">Tự động nén ảnh 800px WebP siêu nhẹ 0ms lag</p>
                 <input type="file" id="new-photo-input" accept="image/*" capture="environment" class="hidden" />
               </div>
 
-              <!-- Preview container -->
-              <div id="photo-preview-container" class="hidden mt-3 text-center bg-slate-900 p-3 rounded-2xl border border-slate-700">
+              <div id="photo-preview-container" class="hidden mt-3 text-center bg-slate-950 p-3 rounded-2xl border border-slate-800">
                 <img id="photo-preview-img" class="max-h-48 mx-auto rounded-xl object-contain mb-2" />
-                <span id="photo-size-tag" class="text-[11px] font-bold text-emerald-400"></span>
+                <span id="photo-size-tag" class="text-[11px] font-black text-emerald-400"></span>
               </div>
             </div>
 
-            <!-- SKU Name & Description -->
             <div>
-              <label class="block font-bold text-slate-700 mb-1">2. Tên Bao Bì / Hàng Hóa / Mã Vật Tư (*):</label>
-              <input type="text" id="new-sku-name" required placeholder="Ví dụ: Cuộn Màng Co PE 50cm, Bao Bột Mì 25kg, Thùng Gia Vị..." class="w-full bg-slate-50 border border-slate-300 rounded-xl px-4 py-2.5 text-xs text-slate-900 outline-none focus:border-blue-500 font-semibold" />
+              <label class="block font-black text-slate-900 mb-1">2. Tên Bao Bì / Hàng Hóa / Mã Vật Tư (*):</label>
+              <input type="text" id="new-sku-name" required placeholder="Ví dụ: Cuộn Màng Co PE 50cm, Bao Bột Mì 25kg, Thùng Gia Vị..." class="w-full bg-white border-2 border-slate-300 rounded-xl px-4 py-2.5 text-xs text-slate-950 outline-none focus:border-blue-600 font-extrabold" />
             </div>
 
-            <!-- Warehouse Taxonomy (Kho, Rack, Tier) -->
             <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
               <div>
-                <label class="block font-bold text-slate-700 mb-1">Kho / Khu Vực (*):</label>
-                <input type="text" id="new-warehouse" required placeholder="Kho Bao Bì, Kho Nguyên Liệu..." class="w-full bg-slate-50 border border-slate-300 rounded-xl px-3 py-2 text-xs text-slate-900 outline-none focus:border-blue-500 font-medium" />
+                <label class="block font-black text-slate-900 mb-1">Kho / Khu Vực (*):</label>
+                <input type="text" id="new-warehouse" required placeholder="Kho Bao Bì, Kho Nguyên Liệu..." class="w-full bg-white border-2 border-slate-300 rounded-xl px-3 py-2 text-xs text-slate-950 outline-none focus:border-blue-600 font-bold" />
               </div>
 
               <div>
-                <label class="block font-bold text-slate-700 mb-1">Dãy / Kệ (*):</label>
-                <input type="text" id="new-rack" required placeholder="Dãy A, Kệ K01, Giàn B2..." class="w-full bg-slate-50 border border-slate-300 rounded-xl px-3 py-2 text-xs text-slate-900 outline-none focus:border-blue-500 font-medium" />
+                <label class="block font-black text-slate-900 mb-1">Dãy / Kệ (*):</label>
+                <input type="text" id="new-rack" required placeholder="Dãy A, Kệ K01, Giàn B2..." class="w-full bg-white border-2 border-slate-300 rounded-xl px-3 py-2 text-xs text-slate-950 outline-none focus:border-blue-600 font-bold" />
               </div>
 
               <div>
-                <label class="block font-bold text-slate-700 mb-1">Tầng / Ô Vị Trí (*):</label>
-                <input type="text" id="new-tier" required placeholder="Tầng 2 - Ô 04, Tầng Sàn..." class="w-full bg-slate-50 border border-slate-300 rounded-xl px-3 py-2 text-xs text-slate-900 outline-none focus:border-blue-500 font-medium" />
+                <label class="block font-black text-slate-900 mb-1">Tầng / Ô Vị Trí (*):</label>
+                <input type="text" id="new-tier" required placeholder="Tầng 2 - Ô 04, Tầng Sàn..." class="w-full bg-white border-2 border-slate-300 rounded-xl px-3 py-2 text-xs text-slate-950 outline-none focus:border-blue-600 font-bold" />
               </div>
             </div>
 
-            <!-- Qty & Staff Note -->
             <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
               <div>
-                <label class="block font-bold text-slate-700 mb-1">Số Lượng / Tồn Kho Hiện Tại:</label>
-                <input type="text" id="new-qty-note" placeholder="Ví dụ: Tồn 120 cuộn, 85 bao, 15 thùng..." class="w-full bg-slate-50 border border-slate-300 rounded-xl px-3 py-2 text-xs text-slate-900 outline-none focus:border-blue-500 font-medium" />
+                <label class="block font-black text-slate-900 mb-1">Số Lượng / Tồn Kho Hiện Tại:</label>
+                <input type="text" id="new-qty-note" placeholder="Ví dụ: Tồn 120 cuộn, 85 bao, 15 thùng..." class="w-full bg-white border-2 border-slate-300 rounded-xl px-3 py-2 text-xs text-slate-950 outline-none focus:border-blue-600 font-bold" />
               </div>
 
               <div>
-                <label class="block font-bold text-slate-700 mb-1">Họ Tên Nhân Viên Chụp Ảnh:</label>
-                <input type="text" id="new-staff-name" placeholder="Ví dụ: Lê Vũ Tường, Nguyễn Văn Hùng..." class="w-full bg-slate-50 border border-slate-300 rounded-xl px-3 py-2 text-xs text-slate-900 outline-none focus:border-blue-500 font-medium" />
+                <label class="block font-black text-slate-900 mb-1">Họ Tên Nhân Viên Chụp Ảnh:</label>
+                <input type="text" id="new-staff-name" placeholder="Ví dụ: Lê Vũ Tường, Nguyễn Văn Hùng..." class="w-full bg-white border-2 border-slate-300 rounded-xl px-3 py-2 text-xs text-slate-950 outline-none focus:border-blue-600 font-bold" />
               </div>
             </div>
 
-            <!-- Extra Note -->
             <div>
-              <label class="block font-bold text-slate-700 mb-1">Ghi Chú Nhận Dạng Thêm:</label>
-              <textarea id="new-note" rows="2" placeholder="Nhập ghi chú đặc điểm nhận dạng (VD: nằm ở góc kệ cạnh lối đi chính, dán băng dính vàng...)" class="w-full bg-slate-50 border border-slate-300 rounded-xl p-3 text-xs text-slate-900 outline-none focus:border-blue-500 font-medium"></textarea>
+              <label class="block font-black text-slate-900 mb-1">Ghi Chú Nhận Dạng Thêm:</label>
+              <textarea id="new-note" rows="2" placeholder="Nhập ghi chú đặc điểm nhận dạng (VD: nằm ở góc kệ cạnh lối đi chính, dán băng dính vàng...)" class="w-full bg-white border-2 border-slate-300 rounded-xl p-3 text-xs text-slate-950 outline-none focus:border-blue-600 font-bold"></textarea>
             </div>
 
-            <!-- Action buttons -->
             <div class="flex justify-end gap-3 pt-3 border-t border-slate-200">
-              <button type="button" id="btn-reset-form" class="bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold text-xs px-4 py-2.5 rounded-xl transition border border-slate-300">Nhập Lại</button>
-              <button type="submit" class="bg-blue-600 hover:bg-blue-700 text-white font-bold text-xs px-6 py-2.5 rounded-xl transition shadow-md flex items-center gap-1.5">
+              <button type="button" id="btn-reset-form" class="bg-slate-200 hover:bg-slate-300 text-slate-900 font-black text-xs px-4 py-2.5 rounded-xl transition border border-slate-300">Nhập Lại</button>
+              <button type="submit" class="bg-blue-700 hover:bg-blue-800 text-white font-black text-xs px-6 py-2.5 rounded-xl transition shadow-md flex items-center gap-1.5">
                 💾 LƯU VỊ TRÍ HÌNH ẢNH KHO
               </button>
             </div>
@@ -189,76 +210,74 @@
     </div>
 
     <!-- Pane 3: Step-by-Step User Guide -->
-    <div class="tab-pane" id="pane-guide">
+    <div class="tab-pane hidden" id="pane-guide">
       <div class="max-w-4xl mx-auto space-y-6">
-        <div class="bg-gradient-to-r from-blue-600 to-indigo-700 rounded-3xl p-6 text-white shadow-xl">
+        <div class="bg-gradient-to-r from-blue-700 to-indigo-900 rounded-3xl p-6 text-white shadow-xl">
           <h2 class="text-2xl font-black font-heading mb-2">📖 Hướng Dẫn Sử Dụng Hệ Thống Tra Cứu Vị Trí Ảnh Kho</h2>
-          <p class="text-xs text-blue-100 leading-relaxed">
+          <p class="text-xs text-blue-100 font-bold leading-relaxed">
             Áp dụng cho bao bì, nguyên liệu khô, cuộn nilon, thùng phụ gia chưa kịp dán mã QR. Giúp nhân viên đi nhặt hàng tìm thấy vị trí ngay lập tức thông qua ảnh chụp thực tế!
           </p>
         </div>
 
-        <!-- Section 1 -->
         <div class="glass-card p-6 rounded-3xl space-y-4">
           <div class="flex items-center gap-3 border-b border-slate-200 pb-3">
             <span class="text-2xl">📷</span>
             <div>
-              <h3 class="text-base font-bold text-slate-900 font-heading">PHẦN 1: Chụp Ảnh & Gán Vị Trí Kệ Bằng Điện Thoại</h3>
-              <p class="text-xs text-slate-500">Nhân viên kho khi xếp hàng lên kệ chỉ mất 10 giây để ghi nhận</p>
+              <h3 class="text-base font-black text-slate-950 font-heading">PHẦN 1: Chụp Ảnh & Gán Vị Trí Kệ Bằng Điện Thoại</h3>
+              <p class="text-xs text-slate-600 font-bold">Nhân viên kho khi xếp hàng lên kệ chỉ mất 10 giây để ghi nhận</p>
             </div>
           </div>
 
-          <div class="space-y-3 text-xs text-slate-700">
+          <div class="space-y-3 text-xs text-slate-800 font-bold">
             <div class="flex gap-3 items-start">
               <div class="step-number">1</div>
               <div>
-                <strong class="text-slate-900 text-sm">Bước 1: Bấm tab "📷 Chụp & Thêm Vị Trí"</strong>
-                <p class="text-slate-500 mt-0.5">Bấm vào khung ảnh màu xanh để mở trực tiếp Camera trên điện thoại.</p>
+                <strong class="text-slate-950 text-sm">Bước 1: Bấm tab "📷 Chụp & Thêm Vị Trí"</strong>
+                <p class="text-slate-600 font-semibold mt-0.5">Bấm vào khung ảnh màu xanh để mở trực tiếp Camera trên điện thoại.</p>
               </div>
             </div>
 
             <div class="flex gap-3 items-start">
               <div class="step-number">2</div>
               <div>
-                <strong class="text-slate-900 text-sm">Bước 2: Hướng Camera vào góc kệ & chụp ảnh</strong>
-                <p class="text-slate-500 mt-0.5">Bấm chụp ảnh góc kệ chứa bao bì/nguyên liệu. Ứng dụng tự động nén dung lượng xuống còn 30KB siêu nhẹ!</p>
+                <strong class="text-slate-950 text-sm">Bước 2: Hướng Camera vào góc kệ & chụp ảnh</strong>
+                <p class="text-slate-600 font-semibold mt-0.5">Bấm chụp ảnh góc kệ chứa bao bì/nguyên liệu. Ứng dụng tự động nén dung lượng xuống còn 30KB siêu nhẹ!</p>
               </div>
             </div>
 
             <div class="flex gap-3 items-start">
               <div class="step-number">3</div>
               <div>
-                <strong class="text-slate-900 text-sm">Bước 3: Gõ tên bao bì & Tên Dãy/Kệ -> Bấm Lưu</strong>
-                <p class="text-slate-500 mt-0.5">Điền tên hàng (VD: <em>Cuộn màng co PE</em>), chọn Dãy/Kệ (VD: <em>Dãy A - Kệ K01 - Tầng 2</em>) -> Bấm <span class="bg-blue-600 text-white px-2 py-0.5 rounded font-bold">LƯU VỊ TRÍ HÌNH ẢNH</span>.</p>
+                <strong class="text-slate-950 text-sm">Bước 3: Gõ tên bao bì & Tên Dãy/Kệ -> Bấm Lưu</strong>
+                <p class="text-slate-600 font-semibold mt-0.5">Điền tên hàng (VD: <em>Cuộn màng co PE</em>), chọn Dãy/Kệ (VD: <em>Dãy A - Kệ K01 - Tầng 2</em>) -> Bấm <span class="bg-blue-700 text-white px-2 py-0.5 rounded font-bold">LƯU VỊ TRÍ HÌNH ẢNH</span>.</p>
               </div>
             </div>
           </div>
         </div>
 
-        <!-- Section 2 -->
         <div class="glass-card p-6 rounded-3xl space-y-4">
           <div class="flex items-center gap-3 border-b border-slate-200 pb-3">
             <span class="text-2xl">🔍</span>
             <div>
-              <h3 class="text-base font-bold text-slate-900 font-heading">PHẦN 2: Tra Cứu Hình Ảnh Khi Đi Nhặt Hàng / Soạn Đơn</h3>
-              <p class="text-xs text-slate-500">Giúp nhân viên đi soạn hàng tìm đúng ngay góc kệ mà không mất công tìm kiếm khắp kho</p>
+              <h3 class="text-base font-black text-slate-950 font-heading">PHẦN 2: Tra Cứu Hình Ảnh Khi Đi Nhặt Hàng / Soạn Đơn</h3>
+              <p class="text-xs text-slate-600 font-bold">Giúp nhân viên đi soạn hàng tìm đúng ngay góc kệ mà không mất công tìm kiếm khắp kho</p>
             </div>
           </div>
 
-          <div class="space-y-3 text-xs text-slate-700">
+          <div class="space-y-3 text-xs text-slate-800 font-bold">
             <div class="flex gap-3 items-start">
               <div class="step-number">1</div>
               <div>
-                <strong class="text-slate-900 text-sm">Bước 1: Gõ tên bao bì hoặc tên kệ vào ô tìm kiếm</strong>
-                <p class="text-slate-500 mt-0.5">Gõ từ khóa như <em>"PE"</em>, <em>"Bột mì"</em>, hoặc <em>"Dãy A"</em> vào ô tìm kiếm.</p>
+                <strong class="text-slate-950 text-sm">Bước 1: Chọn bộ lọc Kho, Dãy/Kệ, Tầng/Ô hoặc Gõ ô tìm kiếm</strong>
+                <p class="text-slate-600 font-semibold mt-0.5">Chọn dropdown Kho hoặc Dãy/Kệ để lọc danh sách tức thì.</p>
               </div>
             </div>
 
             <div class="flex gap-3 items-start">
               <div class="step-number">2</div>
               <div>
-                <strong class="text-slate-900 text-sm">Bước 2: Bấm vào ảnh để Phóng To quan sát góc kệ</strong>
-                <p class="text-slate-500 mt-0.5">Ảnh chụp thực tế góc kệ sắc nét sẽ hiện ra giúp nhân viên đi thẳng đến đúng ô vị trí để nhặt hàng 100% chuẩn xác!</p>
+                <strong class="text-slate-950 text-sm">Bước 2: Bấm vào ảnh để Phóng To quan sát góc kệ</strong>
+                <p class="text-slate-600 font-semibold mt-0.5">Ảnh chụp thực tế góc kệ sắc nét sẽ hiện ra giúp nhân viên đi thẳng đến đúng ô vị trí để nhặt hàng 100% chuẩn xác!</p>
               </div>
             </div>
           </div>
@@ -271,8 +290,8 @@
 
   <!-- ZOOM PHOTO MODAL -->
   <div class="modal-overlay" id="zoom-photo-modal">
-    <div class="bg-white p-6 rounded-3xl max-w-xl w-full relative max-h-[90vh] overflow-y-auto border border-slate-300 shadow-2xl">
-      <button onclick="closeModal('zoom-photo-modal')" class="absolute top-4 right-4 text-slate-400 hover:text-slate-900 text-lg">✕</button>
+    <div class="bg-white p-6 rounded-3xl max-w-xl w-full relative max-h-[90vh] overflow-y-auto border-2 border-slate-300 shadow-2xl">
+      <button onclick="closeModal('zoom-photo-modal')" class="absolute top-4 right-4 text-slate-400 hover:text-slate-950 text-xl font-bold">✕</button>
       <div id="zoom-modal-content">
         <!-- Dynamic content -->
       </div>
@@ -280,8 +299,8 @@
   </div>
 
   <!-- Footer -->
-  <footer class="text-center text-xs text-slate-500 py-6 border-t border-slate-200 max-w-7xl mx-auto w-full mt-8">
-    © 2026 📷 **Visual Photo Bin Finder & Warehouse Location Manager** • Auto Client-Side Image Compression Engine
+  <footer class="text-center text-xs text-slate-600 font-bold py-6 border-t border-slate-300 max-w-7xl mx-auto w-full mt-8">
+    © 2026 📷 **Visual Photo Bin Finder & Warehouse Location Manager** • Dynamic Multi-Level Filters & Outdoor Sunlight Responsive
   </footer>
 
   <script src="js/storage.js"></script>

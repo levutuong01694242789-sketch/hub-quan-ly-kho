@@ -1,20 +1,23 @@
 /**
  * Visual Photo Bin Finder & Warehouse Location Manager - Main Application Controller
+ * Pagination Engine for 3,000+ Photos, Cascading Dynamic Multi-Level Filters & Outdoor Sunlight UI.
  */
 
 let currentCompressedPhoto = null;
+let currentPage = 1;
+const pageSize = 24; // 24 cards per page for 0ms lag
+let currentFilteredLocations = [];
 
 document.addEventListener('DOMContentLoaded', () => {
-  console.log('[VisualBinApp] Initializing Visual Photo Location Manager...');
+  console.log('[VisualBinApp] Initializing Advanced Dynamic Location Manager...');
 
-  // 1. Populate Filter Options
-  populateWarehouseOptions();
+  // 1. Populate Cascading Dynamic Filters
+  populateDynamicFilters();
 
-  // 2. Render Initial Grid
+  // 2. Initial Render Grid & KPIs
   renderLocationGrid();
-  updateKPIs();
 
-  // 3. Tab Navigation setup
+  // 3. Tab Navigation Setup
   document.querySelectorAll('.tab-btn').forEach(btn => {
     btn.addEventListener('click', (e) => {
       document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
@@ -27,14 +30,37 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   });
 
-  // Search & Filter listeners
-  const searchInput = document.getElementById('search-input');
-  if (searchInput) searchInput.addEventListener('input', renderLocationGrid);
+  // Dynamic Filter Listeners
+  document.getElementById('search-input')?.addEventListener('input', () => { currentPage = 1; renderLocationGrid(); });
 
-  const warehouseSelect = document.getElementById('filter-warehouse');
-  if (warehouseSelect) warehouseSelect.addEventListener('change', renderLocationGrid);
+  document.getElementById('filter-warehouse')?.addEventListener('change', () => {
+    populateRackFilter();
+    populateTierFilter();
+    currentPage = 1;
+    renderLocationGrid();
+  });
 
-  // File Input / Camera Photo Selection with Automatic Compression
+  document.getElementById('filter-rack')?.addEventListener('change', () => {
+    populateTierFilter();
+    currentPage = 1;
+    renderLocationGrid();
+  });
+
+  document.getElementById('filter-tier')?.addEventListener('change', () => { currentPage = 1; renderLocationGrid(); });
+  document.getElementById('filter-staff')?.addEventListener('change', () => { currentPage = 1; renderLocationGrid(); });
+
+  // Reset Filters Button
+  document.getElementById('btn-reset-filters')?.addEventListener('click', () => {
+    document.getElementById('search-input').value = '';
+    document.getElementById('filter-warehouse').value = 'ALL';
+    populateRackFilter();
+    populateTierFilter();
+    document.getElementById('filter-staff').value = 'ALL';
+    currentPage = 1;
+    renderLocationGrid();
+  });
+
+  // Photo Input & Automatic Canvas Compression
   const photoInput = document.getElementById('new-photo-input');
   if (photoInput) {
     photoInput.addEventListener('change', async (e) => {
@@ -49,23 +75,20 @@ document.addEventListener('DOMContentLoaded', () => {
         if (previewBox) previewBox.classList.remove('hidden');
         if (sizeTag) sizeTag.textContent = `Đang nén ảnh (Gốc ${(file.size / (1024 * 1024)).toFixed(2)} MB)...`;
 
-        // Compress image using Client-side HTML5 Canvas
         const compressedBase64 = await VisualBinStorage.compressImage(file, 800, 0.75);
         currentCompressedPhoto = compressedBase64;
 
         if (previewImg) previewImg.src = compressedBase64;
-
-        // Calculate compressed KB size
         const compressedKb = (compressedBase64.length * 0.75 / 1024).toFixed(1);
         if (sizeTag) sizeTag.textContent = `✓ Nén ảnh thành công: ${compressedKb} KB (Siêu nhẹ & Nét!)`;
       } catch (err) {
         console.error('[ImageCompression] Error:', err);
-        alert('Không thể đọc ảnh. Vui lòng chọn ảnh khác!');
+        alert('Không thể nén ảnh. Vui lòng chọn ảnh khác!');
       }
     });
   }
 
-  // Save New Location Tag Form Submit
+  // Save Form Submit
   const formAdd = document.getElementById('form-add-location');
   if (formAdd) {
     formAdd.addEventListener('submit', (e) => {
@@ -76,21 +99,60 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // Action Buttons
   document.getElementById('btn-reset-form')?.addEventListener('click', resetAddForm);
-  document.getElementById('btn-load-samples')?.addEventListener('click', handleLoadSamples);
+  document.getElementById('btn-load-samples')?.addEventListener('click', handleLoad1000Samples);
   document.getElementById('btn-wipe-data')?.addEventListener('click', handleWipeData);
+
+  // Pagination Toolbar
+  document.getElementById('btn-prev-page')?.addEventListener('click', () => {
+    if (currentPage > 1) { currentPage--; renderLocationGrid(); }
+  });
+
+  document.getElementById('btn-next-page')?.addEventListener('click', () => {
+    const totalPages = Math.ceil(currentFilteredLocations.length / pageSize) || 1;
+    if (currentPage < totalPages) { currentPage++; renderLocationGrid(); }
+  });
 });
 
-function populateWarehouseOptions() {
-  const locations = VisualBinStorage.getLocations();
-  const warehouses = Array.from(new Set(locations.map(l => l.warehouse).filter(Boolean)));
+function populateDynamicFilters() {
+  populateWarehouseFilter();
+  populateRackFilter();
+  populateTierFilter();
+  populateStaffFilter();
+}
 
+function populateWarehouseFilter() {
   const select = document.getElementById('filter-warehouse');
   if (!select) return;
+  const warehouses = VisualBinStorage.getUniqueWarehouses();
+  select.innerHTML = '<option value="ALL">🏢 Tất cả Kho (Toàn Bộ)</option>';
+  warehouses.forEach(wh => { select.innerHTML += `<option value="${wh}">${wh}</option>`; });
+}
 
-  select.innerHTML = '<option value="ALL">Tất cả Kho Vị Trí</option>';
-  warehouses.forEach(wh => {
-    select.innerHTML += `<option value="${wh}">${wh}</option>`;
-  });
+function populateRackFilter() {
+  const select = document.getElementById('filter-rack');
+  if (!select) return;
+  const wh = document.getElementById('filter-warehouse')?.value || 'ALL';
+  const racks = VisualBinStorage.getUniqueRacks(wh);
+  select.innerHTML = '<option value="ALL">📦 Tất cả Dãy / Kệ</option>';
+  racks.forEach(rk => { select.innerHTML += `<option value="${rk}">${rk}</option>`; });
+}
+
+function populateTierFilter() {
+  const select = document.getElementById('filter-tier');
+  if (!select) return;
+  const wh = document.getElementById('filter-warehouse')?.value || 'ALL';
+  const rk = document.getElementById('filter-rack')?.value || 'ALL';
+  const tiers = VisualBinStorage.getUniqueTiers(wh, rk);
+  select.innerHTML = '<option value="ALL">📍 Tất cả Tầng / Ô Vị Trí</option>';
+  tiers.forEach(tr => { select.innerHTML += `<option value="${tr}">${tr}</option>`; });
+}
+
+function populateStaffFilter() {
+  const select = document.getElementById('filter-staff');
+  if (!select) return;
+  const staffList = VisualBinStorage.getUniqueStaff();
+  select.innerHTML = '<option value="ALL">👤 Tất cả Nhân Viên</option>';
+  staffList.forEach(st => { select.innerHTML += `<option value="${st}">${st}</option>`; });
 }
 
 function updateKPIs() {
@@ -113,56 +175,73 @@ function renderLocationGrid() {
   if (!container) return;
 
   const query = document.getElementById('search-input')?.value || '';
-  const warehouseFilter = document.getElementById('filter-warehouse')?.value || 'ALL';
+  const warehouse = document.getElementById('filter-warehouse')?.value || 'ALL';
+  const rack = document.getElementById('filter-rack')?.value || 'ALL';
+  const tier = document.getElementById('filter-tier')?.value || 'ALL';
+  const staff = document.getElementById('filter-staff')?.value || 'ALL';
 
-  const filtered = VisualBinStorage.searchLocations(query, warehouseFilter);
+  currentFilteredLocations = VisualBinStorage.searchLocationsAdvanced({ query, warehouse, rack, tier, staff });
   updateKPIs();
 
-  if (filtered.length === 0) {
+  const totalItems = currentFilteredLocations.length;
+  const totalPages = Math.ceil(totalItems / pageSize) || 1;
+
+  if (currentPage > totalPages) currentPage = totalPages;
+
+  const startIdx = (currentPage - 1) * pageSize;
+  const pageLocations = currentFilteredLocations.slice(startIdx, startIdx + pageSize);
+
+  // Update Pagination Info
+  const pageInfoEl = document.getElementById('page-info');
+  if (pageInfoEl) {
+    pageInfoEl.textContent = `Trang ${currentPage} / ${totalPages} (Tổng ${totalItems.toLocaleString()} vị trí ảnh)`;
+  }
+
+  if (pageLocations.length === 0) {
     container.innerHTML = `
-      <div class="col-span-full text-center py-12 text-slate-400 glass-card">
+      <div class="col-span-full text-center py-12 text-slate-500 glass-card">
         <div class="text-4xl mb-2">📷</div>
-        <p class="font-bold text-slate-700">Chưa có vị trí ảnh nào được ghi nhận.</p>
-        <p class="text-xs text-slate-500 mt-1">Bấm sang tab "📷 Chụp & Thêm Vị Trí Mới" hoặc bấm "⚡ Nạp Mẫu" để thử nghiệm!</p>
+        <p class="font-extrabold text-slate-800 text-base">Chưa tìm thấy vị trí ảnh nào phù hợp với bộ lọc.</p>
+        <p class="text-xs text-slate-500 mt-1">Bấm "⚡ Nạp Mẫu 1.000 Vị Trí" hoặc bấm "Xóa Bộ Lọc" để thử nghiệm dàn trang siêu tốc!</p>
       </div>
     `;
     return;
   }
 
-  container.innerHTML = filtered.map(item => `
+  container.innerHTML = pageLocations.map(item => `
     <div class="photo-card flex flex-col justify-between">
       <div>
         <div class="relative cursor-pointer overflow-hidden group" onclick="openZoomPhotoModal('${item.id}')">
           <img src="${item.photoBase64}" alt="${item.skuName}" class="photo-container group-hover:scale-105 transition duration-300" />
-          <div class="absolute inset-0 bg-slate-900/40 opacity-0 group-hover:opacity-100 transition flex items-center justify-center text-white text-xs font-bold gap-1.5">
-            <i class="fa-solid fa-magnifying-glass-plus"></i> Bấm Phóng To Ảnh
+          <div class="absolute inset-0 bg-slate-950/60 opacity-0 group-hover:opacity-100 transition flex items-center justify-center text-white text-xs font-black gap-1.5">
+            <i class="fa-solid fa-magnifying-glass-plus text-base"></i> BẤM PHÓNG TO ÁNH KỆ
           </div>
-          <span class="absolute top-3 right-3 bg-slate-900/80 backdrop-blur-md text-white text-[10px] font-extrabold px-2.5 py-1 rounded-full border border-slate-700">
+          <span class="absolute top-3 right-3 bg-slate-950 text-amber-400 text-[11px] font-black px-3 py-1 rounded-full border border-amber-500 shadow-md">
             ${item.id}
           </span>
         </div>
 
-        <div class="p-4 space-y-2">
+        <div class="p-4 space-y-2.5">
           <div class="flex items-center gap-1.5 flex-wrap">
             <span class="tag-badge tag-warehouse"><i class="fa-solid fa-warehouse text-[10px]"></i> ${item.warehouse}</span>
             <span class="tag-badge tag-rack"><i class="fa-solid fa-layer-group text-[10px]"></i> ${item.rack}</span>
           </div>
 
-          <h3 class="font-extrabold text-slate-900 text-sm leading-snug hover:text-blue-600 transition cursor-pointer" onclick="openZoomPhotoModal('${item.id}')">
+          <h3 class="font-black text-slate-900 text-sm leading-snug hover:text-blue-700 transition cursor-pointer" onclick="openZoomPhotoModal('${item.id}')">
             ${item.skuName}
           </h3>
 
-          <div class="text-xs text-slate-600 space-y-1">
-            <div class="flex items-center gap-1"><i class="fa-solid fa-location-dot text-rose-500"></i> <strong>Vị Trí Cụ Thể:</strong> ${item.tier}</div>
-            <div class="flex items-center gap-1"><i class="fa-solid fa-boxes-stacked text-amber-500"></i> <strong>Số Lượng / Tồn:</strong> ${item.qtyNote || 'Chưa ghi chú'}</div>
-            ${item.note ? `<div class="text-[11px] text-slate-500 bg-slate-50 p-2 rounded-lg border border-slate-200 mt-1">📝 ${item.note}</div>` : ''}
+          <div class="text-xs text-slate-800 space-y-1.5 bg-slate-50 p-2.5 rounded-xl border border-slate-200">
+            <div class="flex items-center gap-1.5 font-bold"><i class="fa-solid fa-location-dot text-rose-600"></i> <span>Vị Trí:</span> <span class="text-blue-700">${item.tier}</span></div>
+            <div class="flex items-center gap-1.5 font-bold"><i class="fa-solid fa-boxes-stacked text-amber-600"></i> <span>Tồn Kho:</span> <span class="text-slate-900">${item.qtyNote || 'Chưa ghi chú'}</span></div>
+            ${item.note ? `<div class="text-[11px] text-slate-700 font-semibold border-t border-slate-200 pt-1.5 mt-1">📝 ${item.note}</div>` : ''}
           </div>
         </div>
       </div>
 
-      <div class="p-3 border-t border-slate-100 bg-slate-50 flex items-center justify-between text-[11px] text-slate-500">
+      <div class="p-3 border-t border-slate-200 bg-slate-100 flex items-center justify-between text-[11px] text-slate-700 font-bold">
         <span>👤 ${item.staffName || 'Kho'} • ${item.updatedAt || ''}</span>
-        <button onclick="deleteLocationHandler('${item.id}')" class="text-rose-600 hover:text-rose-800 font-bold px-2 py-1 rounded hover:bg-rose-50 transition">
+        <button onclick="deleteLocationHandler('${item.id}')" class="bg-rose-100 hover:bg-rose-200 text-rose-800 border border-rose-300 font-black px-2.5 py-1 rounded-lg transition">
           🗑️ Xóa
         </button>
       </div>
@@ -202,10 +281,10 @@ function saveNewLocation() {
 
   VisualBinStorage.saveLocation(newItem);
   resetAddForm();
-  populateWarehouseOptions();
+  populateDynamicFilters();
+  currentPage = 1;
   renderLocationGrid();
 
-  // Switch back to search tab
   document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
   document.querySelectorAll('.tab-pane').forEach(p => p.classList.remove('active'));
   document.querySelector('[data-target="pane-grid"]').classList.add('active');
@@ -231,24 +310,24 @@ function openZoomPhotoModal(id) {
 
   content.innerHTML = `
     <div class="text-center pb-3 border-b border-slate-200 mb-4">
-      <span class="bg-blue-100 text-blue-800 text-[10px] font-black px-2.5 py-0.5 rounded-full border border-blue-300">MÃ VỊ TRÍ: ${item.id}</span>
-      <h3 class="text-lg font-bold text-slate-900 mt-1">${item.skuName}</h3>
-      <p class="text-xs text-slate-500">${item.warehouse} • ${item.rack} • ${item.tier}</p>
+      <span class="bg-blue-600 text-white text-[11px] font-black px-3 py-1 rounded-full shadow-xs">MÃ Ô VỊ TRÍ: ${item.id}</span>
+      <h3 class="text-xl font-black text-slate-900 mt-2">${item.skuName}</h3>
+      <p class="text-xs font-bold text-blue-700 mt-0.5">${item.warehouse} • ${item.rack} • ${item.tier}</p>
     </div>
 
-    <div class="bg-slate-900 rounded-2xl overflow-hidden mb-4 border border-slate-700 flex items-center justify-center min-h-[300px]">
-      <img src="${item.photoBase64}" alt="${item.skuName}" class="w-full max-h-[60vh] object-contain" />
+    <div class="bg-slate-950 rounded-2xl overflow-hidden mb-4 border-2 border-slate-800 flex items-center justify-center min-h-[300px]">
+      <img src="${item.photoBase64}" alt="${item.skuName}" class="w-full max-h-[65vh] object-contain" />
     </div>
 
-    <div class="grid grid-cols-2 gap-3 text-xs bg-slate-50 p-4 rounded-xl border border-slate-200 mb-4">
-      <div><span class="text-slate-500">Số Lượng / Tồn Kho:</span> <strong class="text-slate-900 block">${item.qtyNote || 'Chưa ghi chú'}</strong></div>
-      <div><span class="text-slate-500">Cán Bộ Chụp Ảnh:</span> <strong class="text-slate-900 block">${item.staffName || 'N/A'} (${item.updatedAt})</strong></div>
-      <div class="col-span-2"><span class="text-slate-500">Ghi Chú Vị Trí:</span> <p class="text-slate-800 font-medium mt-0.5">${item.note || 'Không có ghi chú thêm.'}</p></div>
+    <div class="grid grid-cols-2 gap-3 text-xs bg-slate-100 p-4 rounded-xl border border-slate-300 font-bold mb-4">
+      <div><span class="text-slate-600">Số Lượng Tồn Kho:</span> <strong class="text-slate-900 text-sm block">${item.qtyNote || 'Chưa ghi chú'}</strong></div>
+      <div><span class="text-slate-600">Cán Bộ Chụp Ảnh:</span> <strong class="text-slate-900 text-sm block">${item.staffName || 'N/A'} (${item.updatedAt})</strong></div>
+      <div class="col-span-2 border-t border-slate-200 pt-2"><span class="text-slate-600">Ghi Chú Vị Trí:</span> <p class="text-slate-900 font-bold mt-0.5">${item.note || 'Không có ghi chú thêm.'}</p></div>
     </div>
 
     <div class="flex justify-end gap-2">
-      <button onclick="closeModal('zoom-photo-modal')" class="bg-slate-200 hover:bg-slate-300 text-slate-800 font-bold text-xs px-5 py-2.5 rounded-xl transition">Đóng</button>
-      <button onclick="deleteLocationHandler('${item.id}'); closeModal('zoom-photo-modal');" class="bg-rose-100 hover:bg-rose-200 text-rose-700 font-bold text-xs px-4 py-2.5 rounded-xl border border-rose-300 transition">🗑️ Xóa Ô Vị Trí Này</button>
+      <button onclick="closeModal('zoom-photo-modal')" class="bg-slate-200 hover:bg-slate-300 text-slate-900 font-black text-xs px-6 py-3 rounded-xl transition">Đóng</button>
+      <button onclick="deleteLocationHandler('${item.id}'); closeModal('zoom-photo-modal');" class="bg-rose-100 hover:bg-rose-200 text-rose-800 font-black text-xs px-4 py-3 rounded-xl border border-rose-300 transition">🗑️ Xóa Vị Trí Này</button>
     </div>
   `;
 
@@ -258,23 +337,25 @@ function openZoomPhotoModal(id) {
 function deleteLocationHandler(id) {
   if (confirm(`Bạn có chắc chắn muốn xóa vị trí ảnh "${id}" khỏi hệ thống?`)) {
     VisualBinStorage.deleteLocation(id);
-    populateWarehouseOptions();
+    populateDynamicFilters();
     renderLocationGrid();
   }
 }
 
-function handleLoadSamples() {
-  VisualBinStorage.generateSampleRecords();
-  populateWarehouseOptions();
+function handleLoad1000Samples() {
+  const count = VisualBinStorage.generate1000SampleRecords();
+  populateDynamicFilters();
+  currentPage = 1;
   renderLocationGrid();
-  alert('✓ Đã nạp thành công 3 vị trí kho mẫu thử nghiệm!');
+  alert(`✓ Đã nạp thành công 1.000 vị trí ảnh mẫu! Đã kích hoạt dàn trang 24 vị trí/trang giúp chạy siêu tốc 0ms lag.`);
 }
 
 function handleWipeData() {
   const confirmPin = prompt('⚠️ BẢO MẬT: Nhập chữ "CONFIRM" hoặc PIN 8888 để xóa trắng dữ liệu ảnh vị trí kho:');
   if (confirmPin === 'CONFIRM' || confirmPin === '8888') {
     VisualBinStorage.clearAllData();
-    populateWarehouseOptions();
+    populateDynamicFilters();
+    currentPage = 1;
     renderLocationGrid();
     alert('✓ Đã XÓA TRẮNG toàn bộ vị trí ảnh kho!');
   }

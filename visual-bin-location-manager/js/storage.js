@@ -1,17 +1,16 @@
 /**
- * Visual Photo Bin Finder & Warehouse Location Manager - Data & Compression Storage Engine
- * Automatic client-side image compression down to ~30KB WebP to guarantee 0ms lag.
+ * Visual Photo Bin Finder & Warehouse Location Manager - Storage & Dynamic Filter Engine
+ * High Contrast Mobile Support, Client-Side Compression, Dynamic Multi-Level Taxonomy, 1,000+ Items Pagination.
  */
 
 window.VisualBinStorage = (function () {
   const STORAGE_KEY = 'visual_bin_locations_v1';
 
-  // SVG placeholder samples for instant test preview
-  const samplePhotoBaoBi = 'data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="600" height="400" viewBox="0 0 600 400"><rect width="600" height="400" fill="%231e293b"/><rect x="50" y="80" width="500" height="240" fill="%23334155" rx="16"/><text x="300" y="150" font-family="sans-serif" font-size="22" font-weight="bold" fill="%2338bdf8" text-anchor="middle">KHO BAO BÌ - KỆ A1-03</text><text x="300" y="190" font-family="sans-serif" font-size="16" fill="%23f8fafc" text-anchor="middle">MÀNG CO PE & CUỘN NILON NHẬP KHẨU</text><rect x="150" y="220" width="300" height="60" fill="%230284c7" rx="10"/><text x="300" y="258" font-family="sans-serif" font-size="16" font-weight="bold" fill="%23ffffff" text-anchor="middle">TẦNG 2 - Ô SỐ 04</text></svg>';
+  const samplePhotoBaoBi = 'data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="600" height="400" viewBox="0 0 600 400"><rect width="600" height="400" fill="%230f172a"/><rect x="40" y="60" width="520" height="280" fill="%231e293b" rx="16" stroke="%2338bdf8" stroke-width="4"/><text x="300" y="140" font-family="sans-serif" font-size="24" font-weight="900" fill="%2338bdf8" text-anchor="middle">KHO BAO BÌ LC01 - KỆ A1-03</text><text x="300" y="185" font-family="sans-serif" font-size="18" font-weight="bold" fill="%23ffffff" text-anchor="middle">MÀNG CO PE 50CM & CUỘN NILON</text><rect x="120" y="220" width="360" height="65" fill="%231d4ed8" rx="12"/><text x="300" y="260" font-family="sans-serif" font-size="18" font-weight="900" fill="%23ffffff" text-anchor="middle">TẦNG 2 - VỊ TRÍ Ô 04</text></svg>';
 
-  const samplePhotoNguyenLieu = 'data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="600" height="400" viewBox="0 0 600 400"><rect width="600" height="400" fill="%230f172a"/><rect x="50" y="80" width="500" height="240" fill="%231e293b" rx="16"/><text x="300" y="150" font-family="sans-serif" font-size="22" font-weight="bold" fill="%234ade80" text-anchor="middle">KHO NGUYÊN LIỆU KHÔ - DÃY B</text><text x="300" y="190" font-family="sans-serif" font-size="16" fill="%23f8fafc" text-anchor="middle">BAO BỘT MÌ & BỘT NĂNG 25KG</text><rect x="150" y="220" width="300" height="60" fill="%2316a34a" rx="10"/><text x="300" y="258" font-family="sans-serif" font-size="16" font-weight="bold" fill="%23ffffff" text-anchor="middle">KỆ K05 - TẦNG SÀN</text></svg>';
+  const samplePhotoNguyenLieu = 'data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="600" height="400" viewBox="0 0 600 400"><rect width="600" height="400" fill="%23022c22"/><rect x="40" y="60" width="520" height="280" fill="%23064e3b" rx="16" stroke="%234ade80" stroke-width="4"/><text x="300" y="140" font-family="sans-serif" font-size="24" font-weight="900" fill="%234ade80" text-anchor="middle">KHO NGUYÊN LIỆU KHÔ - DÃY B</text><text x="300" y="185" font-family="sans-serif" font-size="18" font-weight="bold" fill="%23ffffff" text-anchor="middle">BAO BỘT MÌ TÁO ĐỎ 25KG (85 BAO)</text><rect x="120" y="220" width="360" height="65" fill="%2315803d" rx="12"/><text x="300" y="260" font-family="sans-serif" font-size="18" font-weight="900" fill="%23ffffff" text-anchor="middle">KỆ K05 - TẦNG SÀN VỊ TRÍ 02</text></svg>';
 
-  const samplePhotoPhuGia = 'data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="600" height="400" viewBox="0 0 600 400"><rect width="600" height="400" fill="%2331135e"/><rect x="50" y="80" width="500" height="240" fill="%234c1d95" rx="16"/><text x="300" y="150" font-family="sans-serif" font-size="22" font-weight="bold" fill="%23c084fc" text-anchor="middle">KHO PHỤ GIA - KỆ C02</text><text x="300" y="190" font-family="sans-serif" font-size="16" fill="%23f8fafc" text-anchor="middle">THÙNG GIA VỊ & HƯƠNG LIỆU THỰC PHẨM</text><rect x="150" y="220" width="300" height="60" fill="%239333ea" rx="10"/><text x="300" y="258" font-family="sans-serif" font-size="16" font-weight="bold" fill="%23ffffff" text-anchor="middle">TẦNG 3 - VỊ TRÍ 01</text></svg>';
+  const samplePhotoPhuGia = 'data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="600" height="400" viewBox="0 0 600 400"><rect width="600" height="400" fill="%233b0764"/><rect x="40" y="60" width="520" height="280" fill="%23581c87" rx="16" stroke="%23c084fc" stroke-width="4"/><text x="300" y="140" font-family="sans-serif" font-size="24" font-weight="900" fill="%23c084fc" text-anchor="middle">KHO PHỤ GIA - KỆ C02</text><text x="300" y="185" font-family="sans-serif" font-size="18" font-weight="bold" fill="%23ffffff" text-anchor="middle">THÙNG HƯƠNG LIỆU BÒ NƯỚNG 20KG</text><rect x="120" y="220" width="360" height="65" fill="%237e22ce" rx="12"/><text x="300" y="260" font-family="sans-serif" font-size="18" font-weight="900" fill="%23ffffff" text-anchor="middle">TẦNG 3 - VỊ TRÍ 01</text></svg>';
 
   const defaultLocations = [
     {
@@ -60,11 +59,8 @@ window.VisualBinStorage = (function () {
 
   function getLocations() {
     initStorage();
-    try {
-      return JSON.parse(localStorage.getItem(STORAGE_KEY)) || defaultLocations;
-    } catch {
-      return defaultLocations;
-    }
+    try { return JSON.parse(localStorage.getItem(STORAGE_KEY)) || defaultLocations; }
+    catch { return defaultLocations; }
   }
 
   function saveLocation(locItem) {
@@ -85,55 +81,65 @@ window.VisualBinStorage = (function () {
     localStorage.setItem(STORAGE_KEY, JSON.stringify([]));
   }
 
-  /**
-   * Automatic Client-Side Image Downscaler & Compressor
-   * Takes a File or Image DataURL and compresses it to max 800px WebP / JPEG (~30-50KB)
-   */
   function compressImage(imageSource, maxWidth = 800, quality = 0.75) {
     return new Promise((resolve, reject) => {
       const img = new Image();
       img.onload = () => {
-        let width = img.width;
-        let height = img.height;
-
+        let width = img.width, height = img.height;
         if (width > maxWidth) {
           height = Math.round((height * maxWidth) / width);
           width = maxWidth;
         }
-
         const canvas = document.createElement('canvas');
         canvas.width = width;
         canvas.height = height;
-
         const ctx = canvas.getContext('2d');
         ctx.fillStyle = '#ffffff';
         ctx.fillRect(0, 0, width, height);
         ctx.drawImage(img, 0, 0, width, height);
-
-        // Export compressed Data URL
-        const compressedDataUrl = canvas.toDataURL('image/jpeg', quality);
-        resolve(compressedDataUrl);
+        resolve(canvas.toDataURL('image/jpeg', quality));
       };
       img.onerror = (err) => reject(err);
-
-      if (typeof imageSource === 'string') {
-        img.src = imageSource;
-      } else if (imageSource instanceof File || imageSource instanceof Blob) {
+      if (typeof imageSource === 'string') img.src = imageSource;
+      else if (imageSource instanceof File || imageSource instanceof Blob) {
         const reader = new FileReader();
         reader.onload = (e) => { img.src = e.target.result; };
         reader.readAsDataURL(imageSource);
-      } else {
-        reject('Invalid image input');
-      }
+      } else reject('Invalid image source');
     });
   }
 
-  function searchLocations(query, warehouseFilter = 'ALL') {
+  // Dynamic Extractors for Multi-dimensional Filtering
+  function getUniqueWarehouses() {
+    return Array.from(new Set(getLocations().map(l => l.warehouse).filter(Boolean))).sort();
+  }
+
+  function getUniqueRacks(warehouseFilter = 'ALL') {
+    let list = getLocations();
+    if (warehouseFilter !== 'ALL') list = list.filter(l => l.warehouse === warehouseFilter);
+    return Array.from(new Set(list.map(l => l.rack).filter(Boolean))).sort();
+  }
+
+  function getUniqueTiers(warehouseFilter = 'ALL', rackFilter = 'ALL') {
+    let list = getLocations();
+    if (warehouseFilter !== 'ALL') list = list.filter(l => l.warehouse === warehouseFilter);
+    if (rackFilter !== 'ALL') list = list.filter(l => l.rack === rackFilter);
+    return Array.from(new Set(list.map(l => l.tier).filter(Boolean))).sort();
+  }
+
+  function getUniqueStaff() {
+    return Array.from(new Set(getLocations().map(l => l.staffName).filter(Boolean))).sort();
+  }
+
+  // Advanced Multi-Field Dynamic Filtering Engine
+  function searchLocationsAdvanced(filters = {}) {
+    const { query = '', warehouse = 'ALL', rack = 'ALL', tier = 'ALL', staff = 'ALL' } = filters;
     let list = getLocations();
 
-    if (warehouseFilter && warehouseFilter !== 'ALL') {
-      list = list.filter(item => item.warehouse === warehouseFilter);
-    }
+    if (warehouse !== 'ALL') list = list.filter(l => l.warehouse === warehouse);
+    if (rack !== 'ALL') list = list.filter(l => l.rack === rack);
+    if (tier !== 'ALL') list = list.filter(l => l.tier === tier);
+    if (staff !== 'ALL') list = list.filter(l => l.staffName === staff);
 
     if (!query) return list;
     const q = query.toLowerCase().trim();
@@ -149,9 +155,37 @@ window.VisualBinStorage = (function () {
     ));
   }
 
-  function generateSampleRecords() {
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(defaultLocations));
-    return defaultLocations.length;
+  // Generate 1,000 realistic sample photo location records for pagination stress test
+  function generate1000SampleRecords() {
+    const warehouses = ['Kho Bao Bì LC01', 'Kho Nguyên Liệu Khô', 'Kho Phụ Gia & Hương Liệu', 'Kho Vật Tư Tổng A', 'Kho Thành Phẩm B'];
+    const racks = ['Dãy A - Kệ 01', 'Dãy A - Kệ 02', 'Dãy B - Kệ K05', 'Dãy C - Kệ C02', 'Giàn D1', 'Giàn D2'];
+    const tiers = ['Tầng Sàn - Vị Trí 01', 'Tầng 1 - Ô 02', 'Tầng 2 - Ô 04', 'Tầng 3 - Vị Trí 01', 'Tầng Cao - Ô 08'];
+    const items = [
+      'Cuộn Màng Co PE 50cm', 'Bao Bột Mì Táo Đỏ 25kg', 'Thùng Hương Liệu Bò Nướng 20kg',
+      'Cuộn Nilon Lót Thùng Carton', 'Bao Bột Năng Nhập Khẩu 50kg', 'Thùng Bột Ngọt Ajinomoto 25kg',
+      'Cuộn Băng Dính Niêm Phong 5cm', 'Vỏ Thùng Carton 5 Lớp LC01'
+    ];
+    const staffList = ['Lê Vũ Tường', 'Nguyễn Văn Hùng', 'Phạm Minh Đức', 'Trần Văn Nam'];
+    const photos = [samplePhotoBaoBi, samplePhotoNguyenLieu, samplePhotoPhuGia];
+
+    const list = [];
+    for (let i = 1; i <= 1000; i++) {
+      list.push({
+        id: `LOC-2026-${String(i).padStart(4, '0')}`,
+        warehouse: warehouses[i % warehouses.length],
+        rack: racks[i % racks.length],
+        tier: tiers[i % tiers.length],
+        skuName: `${items[i % items.length]} #${i}`,
+        qtyNote: `Tồn kho ${10 + (i % 90)} đơn vị`,
+        staffName: staffList[i % staffList.length],
+        updatedAt: `2026-01-${String((i % 28) + 1).padStart(2, '0')} 10:30`,
+        photoBase64: photos[i % photos.length],
+        note: `Hàng lưu tại vị trí kho thử nghiệm mẫu thứ ${i}`
+      });
+    }
+
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(list));
+    return list.length;
   }
 
   return {
@@ -160,8 +194,12 @@ window.VisualBinStorage = (function () {
     deleteLocation,
     clearAllData,
     compressImage,
-    searchLocations,
-    generateSampleRecords,
+    getUniqueWarehouses,
+    getUniqueRacks,
+    getUniqueTiers,
+    getUniqueStaff,
+    searchLocationsAdvanced,
+    generate1000SampleRecords,
     getLocationById: (id) => getLocations().find(item => item.id === id)
   };
 })();
