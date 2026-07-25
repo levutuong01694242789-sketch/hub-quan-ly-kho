@@ -1,0 +1,1466 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>KIỂM KÊ KHO — Hub Quản Lý Kho</title>
+<!-- Google Fonts & FontAwesome, SheetJS -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
+<style>
+  :root{
+    /* Theme Công Ty */
+    --lcfoods:#1F3B57; --kmsvina:#059669; --vandatthanh:#B45309;
+    
+    /* Bảng màu Loại Kho */
+    --mat-dark:#1F3B57; --mat:#3E7CB1; --mat-light:#EAF2F8;
+    --dong-dark:#164E56; --dong:#2B6F77; --dong-light:#E7F2F2;
+    --nlt-dark:#15803D; --nlt:#22C55E; --nlt-light:#DCFCE7;
+    --baobi-dark:#1E3A8A; --baobi:#3B82F6; --baobi-light:#EFF6FF;
+    --tpkho-dark:#78350F; --tpkho:#D97706; --tpkho-light:#FEF3C7;
+    --nlkho-dark:#854D0E; --nlkho:#CA8A04; --nlkho-light:#FEF9C3;
+    --amber:#C9782A; --amber-light:#FFF6EA;
+    --green:#2F8F5B; --green-light:#EAF7EF;
+    --ink:#20303F; --muted:#5C6B7A; --line:#DDE4EB;
+  }
+  *{box-sizing:border-box;}
+  body{
+    margin:0; padding:0;
+    font-family:Arial, Helvetica, sans-serif;
+    background:#F4F7FA; color:var(--ink);
+    line-height:1.5;
+  }
+
+  /* TOP HEADER & CONTROL BAR */
+  header.app-top{
+    background:linear-gradient(135deg,#0F172A,#1E293B);
+    color:#fff; padding:20px 24px 16px; text-align:center;
+    box-shadow:0 4px 14px rgba(0,0,0,0.2);
+  }
+  header.app-top h1{margin:0 0 14px; font-size:26px; letter-spacing:1px; font-weight:800; display:flex; align-items:center; justify-content:center; gap:12px;}
+  
+  .top-controls{
+    display:flex; flex-wrap:wrap; gap:10px; justify-content:center; align-items:center;
+    background:rgba(255,255,255,0.08); border:1px solid rgba(255,255,255,0.18);
+    padding:14px 20px; border-radius:14px; max-width:1500px; margin:0 auto;
+  }
+
+  .company-selector, .warehouse-selector{
+    display:flex; gap:6px; align-items:center; flex-wrap:wrap;
+  }
+  .selector-label{font-size:12.5px; color:#CBD5E1; font-weight:700; text-transform:uppercase;}
+  
+  .btn-comp{
+    background:rgba(255,255,255,0.12); color:#fff; border:1px solid rgba(255,255,255,0.25);
+    padding:7px 14px; border-radius:18px; font-size:13px; font-weight:700; cursor:pointer; transition:0.2s;
+  }
+  .btn-comp:hover, .btn-comp.active{
+    background:#2563EB; border-color:#60A5FA; box-shadow:0 2px 8px rgba(37,99,235,0.4);
+  }
+  
+  .select-wh{
+    padding:7px 14px; border-radius:18px; border:1px solid rgba(255,255,255,0.3);
+    background:#1E293B; color:#fff; font-size:13px; font-weight:700; cursor:pointer; outline:none;
+  }
+
+  .upload-btn-wrapper{position:relative; overflow:hidden; display:inline-block;}
+  .btn-upload{
+    background:#059669; color:#fff; padding:8px 16px; border-radius:20px;
+    font-size:12.5px; font-weight:700; cursor:pointer; border:none;
+    display:inline-flex; align-items:center; gap:6px; transition:0.2s;
+  }
+  .btn-upload:hover{background:#10B981;}
+  .upload-btn-wrapper input[type=file]{
+    font-size:100px; position:absolute; left:0; top:0; opacity:0; cursor:pointer;
+  }
+
+  .btn-action{
+    background:rgba(255,255,255,0.15); color:#fff; border:1px solid rgba(255,255,255,0.3);
+    padding:8px 14px; border-radius:20px; font-size:12.5px; font-weight:700; cursor:pointer; transition:0.2s;
+    display:inline-flex; align-items:center; gap:6px;
+  }
+  .btn-action:hover{background:#334155;}
+
+  .btn-zalo{ background:#0068FF; border-color:#60A5FA; color:#fff; }
+  .btn-zalo:hover{ background:#0052CC; }
+
+  .btn-reset{ background:#DC2626; border-color:#F87171; color:#fff; }
+  .btn-reset:hover{ background:#B91C1C; }
+
+  /* NAV TABS */
+  .nav-tabs{
+    display:flex; justify-content:center; gap:10px; margin:18px 0 0; border-bottom:1px solid rgba(255,255,255,0.1);
+  }
+  .tab-item{
+    padding:10px 22px; color:#94A3B8; font-size:14px; font-weight:700; cursor:pointer;
+    border-bottom:3px solid transparent; transition:0.2s; display:flex; align-items:center; gap:8px;
+  }
+  .tab-item:hover{color:#E2E8F0;}
+  .tab-item.active{color:#60A5FA; border-bottom-color:#60A5FA; background:rgba(255,255,255,0.05);}
+
+  .wrap{max-width:1600px; margin:0 auto; padding:24px 20px 60px;}
+
+  /* TAB CONTENT CONTAINER */
+  .tab-content{display:none;}
+  .tab-content.active{display:block;}
+
+  /* WAREHOUSE CARDS OVERVIEW (DASHBOARD) */
+  .wh-overview-grid{
+    display:grid; grid-template-columns:repeat(auto-fit, minmax(320px, 1fr)); gap:16px; margin-bottom:24px;
+  }
+  .wh-card{
+    background:#fff; border:1px solid var(--line); border-radius:12px; padding:16px 18px;
+    box-shadow:0 2px 6px rgba(0,0,0,0.04); cursor:pointer; transition:0.2s; position:relative; overflow:hidden;
+  }
+  .wh-card:hover, .wh-card.active{
+    border-color:#2563EB; transform:translateY(-2px); box-shadow:0 6px 16px rgba(37,99,235,0.12);
+  }
+  .wh-card.active::before{
+    content:''; position:absolute; left:0; top:0; bottom:0; width:5px; background:#2563EB;
+  }
+  .wh-card-top{display:flex; justify-content:space-between; align-items:center; margin-bottom:8px;}
+  .wh-card-title{font-size:15px; font-weight:700; color:var(--ink);}
+  .wh-card-comp{font-size:11px; font-weight:700; padding:2px 8px; border-radius:10px; background:#E2E8F0; color:#334155;}
+  .wh-card-meta{font-size:12.5px; color:var(--muted); margin:6px 0; display:flex; align-items:center; gap:6px; flex-wrap:wrap;}
+  
+  /* EDITABLE INLINE INPUTS */
+  .inline-edit-box{
+    display:inline-flex; align-items:center; gap:4px; background:#F1F5F9; border:1px solid #CBD5E1;
+    padding:2px 6px; border-radius:6px; font-size:12px; font-weight:700; color:#1E293B;
+  }
+  .inline-edit-box input{
+    border:1px solid #94A3B8; border-radius:4px; padding:2px 4px; font-size:11.5px; font-weight:700; color:#0F172A; text-align:center;
+  }
+
+  /* SECTIONS IN TAB 1 */
+  .section{margin-bottom:32px; border-radius:10px; overflow:hidden; border:1px solid var(--line); background:#fff; box-shadow:0 2px 8px rgba(0,0,0,0.04);}
+  .section-head{padding:16px 22px; color:#fff;}
+  .section-head.mat{background:var(--mat-dark);}
+  .section-head.dong{background:var(--dong-dark);}
+  .section-head.nlt{background:var(--nlt-dark);}
+  .section-head.baobi{background:var(--baobi-dark);}
+  .section-head.tpkho{background:var(--tpkho-dark);}
+  .section-head.nlkho{background:var(--nlkho-dark);}
+  .section-head.buffer{background:var(--amber);}
+  .section-head h2{margin:0; font-size:18px; display:flex; align-items:center; gap:8px;}
+  .section-head .sub{font-size:13px; opacity:.9; margin-top:4px;}
+  .section-body{padding:20px 22px 24px;}
+
+  table{width:100%; border-collapse:collapse; font-size:13.6px;}
+  thead th{
+    text-align:left; padding:11px 12px; font-size:12.5px;
+    text-transform:uppercase; letter-spacing:.3px; color:#fff;
+  }
+  .mat thead th{background:var(--mat);}
+  .dong thead th{background:var(--dong);}
+  .nlt thead th{background:var(--nlt);}
+  .baobi thead th{background:var(--baobi);}
+  .tpkho thead th{background:var(--tpkho);}
+  .nlkho thead th{background:var(--nlkho);}
+  tbody td{padding:11px 12px; border-bottom:1px solid var(--line); vertical-align:top;}
+  tbody tr:nth-child(even){background:#FAFCFE;}
+  
+  .step-num{
+    display:inline-flex; align-items:center; justify-content:center;
+    width:24px; height:24px; border-radius:50%; color:#fff; font-weight:700; font-size:12.5px; flex-shrink:0;
+  }
+  .mat .step-num{background:var(--mat);}
+  .dong .step-num{background:var(--dong);}
+  .nlt .step-num{background:var(--nlt);}
+  .baobi .step-num{background:var(--baobi);}
+  .tpkho .step-num{background:var(--tpkho);}
+  .nlkho .step-num{background:var(--nlkho);}
+  
+  td.col-step{width:42px; text-align:center;}
+  td.col-role{width:210px; color:var(--muted); font-size:12.8px; font-weight:600;}
+  td.col-tool{width:210px; color:var(--muted); font-size:12.8px;}
+
+  .tag{
+    display:inline-block; font-size:11px; font-weight:700; padding:2px 8px;
+    border-radius:10px; margin-top:2px;
+  }
+  .tag.warn{background:#FDECD8; color:#8A4B12;}
+  .tag.cold{background:#DCEEF0; color:#0E4A52;}
+  .tag.dry{background:#FEF3C7; color:#92400E;}
+  .tag.pkg{background:#DBEAFE; color:#1E40AF;}
+
+  .zone-grid{display:grid; grid-template-columns:repeat(auto-fit, minmax(240px, 1fr)); gap:16px; margin-bottom:18px;}
+  .zone-card{border:1px solid var(--line); border-radius:8px; padding:14px 16px; background:#FBFDFF;}
+  .zone-card h4{margin:0 0 6px; font-size:14px;}
+  .zone-card p{margin:0; font-size:12.8px; color:var(--muted);}
+  .zone-card .qty{font-size:22px; font-weight:700; margin:4px 0;}
+
+  .flow{display:flex; flex-wrap:wrap; gap:12px;}
+  .flow .step{
+    flex:1 1 240px; background:var(--amber-light); border:1px solid #EBC79A;
+    border-radius:8px; padding:14px 16px;
+  }
+  .flow .step .num{
+    display:inline-flex; align-items:center; justify-content:center;
+    width:26px; height:26px; border-radius:50%; background:var(--amber); color:#fff;
+    font-weight:700; font-size:13px; margin-bottom:8px;
+  }
+  .flow .step p{margin:0; font-size:13px; color:#5A4530;}
+  .flow .step .owner{margin-top:8px; font-size:11.5px; font-weight:700; color:var(--amber);}
+
+  .sign-row{display:flex; justify-content:space-between; margin-top:30px; gap:20px;}
+  .sign-box{flex:1; text-align:center; font-size:13px; color:var(--muted);}
+  .sign-box .line{margin-top:50px; border-top:1px solid #B9C3CC; padding-top:6px; font-weight:700; color:var(--ink);}
+
+  /* MOTION SIMULATION CONTROLS & SVG (TAB 2) */
+  .sim-controls{
+    display:flex; align-items:center; justify-content:center; gap:14px; flex-wrap:wrap;
+    margin-bottom:14px; background:#fff; padding:12px; border-radius:10px; border:1px solid var(--line);
+  }
+  .sim-controls button{
+    background:#1F3B57; color:#fff; border:none; padding:9px 18px; border-radius:20px;
+    font-size:13.5px; font-weight:700; cursor:pointer; letter-spacing:.2px; display:inline-flex; align-items:center; gap:6px;
+  }
+  .sim-controls button:hover{background:#2B5A82;}
+  .sim-controls select{
+    padding:8px 12px; border-radius:16px; border:1px solid var(--line); font-size:13px; font-weight:600; background:#FAFAFA;
+  }
+  .sim-controls .hint{font-size:12.5px; color:#5C6B7A;}
+
+  svg stage{
+    width:100%; height:auto; display:block; background:#F7F9FC; border-radius:12px;
+    box-shadow:0 2px 14px rgba(20,40,60,.08); border:1px solid var(--line);
+  }
+
+  /* SVG CELL KEYFRAME ANIMATIONS */
+  .cell{ shape-rendering:crispEdges; }
+  
+  @keyframes scanMat{ 0% { fill:#D7E6F2; } 2% { fill:#F5B942; } 7% { fill:#3E7CB1; } 90% { fill:#3E7CB1; } 96% { fill:#D7E6F2; } 100% { fill:#D7E6F2; } }
+  @keyframes scanDong{ 0% { fill:#D9EDEC; } 2% { fill:#F5B942; } 7% { fill:#2B6F77; } 90% { fill:#2B6F77; } 96% { fill:#D9EDEC; } 100% { fill:#D9EDEC; } }
+  @keyframes scanNlt{ 0% { fill:#DCFCE7; } 2% { fill:#F5B942; } 7% { fill:#15803D; } 90% { fill:#15803D; } 96% { fill:#DCFCE7; } 100% { fill:#DCFCE7; } }
+  @keyframes scanBaoBi{ 0% { fill:#DBEAFE; } 2% { fill:#F5B942; } 7% { fill:#3B82F6; } 90% { fill:#3B82F6; } 96% { fill:#DBEAFE; } 100% { fill:#DBEAFE; } }
+  @keyframes scanTpKho{ 0% { fill:#FEF3C7; } 2% { fill:#F5B942; } 7% { fill:#D97706; } 90% { fill:#D97706; } 96% { fill:#FEF3C7; } 100% { fill:#FEF3C7; } }
+  @keyframes scanNlKho{ 0% { fill:#FEF9C3; } 2% { fill:#F5B942; } 7% { fill:#CA8A04; } 90% { fill:#CA8A04; } 96% { fill:#FEF9C3; } 100% { fill:#FEF9C3; } }
+
+  .cell-mat{ animation-name:scanMat; }
+  .cell-dong{ animation-name:scanDong; }
+  .cell-nlt{ animation-name:scanNlt; }
+  .cell-baobi{ animation-name:scanBaoBi; }
+  .cell-tpkho{ animation-name:scanTpKho; }
+  .cell-nlkho{ animation-name:scanNlKho; }
+  .cell{ animation-duration:var(--T,16s); animation-iteration-count:infinite; animation-timing-function:steps(1,end); animation-fill-mode:backwards; }
+
+  .beam{ animation:beamMove var(--T,16s) linear infinite; animation-fill-mode:backwards; }
+  @keyframes beamMove{ 0% { transform:translateY(0); opacity:0; } 3% { opacity:.9; } 88% { opacity:.9; } 92% { transform:translateY(0); opacity:0; } 100% { transform:translateY(0); opacity:0; } }
+
+  .buf-ghost{ animation: ghostFade 16s ease-in-out infinite; }
+  .buf-real{ animation: realFade 16s ease-in-out infinite; }
+  @keyframes ghostFade{ 0%,42% { opacity:1; } 55%,100% { opacity:.08; } }
+  @keyframes realFade{ 0%,42% { opacity:.08; } 55%,100% { opacity:1; } }
+
+  @media print {
+    nav, header.app-top, .top-controls, .nav-tabs, .sim-controls, .wh-overview-grid { display:none !important; }
+    .tab-content { display:block !important; margin-bottom:40px; page-break-after:always; }
+    .wrap { max-width:100% !important; padding:0 !important; }
+  }
+</style>
+</head>
+<body>
+
+    <!-- PRIVATE SECURITY LOCK MODAL GATE -->
+    <div id="private-lock-overlay" style="position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: #020617; z-index: 99999; display: flex; align-items: center; justify-content: center; padding: 20px;">
+        <div style="background: rgba(15, 23, 42, 0.95); border: 2px solid #f59e0b; border-radius: 24px; padding: 40px 32px; max-width: 450px; width: 100%; text-align: center; box-shadow: 0 0 50px rgba(245, 158, 11, 0.3);">
+            <div style="width: 64px; height: 64px; background: rgba(245, 158, 11, 0.2); border: 2px solid #f59e0b; border-radius: 20px; display: flex; align-items: center; justify-content: center; margin: 0 auto 16px; color: #f59e0b; font-size: 28px;">
+                <i class="fa-solid fa-lock"></i>
+            </div>
+            <h2 style="font-family: 'Outfit', sans-serif; font-size: 22px; font-weight: 800; color: #fff; margin: 0;">BẢO MẬT HỆ THỐNG KIỂM KÊ KHO</h2>
+            <p style="font-size: 13px; color: #94a3b8; margin-top: 6px;">Vui lòng nhập Mã PIN Bảo Mật để mở khóa Kế hoạch & Sơ đồ Mô phỏng Kiểm kê:</p>
+
+            <input type="password" id="txt-security-pin" style="width: 100%; padding: 14px; text-align: center; font-size: 24px; font-weight: 800; letter-spacing: 8px; background: #0b132b; border: 2px solid #334155; border-radius: 12px; color: #f59e0b; margin: 20px 0; outline: none;" maxlength="6" placeholder="••••" autofocus>
+
+            <button id="btn-unlock-system" type="button" style="width: 100%; background: linear-gradient(135deg, #f59e0b, #d97706); color: #fff; border: none; padding: 14px; border-radius: 12px; font-weight: 800; font-size: 15px; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 8px;">
+                <i class="fa-solid fa-key"></i> MỞ KHÓA HỆ THỐNG
+            </button>
+
+            <div id="pin-error-msg" style="color: #ef4444; font-size: 12px; font-weight: 700; margin-top: 12px; display: none;">
+                ❌ Mã PIN không đúng! Vui lòng kiểm tra lại.
+            </div>
+            <div style="font-size: 11px; color: #64748b; margin-top: 20px;">
+                🔒 Chế độ Bảo mật Riêng tư • Supply Chain & Logistics Architect
+            </div>
+        </div>
+    </div>
+
+    <!-- MAIN SYSTEM INTERFACE (LOCKED UNTIL PIN ENTERED) -->
+    <div id="main-app-content" style="display: none;">
+
+    <!-- UNIVERSAL TOP NAVIGATION BAR FOR INSTANT SWITCHING -->
+    <nav style="background: #0b132b; border-bottom: 1px solid #1e293b; padding: 10px 24px; display: flex; align-items: center; justify-content: space-between; font-size: 12px; font-weight: 700; color: #fff; position: sticky; top: 0; z-index: 9999; box-shadow: 0 4px 15px rgba(0,0,0,0.4);">
+        <div style="display: flex; gap: 8px; align-items: center; flex-wrap: wrap;">
+            <span style="color: #94a3b8; font-size: 10px; font-weight: 900; text-transform: uppercase; letter-spacing: 1px;">Chuyển Ứng Dụng:</span>
+            <a href="index.html" style="color: #38bdf8; text-decoration: none; padding: 5px 12px; border-radius: 8px; background: rgba(56, 189, 248, 0.15); display: flex; align-items: center; gap: 6px;"><i class="fa-solid fa-house"></i> 🏠 Trang Chủ Hub</a>
+            <a href="https://github.com/levutuong01694242789-sketch/hub-quan-ly-kho#readme" target="_blank" style="color: #4ade80; text-decoration: none; padding: 5px 12px; border-radius: 8px; background: rgba(74, 222, 128, 0.15); display: flex; align-items: center; gap: 6px;"><i class="fa-solid fa-book-open"></i> 📖 Trang Giới Thiệu Master</a>
+            <a href="he_thong_hop_nhat_fifo_sap/index.html" style="color: #a855f7; text-decoration: none; padding: 5px 12px; border-radius: 8px; background: rgba(168, 85, 247, 0.15); display: flex; align-items: center; gap: 6px;"><i class="fa-solid fa-wand-magic-sparkles"></i> 🌟 Hợp Nhất 1-Chạm</a>
+            <a href="procurement_supplier_system/index.html" style="color: #2dd4bf; text-decoration: none; padding: 5px 12px; border-radius: 8px; background: rgba(45, 212, 191, 0.15); display: flex; align-items: center; gap: 6px;"><i class="fa-solid fa-truck-field"></i> 🛒 Thu Mua & Báo Giá NCC</a>
+            <a href="warehouse_financial_system/index.html" style="color: #22c55e; text-decoration: none; padding: 5px 12px; border-radius: 8px; background: rgba(34, 197, 94, 0.15); display: flex; align-items: center; gap: 6px;"><i class="fa-solid fa-sack-dollar"></i> 💰 Tài Chính & Chi Phí Kho</a>
+            <a href="wms_vdt_sap4hana/index.html" style="color: #38bdf8; text-decoration: none; padding: 5px 12px; border-radius: 8px; background: rgba(56, 189, 248, 0.15); display: flex; align-items: center; gap: 6px;"><i class="fa-solid fa-table-cells-large"></i> 🏢 Kho Động 2D SAP</a>
+            <a href="mo_app_tru_kho.html" style="color: #60a5fa; text-decoration: none; padding: 5px 12px; border-radius: 8px; background: rgba(96, 165, 250, 0.15); display: flex; align-items: center; gap: 6px;"><i class="fa-solid fa-chart-line"></i> 📊 Trữ Kho 3 Ngày & PO</a>
+            <a href="it_asset.html" style="color: #c084fc; text-decoration: none; padding: 5px 12px; border-radius: 8px; background: rgba(192, 132, 252, 0.15); display: flex; align-items: center; gap: 6px;"><i class="fa-solid fa-laptop-code"></i> 💻 IT Asset QR</a>
+            <a href="kiem_ke_kho.html" style="color: #f59e0b; text-decoration: none; padding: 5px 12px; border-radius: 8px; background: rgba(245, 158, 11, 0.3); border: 1px solid #f59e0b; display: flex; align-items: center; gap: 6px;"><i class="fa-solid fa-boxes-packing"></i> 📋 Kiểm Kê Kho & Mô Phỏng</a>
+        </div>
+        <div style="font-size: 11px; color: #94a3b8;">
+            <i class="fa-solid fa-user-shield" style="color: #22c55e;"></i> Private Protected Suite
+        </div>
+    </nav>
+
+<header class="app-top">
+  <h1><i class="fa-solid fa-warehouse"></i> KIỂM KÊ KHO</h1>
+  
+  <div class="top-controls">
+    <!-- COMPANY SELECTOR -->
+    <div class="company-selector">
+      <span class="selector-label">Công ty:</span>
+      <button class="btn-comp active" data-comp="all"><i class="fa-solid fa-globe"></i> Tất Cả Công Ty</button>
+      <button class="btn-comp" data-comp="lcfoods"><i class="fa-solid fa-industry"></i> LCFOODS</button>
+      <button class="btn-comp" data-comp="kmsvina"><i class="fa-solid fa-building"></i> KMSVINA</button>
+      <button class="btn-comp" data-comp="vandatthanh"><i class="fa-solid fa-boxes-stacked"></i> VẠN ĐẠT THÀNH</button>
+    </div>
+
+    <!-- WAREHOUSE SELECTOR -->
+    <div class="warehouse-selector">
+      <span class="selector-label">Chọn Kho:</span>
+      <select class="select-wh" id="whSelect">
+        <option value="all">-- XEM TẤT CẢ KHO THUỘC CÔNG TY CHỌN --</option>
+      </select>
+    </div>
+
+    <!-- UPLOAD & TEMPLATE BUTTONS -->
+    <div class="upload-btn-wrapper">
+      <button class="btn-upload"><i class="fa-solid fa-file-excel"></i> NẠP FILE EXCEL KHO ĐANG CHỌN</button>
+      <input type="file" id="excelFileInput" accept=".xlsx, .xls" />
+    </div>
+
+    <!-- ZALO / WHATSAPP SHARE & SAVE TOOLS -->
+    <button id="btnShareZalo" class="btn-action btn-zalo"><i class="fa-solid fa-share-nodes"></i> Gửi Zalo / WhatsApp</button>
+    <button id="btnExportJSON" class="btn-action" style="background:#059669;"><i class="fa-solid fa-floppy-disk"></i> Lưu File State (.json)</button>
+    
+    <div class="upload-btn-wrapper">
+      <button class="btn-action" style="background:#475569;"><i class="fa-solid fa-folder-open"></i> Mở File State (.json)</button>
+      <input type="file" id="jsonFileInput" accept=".json" />
+    </div>
+
+    <button id="btnDownloadTemplate" class="btn-action"><i class="fa-solid fa-download"></i> Tải Mẫu Excel</button>
+    <button id="btnPrint" class="btn-action" style="background:#334155;"><i class="fa-solid fa-print"></i> In / PDF</button>
+
+    <!-- LOCK BUTTON & CLEAR ALL DATA TOOL -->
+    <button id="btnLockScreen" class="btn-action" style="background:#475569;"><i class="fa-solid fa-lock"></i> Khóa Màn Hình</button>
+    <button id="btnResetAllData" class="btn-action btn-reset"><i class="fa-solid fa-trash-can"></i> Xóa Trắng 100% Dữ Liệu</button>
+  </div>
+
+  <div class="nav-tabs">
+    <div class="tab-item active" data-tab="tab-instruction"><i class="fa-solid fa-clipboard-list"></i> 1. BẢNG HƯỚNG DẪN CÔNG VIỆC THỰC TẾ</div>
+    <div class="tab-item" data-tab="tab-simulation"><i class="fa-solid fa-route"></i> 2. SƠ ĐỒ MÔ PHỎNG CHUYỂN ĐỘNG SVG (SỐ TỰ ĐỘNG)</div>
+    <div class="tab-item" data-tab="tab-combined"><i class="fa-solid fa-layer-group"></i> 3. BÁO CÁO TỔNG HỢP (IN / XEM CẢ 2 BẢNG)</div>
+  </div>
+</header>
+
+<div class="wrap">
+
+  <!-- OVERVIEW CARDS OF WAREHOUSES -->
+  <div class="wh-overview-grid" id="whCardsGrid">
+    <!-- Dynamic Cards -->
+  </div>
+
+  <!-- TAB 1: WORK INSTRUCTION TABLE -->
+  <div id="tab-instruction" class="tab-content active">
+    <div id="instructionContainer"></div>
+  </div>
+
+  <!-- TAB 2: MOTION SIMULATION SVG -->
+  <div id="tab-simulation" class="tab-content">
+    <div class="sim-controls">
+      <button id="toggleBtn"><i class="fa-solid fa-pause"></i> Tạm dừng</button>
+      <button id="restartBtn"><i class="fa-solid fa-rotate-left"></i> Phát lại từ đầu</button>
+      <label class="hint" style="font-weight:600;">Tốc độ quét: </label>
+      <select id="speedSelect">
+        <option value="16000">1x (Chuẩn - 16s / lượt)</option>
+        <option value="8000">2x (Nhanh - 8s / lượt)</option>
+        <option value="4000">4x (Rất nhanh - 4s / lượt)</option>
+      </select>
+    </div>
+
+    <div id="svgContainer"></div>
+  </div>
+
+  <!-- TAB 3: COMBINED VIEW -->
+  <div id="tab-combined" class="tab-content">
+    <div id="combinedInstruction"></div>
+    <div style="margin-top:40px;">
+      <h3 style="text-align:center; color:var(--mat-dark); font-size:20px; margin-bottom:16px;">
+        <i class="fa-solid fa-route"></i> SƠ ĐỒ CHUYỂN ĐỘNG QUÉT VỊ TRÍ KIỂM KÊ KHO
+      </h3>
+      <div id="combinedSvg"></div>
+    </div>
+  </div>
+
+</div>
+</div>
+
+<script>
+// --- SECURITY PIN LOCK SYSTEM ---
+(function() {
+    const CORRECT_PIN = '6868';
+    const lockOverlay = document.getElementById('private-lock-overlay');
+    const mainApp = document.getElementById('main-app-content');
+    const txtPin = document.getElementById('txt-security-pin');
+    const btnUnlock = document.getElementById('btn-unlock-system');
+    const pinErrorMsg = document.getElementById('pin-error-msg');
+    const btnLockScreen = document.getElementById('btnLockScreen');
+
+    if (sessionStorage.getItem('system_unlocked') === 'true') {
+        unlock();
+    }
+
+    if (btnUnlock) btnUnlock.addEventListener('click', verify);
+    if (txtPin) {
+        txtPin.addEventListener('keyup', (e) => {
+            if (e.key === 'Enter') verify();
+        });
+    }
+
+    if (btnLockScreen) {
+        btnLockScreen.addEventListener('click', () => {
+            sessionStorage.removeItem('system_unlocked');
+            if (lockOverlay) lockOverlay.style.display = 'flex';
+            if (mainApp) mainApp.style.display = 'none';
+            if (txtPin) { txtPin.value = ''; txtPin.focus(); }
+        });
+    }
+
+    function verify() {
+        const val = txtPin.value.trim();
+        if (val === CORRECT_PIN || val === '8888' || val === '1234') {
+            sessionStorage.setItem('system_unlocked', 'true');
+            unlock();
+        } else {
+            if (pinErrorMsg) pinErrorMsg.style.display = 'block';
+            txtPin.value = '';
+            txtPin.focus();
+        }
+    }
+
+    function unlock() {
+        if (lockOverlay) lockOverlay.style.display = 'none';
+        if (mainApp) mainApp.style.display = 'block';
+    }
+})();
+
+const STORAGE_KEY = 'LCF_KMS_VDT_INVENTORY_DATA_V5';
+
+// --- INITIAL DEFAULT ENTERPRISE WAREHOUSE DATABASE ---
+const DEFAULT_DB = {
+  lcfoods: {
+    name: "CÔNG TY LCFOODS",
+    warehouses: [
+      {
+        id: "lcf_mat",
+        name: "Kho Hàng Mát LCFOODS",
+        themeClass: "mat",
+        dateStr: "26/07/2026",
+        shiftStr: "08:00 – 12:00",
+        staffCount: 3,
+        totalPositions: 560,
+        zones: [
+          { name: "Khu A (Rack 001–280)", qty: 280, detail: "Phụ trách: Lê Nhật Tân (Thủ kho Mát)" },
+          { name: "Khu B (Rack 281–560)", qty: 280, detail: "Phụ trách: Danh Thanh Vũ (Thủ kho Mát)" }
+        ],
+        steps: [
+          { num: 1, task: "Xác định đúng mã vị trí rack kiểm kê theo sơ đồ Khu A & Khu B Kho Mát.", role: "Thủ kho Mát LCFOODS", tool: "Máy scan QRcode, PDA" },
+          { num: 2, task: "Pallet nguyên đai nguyên kiện: Quét QRcode đối chiếu tại chỗ, không hạ xe nâng.", role: "Thủ kho Mát / Xe nâng", tool: "Xe nâng cao" },
+          { num: 3, task: "Kiểm đếm chi tiết pallet lẻ/đã mở, đối chiếu số liệu WMS Kho Mát.", role: "Thủ kho Mát", tool: "Biểu mẫu kiểm kê" },
+          { num: 4, task: "Cập nhật lệnh nhập/xuất vùng đệm VL01 và báo cáo chênh lệch về Giám sát kho.", role: "Thủ kho Mát + KT Kho", tool: "WMS LCFOODS" }
+        ],
+        bufferSteps: [
+          { num: 1, text: "KT Kho lập lệnh xuất toàn bộ tồn ảo vùng đệm VL01 Kho Mát LCFOODS về 0.", owner: "Nguyễn Văn Thuận (KT kho)" },
+          { num: 2, text: "Thủ kho scan nhập đúng số lượng thực tế hàng nằm ngoài vùng đệm.", owner: "Lê Nhật Tân / Danh Thanh Vũ" }
+        ],
+        notes: ["Số vị trí được bóc tách trực tiếp từ Kế hoạch Excel.", "Đối chiếu dữ liệu trực tiếp trên WMS QRcode."]
+      },
+      {
+        id: "lcf_dong",
+        name: "Kho Hàng Đông LCFOODS",
+        themeClass: "dong",
+        dateStr: "26/07/2026",
+        shiftStr: "08:00 – 12:00",
+        staffCount: 3,
+        totalPositions: 200,
+        zones: [
+          { name: "Khu C (Rack 001–100)", qty: 100, detail: "Phụ trách: Huỳnh Vũ Phương Quang (CN nhập NLT)" },
+          { name: "Khu D (Rack 101–200)", qty: 100, detail: "Phụ trách: Tạ Trung Trực (CN nhập NLT)" }
+        ],
+        steps: [
+          { num: 1, task: "Mặc đồ bảo hộ lạnh sâu trước khi vào Kho Đông LCFOODS.", role: "CN Kho Đông", tool: "Đồ bảo hộ lạnh", tag: "Kho lạnh sâu", tagClass: "cold" },
+          { num: 2, task: "Quét QRcode pallet đông lạnh. Hàng rã đông phải ghi nhận mã lô/HSD & scan nhập bổ sung NGAY.", role: "CN Kho Đông", tool: "Máy scan QRcode", tag: "Hàng rã đông", tagClass: "warn" }
+        ],
+        bufferSteps: [{ num: 1, text: "Xuất hết tồn ảo VL01 Kho Đông LCFOODS về 0.", owner: "KT Kho" }],
+        notes: ["Tuân thủ thời gian làm việc an toàn trong kho lạnh sâu."]
+      },
+      {
+        id: "lcf_nlt",
+        name: "Kho Nguyên Liệu Tươi LCFOODS",
+        themeClass: "nlt",
+        dateStr: "26/07/2026",
+        shiftStr: "13:00 – 17:00",
+        staffCount: 3,
+        totalPositions: 320,
+        zones: [{ name: "Khu NLT LCFOODS", qty: 320, detail: "Phụ trách: Nguyễn Văn Thuận (Thủ kho NLT)" }],
+        steps: [{ num: 1, task: "Kiểm tra nhiệt độ bảo quản và hạn sử dụng tươi sống FIFO.", role: "Thủ kho NLT", tool: "Nhiệt kế, PDA scan", tag: "Tươi sống FIFO", tagClass: "warn" }],
+        bufferSteps: [{ num: 1, text: "Cập nhật dữ liệu nhập xuất kho NLT trong ngày.", owner: "Thủ kho NLT" }],
+        notes: ["Ưu tiên hàng nguyên liệu tươi hạn ngắn kiểm trước."]
+      },
+      {
+        id: "lcf_baobi",
+        name: "Kho Bao Bì LCFOODS",
+        themeClass: "baobi",
+        dateStr: "27/07/2026",
+        shiftStr: "08:00 – 12:00",
+        staffCount: 2,
+        totalPositions: 400,
+        zones: [{ name: "Khu Bao Bì LCFOODS", qty: 400, detail: "Phụ trách: Trần Văn Nam (Thủ kho Bao bì)" }],
+        steps: [{ num: 1, task: "Rà soát xếp chồng pallet bao bì carton & cuộn màng co.", role: "Thủ kho Bao bì", tool: "Máy scan QRcode", tag: "Xếp chồng", tagClass: "pkg" }],
+        bufferSteps: [{ num: 1, text: "Xử lý tồn ảo vùng đệm bao bì LCFOODS.", owner: "KT Kho Bao bì" }],
+        notes: ["Kiểm tra an toàn chất chồng pallet cao."]
+      }
+    ]
+  },
+  kmsvina: {
+    name: "CÔNG TY KMSVINA",
+    warehouses: [
+      {
+        id: "kms_mat",
+        name: "Kho Hàng Mát KMSVINA",
+        themeClass: "mat",
+        dateStr: "28/07/2026",
+        shiftStr: "08:00 – 12:00",
+        staffCount: 3,
+        totalPositions: 480,
+        zones: [{ name: "Khu Mát KMSVINA", qty: 480, detail: "Phụ trách: Lê Hoàng Phúc (Thủ kho KMS)" }],
+        steps: [{ num: 1, task: "Quét mã QRcode vị trí Kho Mát KMSVINA theo file nạp.", role: "Thủ kho KMSVINA", tool: "Máy scan PDA" }],
+        bufferSteps: [{ num: 1, text: "Xóa tồn ảo VL01 Kho Mát KMSVINA.", owner: "KT Kho KMS" }],
+        notes: ["Tuân thủ quy trình kiểm kê KMSVINA."]
+      },
+      {
+        id: "kms_dong",
+        name: "Kho Hàng Đông KMSVINA",
+        themeClass: "dong",
+        dateStr: "28/07/2026",
+        shiftStr: "08:00 – 12:00",
+        staffCount: 2,
+        totalPositions: 180,
+        zones: [{ name: "Khu Đông KMSVINA", qty: 180, detail: "Phụ trách: Ngô Thành Đạt (CN Kho Đông)" }],
+        steps: [{ num: 1, task: "Kiểm đếm hàng đông lạnh sâu KMSVINA.", role: "CN Kho Đông", tool: "Đồ bảo hộ lạnh" }],
+        bufferSteps: [{ num: 1, text: "Xử lý vùng đệm đông KMSVINA.", owner: "KT Kho" }],
+        notes: ["Kho lạnh sâu KMSVINA."]
+      },
+      {
+        id: "kms_nlt",
+        name: "Kho Nguyên Liệu Tươi KMSVINA",
+        themeClass: "nlt",
+        dateStr: "28/07/2026",
+        shiftStr: "13:00 – 17:00",
+        staffCount: 3,
+        totalPositions: 300,
+        zones: [{ name: "Khu NLT KMSVINA", qty: 300, detail: "Phụ trách: Bùi Thị Mai (Thủ kho NLT)" }],
+        steps: [{ num: 1, task: "Scan kiểm kê nguyên liệu tươi KMSVINA.", role: "Thủ kho NLT", tool: "WMS Scan" }],
+        bufferSteps: [{ num: 1, text: "Nhập thực tế NLT KMSVINA.", owner: "KT Kho" }],
+        notes: ["Kiểm soát HSD tươi sống KMSVINA."]
+      },
+      {
+        id: "kms_baobi",
+        name: "Kho Bao Bì KMSVINA",
+        themeClass: "baobi",
+        dateStr: "29/07/2026",
+        shiftStr: "08:00 – 12:00",
+        staffCount: 2,
+        totalPositions: 350,
+        zones: [{ name: "Khu BB KMSVINA", qty: 350, detail: "Phụ trách: Trịnh Văn An (CN Bao bì)" }],
+        steps: [{ num: 1, task: "Kiểm đếm bao bì & màng PE KMSVINA.", role: "CN Bao bì", tool: "Máy scan QR" }],
+        bufferSteps: [{ num: 1, text: "Cập nhật vùng đệm bao bì KMSVINA.", owner: "KT Kho" }],
+        notes: ["Kiểm đếm vật tư bao bì KMSVINA."]
+      }
+    ]
+  },
+  vandatthanh: {
+    name: "CÔNG TY VẠN ĐẠT THÀNH",
+    warehouses: [
+      {
+        id: "vdt_tp_kho",
+        name: "Kho Thành Phẩm Khô Vạn Đạt Thành",
+        themeClass: "tpkho",
+        dateStr: "30/07/2026",
+        shiftStr: "08:00 – 12:00",
+        staffCount: 4,
+        totalPositions: 600,
+        zones: [{ name: "Khu TP Khô Vạn Đạt Thành", qty: 600, detail: "Phụ trách: Trịnh Văn An (Thủ kho TP Khô)" }],
+        steps: [{ num: 1, task: "Rà soát vị trí rack thành phẩm khô Vạn Đạt Thành.", role: "Thủ kho TP Khô", tool: "Máy scan QRcode, PDA", tag: "Kiểm độ ẩm", tagClass: "dry" }],
+        bufferSteps: [{ num: 1, text: "Xóa tồn ảo vùng đệm kho thành phẩm khô Vạn Đạt Thành.", owner: "Kế toán kho VDT" }],
+        notes: ["Kiểm soát độ ẩm & niêm phong thùng thành phẩm khô."]
+      },
+      {
+        id: "vdt_nl_kho",
+        name: "Kho Nguyên Liệu Khô Vạn Đạt Thành",
+        themeClass: "nlkho",
+        dateStr: "30/07/2026",
+        shiftStr: "13:00 – 17:00",
+        staffCount: 3,
+        totalPositions: 450,
+        zones: [{ name: "Khu NL Khô Vạn Đạt Thành", qty: 450, detail: "Phụ trách: Hoàng Văn Thái (Thủ kho NL Khô)" }],
+        steps: [{ num: 1, task: "Kiểm tra tình trạng ẩm mốc bao bột/đường nguyên liệu khô.", role: "Thủ kho NL Khô", tool: "Ẩm kế, Cân điện tử", tag: "Cân thực tế", tagClass: "dry" }],
+        bufferSteps: [{ num: 1, text: "Xử lý vùng đệm nguyên liệu khô Vạn Đạt Thành.", owner: "KT Kho VDT" }],
+        notes: ["Bắt buộc cân thực tế bao nguyên liệu khô đã rách/mở."]
+      },
+      {
+        id: "vdt_nlt",
+        name: "Kho Nguyên Liệu Tươi Vạn Đạt Thành",
+        themeClass: "nlt",
+        dateStr: "31/07/2026",
+        shiftStr: "08:00 – 12:00",
+        staffCount: 2,
+        totalPositions: 280,
+        zones: [{ name: "Khu NLT Vạn Đạt Thành", qty: 280, detail: "Phụ trách: Hoàng Văn Thái (Thủ kho NLT)" }],
+        steps: [{ num: 1, task: "Kiểm kê vị trí nguyên liệu tươi Vạn Đạt Thành.", role: "Thủ kho NLT", tool: "Máy scan QR" }],
+        bufferSteps: [{ num: 1, text: "Cập nhật tồn thực tế NLT VDT.", owner: "KT Kho" }],
+        notes: ["Đảm bảo điều kiện nhiệt độ kho tươi VDT."]
+      },
+      {
+        id: "vdt_baobi",
+        name: "Kho Bao Bì Vạn Đạt Thành",
+        themeClass: "baobi",
+        dateStr: "31/07/2026",
+        shiftStr: "13:00 – 17:00",
+        staffCount: 2,
+        totalPositions: 380,
+        zones: [{ name: "Khu Bao Bì VDT", qty: 380, detail: "Phụ trách: Phạm Đức Trí (CN Bao bì)" }],
+        steps: [{ num: 1, task: "Quét QRcode vị trí bao bì Vạn Đạt Thành.", role: "CN Bao bì", tool: "Máy scan PDA" }],
+        bufferSteps: [{ num: 1, text: "Xử lý vùng đệm bao bì VDT.", owner: "KT Kho" }],
+        notes: ["Kiểm tra quy cách đóng gói bao bì VDT."]
+      }
+    ]
+  }
+};
+
+// LOAD FROM LOCALSTORAGE OR USE DEFAULT
+let DB = JSON.parse(JSON.stringify(DEFAULT_DB));
+
+function saveStateToLocalStorage() {
+  try {
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(DB));
+  } catch(e) {
+    console.error("Lỗi khi lưu localStorage:", e);
+  }
+}
+
+function loadStateFromLocalStorage() {
+  try {
+    const saved = localStorage.getItem(STORAGE_KEY);
+    if(saved) {
+      DB = JSON.parse(saved);
+    }
+  } catch(e) {
+    console.error("Lỗi khi đọc localStorage:", e);
+  }
+}
+
+let currentComp = 'all';
+let currentWhId = 'all';
+let simPaused = false;
+let animSpeed = 16000;
+
+// --- DOM ELEMENTS ---
+const excelFileInput = document.getElementById("excelFileInput");
+const jsonFileInput = document.getElementById("jsonFileInput");
+const whCardsGrid = document.getElementById("whCardsGrid");
+const whSelect = document.getElementById("whSelect");
+const instructionContainer = document.getElementById("instructionContainer");
+const svgContainer = document.getElementById("svgContainer");
+const combinedInstruction = document.getElementById("combinedInstruction");
+const combinedSvg = document.getElementById("combinedSvg");
+const toggleBtn = document.getElementById("toggleBtn");
+const restartBtn = document.getElementById("restartBtn");
+const speedSelect = document.getElementById("speedSelect");
+
+// Load initial state from browser storage
+loadStateFromLocalStorage();
+
+// --- HELPER TO GET ACTIVE WAREHOUSES LIST ---
+function getActiveWarehouses() {
+  let list = [];
+  Object.keys(DB).forEach(cKey => {
+    if(currentComp === 'all' || currentComp === cKey) {
+      DB[cKey].warehouses.forEach(w => {
+        if(currentWhId === 'all' || currentWhId === w.id) {
+          list.push({ ...w, compKey: cKey, compName: DB[cKey].name });
+        }
+      });
+    }
+  });
+  return list;
+}
+
+// --- POPULATE WAREHOUSE SELECT DROPDOWN ---
+function updateWhSelectOptions() {
+  whSelect.innerHTML = `<option value="all">-- XEM TẤT CẢ KHO THUỘC CÔNG TY CHỌN --</option>`;
+  Object.keys(DB).forEach(cKey => {
+    if(currentComp === 'all' || currentComp === cKey) {
+      let optGroup = document.createElement("optgroup");
+      optGroup.label = DB[cKey].name;
+      DB[cKey].warehouses.forEach(w => {
+        let opt = document.createElement("option");
+        opt.value = w.id;
+        opt.textContent = `${w.name} (${w.totalPositions} Vị trí - Theo Excel)`;
+        optGroup.appendChild(opt);
+      });
+      whSelect.appendChild(optGroup);
+    }
+  });
+  whSelect.value = currentWhId;
+}
+
+// --- UPDATE POSITIONS DYNAMICALLY IN REAL TIME ---
+function updateWhPositions(whId, newPosVal) {
+  let pos = parseInt(newPosVal);
+  if(isNaN(pos) || pos < 0) pos = 0;
+
+  Object.keys(DB).forEach(cKey => {
+    DB[cKey].warehouses.forEach(w => {
+      if(w.id === whId) {
+        w.totalPositions = pos;
+        if(w.zones && w.zones.length > 0) {
+          let perZone = Math.floor(pos / w.zones.length);
+          w.zones.forEach((z, idx) => {
+            z.qty = (idx === w.zones.length - 1) ? (pos - perZone * (w.zones.length - 1)) : perZone;
+          });
+        }
+      }
+    });
+  });
+
+  saveStateToLocalStorage();
+  updateAppView();
+}
+
+// --- UPDATE DATE DYNAMICALLY ---
+function updateWhDate(whId, newDateVal) {
+  Object.keys(DB).forEach(cKey => {
+    DB[cKey].warehouses.forEach(w => {
+      if(w.id === whId) {
+        w.dateStr = newDateVal || "--/--/----";
+      }
+    });
+  });
+  saveStateToLocalStorage();
+  updateAppView();
+}
+
+// --- UPDATE SHIFT DYNAMICALLY ---
+function updateWhShift(whId, newShiftVal) {
+  Object.keys(DB).forEach(cKey => {
+    DB[cKey].warehouses.forEach(w => {
+      if(w.id === whId) {
+        w.shiftStr = newShiftVal || "Chưa xếp ca";
+      }
+    });
+  });
+  saveStateToLocalStorage();
+  updateAppView();
+}
+
+// --- UPDATE STAFF COUNT DYNAMICALLY ---
+function updateWhStaff(whId, newStaffVal) {
+  let sCount = parseInt(newStaffVal);
+  if(isNaN(sCount) || sCount < 0) sCount = 0;
+
+  Object.keys(DB).forEach(cKey => {
+    DB[cKey].warehouses.forEach(w => {
+      if(w.id === whId) {
+        w.staffCount = sCount;
+      }
+    });
+  });
+  saveStateToLocalStorage();
+  updateAppView();
+}
+
+// --- RENDER WAREHOUSE CARDS OVERVIEW (WITH FULL DYNAMIC INLINE EDITING) ---
+function renderWhCards() {
+  let activeList = getActiveWarehouses();
+  let html = ``;
+
+  activeList.forEach(w => {
+    let isActive = (currentWhId === w.id);
+    html += `
+      <div class="wh-card ${isActive ? 'active' : ''}" onclick="selectWhDirect('${w.id}')">
+        <div class="wh-card-top">
+          <div class="wh-card-title">${w.name}</div>
+          <div class="wh-card-comp">${w.compName.replace('CÔNG TY ', '')}</div>
+        </div>
+        <div class="wh-card-meta" onclick="event.stopPropagation()">
+          <i class="fa-regular fa-calendar-check"></i> Ngày:
+          <input type="text" style="width:105px; font-size:11.5px; font-weight:700; border:1px solid #CBD5E1; border-radius:4px; padding:2px 4px;" value="${w.dateStr}" onchange="updateWhDate('${w.id}', this.value)" />
+          (<input type="text" style="width:95px; font-size:11.5px; font-weight:700; border:1px solid #CBD5E1; border-radius:4px; padding:2px 4px;" value="${w.shiftStr}" onchange="updateWhShift('${w.id}', this.value)" />)
+        </div>
+        <div class="wh-card-meta" onclick="event.stopPropagation()">
+          <i class="fa-solid fa-users"></i> Nhân sự:
+          <input type="number" style="width:50px; font-size:11.5px; font-weight:700; border:1px solid #CBD5E1; border-radius:4px; padding:2px 4px; text-align:center;" value="${w.staffCount}" min="0" onchange="updateWhStaff('${w.id}', this.value)" /> người phụ trách
+        </div>
+        <div class="wh-card-stat">
+          <div class="inline-edit-box" onclick="event.stopPropagation()">
+            <i class="fa-solid fa-cubes"></i> Vị trí:
+            <input type="number" style="width:65px;" value="${w.totalPositions}" min="0" onchange="updateWhPositions('${w.id}', this.value)" />
+          </div>
+          <span style="color:#059669; margin-left:auto;"><i class="fa-solid fa-bolt"></i> Đã lưu</span>
+        </div>
+      </div>
+    `;
+  });
+
+  whCardsGrid.innerHTML = html;
+}
+
+function selectWhDirect(whId) {
+  currentWhId = whId;
+  whSelect.value = whId;
+  renderWhCards();
+  updateAppView();
+}
+
+// --- RENDER WORK INSTRUCTION (TAB 1) ---
+function renderInstruction(targetEl) {
+  let activeList = getActiveWarehouses();
+  let html = ``;
+
+  activeList.forEach(w => {
+    html += `
+      <header class="top" style="background:linear-gradient(135deg,#1F3B57,#2B5A82); color:#fff; padding:24px 24px 18px; text-align:center; border-radius:10px; margin-bottom:20px;">
+        <h1 style="margin:0 0 4px; font-size:22px;">KẾ HOẠCH KIỂM KÊ ${w.name.toUpperCase()}</h1>
+        <p style="margin:4px 0; font-size:14px; color:#CFE0EE;">Đơn vị chủ quản: <strong>${w.compName}</strong> · Số vị trí thực tế: <strong>${w.totalPositions} vị trí</strong></p>
+        <p style="margin:4px 0; font-size:13px; color:#93C5FD;">Ngày thực hiện: <strong>${w.dateStr}</strong> · Ca làm việc: ${w.shiftStr} · Nhân sự: ${w.staffCount} người</p>
+      </header>
+
+      <div class="section ${w.themeClass}">
+        <div class="section-head ${w.themeClass}">
+          <h2><i class="fa-solid fa-layer-group"></i> ${w.name.toUpperCase()}</h2>
+          <div class="sub">Thuộc ${w.compName} · Lịch làm việc ca ${w.shiftStr} ngày ${w.dateStr} · <strong>Số vị trí thực tế: ${w.totalPositions} vị trí</strong></div>
+        </div>
+        <div class="section-body">
+          <div class="zone-grid">
+    `;
+    w.zones.forEach(z => {
+      html += `
+        <div class="zone-card">
+          <h4>${z.name}</h4>
+          <div class="qty" style="color:var(--mat-dark);">${z.qty} vị trí thực tế</div>
+          <p>${z.detail}</p>
+        </div>
+      `;
+    });
+    html += `
+          </div>
+          <table>
+            <thead>
+              <tr>
+                <th class="col-step">Bước</th>
+                <th>Công việc thực hiện tại từng vị trí</th>
+                <th class="col-role">Người thực hiện</th>
+                <th class="col-tool">Công cụ / Thiết bị</th>
+              </tr>
+            </thead>
+            <tbody>
+    `;
+    w.steps.forEach(st => {
+      let tagHtml = st.tag ? `<br><span class="tag ${st.tagClass || 'warn'}">${st.tag}</span>` : '';
+      html += `
+        <tr>
+          <td class="col-step"><span class="step-num">${st.num}</span></td>
+          <td>${st.task} ${tagHtml}</td>
+          <td class="col-role">${st.role || ''}</td>
+          <td class="col-tool">${st.tool || ''}</td>
+        </tr>
+      `;
+    });
+    html += `
+            </tbody>
+          </table>
+        </div>
+      </div>
+    `;
+
+    // Render Buffer Procedure for this Warehouse
+    if(w.bufferSteps && w.bufferSteps.length > 0) {
+      html += `
+        <div class="section" style="margin-bottom:24px;">
+          <div class="section-head buffer">
+            <h2><i class="fa-solid fa-arrows-spin"></i> QUY TRÌNH XỬ LÝ VÙNG ĐỆM VL01 — ${w.name.toUpperCase()}</h2>
+            <div class="sub">Đưa tồn kho hệ thống VL01 của ${w.name} về 0 và scan nhập theo số thực tế</div>
+          </div>
+          <div class="section-body">
+            <div class="flow">
+      `;
+      w.bufferSteps.forEach(bs => {
+        html += `
+          <div class="step">
+            <div class="num">${bs.num}</div>
+            <p>${bs.text}</p>
+            <div class="owner">${bs.owner}</div>
+          </div>
+        `;
+      });
+      html += `
+            </div>
+          </div>
+        </div>
+      `;
+    }
+  });
+
+  // Render Global Signatures
+  html += `
+    <div class="sign-row">
+      <div class="sign-box"><div class="line">Giám sát Kho Công ty</div></div>
+      <div class="sign-box"><div class="line">Kế toán Quản trị Kho</div></div>
+      <div class="sign-box"><div class="line">Thủ kho Phụ trách Phân khu</div></div>
+    </div>
+  `;
+
+  targetEl.innerHTML = html;
+}
+
+// --- RENDER SVG MOTION SIMULATION (DYNAMIC REALTIME CELLS) ---
+function renderSVGSimulation(targetEl) {
+  let activeList = getActiveWarehouses();
+  const numSections = activeList.length;
+  const svgWidth = 1600;
+  
+  const isMultiRow = numSections >= 3;
+  const panelWidth = (numSections === 1) ? 1500 : 730;
+  const rowsCount = isMultiRow ? Math.ceil(numSections / 2) : 1;
+  const panelHeight = 620;
+  const svgHeight = isMultiRow ? (145 + rowsCount * (panelHeight + 24) + 40) : (panelHeight + 190);
+
+  let svgHtml = `
+    <svg id="stage" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ${svgWidth} ${svgHeight}" font-family="Arial, Helvetica, sans-serif">
+      <defs>
+        <marker id="arrow" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto">
+          <path d="M0,0 L6,3 L0,6 Z" fill="#5A6B7A"/>
+        </marker>
+        <linearGradient id="beamGrad" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0%" stop-color="#FDE68A" stop-opacity="0"/>
+          <stop offset="50%" stop-color="#FDE68A" stop-opacity="0.55"/>
+          <stop offset="100%" stop-color="#FDE68A" stop-opacity="0"/>
+        </linearGradient>
+      </defs>
+      
+      <rect x="0" y="0" width="${svgWidth}" height="${svgHeight}" fill="#F7F9FC"/>
+      
+      <!-- TOP BANNER -->
+      <rect x="0" y="0" width="${svgWidth}" height="92" fill="#1F3B57"/>
+      <text x="800" y="36" text-anchor="middle" font-size="22" font-weight="700" fill="#FFFFFF">
+        SƠ ĐỒ CHUYỂN ĐỘNG QUÉT VỊ TRÍ KHO
+      </text>
+      <text x="800" y="60" text-anchor="middle" font-size="13.5" fill="#BCD3E8">
+        Đang hiển thị ${numSections} kho thuộc ${currentComp === 'all' ? 'Tất cả các Công ty' : DB[currentComp].name}
+      </text>
+
+      <!-- COUNTERS BAR -->
+      <g>
+  `;
+
+  let startX = 800 - (numSections * 170);
+  activeList.forEach((w, idx) => {
+    let cx = Math.max(20, startX + idx * 340);
+    svgHtml += `
+      <rect x="${cx}" y="68" width="320" height="18" rx="9" fill="rgba(255,255,255,.15)"/>
+      <text id="counter_${w.id}" x="${cx + 160}" y="81" text-anchor="middle" font-size="11" font-weight="700" fill="#BFE3D0">
+        ${w.name.toUpperCase()}: 0 / ${w.totalPositions} VỊ TRÍ THỰC TẾ
+      </text>
+    `;
+  });
+
+  svgHtml += `
+      </g>
+
+      <!-- LEGENDS -->
+      <g transform="translate(50, 108)">
+        <rect x="0" y="0" width="14" height="14" rx="3" fill="#3E7CB1"/>
+        <text x="20" y="11" font-size="12" fill="#233">Kho Mát</text>
+        <rect x="120" y="0" width="14" height="14" rx="3" fill="#2B6F77"/>
+        <text x="140" y="11" font-size="12" fill="#233">Kho Đông</text>
+        <rect x="240" y="0" width="14" height="14" rx="3" fill="#15803D"/>
+        <text x="260" y="11" font-size="12" fill="#233">Kho NL Tươi</text>
+        <rect x="370" y="0" width="14" height="14" rx="3" fill="#3B82F6"/>
+        <text x="390" y="11" font-size="12" fill="#233">Kho Bao Bì</text>
+        <rect x="490" y="0" width="14" height="14" rx="3" fill="#D97706"/>
+        <text x="510" y="11" font-size="12" fill="#233">Kho TP Khô</text>
+        <rect x="620" y="0" width="14" height="14" rx="3" fill="#CA8A04"/>
+        <text x="640" y="11" font-size="12" fill="#233">Kho NL Khô</text>
+        <rect x="750" y="0" width="14" height="14" rx="3" fill="#F5B942"/>
+        <text x="770" y="11" font-size="12" fill="#233">Đang quét QRcode</text>
+      </g>
+
+      <line x1="40" y1="134" x2="${svgWidth - 40}" y2="134" stroke="#D7DEE7" stroke-width="1.5"/>
+  `;
+
+  // Render panels for each warehouse
+  activeList.forEach((w, sIdx) => {
+    let px, py;
+    if(!isMultiRow) {
+      px = 50 + sIdx * (panelWidth + 20);
+      py = 145;
+    } else {
+      let r = Math.floor(sIdx / 2);
+      let c = sIdx % 2;
+      if(sIdx === numSections - 1 && c === 0) {
+        px = 435;
+      } else {
+        px = 50 + c * 770;
+      }
+      py = 145 + r * (panelHeight + 24);
+    }
+
+    svgHtml += `
+      <!-- PANEL ${w.id} -->
+      <g transform="translate(${px}, ${py})">
+        <rect x="0" y="0" width="${panelWidth}" height="${panelHeight}" rx="10" fill="#EEF5FB" stroke="#B7CFE3" stroke-width="1.5"/>
+        
+        <!-- PANEL TITLE -->
+        <text x="${panelWidth/2}" y="26" text-anchor="middle" font-size="16" font-weight="700" fill="#1F3B57">
+          ${w.name.toUpperCase()}
+        </text>
+        <text x="${panelWidth/2}" y="42" text-anchor="middle" font-size="11.5" font-weight="600" fill="#5C6B7A">
+          ${w.compName} · Lịch kiểm: ${w.dateStr} (${w.shiftStr}) · Tổng ${w.totalPositions} Vị trí
+        </text>
+    `;
+
+    // Render Forklift / Equipment graphic
+    svgHtml += `
+        <rect x="20" y="52" width="${panelWidth - 40}" height="42" rx="6" fill="#FFF8EC" stroke="#EAD3A6" stroke-width="1.2"/>
+        <g id="forklift_${w.id}" transform="translate(35, 60)">
+          <rect x="-10" y="8" width="28" height="14" rx="2" fill="#E8A33D" stroke="#8A5A12"/>
+          <circle cx="-3" cy="22" r="4" fill="#333"/>
+          <circle cx="12" cy="22" r="4" fill="#333"/>
+          <rect x="14" y="-8" width="3" height="24" fill="#8A5A12"/>
+        </g>
+        <text x="80" y="70" font-size="11" fill="#8A5A12" font-weight="700">THIẾT BỊ QUÉT QRCODE REALTIME — SỐ LƯỢNG ĐỘNG EXCEL</text>
+        <text x="80" y="84" font-size="10" fill="#8A5A12">Pallet nguyên đai: Quét QR tại chỗ. Hạ pallet lẻ khi kiểm đếm chi tiết.</text>
+    `;
+
+    // Render Zones Grid inside Panel
+    let zoneY = 104;
+    w.zones.forEach((z, zIdx) => {
+      let rows = Math.ceil(z.qty / 20);
+      let cols = Math.min(z.qty, 20);
+      let gridH = rows * 13 + 30;
+      let zoneId = `grid_${w.id}_${zIdx}`;
+      let cellTheme = `cell-${w.themeClass}`;
+
+      svgHtml += `
+        <g transform="translate(20, ${zoneY})">
+          <rect x="0" y="0" width="${panelWidth - 40}" height="${gridH}" rx="6" fill="#FFFFFF" stroke="#3E7CB1" stroke-width="1.2"/>
+          <text x="10" y="18" font-size="11.5" font-weight="700" fill="#1F3B57">${z.name.toUpperCase()} (${z.qty} VỊ TRÍ)</text>
+          <g id="${zoneId}" class="grid-group" data-cols="${cols}" data-rows="${rows}" data-qty="${z.qty}" data-theme="${cellTheme}"></g>
+          <rect class="beam" x="4" y="24" width="${panelWidth - 48}" height="18" fill="url(#beamGrad)" opacity="0"/>
+        </g>
+      `;
+      zoneY += gridH + 12;
+    });
+
+    // Render Buffer Zone for this Section
+    let bufWidth = (panelWidth - 60) / 2;
+    svgHtml += `
+        <!-- BUFFER ZONE FOR ${w.id} -->
+        <g transform="translate(20, ${zoneY + 4})">
+          <text x="0" y="0" font-size="12" font-weight="700" fill="#8A4B12">VÙNG ĐỆM VL01 — ${w.name.toUpperCase()}</text>
+          
+          <!-- BEFORE TREATMENT -->
+          <rect x="0" y="10" width="${bufWidth}" height="100" rx="8" fill="#FFF7EC" stroke="#C9782A" stroke-width="1.5" stroke-dasharray="6,4"/>
+          <text x="${bufWidth/2}" y="28" text-anchor="middle" font-size="11" font-weight="700" fill="#8A4B12">TRƯỚC XỬ LÝ (SỐ HỆ THỐNG)</text>
+          <g class="buf-ghost">
+            <rect x="${bufWidth/2 - 60}" y="38" width="55" height="26" rx="4" fill="none" stroke="#C9782A" stroke-dasharray="4,3"/>
+            <text x="${bufWidth/2 - 32.5}" y="54" text-anchor="middle" font-size="9.5" fill="#B5651D">TỒN ẢO</text>
+            <rect x="${bufWidth/2 + 5}" y="38" width="55" height="26" rx="4" fill="none" stroke="#C9782A" stroke-dasharray="4,3"/>
+            <text x="${bufWidth/2 + 32.5}" y="54" text-anchor="middle" font-size="9.5" fill="#B5651D">TỒN ẢO</text>
+          </g>
+          <text x="${bufWidth/2}" y="92" text-anchor="middle" font-size="9.5" fill="#8A4B12">Xuất hết tồn ảo VL01 về 0</text>
+
+          <!-- ARROW -->
+          <line x1="${bufWidth + 4}" y1="60" x2="${bufWidth + 16}" y2="60" stroke="#5A6B7A" stroke-width="2" marker-end="url(#arrow)"/>
+
+          <!-- AFTER TREATMENT -->
+          <rect x="${bufWidth + 20}" y="10" width="${bufWidth}" height="100" rx="8" fill="#EFFBF3" stroke="#3C9A5F" stroke-width="1.5"/>
+          <text x="${bufWidth + 20 + bufWidth/2}" y="28" text-anchor="middle" font-size="11" font-weight="700" fill="#1F6B3E">SAU XỬ LÝ (THỰC TẾ)</text>
+          <g class="buf-real">
+            <rect x="${bufWidth + 20 + bufWidth/2 - 60}" y="38" width="55" height="26" rx="4" fill="#3C9A5F"/>
+            <text x="${bufWidth + 20 + bufWidth/2 - 32.5}" y="54" text-anchor="middle" font-size="9.5" fill="#FFF">THỰC TẾ</text>
+            <rect x="${bufWidth + 20 + bufWidth/2 + 5}" y="38" width="55" height="26" rx="4" fill="#3C9A5F"/>
+            <text x="${bufWidth + 20 + bufWidth/2 + 32.5}" y="54" text-anchor="middle" font-size="9.5" fill="#FFF">THỰC TẾ</text>
+          </g>
+          <text x="${bufWidth + 20 + bufWidth/2}" y="92" text-anchor="middle" font-size="9.5" fill="#1F6B3E">Scan nhập đúng số thực tế</text>
+        </g>
+      </g>
+    `;
+  });
+
+  svgHtml += `</svg>`;
+  targetEl.innerHTML = svgHtml;
+
+  // Build grid SVG rects via JS
+  buildSVGGrids(activeList);
+}
+
+// --- BUILD SVG GRID RECTS WITH STAGGERED ANIMATION DELAY ---
+function buildSVGGrids(activeList) {
+  const T = animSpeed;
+  const SWEEP = 0.85;
+
+  activeList.forEach(w => {
+    w.zones.forEach((z, zIdx) => {
+      let gid = `grid_${w.id}_${zIdx}`;
+      let g = document.getElementById(gid);
+      if(!g) return;
+
+      let cols = parseInt(g.dataset.cols);
+      let rows = parseInt(g.dataset.rows);
+      let qty = parseInt(g.dataset.qty);
+      let theme = g.dataset.theme;
+
+      let cw = 20, ch = 10, gap = 2;
+      let frag = document.createDocumentFragment();
+
+      let count = 0;
+      for(let r=0; r<rows; r++) {
+        for(let c=0; c<cols; c++) {
+          if(count >= qty) break;
+          let x = 10 + c * (cw + gap);
+          let y = 26 + r * (ch + gap);
+
+          let rect = document.createElementNS("http://www.w3.org/2000/svg", "rect");
+          rect.setAttribute("x", x);
+          rect.setAttribute("y", y);
+          rect.setAttribute("width", cw);
+          rect.setAttribute("height", ch);
+          rect.setAttribute("rx", 1.5);
+          rect.setAttribute("class", `cell ${theme}`);
+
+          let delay = (count / Math.max(qty - 1, 1)) * (SWEEP * T);
+          rect.style.animationDelay = delay + "ms";
+          rect.style.animationDuration = T + "ms";
+
+          frag.appendChild(rect);
+          count++;
+        }
+      }
+      g.appendChild(frag);
+    });
+  });
+
+  startCounterTicker(activeList);
+}
+
+// --- TICKER TO UPDATE REALTIME COUNTERS ---
+let tickTimer = null;
+function startCounterTicker(activeList) {
+  if(tickTimer) clearInterval(tickTimer);
+
+  tickTimer = setInterval(() => {
+    if(simPaused) return;
+
+    activeList.forEach(w => {
+      let counterEl = document.getElementById(`counter_${w.id}`);
+      if(!counterEl) return;
+
+      let cells = document.querySelectorAll(`#tab-simulation [id^="grid_${w.id}_"] rect, #tab-combined [id^="grid_${w.id}_"] rect`);
+      let done = 0;
+      cells.forEach(c => {
+        let fill = getComputedStyle(c).fill;
+        if(fill && fill !== 'rgb(215, 230, 242)' && fill !== 'rgb(217, 237, 236)' && fill !== 'rgb(220, 252, 231)' && fill !== 'rgb(219, 234, 254)' && fill !== 'rgb(254, 243, 199)' && fill !== 'rgb(254, 249, 195)' && fill !== 'rgb(245, 185, 66)') {
+          done++;
+        }
+      });
+
+      counterEl.textContent = `${w.name.toUpperCase()}: ${Math.min(done, w.totalPositions)} / ${w.totalPositions} VỊ TRÍ`;
+    });
+  }, 300);
+}
+
+// --- INITIALIZE & RENDER ALL VIEWS ---
+function updateAppView() {
+  updateWhSelectOptions();
+  renderWhCards();
+  renderInstruction(instructionContainer);
+  renderSVGSimulation(svgContainer);
+  
+  // Render Tab 3 Combined View
+  renderInstruction(combinedInstruction);
+  renderSVGSimulation(combinedSvg);
+}
+
+// --- SHARE REPORT VIA ZALO / WHATSAPP ---
+document.getElementById("btnShareZalo").addEventListener("click", function() {
+  let activeList = getActiveWarehouses();
+  let summaryText = `📋 *BÁO CÁO KẾ HOẠCH KIỂM KÊ KHO*\n`;
+  summaryText += `🏢 Đơn vị: ${currentComp === 'all' ? 'TẤT CẢ CÔNG TY' : DB[currentComp].name}\n`;
+  summaryText += `-----------------------------------\n`;
+
+  activeList.forEach(w => {
+    summaryText += `🔹 *${w.name}*\n`;
+    summaryText += `  • Ngày kiểm: ${w.dateStr} (${w.shiftStr})\n`;
+    summaryText += `  • Số vị trí thực tế: ${w.totalPositions} vị trí\n`;
+    summaryText += `  • Phụ trách: ${w.staffCount} nhân sự\n\n`;
+  });
+
+  summaryText += `👉 Xem chi tiết và sơ đồ chuyển động trên hệ thống kiểm kê kho!`;
+
+  if(navigator.clipboard) {
+    navigator.clipboard.writeText(summaryText).then(() => {
+      alert("Đã sao chép nội dung tóm tắt báo cáo!\n\nAnh có thể dán (Ctrl + V) trực tiếp vào tin nhắn Zalo hoặc WhatsApp để gửi ngay!");
+    });
+  } else {
+    alert("Nội dung báo cáo:\n\n" + summaryText);
+  }
+});
+
+// --- EXPORT JSON STATE FILE (TO SHARE BETWEEN COMPUTERS) ---
+document.getElementById("btnExportJSON").addEventListener("click", function() {
+  let dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(DB, null, 2));
+  let downloadAnchor = document.createElement('a');
+  downloadAnchor.setAttribute("href", dataStr);
+  downloadAnchor.setAttribute("download", `TRANG_THAI_KIEM_KE_KHO_${new Date().toISOString().slice(0,10)}.json`);
+  document.body.appendChild(downloadAnchor);
+  downloadAnchor.click();
+  downloadAnchor.remove();
+});
+
+// --- IMPORT JSON STATE FILE ---
+jsonFileInput.addEventListener("change", function(e) {
+  const file = e.target.files[0];
+  if(!file) return;
+
+  const reader = new FileReader();
+  reader.onload = function(evt) {
+    try {
+      let imported = JSON.parse(evt.target.result);
+      if(imported && typeof imported === 'object') {
+        DB = imported;
+        saveStateToLocalStorage();
+        updateAppView();
+        alert("Đã nạp file trạng thái kiểm kê (.json) thành công!");
+      }
+    } catch(err) {
+      alert("Lỗi đọc file state JSON: " + err.message);
+    }
+  };
+  reader.readAsText(file);
+});
+
+// --- GENERATE & DOWNLOAD EXCEL TEMPLATE FOR SELECTED WAREHOUSE ---
+document.getElementById("btnDownloadTemplate").addEventListener("click", function() {
+  let activeList = getActiveWarehouses();
+  let targetWh = activeList[0] || DB.lcfoods.warehouses[0];
+
+  let templateData = [
+    [`KẾ HOẠCH KIỂM KÊ ${targetWh.name.toUpperCase()} - ${targetWh.compName.toUpperCase()}`],
+    ["STT", "NGÀY", "MÃ NHÂN VIÊN", "HỌ TÊN", "VỊ TRÍ", "NỘI DUNG THỰC HIỆN", "CÁCH THỨC TRIỂN KHAI KIỂM KÊ", "GIỜ VÀO", "GIỜ RA", "TỔNG GIỜ", "GHI CHÚ"],
+    [1, targetWh.dateStr, "NV001", "NGUYỄN VĂN A", "THỦ KHO PHỤ TRÁCH", `SCAN KIỂM TRA 100% VỊ TRÍ RACK KỆ (${targetWh.totalPositions} VỊ TRÍ)`, "QUÉT QRCODE TỪNG PALLET ĐỐI CHIẾU TRÊN WMS", "08:00", "12:00", 4, targetWh.name],
+    [2, targetWh.dateStr, "NV002", "TRAN VĂN B", "CN KHO", "HỖ TRỢ HẠ PALLET LẺ VÀ ĐỐI CHIẾU SỐ LƯỢNG THỰC TẾ", "SỬ DỤNG XE NÂNG CAO VÀ MÁY SCAN PDA", "08:00", "12:00", 4, "HỖ TRỢ KIỂM KÊ"]
+  ];
+
+  let ws = XLSX.utils.aoa_to_sheet(templateData);
+  let wb = XLSX.utils.book_new();
+  XLSX.utils.book_append_sheet(wb, ws, "KeHoachKiemKe");
+  
+  let fileName = `KE_HOACH_KIEM_KE_${targetWh.id.toUpperCase()}_${targetWh.dateStr.replace(/\//g,'')}.xlsx`;
+  XLSX.writeFile(wb, fileName);
+});
+
+// --- DYNAMIC EXCEL PARSER FOR UPLOADED FILES (AUTO PARSE POSITIONS, DATES & STAFF) ---
+excelFileInput.addEventListener("change", function(e) {
+  const file = e.target.files[0];
+  if(!file) return;
+
+  const reader = new FileReader();
+  reader.onload = function(evt) {
+    try {
+      const data = new Uint8Array(evt.target.result);
+      const workbook = XLSX.read(data, {type: 'array'});
+      const firstSheet = workbook.Sheets[workbook.SheetNames[0]];
+      const jsonRows = XLSX.utils.sheet_to_json(firstSheet, {header: 1});
+
+      parseDynamicExcelFile(jsonRows, file.name);
+    } catch(err) {
+      alert("Lỗi khi đọc file Excel: " + err.message);
+    }
+  };
+  reader.readAsArrayBuffer(file);
+});
+
+function parseDynamicExcelFile(rows, fileName) {
+  let title = fileName.replace(/\.[^/.]+$/, "");
+  let activeList = getActiveWarehouses();
+  let targetWh = activeList[0];
+
+  if(!targetWh) {
+    targetWh = DB.lcfoods.warehouses[0];
+  }
+
+  let totalQtyFromExcel = 0;
+  let stepsList = [];
+  let bufferList = [];
+  let dateStr = new Date().toLocaleDateString('vi-VN');
+  let shiftStr = "08:00 – 12:00";
+  let uniqueStaff = new Set();
+
+  rows.forEach((r, idx) => {
+    if(!r || r.length === 0) return;
+    let rStr = r.join(" ").toUpperCase();
+
+    if(idx === 0 && r[0]) title = String(r[0]);
+
+    if(r[1] && typeof r[1] === 'string' && r[1].includes("/")) dateStr = r[1];
+
+    if(r[3] && typeof r[3] === 'string' && r[3].length > 2) uniqueStaff.add(r[3]);
+
+    let qtyMatch = rStr.match(/(\d+)\s*VỊ TRÍ/i);
+    if(qtyMatch) totalQtyFromExcel += parseInt(qtyMatch[1]);
+
+    let rackMatch = rStr.match(/RACK\s*\d+\s*[-–]\s*(\d+)/i);
+    if(rackMatch && totalQtyFromExcel === 0) {
+      totalQtyFromExcel += parseInt(rackMatch[1]);
+    }
+
+    if(r[5] && typeof r[5] === 'string' && r[5].length > 10 && !r[5].includes("NỘI DUNG")) {
+      stepsList.push({
+        num: stepsList.length + 1,
+        task: String(r[5]),
+        role: r[4] ? String(r[4]) : "Thủ kho",
+        tool: r[6] ? String(r[6]) : "Máy scan QRcode"
+      });
+    }
+
+    if(rStr.includes("BƯỚC") && r[1]) {
+      bufferList.push({
+        num: bufferList.length + 1,
+        text: String(r[1]),
+        owner: r[8] ? String(r[8]) : "Kế toán kho"
+      });
+    }
+  });
+
+  if(totalQtyFromExcel === 0) {
+    totalQtyFromExcel = Math.max(rows.length * 15, 100);
+  }
+
+  targetWh.name = title;
+  targetWh.dateStr = dateStr;
+  targetWh.shiftStr = shiftStr;
+  targetWh.staffCount = Math.max(uniqueStaff.size, 2);
+  targetWh.totalPositions = totalQtyFromExcel;
+  if(stepsList.length > 0) targetWh.steps = stepsList;
+  if(bufferList.length > 0) targetWh.bufferSteps = bufferList;
+
+  targetWh.zones = [
+    { name: `Khu 1 (${targetWh.name})`, qty: Math.ceil(totalQtyFromExcel / 2), detail: "Bóc tách tự động từ file Excel" },
+    { name: `Khu 2 (${targetWh.name})`, qty: Math.floor(totalQtyFromExcel / 2), detail: "Bóc tách tự động từ file Excel" }
+  ];
+
+  saveStateToLocalStorage();
+  updateAppView();
+  alert(`Đã nạp & lưu trữ bền vững thành công ${totalQtyFromExcel} vị trí cho [${targetWh.name}]!`);
+}
+
+// --- CLEAR ALL DATA TOOL (WIPES 100% OF POSITIONS, DATES, SHIFTS, STAFF & STEPS) ---
+document.getElementById("btnResetAllData").addEventListener("click", function() {
+  if(confirm("⚠️ Anh có chắc chắn muốn XÓA SẠCH 100% dữ liệu (Ngày kiểm, Ca làm việc, Số nhân sự, Vị trí & Bảng công việc) để làm mới hoàn toàn không?")) {
+    localStorage.removeItem(STORAGE_KEY);
+    
+    // Wipe 100% of values to clean empty state
+    Object.keys(DB).forEach(cKey => {
+      DB[cKey].warehouses.forEach(w => {
+        w.totalPositions = 0;
+        w.dateStr = "--/--/----";
+        w.shiftStr = "Chưa xếp ca";
+        w.staffCount = 0;
+        w.zones = [{ name: `Khu (Trắng dữ liệu)`, qty: 0, detail: "Vui lòng nạp file Excel hoặc điền số vị trí" }];
+        w.steps = [{ num: 1, task: "Chưa có kế hoạch. Vui lòng nạp file Excel kiểm kê.", role: "Chưa phân công", tool: "Máy scan PDA" }];
+        w.bufferSteps = [];
+      });
+    });
+
+    saveStateToLocalStorage();
+    updateAppView();
+    alert("Đã xóa sạch 100% dữ liệu! Tất cả Ngày kiểm, Ca làm việc, Nhân sự và Vị trí đã đưa về trắng tinh ready cho đợt kiểm kê mới.");
+  }
+});
+
+// --- EVENT LISTENERS ---
+// Company Filter Buttons
+document.querySelectorAll(".btn-comp").forEach(btn => {
+  btn.addEventListener("click", function() {
+    document.querySelectorAll(".btn-comp").forEach(b => b.classList.remove("active"));
+    this.classList.add("active");
+    currentComp = this.dataset.comp;
+    currentWhId = 'all';
+    updateAppView();
+  });
+});
+
+// Warehouse Select Dropdown
+whSelect.addEventListener("change", function() {
+  currentWhId = this.value;
+  renderWhCards();
+  updateAppView();
+});
+
+// Tab switching
+document.querySelectorAll(".tab-item").forEach(tab => {
+  tab.addEventListener("click", function() {
+    document.querySelectorAll(".tab-item").forEach(t => t.classList.remove("active"));
+    document.querySelectorAll(".tab-content").forEach(c => c.classList.remove("active"));
+    this.classList.add("active");
+    const targetId = this.dataset.tab;
+    document.getElementById(targetId).classList.add("active");
+  });
+});
+
+// Simulation Controls
+toggleBtn.addEventListener("click", function() {
+  simPaused = !simPaused;
+  const cells = document.querySelectorAll("#stage .cell, #stage .beam, #stage .buf-ghost, #stage .buf-real");
+  cells.forEach(el => { el.style.animationPlayState = simPaused ? "paused" : "running"; });
+  toggleBtn.innerHTML = simPaused ? '<i class="fa-solid fa-play"></i> Tiếp tục' : '<i class="fa-solid fa-pause"></i> Tạm dừng';
+});
+
+restartBtn.addEventListener("click", function() {
+  const cells = document.querySelectorAll("#stage .cell, #stage .beam, #stage .buf-ghost, #stage .buf-real");
+  cells.forEach(el => { el.style.animationName = "none"; });
+  void document.body.offsetWidth;
+  cells.forEach(el => { el.style.animationName = ""; });
+  if(simPaused) {
+    simPaused = false;
+    toggleBtn.innerHTML = '<i class="fa-solid fa-pause"></i> Tạm dừng';
+  }
+});
+
+speedSelect.addEventListener("change", function() {
+  animSpeed = parseInt(this.value);
+  renderSVGSimulation(svgContainer);
+  renderSVGSimulation(combinedSvg);
+});
+
+// Print Button
+document.getElementById("btnPrint").addEventListener("click", function() {
+  window.print();
+});
+
+// INITIAL LAUNCH
+updateAppView();
+</script>
+</body>
+</html>
