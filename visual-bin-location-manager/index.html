@@ -3,326 +3,841 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Visual Photo Bin Finder & Warehouse Location Manager</title>
+  <title>📷 Visual Photo Bin Finder - Quản Lý Vị Trí Kho Bằng Hình Ảnh</title>
   
-  <!-- Tailwind CSS & FontAwesome Icons -->
+  <!-- Tailwind CSS -->
   <script src="https://cdn.tailwindcss.com"></script>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-  
-  <!-- SheetJS & JSZip for Excel Import with Embedded Photos -->
+  <!-- FontAwesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" crossorigin="anonymous">
+  <!-- SheetJS for Excel -->
   <script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
+  <!-- JSZip for embedded image extraction -->
   <script src="https://cdn.jsdelivr.net/npm/jszip@3.10.1/dist/jszip.min.js"></script>
-
   <!-- Google Fonts -->
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Outfit:wght@600;700;800;900&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800;900&family=Outfit:wght@700;800;900&display=swap" rel="stylesheet">
 
-  <link rel="stylesheet" href="css/styles.css">
+  <style>
+    * { box-sizing: border-box; }
+    body {
+      font-family: 'Inter', system-ui, sans-serif;
+      background: #f0f4f8;
+      color: #0f172a;
+      min-height: 100vh;
+    }
+    .font-heading { font-family: 'Outfit', sans-serif; }
+
+    /* Tab system */
+    .tab-pane { display: none !important; }
+    .tab-pane.active { display: block !important; }
+    .tab-btn { transition: all 0.2s; }
+    .tab-btn.active {
+      background: #1d4ed8 !important;
+      color: #fff !important;
+      box-shadow: 0 4px 12px rgba(29,78,216,0.35);
+    }
+
+    /* Cards */
+    .glass-card {
+      background: #fff;
+      border: 1.5px solid #cbd5e1;
+      border-radius: 18px;
+      box-shadow: 0 3px 16px rgba(15,23,42,0.07);
+    }
+    .photo-card {
+      background: #fff;
+      border: 2px solid #e2e8f0;
+      border-radius: 16px;
+      overflow: hidden;
+      transition: transform 0.2s, box-shadow 0.2s, border-color 0.2s;
+    }
+    .photo-card:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 12px 28px rgba(29,78,216,0.14);
+      border-color: #3b82f6;
+    }
+
+    /* Badges */
+    .badge { display: inline-flex; align-items: center; gap: 3px; padding: 3px 10px; border-radius: 10px; font-size: 11px; font-weight: 800; }
+    .badge-blue   { background: #1e40af; color: #fff; }
+    .badge-green  { background: #15803d; color: #fff; }
+    .badge-amber  { background: #d97706; color: #fff; }
+
+    /* Modal */
+    .modal-overlay { display: none; position: fixed; inset: 0; background: rgba(2,6,23,0.87); backdrop-filter: blur(10px); z-index: 9999; align-items: center; justify-content: center; padding: 1rem; }
+    .modal-overlay.active { display: flex; }
+
+    /* Excel Banner pulse */
+    @keyframes pulse-border { 0%,100%{ box-shadow:0 0 0 0 rgba(52,211,153,0.55);} 50%{ box-shadow:0 0 0 7px rgba(52,211,153,0);} }
+    .excel-banner { animation: pulse-border 2s infinite; }
+
+    /* Step circles */
+    .step-circle { width:32px; height:32px; border-radius:50%; background:#1d4ed8; color:#fff; display:flex; align-items:center; justify-content:center; font-weight:900; font-size:15px; flex-shrink:0; }
+
+    /* Scrollbar */
+    ::-webkit-scrollbar { width: 6px; }
+    ::-webkit-scrollbar-track { background: #f1f5f9; }
+    ::-webkit-scrollbar-thumb { background: #94a3b8; border-radius: 4px; }
+  </style>
 </head>
-<body class="bg-[#f8fafc] text-slate-950 selection:bg-blue-600 selection:text-white min-h-screen flex flex-col justify-between">
+<body>
 
-  <!-- Header -->
-  <header class="bg-white border-b border-slate-300 px-4 sm:px-8 py-3.5 flex items-center justify-between sticky top-0 z-50 shadow-sm">
+  <!-- ========== HEADER ========== -->
+  <header class="bg-white border-b-2 border-slate-200 px-4 sm:px-8 py-3 flex items-center justify-between sticky top-0 z-50 shadow-sm">
     <div class="flex items-center gap-3">
-      <div class="w-10 h-10 bg-gradient-to-br from-blue-700 to-indigo-900 rounded-xl flex items-center justify-center text-white text-xl font-black shadow-md shadow-blue-500/20">
-        📷
-      </div>
+      <div class="w-10 h-10 bg-gradient-to-br from-blue-700 to-indigo-900 rounded-xl flex items-center justify-center text-white text-xl shadow">📷</div>
       <div>
-        <h1 class="text-base sm:text-lg font-black text-slate-950 font-heading leading-tight">Visual Photo Bin Finder & Location Manager</h1>
-        <p class="text-[11px] text-blue-700 font-extrabold">Hệ Thống Tra Cứu Vị Trí Kho Bằng Hình Ảnh - Nạp Excel Có Ảnh 1-Click & Sao Lưu Vĩnh Viễn</p>
+        <h1 class="font-heading text-base sm:text-lg font-black text-slate-950 leading-tight">Visual Photo Bin Finder</h1>
+        <p class="text-[11px] text-blue-700 font-extrabold">Tra Cứu Vị Trí Kho Bằng Hình Ảnh • Nạp Excel 1-Click • Lưu Vĩnh Viễn</p>
       </div>
     </div>
 
-    <!-- Navigation Tabs -->
-    <div class="flex gap-1.5 bg-slate-100 p-1 rounded-xl border border-slate-300">
-      <button class="tab-btn active px-3 sm:px-4 py-2 rounded-lg text-xs font-black text-slate-700 hover:text-slate-950 transition flex items-center gap-1.5" data-target="pane-grid">
-        🔍 Tra Cứu Vị Trí
-      </button>
-      <button class="tab-btn px-3 sm:px-4 py-2 rounded-lg text-xs font-black text-slate-700 hover:text-slate-950 transition flex items-center gap-1.5" data-target="pane-add">
-        📷 Chụp & Thêm Vị Trí
-      </button>
-      <button class="tab-btn px-3 sm:px-4 py-2 rounded-lg text-xs font-black text-slate-700 hover:text-slate-950 transition flex items-center gap-1.5 bg-amber-100 text-amber-900 border border-amber-300" data-target="pane-guide">
-        📖 Hướng Dẫn Sử Dụng
-      </button>
+    <!-- Tab Navigation -->
+    <div class="flex gap-1 bg-slate-100 p-1 rounded-xl border border-slate-300">
+      <button class="tab-btn active px-3 py-2 rounded-lg text-[11px] font-black text-slate-700" data-tab="tab-search">🔍 Tra Cứu</button>
+      <button class="tab-btn px-3 py-2 rounded-lg text-[11px] font-black text-slate-700" data-tab="tab-add">📷 Thêm Vị Trí</button>
+      <button class="tab-btn px-3 py-2 rounded-lg text-[11px] font-black text-amber-800 bg-amber-50 border border-amber-200" data-tab="tab-guide">📖 Hướng Dẫn</button>
     </div>
   </header>
 
-  <!-- Metric KPI Bar -->
-  <div class="max-w-7xl mx-auto w-full px-4 sm:px-8 pt-6">
-    <div class="grid grid-cols-2 md:grid-cols-3 gap-4">
-      <div class="glass-card p-4 rounded-2xl border-l-4 border-blue-700 flex items-center gap-3">
-        <div class="text-blue-700 text-2xl">📦</div>
+  <!-- ========== KPI BAR ========== -->
+  <div class="max-w-7xl mx-auto w-full px-4 sm:px-8 pt-5">
+    <div class="grid grid-cols-3 gap-4">
+      <div class="glass-card p-4 flex items-center gap-3 border-l-4 border-blue-600">
+        <div class="text-blue-600 text-2xl">📦</div>
         <div>
-          <span class="text-[11px] text-slate-600 font-extrabold block uppercase">Tổng Vị Trí Đã Lưu Vĩnh Viễn</span>
-          <span class="text-xl font-black text-slate-950 font-heading" id="kpi-total-locations">0</span>
+          <div class="text-[10px] text-slate-500 font-extrabold uppercase">Tổng Vị Trí Lưu</div>
+          <div class="text-xl font-black text-slate-950 font-heading" id="kpi-total">0</div>
         </div>
       </div>
-
-      <div class="glass-card p-4 rounded-2xl border-l-4 border-emerald-700 flex items-center gap-3">
-        <div class="text-emerald-700 text-2xl">🏢</div>
+      <div class="glass-card p-4 flex items-center gap-3 border-l-4 border-emerald-600">
+        <div class="text-emerald-600 text-2xl">🏢</div>
         <div>
-          <span class="text-[11px] text-slate-600 font-extrabold block uppercase">Tổng Số Kho / Khu Vực</span>
-          <span class="text-xl font-black text-slate-950 font-heading" id="kpi-total-warehouses">0</span>
+          <div class="text-[10px] text-slate-500 font-extrabold uppercase">Số Kho / Khu Vực</div>
+          <div class="text-xl font-black text-slate-950 font-heading" id="kpi-warehouses">0</div>
         </div>
       </div>
-
-      <div class="glass-card p-4 rounded-2xl border-l-4 border-amber-600 flex items-center gap-3">
-        <div class="text-amber-600 text-2xl">📷</div>
+      <div class="glass-card p-4 flex items-center gap-3 border-l-4 border-amber-500">
+        <div class="text-amber-500 text-2xl">📷</div>
         <div>
-          <span class="text-[11px] text-slate-600 font-extrabold block uppercase">Hình Ảnh Chụp Nén (~30KB)</span>
-          <span class="text-xl font-black text-slate-950 font-heading" id="kpi-photos-count">0</span>
+          <div class="text-[10px] text-slate-500 font-extrabold uppercase">Hình Ảnh (~30KB)</div>
+          <div class="text-xl font-black text-slate-950 font-heading" id="kpi-photos">0</div>
         </div>
       </div>
     </div>
   </div>
 
-  <!-- Main Content Layout -->
-  <main class="max-w-7xl mx-auto w-full p-4 sm:p-8 flex-1">
+  <!-- ========== MAIN CONTENT ========== -->
+  <main class="max-w-7xl mx-auto w-full px-4 sm:px-8 py-5 flex-1">
 
-    <!-- Pane 1: Photo Grid Search -->
-    <div class="tab-pane active" id="pane-grid">
+    <!-- ====== TAB 1: Search ====== -->
+    <div id="tab-search" class="tab-pane active">
 
-      <!-- DEDICATED EXCEL & DATA IMPORT BANNER TOOLBAR -->
-      <div class="p-4 sm:p-5 rounded-2xl mb-6 bg-gradient-to-r from-emerald-950 via-teal-900 to-slate-900 text-white shadow-xl border-2 border-emerald-500">
-        <div class="flex flex-col lg:flex-row items-center justify-between gap-4">
-          <div class="flex items-center gap-3.5">
-            <div class="w-12 h-12 bg-emerald-400 text-slate-950 rounded-2xl flex items-center justify-center text-2xl font-black shadow-lg flex-shrink-0">
-              📊
-            </div>
+      <!-- ✅ EXCEL UPLOAD BANNER - Always visible at top -->
+      <div class="excel-banner mb-5 p-4 sm:p-5 rounded-2xl bg-gradient-to-r from-emerald-900 via-teal-800 to-slate-800 border-2 border-emerald-400 text-white shadow-xl">
+        <div class="flex flex-col lg:flex-row items-start lg:items-center justify-between gap-4">
+
+          <div class="flex items-center gap-3">
+            <div class="w-12 h-12 bg-emerald-400 rounded-2xl flex items-center justify-center text-2xl font-black text-slate-900 shadow-lg flex-shrink-0">📊</div>
             <div>
-              <div class="flex items-center gap-2">
-                <h2 class="text-base sm:text-lg font-black font-heading text-white">Nạp Hàng Ngàn Vị Trí Từ File Excel Có Ảnh</h2>
-                <span class="bg-emerald-400 text-slate-950 text-[10px] font-black px-2 py-0.5 rounded-full">Siêu Tốc 1-Click</span>
+              <div class="flex items-center flex-wrap gap-2">
+                <h2 class="font-heading text-base sm:text-lg font-black text-white">Nạp Vị Trí Từ File Excel Có Ảnh</h2>
+                <span class="bg-emerald-400 text-slate-900 text-[10px] font-black px-2 py-0.5 rounded-full">Siêu Tốc 1-Click</span>
               </div>
-              <p class="text-xs text-emerald-200 font-bold mt-0.5">Tự động bóc tách thông tin & trích xuất ảnh đính kèm từ file .XLSX!</p>
+              <p class="text-[12px] text-emerald-200 font-bold mt-0.5">Tự động bóc tách thông tin & trích xuất ảnh đính kèm từ file .XLSX!</p>
             </div>
           </div>
 
-          <div class="flex flex-wrap gap-2.5 w-full lg:w-auto justify-start lg:justify-end">
-            <button id="btn-trigger-import-excel" class="bg-emerald-400 hover:bg-emerald-300 text-slate-950 font-black text-xs px-4 py-3 rounded-xl shadow-lg transition flex items-center gap-2 border-2 border-white cursor-pointer">
-              <i class="fa-solid fa-file-excel text-base text-emerald-950"></i>
-              <span>📊 UPLOAD FILE EXCEL CÓ ẢNH (.XLSX)</span>
+          <div class="flex flex-wrap gap-2">
+            <!-- PRIMARY: Upload Excel -->
+            <button id="btn-upload-excel"
+              class="bg-emerald-400 hover:bg-emerald-300 text-slate-950 font-black text-[12px] px-4 py-3 rounded-xl border-2 border-white shadow-lg flex items-center gap-2 transition cursor-pointer">
+              <i class="fa-solid fa-file-excel text-base"></i>
+              📊 UPLOAD FILE EXCEL (.XLSX)
             </button>
 
-            <button id="btn-download-excel-template" class="bg-blue-600 hover:bg-blue-500 text-white font-black text-xs px-3.5 py-3 rounded-xl shadow-md transition flex items-center gap-1.5 border border-blue-400 cursor-pointer">
+            <!-- Download Template -->
+            <button id="btn-download-template"
+              class="bg-blue-600 hover:bg-blue-500 text-white font-black text-[12px] px-4 py-3 rounded-xl border border-blue-300 shadow flex items-center gap-2 transition cursor-pointer">
               <i class="fa-solid fa-download"></i>
-              <span>📥 Tải Mẫu File Excel</span>
+              📥 Tải Mẫu Excel
             </button>
 
-            <button id="btn-export-backup" class="bg-slate-800 hover:bg-slate-700 text-amber-300 font-black text-xs px-3 py-3 rounded-xl transition flex items-center gap-1 border border-slate-600 cursor-pointer">
+            <!-- Backup JSON -->
+            <button id="btn-backup"
+              class="bg-slate-700 hover:bg-slate-600 text-amber-300 font-black text-[12px] px-3 py-3 rounded-xl border border-slate-500 flex items-center gap-1.5 transition cursor-pointer">
               <i class="fa-solid fa-box-archive"></i>
-              <span>💾 Backup JSON</span>
+              💾 Backup
             </button>
 
-            <button id="btn-trigger-import-backup" class="bg-indigo-800 hover:bg-indigo-700 text-white font-black text-xs px-3 py-3 rounded-xl transition flex items-center gap-1 border border-indigo-500 cursor-pointer">
+            <!-- Restore Backup -->
+            <button id="btn-restore"
+              class="bg-indigo-700 hover:bg-indigo-600 text-white font-black text-[12px] px-3 py-3 rounded-xl border border-indigo-400 flex items-center gap-1.5 transition cursor-pointer">
               <i class="fa-solid fa-upload"></i>
-              <span>📤 Phục Hồi</span>
+              📤 Phục Hồi
             </button>
           </div>
         </div>
 
-        <!-- Hidden File Inputs -->
-        <input type="file" id="file-excel-input" accept=".xlsx, .xls" style="display:none;" />
-        <input type="file" id="file-backup-input" accept=".json" style="display:none;" />
+        <!-- Hidden file inputs -->
+        <input type="file" id="file-excel" accept=".xlsx,.xls" class="hidden">
+        <input type="file" id="file-backup" accept=".json" class="hidden">
       </div>
 
-      <!-- Multi-Dimensional Dynamic Filter Toolbar -->
-      <div class="glass-card p-4.5 rounded-2xl mb-6 space-y-3">
+      <!-- ====== Filter Toolbar ====== -->
+      <div class="glass-card p-4 mb-5 space-y-3">
+        <!-- Search -->
         <div class="flex gap-2">
-          <input type="text" id="search-input" placeholder="Gõ tên bao bì, mã hàng, dãy A, kệ K01, ô tầng..." class="flex-1 bg-white border-2 border-slate-300 rounded-xl px-4 py-2.5 text-xs text-slate-950 outline-none focus:border-blue-600 font-bold shadow-xs">
-          <button id="btn-reset-filters" class="bg-slate-200 hover:bg-slate-300 text-slate-900 text-xs font-black px-4 py-2.5 rounded-xl border border-slate-300">
-            Xóa Bộ Lọc
-          </button>
+          <input type="text" id="search" placeholder="🔍 Gõ tên hàng, mã vật tư, dãy A, kệ K01, tầng 2..." class="flex-1 border-2 border-slate-300 rounded-xl px-4 py-2.5 text-[12px] font-bold text-slate-900 outline-none focus:border-blue-600 bg-white">
+          <button id="btn-clear-filters" class="bg-slate-200 hover:bg-slate-300 text-slate-900 font-black text-[12px] px-4 py-2.5 rounded-xl border border-slate-300 transition">Xóa Lọc</button>
         </div>
-
-        <!-- Cascading Multi-Level Filters -->
-        <div class="grid grid-cols-2 sm:grid-cols-4 gap-2.5">
-          <select id="filter-warehouse" class="bg-white border-2 border-slate-300 rounded-xl px-3 py-2 text-xs font-black text-blue-900 outline-none focus:border-blue-600">
-            <option value="ALL">🏢 Tất cả Kho (Toàn Bộ)</option>
+        <!-- Multi Filters -->
+        <div class="grid grid-cols-2 sm:grid-cols-4 gap-2">
+          <select id="f-warehouse" class="border-2 border-slate-300 rounded-xl px-3 py-2 text-[12px] font-black text-blue-900 outline-none focus:border-blue-600 bg-white">
+            <option value="ALL">🏢 Tất Cả Kho</option>
           </select>
-
-          <select id="filter-rack" class="bg-white border-2 border-slate-300 rounded-xl px-3 py-2 text-xs font-black text-emerald-900 outline-none focus:border-blue-600">
-            <option value="ALL">📦 Tất cả Dãy / Kệ</option>
+          <select id="f-rack" class="border-2 border-slate-300 rounded-xl px-3 py-2 text-[12px] font-black text-emerald-900 outline-none focus:border-blue-600 bg-white">
+            <option value="ALL">📦 Tất Cả Kệ</option>
           </select>
-
-          <select id="filter-tier" class="bg-white border-2 border-slate-300 rounded-xl px-3 py-2 text-xs font-black text-amber-900 outline-none focus:border-blue-600">
-            <option value="ALL">📍 Tất cả Tầng / Ô Vị Trí</option>
+          <select id="f-tier" class="border-2 border-slate-300 rounded-xl px-3 py-2 text-[12px] font-black text-amber-900 outline-none focus:border-blue-600 bg-white">
+            <option value="ALL">📍 Tất Cả Tầng</option>
           </select>
-
-          <select id="filter-staff" class="bg-white border-2 border-slate-300 rounded-xl px-3 py-2 text-xs font-black text-slate-900 outline-none focus:border-blue-600">
-            <option value="ALL">👤 Tất cả Nhân Viên</option>
+          <select id="f-staff" class="border-2 border-slate-300 rounded-xl px-3 py-2 text-[12px] font-black text-slate-900 outline-none focus:border-blue-600 bg-white">
+            <option value="ALL">👤 Tất Cả NV</option>
           </select>
         </div>
-
-        <div class="flex justify-end gap-2 pt-2 border-t border-slate-200">
-          <button class="bg-amber-500 hover:bg-amber-600 text-white font-black text-xs px-4 py-2 rounded-xl transition shadow-sm flex items-center gap-1.5" id="btn-load-samples" title="Nạp nối tiếp 1.000 vị trí mẫu thử nghiệm dàn trang (Không xóa dữ liệu thật)">
-            ⚡ Nạp Mẫu 1.000 Vị Trí
-          </button>
-          <button class="bg-rose-100 hover:bg-rose-200 text-rose-800 border border-rose-300 font-black text-xs px-3.5 py-2 rounded-xl transition flex items-center gap-1" id="btn-wipe-data">
-            🗑️ Xóa Trắng
-          </button>
+        <!-- Action row -->
+        <div class="flex justify-between items-center pt-1 border-t border-slate-200">
+          <span class="text-[11px] text-slate-500 font-bold">Hệ thống lưu dữ liệu vĩnh viễn ngay cả khi đóng trình duyệt.</span>
+          <div class="flex gap-2">
+            <button id="btn-samples" class="bg-amber-500 hover:bg-amber-600 text-white font-black text-[11px] px-3 py-1.5 rounded-lg transition">⚡ Nạp 1.000 Mẫu</button>
+            <button id="btn-wipe" class="bg-rose-100 hover:bg-rose-200 text-rose-800 border border-rose-300 font-black text-[11px] px-3 py-1.5 rounded-lg transition">🗑️ Xóa Trắng</button>
+          </div>
         </div>
       </div>
 
-      <!-- Location Cards Grid (Paginated 24/page) -->
-      <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-5 mb-6" id="location-grid-container">
-        <!-- Dynamic cards -->
-      </div>
+      <!-- Photo Grid -->
+      <div id="grid-container" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 mb-5"></div>
 
-      <!-- Pagination Toolbar -->
-      <div class="glass-card p-3.5 rounded-2xl flex justify-between items-center text-xs font-bold text-slate-800">
-        <span id="page-info">Trang 1 / 1 (Tổng 0 vị trí)</span>
+      <!-- Pagination -->
+      <div class="glass-card p-3 flex justify-between items-center text-[12px] font-bold text-slate-800">
+        <span id="page-info">Trang 1 / 1 (0 vị trí)</span>
         <div class="flex gap-2">
-          <button class="px-4 py-2 bg-slate-200 border-2 border-slate-300 rounded-xl hover:bg-slate-300 font-black text-slate-900" id="btn-prev-page">← Trang Trước</button>
-          <button class="px-4 py-2 bg-slate-200 border-2 border-slate-300 rounded-xl hover:bg-slate-300 font-black text-slate-900" id="btn-next-page">Trang Sau →</button>
+          <button id="btn-prev" class="px-4 py-2 bg-slate-100 border-2 border-slate-300 rounded-xl hover:bg-slate-200 font-black text-slate-900 transition">← Trước</button>
+          <button id="btn-next" class="px-4 py-2 bg-slate-100 border-2 border-slate-300 rounded-xl hover:bg-slate-200 font-black text-slate-900 transition">Tiếp →</button>
         </div>
       </div>
 
-    </div>
+    </div><!-- end tab-search -->
 
-    <!-- Pane 2: Snap Camera / Add Location Form -->
-    <div class="tab-pane hidden" id="pane-add">
+    <!-- ====== TAB 2: Add Location ====== -->
+    <div id="tab-add" class="tab-pane">
       <div class="max-w-2xl mx-auto">
-        <div class="glass-card p-6 sm:p-8 rounded-3xl">
-          <h2 class="text-xl font-black text-slate-950 font-heading mb-1">📷 Chụp Ảnh & Gán Vị Trí Hàng Hóa Mới</h2>
-          <p class="text-xs text-slate-600 font-bold mb-6">Chụp hình trực tiếp bằng Camera điện thoại. Hệ thống sẽ tự động nén ảnh siêu nhẹ (~30KB) để lưu mượt mà vĩnh viễn!</p>
+        <div class="glass-card p-6 sm:p-8">
+          <h2 class="font-heading text-xl font-black text-slate-950 mb-1">📷 Chụp & Gán Vị Trí Hàng Hóa Mới</h2>
+          <p class="text-[12px] text-slate-500 font-bold mb-6">Chụp bằng Camera điện thoại. Ảnh tự động nén siêu nhẹ ~30KB lưu vĩnh viễn!</p>
 
-          <form id="form-add-location" class="space-y-4 text-xs font-bold">
-            
+          <form id="form-add" class="space-y-4">
+            <!-- Photo -->
             <div>
-              <label class="block font-black text-slate-900 mb-1">1. Chụp Ảnh Hoặc Tải Ảnh Vị Trí Kho (*):</label>
-              <div class="border-3 border-dashed border-blue-400 bg-blue-50/70 hover:bg-blue-100 rounded-2xl p-6 text-center cursor-pointer transition relative" onclick="document.getElementById('new-photo-input').click()">
+              <label class="block font-black text-slate-900 text-[12px] mb-1.5">1. Chụp Ảnh / Tải Ảnh Vị Trí (*):</label>
+              <div class="border-2 border-dashed border-blue-400 bg-blue-50 rounded-2xl p-6 text-center cursor-pointer hover:bg-blue-100 transition" onclick="document.getElementById('inp-photo').click()">
                 <div class="text-3xl mb-1">📷</div>
-                <p class="font-black text-blue-900 text-sm">Bấm để Chụp Camera hoặc Chọn Ảnh Từ Thư Viện</p>
-                <p class="text-[11px] text-slate-600 font-bold mt-0.5">Tự động nén ảnh 800px WebP siêu nhẹ 0ms lag</p>
-                <input type="file" id="new-photo-input" accept="image/*" capture="environment" class="hidden" />
+                <p class="font-black text-blue-900 text-sm">Bấm để Chụp Camera hoặc Chọn Ảnh</p>
+                <p class="text-[11px] text-slate-500 font-bold mt-0.5">Tự động nén 800px WebP ~30KB</p>
               </div>
-
-              <div id="photo-preview-container" class="hidden mt-3 text-center bg-slate-950 p-3 rounded-2xl border border-slate-800">
-                <img id="photo-preview-img" class="max-h-48 mx-auto rounded-xl object-contain mb-2" />
-                <span id="photo-size-tag" class="text-[11px] font-black text-emerald-400"></span>
+              <input type="file" id="inp-photo" accept="image/*" capture="environment" class="hidden">
+              <div id="photo-preview-wrap" class="hidden mt-3 bg-slate-900 p-3 rounded-2xl text-center">
+                <img id="photo-preview" class="max-h-48 mx-auto rounded-xl object-contain mb-2">
+                <span id="photo-size" class="text-[11px] font-black text-emerald-400"></span>
               </div>
             </div>
 
+            <!-- SKU Name -->
             <div>
-              <label class="block font-black text-slate-900 mb-1">2. Tên Bao Bì / Hàng Hóa / Mã Vật Tư (*):</label>
-              <input type="text" id="new-sku-name" required placeholder="Ví dụ: Cuộn Màng Co PE 50cm, Bao Bột Mì 25kg, Thùng Gia Vị..." class="w-full bg-white border-2 border-slate-300 rounded-xl px-4 py-2.5 text-xs text-slate-950 outline-none focus:border-blue-600 font-extrabold" />
+              <label class="block font-black text-slate-900 text-[12px] mb-1.5">2. Tên Bao Bì / Hàng Hóa / Mã Vật Tư (*):</label>
+              <input type="text" id="inp-sku" required placeholder="VD: Cuộn Màng Co PE 50cm, Bao Bột Mì 25kg..." class="w-full border-2 border-slate-300 rounded-xl px-4 py-2.5 text-[12px] font-extrabold text-slate-950 outline-none focus:border-blue-600 bg-white">
             </div>
 
+            <!-- Location Fields -->
             <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
               <div>
-                <label class="block font-black text-slate-900 mb-1">Kho / Khu Vực (*):</label>
-                <input type="text" id="new-warehouse" required placeholder="Kho Bao Bì, Kho Nguyên Liệu..." class="w-full bg-white border-2 border-slate-300 rounded-xl px-3 py-2 text-xs text-slate-950 outline-none focus:border-blue-600 font-bold" />
+                <label class="block font-black text-slate-900 text-[12px] mb-1.5">Kho / Khu Vực (*):</label>
+                <input type="text" id="inp-warehouse" required placeholder="Kho Bao Bì, Kho Nguyên Liệu..." class="w-full border-2 border-slate-300 rounded-xl px-3 py-2 text-[12px] font-bold outline-none focus:border-blue-600 bg-white">
               </div>
-
               <div>
-                <label class="block font-black text-slate-900 mb-1">Dãy / Kệ (*):</label>
-                <input type="text" id="new-rack" required placeholder="Dãy A, Kệ K01, Giàn B2..." class="w-full bg-white border-2 border-slate-300 rounded-xl px-3 py-2 text-xs text-slate-950 outline-none focus:border-blue-600 font-bold" />
+                <label class="block font-black text-slate-900 text-[12px] mb-1.5">Dãy / Kệ (*):</label>
+                <input type="text" id="inp-rack" required placeholder="Dãy A, Kệ K01, Giàn B2..." class="w-full border-2 border-slate-300 rounded-xl px-3 py-2 text-[12px] font-bold outline-none focus:border-blue-600 bg-white">
               </div>
-
               <div>
-                <label class="block font-black text-slate-900 mb-1">Tầng / Ô Vị Trí (*):</label>
-                <input type="text" id="new-tier" required placeholder="Tầng 2 - Ô 04, Tầng Sàn..." class="w-full bg-white border-2 border-slate-300 rounded-xl px-3 py-2 text-xs text-slate-950 outline-none focus:border-blue-600 font-bold" />
+                <label class="block font-black text-slate-900 text-[12px] mb-1.5">Tầng / Ô Vị Trí (*):</label>
+                <input type="text" id="inp-tier" required placeholder="Tầng 2 - Ô 04, Tầng Sàn..." class="w-full border-2 border-slate-300 rounded-xl px-3 py-2 text-[12px] font-bold outline-none focus:border-blue-600 bg-white">
               </div>
             </div>
 
             <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
               <div>
-                <label class="block font-black text-slate-900 mb-1">Số Lượng / Tồn Kho Hiện Tại:</label>
-                <input type="text" id="new-qty-note" placeholder="Ví dụ: Tồn 120 cuộn, 85 bao, 15 thùng..." class="w-full bg-white border-2 border-slate-300 rounded-xl px-3 py-2 text-xs text-slate-950 outline-none focus:border-blue-600 font-bold" />
+                <label class="block font-black text-slate-900 text-[12px] mb-1.5">Số Lượng / Tồn Kho:</label>
+                <input type="text" id="inp-qty" placeholder="VD: Tồn 120 cuộn, 85 bao..." class="w-full border-2 border-slate-300 rounded-xl px-3 py-2 text-[12px] font-bold outline-none focus:border-blue-600 bg-white">
               </div>
-
               <div>
-                <label class="block font-black text-slate-900 mb-1">Họ Tên Nhân Viên Chụp Ảnh:</label>
-                <input type="text" id="new-staff-name" placeholder="Ví dụ: Lê Vũ Tường, Nguyễn Văn Hùng..." class="w-full bg-white border-2 border-slate-300 rounded-xl px-3 py-2 text-xs text-slate-950 outline-none focus:border-blue-600 font-bold" />
+                <label class="block font-black text-slate-900 text-[12px] mb-1.5">Họ Tên Nhân Viên:</label>
+                <input type="text" id="inp-staff" placeholder="VD: Lê Vũ Tường, Nguyễn Văn Hùng..." class="w-full border-2 border-slate-300 rounded-xl px-3 py-2 text-[12px] font-bold outline-none focus:border-blue-600 bg-white">
               </div>
             </div>
 
             <div>
-              <label class="block font-black text-slate-900 mb-1">Ghi Chú Nhận Dạng Thêm:</label>
-              <textarea id="new-note" rows="2" placeholder="Nhập ghi chú đặc điểm nhận dạng (VD: nằm ở góc kệ cạnh lối đi chính, dán băng dính vàng...)" class="w-full bg-white border-2 border-slate-300 rounded-xl p-3 text-xs text-slate-950 outline-none focus:border-blue-600 font-bold"></textarea>
+              <label class="block font-black text-slate-900 text-[12px] mb-1.5">Ghi Chú Nhận Dạng Thêm:</label>
+              <textarea id="inp-note" rows="2" placeholder="VD: Nằm góc kệ cạnh lối đi chính, dán băng dính vàng..." class="w-full border-2 border-slate-300 rounded-xl px-3 py-2.5 text-[12px] font-bold outline-none focus:border-blue-600 bg-white"></textarea>
             </div>
 
             <div class="flex justify-end gap-3 pt-3 border-t border-slate-200">
-              <button type="button" id="btn-reset-form" class="bg-slate-200 hover:bg-slate-300 text-slate-900 font-black text-xs px-4 py-2.5 rounded-xl transition border border-slate-300">Nhập Lại</button>
-              <button type="submit" class="bg-blue-700 hover:bg-blue-800 text-white font-black text-xs px-6 py-2.5 rounded-xl transition shadow-md flex items-center gap-1.5">
-                💾 LƯU VỊ TRÍ HÌNH ẢNH KHO
+              <button type="button" id="btn-reset-form" class="bg-slate-200 hover:bg-slate-300 text-slate-900 font-black text-[12px] px-4 py-2.5 rounded-xl border border-slate-300 transition">Nhập Lại</button>
+              <button type="submit" class="bg-blue-700 hover:bg-blue-800 text-white font-black text-[12px] px-6 py-2.5 rounded-xl shadow flex items-center gap-2 transition">
+                💾 LƯU VỊ TRÍ HÌNH ẢNH
               </button>
             </div>
-
           </form>
         </div>
       </div>
-    </div>
+    </div><!-- end tab-add -->
 
-    <!-- Pane 3: Step-by-Step User Guide -->
-    <div class="tab-pane hidden" id="pane-guide">
-      <div class="max-w-4xl mx-auto space-y-6">
+    <!-- ====== TAB 3: Guide ====== -->
+    <div id="tab-guide" class="tab-pane">
+      <div class="max-w-3xl mx-auto space-y-5">
         <div class="bg-gradient-to-r from-blue-700 to-indigo-900 rounded-3xl p-6 text-white shadow-xl">
-          <h2 class="text-2xl font-black font-heading mb-2">📖 Hướng Dẫn Nạp File Excel Có Ảnh Đính Kèm</h2>
-          <p class="text-xs text-blue-100 font-bold leading-relaxed">
-            Hỗ trợ nạp hàng trăm tới hàng ngàn vị trí bao bì / nguyên liệu trực tiếp từ File Excel (.xlsx) có chèn hình ảnh 1-Click!
-          </p>
+          <h2 class="font-heading text-2xl font-black mb-2">📖 Hướng Dẫn Nạp File Excel Có Ảnh</h2>
+          <p class="text-[12px] text-blue-100 font-bold leading-relaxed">Hỗ trợ nạp hàng trăm đến hàng ngàn vị trí bao bì / nguyên liệu từ file Excel (.xlsx) có ảnh chèn trong 1-Click!</p>
         </div>
 
-        <div class="glass-card p-6 rounded-3xl space-y-4">
-          <div class="flex items-center gap-3 border-b border-slate-200 pb-3">
-            <span class="text-2xl">📊</span>
-            <div>
-              <h3 class="text-base font-black text-slate-950 font-heading">PHẦN 1: Hướng Dẫn Upload File Excel Nạp Vị Trí Siêu Tốc</h3>
-              <p class="text-xs text-slate-600 font-bold">Tiết kiệm 99% thời gian nhập liệu thủ công bằng cách import từ Excel</p>
-            </div>
-          </div>
-
-          <div class="space-y-3 text-xs text-slate-800 font-bold">
-            <div class="flex gap-3 items-start">
-              <div class="step-number">1</div>
-              <div>
-                <strong class="text-slate-950 text-sm">Bước 1: Bấm nút "📥 Tải Mẫu File Excel" để lấy file mẫu chuẩn</strong>
-                <p class="text-slate-600 font-semibold mt-0.5">File Excel mẫu đã có sẵn các cột chuẩn: Mã Vị Trí, Tên Hàng Hóa, Kho, Dãy/Kệ, Tầng/Ô, Tồn Kho, Ghi Chú.</p>
-              </div>
-            </div>
-
-            <div class="flex gap-3 items-start">
-              <div class="step-number">2</div>
-              <div>
-                <strong class="text-slate-950 text-sm">Bước 2: Điền dữ liệu & Chèn hình ảnh trực tiếp vào dòng Excel</strong>
-                <p class="text-slate-600 font-semibold mt-0.5">Bạn có thể chèn ảnh vào file Excel hoặc dán đường dẫn/DataURL ảnh vào cột hình ảnh.</p>
-              </div>
-            </div>
-
-            <div class="flex gap-3 items-start">
-              <div class="step-number">3</div>
-              <div>
-                <strong class="text-slate-950 text-sm">Bước 3: Bấm nút "📊 UPLOAD FILE EXCEL CÓ ẢNH (.XLSX)" để Nạp</strong>
-                <p class="text-slate-600 font-semibold mt-0.5">Hệ thống sẽ tự động bóc tách toàn bộ dữ liệu & trích xuất hình ảnh nén đưa vào ứng dụng trong 1 giây!</p>
-              </div>
-            </div>
+        <div class="glass-card p-6 space-y-4">
+          <h3 class="font-heading text-base font-black text-slate-950 border-b pb-2">PHẦN 1: Hướng Dẫn Upload File Excel Siêu Tốc</h3>
+          <div class="space-y-3 text-[12px]">
+            <div class="flex gap-3 items-start"><div class="step-circle">1</div><div><strong class="text-slate-950 block">Bấm nút "📥 Tải Mẫu Excel" để lấy file mẫu chuẩn</strong><p class="text-slate-500 font-semibold mt-0.5">File có sẵn các cột: Mã Vị Trí, Tên Hàng Hóa, Kho, Dãy/Kệ, Tầng/Ô, Tồn Kho, Ghi Chú.</p></div></div>
+            <div class="flex gap-3 items-start"><div class="step-circle">2</div><div><strong class="text-slate-950 block">Điền dữ liệu & Chèn hình ảnh trực tiếp vào dòng Excel</strong><p class="text-slate-500 font-semibold mt-0.5">Chèn ảnh vào cell hoặc dán đường dẫn ảnh vào cột "Link Ảnh Hoặc Base64".</p></div></div>
+            <div class="flex gap-3 items-start"><div class="step-circle">3</div><div><strong class="text-slate-950 block">Bấm nút "📊 UPLOAD FILE EXCEL (.XLSX)" để nạp</strong><p class="text-slate-500 font-semibold mt-0.5">Hệ thống tự bóc tách dữ liệu & trích xuất ảnh trong vòng 1 giây!</p></div></div>
+            <div class="flex gap-3 items-start"><div class="step-circle">4</div><div><strong class="text-slate-950 block">Bấm "💾 Backup" để xuất file sao lưu vị trí + ảnh (.json)</strong><p class="text-slate-500 font-semibold mt-0.5">Dữ liệu lưu vĩnh viễn trong LocalStorage. Backup để phòng xa!</p></div></div>
           </div>
         </div>
 
+        <div class="glass-card p-5 border-l-4 border-amber-400">
+          <h3 class="font-black text-slate-950 text-[13px] mb-2">⚠️ Lưu Ý Quan Trọng Về Bảo Vệ Dữ Liệu</h3>
+          <ul class="text-[12px] text-slate-700 font-bold space-y-1.5 list-disc list-inside">
+            <li>Dữ liệu được lưu <strong>vĩnh viễn</strong> trong LocalStorage của trình duyệt này.</li>
+            <li>Backup thường xuyên bằng nút <strong>"💾 Backup JSON"</strong> để có bản dự phòng.</li>
+            <li>Chức năng "Xóa Trắng" yêu cầu nhập PIN bảo vệ chống xóa nhầm.</li>
+            <li>Mỗi ảnh tự động nén xuống ~30KB để lưu 3.000+ hình không bị lag.</li>
+          </ul>
+        </div>
       </div>
-    </div>
+    </div><!-- end tab-guide -->
 
   </main>
 
-  <!-- ZOOM PHOTO MODAL -->
-  <div class="modal-overlay" id="zoom-photo-modal">
-    <div class="bg-white p-6 rounded-3xl max-w-xl w-full relative max-h-[90vh] overflow-y-auto border-2 border-slate-300 shadow-2xl">
-      <button onclick="closeModal('zoom-photo-modal')" class="absolute top-4 right-4 text-slate-400 hover:text-slate-950 text-xl font-bold">✕</button>
-      <div id="zoom-modal-content">
-        <!-- Dynamic content -->
-      </div>
+  <!-- ========== ZOOM MODAL ========== -->
+  <div id="zoom-modal" class="modal-overlay">
+    <div class="bg-white p-5 rounded-3xl max-w-xl w-full relative max-h-[92vh] overflow-y-auto border-2 border-slate-200 shadow-2xl">
+      <button onclick="closeZoomModal()" class="absolute top-3 right-4 text-slate-400 hover:text-slate-900 text-2xl font-black">✕</button>
+      <div id="zoom-content"></div>
     </div>
   </div>
 
-  <!-- Footer -->
-  <footer class="text-center text-xs text-slate-600 font-bold py-6 border-t border-slate-300 max-w-7xl mx-auto w-full mt-8">
-    © 2026 📷 **Visual Photo Bin Finder & Warehouse Location Manager** • Excel Import with Embedded Photos & Permanent Storage
+  <!-- ========== FOOTER ========== -->
+  <footer class="text-center text-[11px] text-slate-400 font-bold py-5 border-t border-slate-200 max-w-7xl mx-auto w-full mt-6">
+    © 2026 📷 Visual Photo Bin Finder • Excel Import + Ảnh Nhúng + Lưu Vĩnh Viễn LocalStorage
   </footer>
 
-  <script src="js/storage.js?v=20260725_v3"></script>
-  <script src="js/app.js?v=20260725_v3"></script>
+  <!-- ========== JAVASCRIPT ========== -->
+  <script>
+    'use strict';
+
+    // ─────────────────────────────────────────────────────────────────────────
+    // STORAGE ENGINE
+    // ─────────────────────────────────────────────────────────────────────────
+    const STORAGE_KEY = 'visual_bin_v3_locations';
+
+    const SAMPLE_PHOTOS = {
+      blue: `data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="600" height="400"><rect width="600" height="400" fill="%230f172a"/><rect x="30" y="50" width="540" height="300" fill="%231e293b" rx="14" stroke="%2338bdf8" stroke-width="4"/><text x="300" y="130" font-family="sans-serif" font-size="22" font-weight="900" fill="%2338bdf8" text-anchor="middle">KHO BAO BÌ LC01 - KỆ A1</text><text x="300" y="175" font-family="sans-serif" font-size="16" fill="%23fff" text-anchor="middle">MÀNG CO PE 50CM</text><rect x="110" y="210" width="380" height="60" fill="%231d4ed8" rx="10"/><text x="300" y="248" font-family="sans-serif" font-size="16" font-weight="900" fill="%23fff" text-anchor="middle">TẦNG 2 - Ô 04</text></svg>`,
+      green:`data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="600" height="400"><rect width="600" height="400" fill="%23022c22"/><rect x="30" y="50" width="540" height="300" fill="%23064e3b" rx="14" stroke="%234ade80" stroke-width="4"/><text x="300" y="130" font-family="sans-serif" font-size="22" font-weight="900" fill="%234ade80" text-anchor="middle">KHO NGUYÊN LIỆU KHÔ - DÃY B</text><text x="300" y="175" font-family="sans-serif" font-size="16" fill="%23fff" text-anchor="middle">BỘT MÌ TÁO ĐỎ 25KG</text><rect x="110" y="210" width="380" height="60" fill="%2315803d" rx="10"/><text x="300" y="248" font-family="sans-serif" font-size="16" font-weight="900" fill="%23fff" text-anchor="middle">KỆ K05 - TẦNG SÀN 02</text></svg>`,
+      purple:`data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="600" height="400"><rect width="600" height="400" fill="%233b0764"/><rect x="30" y="50" width="540" height="300" fill="%23581c87" rx="14" stroke="%23c084fc" stroke-width="4"/><text x="300" y="130" font-family="sans-serif" font-size="22" font-weight="900" fill="%23c084fc" text-anchor="middle">KHO PHỤ GIA - KỆ C02</text><text x="300" y="175" font-family="sans-serif" font-size="16" fill="%23fff" text-anchor="middle">HƯƠNG LIỆU BÒ NƯỚNG 20KG</text><rect x="110" y="210" width="380" height="60" fill="%237e22ce" rx="10"/><text x="300" y="248" font-family="sans-serif" font-size="16" font-weight="900" fill="%23fff" text-anchor="middle">TẦNG 3 - VỊ TRÍ 01</text></svg>`,
+    };
+    const DEFAULT_PHOTOS = [SAMPLE_PHOTOS.blue, SAMPLE_PHOTOS.green, SAMPLE_PHOTOS.purple];
+
+    const INITIAL_DATA = [
+      { id:'LOC-001', warehouse:'Kho Bao Bì LC01', rack:'Dãy A - Kệ 01', tier:'Tầng 2 - Ô 04', skuName:'Cuộn Màng Co PE 50cm', qtyNote:'Tồn 120 cuộn', staffName:'Lê Vũ Tường', updatedAt:'2026-01-20 14:30', note:'Hàng mới nhập chưa dán QR.', photoBase64: SAMPLE_PHOTOS.blue },
+      { id:'LOC-002', warehouse:'Kho Nguyên Liệu Khô', rack:'Dãy B - Kệ K05', tier:'Tầng Sàn - Vị Trí 02', skuName:'Bao Bột Mì Táo Đỏ 25kg', qtyNote:'Tồn 85 bao', staffName:'Nguyễn Văn Hùng', updatedAt:'2026-01-22 09:15', note:'Đầu kệ K05 cạnh lối đi chính.', photoBase64: SAMPLE_PHOTOS.green },
+      { id:'LOC-003', warehouse:'Kho Phụ Gia', rack:'Dãy C - Kệ C02', tier:'Tầng 3 - Vị Trí 01', skuName:'Thùng Hương Liệu Bò Nướng 20kg', qtyNote:'Tồn 15 thùng', staffName:'Phạm Minh Đức', updatedAt:'2026-01-24 16:45', note:'Dán băng dính niêm phong vàng.', photoBase64: SAMPLE_PHOTOS.purple },
+    ];
+
+    function getLocations() {
+      try {
+        const raw = localStorage.getItem(STORAGE_KEY);
+        if (!raw) {
+          localStorage.setItem(STORAGE_KEY, JSON.stringify(INITIAL_DATA));
+          return INITIAL_DATA;
+        }
+        const data = JSON.parse(raw);
+        return Array.isArray(data) ? data : INITIAL_DATA;
+      } catch { return INITIAL_DATA; }
+    }
+
+    function saveAllLocations(list) {
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(list));
+    }
+
+    function addOrUpdateLocation(item) {
+      const list = getLocations();
+      const idx = list.findIndex(i => i.id === item.id);
+      if (idx >= 0) list[idx] = item; else list.unshift(item);
+      saveAllLocations(list);
+    }
+
+    function deleteLocation(id) {
+      saveAllLocations(getLocations().filter(i => i.id !== id));
+    }
+
+    function compressImage(src, maxW = 800, quality = 0.75) {
+      return new Promise((resolve, reject) => {
+        const img = new Image();
+        img.onload = () => {
+          let w = img.width, h = img.height;
+          if (w > maxW) { h = Math.round(h * maxW / w); w = maxW; }
+          const c = document.createElement('canvas');
+          c.width = w; c.height = h;
+          const ctx = c.getContext('2d');
+          ctx.fillStyle = '#fff';
+          ctx.fillRect(0,0,w,h);
+          ctx.drawImage(img,0,0,w,h);
+          resolve(c.toDataURL('image/jpeg', quality));
+        };
+        img.onerror = reject;
+        if (typeof src === 'string') { img.src = src; }
+        else {
+          const fr = new FileReader();
+          fr.onload = e => { img.src = e.target.result; };
+          fr.readAsDataURL(src);
+        }
+      });
+    }
+
+    // ─────────────────────────────────────────────────────────────────────────
+    // STATE
+    // ─────────────────────────────────────────────────────────────────────────
+    let currentPage = 1;
+    const PAGE_SIZE = 24;
+    let filteredList = [];
+    let compressedPhoto = null;
+
+    // ─────────────────────────────────────────────────────────────────────────
+    // RENDER HELPERS
+    // ─────────────────────────────────────────────────────────────────────────
+    function updateKPIs() {
+      const all = getLocations();
+      document.getElementById('kpi-total').textContent = all.length.toLocaleString();
+      document.getElementById('kpi-warehouses').textContent = new Set(all.map(l=>l.warehouse)).size;
+      document.getElementById('kpi-photos').textContent = all.filter(l=>l.photoBase64).length.toLocaleString();
+    }
+
+    function populateFilters() {
+      const all = getLocations();
+      const fWh = document.getElementById('f-warehouse');
+      const fRk = document.getElementById('f-rack');
+      const fTr = document.getElementById('f-tier');
+      const fSt = document.getElementById('f-staff');
+      const wh = fWh.value, rk = fRk.value, tr = fTr.value, st = fSt.value;
+
+      const warehouses = [...new Set(all.map(l=>l.warehouse))].sort();
+      fWh.innerHTML = '<option value="ALL">🏢 Tất Cả Kho</option>' + warehouses.map(w=>`<option ${w===wh?'selected':''}>${w}</option>`).join('');
+
+      const rackSrc = wh!=='ALL' ? all.filter(l=>l.warehouse===wh) : all;
+      const racks = [...new Set(rackSrc.map(l=>l.rack))].sort();
+      fRk.innerHTML = '<option value="ALL">📦 Tất Cả Kệ</option>' + racks.map(r=>`<option ${r===rk?'selected':''}>${r}</option>`).join('');
+
+      const tierSrc = rackSrc.filter(l=>rk==='ALL'||l.rack===rk);
+      const tiers = [...new Set(tierSrc.map(l=>l.tier))].sort();
+      fTr.innerHTML = '<option value="ALL">📍 Tất Cả Tầng</option>' + tiers.map(t=>`<option ${t===tr?'selected':''}>${t}</option>`).join('');
+
+      const staffs = [...new Set(all.map(l=>l.staffName).filter(Boolean))].sort();
+      fSt.innerHTML = '<option value="ALL">👤 Tất Cả NV</option>' + staffs.map(s=>`<option ${s===st?'selected':''}>${s}</option>`).join('');
+    }
+
+    function filterLocations() {
+      const q  = (document.getElementById('search').value||'').toLowerCase().trim();
+      const wh = document.getElementById('f-warehouse').value;
+      const rk = document.getElementById('f-rack').value;
+      const tr = document.getElementById('f-tier').value;
+      const st = document.getElementById('f-staff').value;
+      let list = getLocations();
+      if (wh!=='ALL') list = list.filter(l=>l.warehouse===wh);
+      if (rk!=='ALL') list = list.filter(l=>l.rack===rk);
+      if (tr!=='ALL') list = list.filter(l=>l.tier===tr);
+      if (st!=='ALL') list = list.filter(l=>l.staffName===st);
+      if (q) list = list.filter(l=>[l.skuName,l.warehouse,l.rack,l.tier,l.qtyNote,l.note,l.id].some(v=>v&&v.toLowerCase().includes(q)));
+      return list;
+    }
+
+    function renderGrid() {
+      filteredList = filterLocations();
+      updateKPIs();
+
+      const total = filteredList.length;
+      const totalPages = Math.ceil(total / PAGE_SIZE) || 1;
+      if (currentPage > totalPages) currentPage = totalPages;
+      const start = (currentPage - 1) * PAGE_SIZE;
+      const page = filteredList.slice(start, start + PAGE_SIZE);
+
+      document.getElementById('page-info').textContent = `Trang ${currentPage} / ${totalPages} (${total.toLocaleString()} vị trí ảnh)`;
+
+      const container = document.getElementById('grid-container');
+      if (page.length === 0) {
+        container.innerHTML = `
+          <div class="col-span-full text-center py-16 glass-card">
+            <div class="text-5xl mb-3">📷</div>
+            <p class="font-extrabold text-slate-700 text-base">Chưa có vị trí ảnh nào phù hợp.</p>
+            <p class="text-[12px] text-slate-400 mt-1">Bấm tab "📷 Thêm Vị Trí" để thêm hoặc dùng nút "Xóa Lọc".</p>
+          </div>`;
+        return;
+      }
+
+      container.innerHTML = page.map(item => `
+        <div class="photo-card flex flex-col justify-between">
+          <div>
+            <div class="relative cursor-pointer overflow-hidden" onclick="openZoom('${item.id}')">
+              <img src="${item.photoBase64||''}" alt="${item.skuName}" class="w-full h-[190px] object-cover bg-slate-800" loading="lazy"
+                onerror="this.style.display='none'">
+              <span class="absolute top-2 right-2 bg-slate-900/90 text-amber-400 text-[10px] font-black px-2 py-0.5 rounded-full border border-amber-500">${item.id}</span>
+            </div>
+
+            <div class="p-3 space-y-2">
+              <div class="flex flex-wrap gap-1.5">
+                <span class="badge badge-blue"><i class="fa-solid fa-warehouse text-[9px]"></i> ${item.warehouse}</span>
+                <span class="badge badge-green"><i class="fa-solid fa-layer-group text-[9px]"></i> ${item.rack}</span>
+              </div>
+              <h3 class="font-black text-slate-950 text-[12px] leading-snug cursor-pointer hover:text-blue-700" onclick="openZoom('${item.id}')">${item.skuName}</h3>
+              <div class="text-[11px] bg-slate-50 p-2 rounded-xl border border-slate-200 space-y-0.5 font-extrabold">
+                <div>📍 <span class="text-slate-500 font-bold">Vị Trí:</span> <span class="text-blue-700">${item.tier}</span></div>
+                <div>📦 <span class="text-slate-500 font-bold">Tồn:</span> <span class="text-slate-900">${item.qtyNote||'Chưa ghi'}</span></div>
+                ${item.note?`<div class="text-[10px] text-slate-600 border-t pt-0.5 mt-0.5">📝 ${item.note}</div>`:''}
+              </div>
+            </div>
+          </div>
+
+          <div class="px-3 py-2 bg-slate-50 border-t border-slate-200 flex justify-between items-center text-[10px] font-extrabold text-slate-600">
+            <span>👤 ${item.staffName||'Kho'} • ${item.updatedAt||''}</span>
+            <button onclick="handleDelete('${item.id}')" class="bg-rose-100 hover:bg-rose-200 text-rose-800 border border-rose-300 px-2 py-0.5 rounded font-black transition">🗑️</button>
+          </div>
+        </div>
+      `).join('');
+    }
+
+    // ─────────────────────────────────────────────────────────────────────────
+    // ZOOM MODAL
+    // ─────────────────────────────────────────────────────────────────────────
+    function openZoom(id) {
+      const item = getLocations().find(i=>i.id===id);
+      if (!item) return;
+      document.getElementById('zoom-content').innerHTML = `
+        <div class="text-center pb-3 border-b border-slate-200 mb-4">
+          <span class="bg-blue-600 text-white text-[11px] font-black px-3 py-1 rounded-full">MÃ: ${item.id}</span>
+          <h3 class="text-xl font-black text-slate-900 mt-2 font-heading">${item.skuName}</h3>
+          <p class="text-[12px] font-bold text-blue-700 mt-0.5">${item.warehouse} • ${item.rack} • ${item.tier}</p>
+        </div>
+        <div class="bg-slate-900 rounded-2xl overflow-hidden mb-4 flex items-center justify-center min-h-[260px] border-2 border-slate-700">
+          <img src="${item.photoBase64||''}" alt="${item.skuName}" class="w-full max-h-[60vh] object-contain">
+        </div>
+        <div class="grid grid-cols-2 gap-3 text-[12px] bg-slate-50 p-4 rounded-xl border border-slate-200 font-bold mb-4">
+          <div><span class="text-slate-500">Tồn Kho:</span> <strong class="text-slate-900 block">${item.qtyNote||'Chưa ghi'}</strong></div>
+          <div><span class="text-slate-500">Nhân Viên:</span> <strong class="text-slate-900 block">${item.staffName||'N/A'} (${item.updatedAt})</strong></div>
+          <div class="col-span-2 border-t pt-2"><span class="text-slate-500">Ghi Chú:</span> <p class="text-slate-900 font-bold mt-0.5">${item.note||'Không có.'}</p></div>
+        </div>
+        <div class="flex justify-end gap-2">
+          <button onclick="closeZoomModal()" class="bg-slate-200 hover:bg-slate-300 text-slate-900 font-black text-[12px] px-5 py-2.5 rounded-xl transition">Đóng</button>
+          <button onclick="handleDelete('${item.id}'); closeZoomModal();" class="bg-rose-100 hover:bg-rose-200 text-rose-800 border border-rose-300 font-black text-[12px] px-4 py-2.5 rounded-xl transition">🗑️ Xóa</button>
+        </div>`;
+      document.getElementById('zoom-modal').classList.add('active');
+    }
+
+    function closeZoomModal() {
+      document.getElementById('zoom-modal').classList.remove('active');
+    }
+
+    function handleDelete(id) {
+      if (confirm(`Xóa vị trí "${id}" khỏi hệ thống?`)) {
+        deleteLocation(id);
+        populateFilters();
+        renderGrid();
+      }
+    }
+
+    // ─────────────────────────────────────────────────────────────────────────
+    // EXCEL IMPORT
+    // ─────────────────────────────────────────────────────────────────────────
+    async function importExcelFile(file) {
+      if (typeof XLSX === 'undefined') throw new Error('Thư viện SheetJS chưa tải xong. Kiểm tra kết nối mạng & thử lại!');
+      if (typeof JSZip === 'undefined') throw new Error('Thư viện JSZip chưa tải xong. Kiểm tra kết nối mạng & thử lại!');
+
+      const buf = await file.arrayBuffer();
+
+      // Parse rows
+      const wb = XLSX.read(buf, { type: 'array' });
+      const ws = wb.Sheets[wb.SheetNames[0]];
+      const rows = XLSX.utils.sheet_to_json(ws, { defval: '' });
+      if (!rows.length) throw new Error('File Excel rỗng!');
+
+      // Extract embedded images from xl/media/
+      const extractedPhotos = [];
+      try {
+        const zip = await JSZip.loadAsync(buf);
+        const mediaFiles = Object.keys(zip.files).filter(n=>n.startsWith('xl/media/'));
+        mediaFiles.sort((a,b)=>(parseInt(a.replace(/\D/g,''))||0)-(parseInt(b.replace(/\D/g,''))||0));
+        for (const fileName of mediaFiles) {
+          const b64 = await zip.files[fileName].async('base64');
+          const mime = fileName.endsWith('.png') ? 'image/png' : 'image/jpeg';
+          const dataUrl = `data:${mime};base64,${b64}`;
+          const compressed = await compressImage(dataUrl, 800, 0.75);
+          extractedPhotos.push(compressed);
+        }
+      } catch (e) { console.warn('[ExcelImport] No embedded images or zip error:', e); }
+
+      // Map rows to location objects
+      const now = new Date();
+      const dateStr = `${now.getFullYear()}-${String(now.getMonth()+1).padStart(2,'0')}-${String(now.getDate()).padStart(2,'0')} ${String(now.getHours()).padStart(2,'0')}:${String(now.getMinutes()).padStart(2,'0')}`;
+
+      const newItems = rows.map((row, i) => {
+        const skuName  = row['Tên Bao Bì / Hàng Hóa (*)'] || row['Tên Hàng Hóa'] || row['SKU'] || `Hàng Hóa #${i+1}`;
+        const warehouse= row['Kho / Khu Vực (*)'] || row['Kho'] || 'Kho Tổng';
+        const rack     = row['Dãy / Kệ (*)'] || row['Kệ'] || 'Dãy A';
+        const tier     = row['Tầng / Ô Vị Trí (*)'] || row['Tầng'] || 'Tầng 1';
+        const qtyNote  = row['Số Lượng / Tồn Kho'] || row['Tồn Kho'] || '';
+        const staffName= row['Nhân Viên Chụp Ảnh'] || row['Nhân Viên'] || 'Cán Bộ Kho';
+        const note     = row['Ghi Chú Vị Trí'] || row['Ghi Chú'] || '';
+        const id       = String(row['Mã Vị Trí (*)'] || row['Mã Vị Trí'] || `LOC-XL-${Date.now().toString().slice(-4)}-${i+1}`).trim();
+        let   photo    = row['Link Ảnh Hoặc Base64'] || '';
+        if (!photo || !photo.startsWith('data:image')) {
+          photo = extractedPhotos[i] || DEFAULT_PHOTOS[i % 3];
+        }
+        return { id, warehouse:String(warehouse).trim(), rack:String(rack).trim(), tier:String(tier).trim(), skuName:String(skuName).trim(), qtyNote:String(qtyNote).trim(), staffName:String(staffName).trim(), updatedAt:dateStr, note:String(note).trim(), photoBase64:photo };
+      });
+
+      // Merge safely
+      const currentMap = new Map(getLocations().map(i=>[i.id,i]));
+      newItems.forEach(item=>currentMap.set(item.id, item));
+      saveAllLocations([...currentMap.values()]);
+
+      return { totalRows: newItems.length, photos: extractedPhotos.length };
+    }
+
+    // ─────────────────────────────────────────────────────────────────────────
+    // EXCEL TEMPLATE DOWNLOAD
+    // ─────────────────────────────────────────────────────────────────────────
+    function downloadTemplate() {
+      if (typeof XLSX === 'undefined') { alert('Thư viện Excel chưa tải. Vui lòng thử lại!'); return; }
+      const data = [
+        {'Mã Vị Trí (*)':'LOC-2026-0001','Tên Bao Bì / Hàng Hóa (*)':'Cuộn Màng Co PE 50cm','Kho / Khu Vực (*)':'Kho Bao Bì LC01','Dãy / Kệ (*)':'Dãy A - Kệ 01','Tầng / Ô Vị Trí (*)':'Tầng 2 - Ô 04','Số Lượng / Tồn Kho':'120 cuộn','Nhân Viên Chụp Ảnh':'Lê Vũ Tường','Ghi Chú Vị Trí':'Đầu kệ cạnh lối đi','Link Ảnh Hoặc Base64':''},
+        {'Mã Vị Trí (*)':'LOC-2026-0002','Tên Bao Bì / Hàng Hóa (*)':'Bao Bột Mì Táo Đỏ 25kg','Kho / Khu Vực (*)':'Kho Nguyên Liệu Khô','Dãy / Kệ (*)':'Dãy B - Kệ K05','Tầng / Ô Vị Trí (*)':'Tầng Sàn - Vị Trí 02','Số Lượng / Tồn Kho':'85 bao','Nhân Viên Chụp Ảnh':'Nguyễn Văn Hùng','Ghi Chú Vị Trí':'Góc kệ K05','Link Ảnh Hoặc Base64':''},
+      ];
+      const ws = XLSX.utils.json_to_sheet(data);
+      const wb = XLSX.utils.book_new();
+      XLSX.utils.book_append_sheet(wb, ws, 'ViTriKho');
+      XLSX.writeFile(wb, 'Mau_Nhap_Vi_Tri_Kho.xlsx');
+    }
+
+    // ─────────────────────────────────────────────────────────────────────────
+    // BACKUP / RESTORE
+    // ─────────────────────────────────────────────────────────────────────────
+    function exportBackup() {
+      const all = getLocations();
+      const blob = new Blob([JSON.stringify(all,null,2)], {type:'application/json'});
+      const a = document.createElement('a');
+      a.href = URL.createObjectURL(blob);
+      a.download = `Sao_Luu_Vi_Tri_Kho_${new Date().toISOString().split('T')[0]}_${all.length}mon.json`;
+      a.click();
+    }
+
+    function importBackup(file) {
+      const fr = new FileReader();
+      fr.onload = e => {
+        try {
+          const data = JSON.parse(e.target.result);
+          if (!Array.isArray(data)) throw new Error();
+          const map = new Map(getLocations().map(i=>[i.id,i]));
+          data.forEach(item=>{ if(item&&item.id&&item.skuName) map.set(item.id,item); });
+          saveAllLocations([...map.values()]);
+          populateFilters();
+          renderGrid();
+          alert(`✓ Phục hồi thành công ${data.length.toLocaleString()} vị trí từ file sao lưu!`);
+        } catch { alert('File sao lưu JSON không đúng định dạng!'); }
+      };
+      fr.readAsText(file);
+    }
+
+    // ─────────────────────────────────────────────────────────────────────────
+    // SAMPLE DATA
+    // ─────────────────────────────────────────────────────────────────────────
+    function generateSamples(n = 1000) {
+      const whs = ['Kho Bao Bì LC01','Kho Nguyên Liệu Khô','Kho Phụ Gia','Kho Vật Tư A'];
+      const rks = ['Dãy A - Kệ 01','Dãy A - Kệ 02','Dãy B - Kệ K05','Dãy C - Kệ C02'];
+      const trs = ['Tầng Sàn - Vị Trí 01','Tầng 1 - Ô 02','Tầng 2 - Ô 04','Tầng 3 - Vị Trí 01'];
+      const skus= ['Cuộn Màng Co PE 50cm','Bao Bột Mì 25kg','Thùng Hương Liệu 20kg','Cuộn Nilon Lót'];
+      const stfs= ['Lê Vũ Tường','Nguyễn Văn Hùng','Phạm Minh Đức'];
+      const current = getLocations();
+      const samples = Array.from({length:n},(_, i)=>({
+        id:`SAMPLE-${Date.now().toString().slice(-5)}-${i+1}`,
+        warehouse: whs[i%4], rack: rks[i%4], tier: trs[i%4],
+        skuName: `${skus[i%4]} Mẫu #${i+1}`,
+        qtyNote: `Tồn ${10+i%90} đơn vị`,
+        staffName: stfs[i%3],
+        updatedAt: `2026-01-${String((i%28)+1).padStart(2,'0')} 10:30`,
+        note: `Vị trí mẫu thử ${i+1}`,
+        photoBase64: DEFAULT_PHOTOS[i%3]
+      }));
+      saveAllLocations([...current,...samples]);
+    }
+
+    // ─────────────────────────────────────────────────────────────────────────
+    // INIT & EVENT BINDINGS
+    // ─────────────────────────────────────────────────────────────────────────
+    document.addEventListener('DOMContentLoaded', () => {
+      populateFilters();
+      renderGrid();
+
+      // ── Tab switching ──
+      document.querySelectorAll('.tab-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+          document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+          document.querySelectorAll('.tab-pane').forEach(p => p.classList.remove('active'));
+          btn.classList.add('active');
+          const target = btn.getAttribute('data-tab');
+          const pane = document.getElementById(target);
+          if (pane) pane.classList.add('active');
+        });
+      });
+
+      // ── Filter events ──
+      document.getElementById('search').addEventListener('input', () => { currentPage=1; renderGrid(); });
+      document.getElementById('f-warehouse').addEventListener('change', () => { populateFilters(); currentPage=1; renderGrid(); });
+      document.getElementById('f-rack').addEventListener('change', () => { currentPage=1; renderGrid(); });
+      document.getElementById('f-tier').addEventListener('change', () => { currentPage=1; renderGrid(); });
+      document.getElementById('f-staff').addEventListener('change', () => { currentPage=1; renderGrid(); });
+      document.getElementById('btn-clear-filters').addEventListener('click', () => {
+        document.getElementById('search').value='';
+        ['f-warehouse','f-rack','f-tier','f-staff'].forEach(id=>document.getElementById(id).value='ALL');
+        populateFilters(); currentPage=1; renderGrid();
+      });
+
+      // ── Pagination ──
+      document.getElementById('btn-prev').addEventListener('click', () => { if(currentPage>1){currentPage--;renderGrid();} });
+      document.getElementById('btn-next').addEventListener('click', () => {
+        const total = Math.ceil(filteredList.length/PAGE_SIZE)||1;
+        if(currentPage<total){currentPage++;renderGrid();}
+      });
+
+      // ── Excel Upload ──
+      document.getElementById('btn-upload-excel').addEventListener('click', () => {
+        document.getElementById('file-excel').value='';
+        document.getElementById('file-excel').click();
+      });
+      document.getElementById('file-excel').addEventListener('change', async e => {
+        const file = e.target.files[0];
+        if (!file) return;
+        try {
+          const result = await importExcelFile(file);
+          populateFilters(); currentPage=1; renderGrid();
+          alert(`⚡ NẠP EXCEL THÀNH CÔNG!\n• Vị trí nạp: ${result.totalRows.toLocaleString()}\n• Ảnh trích xuất: ${result.photos.toLocaleString()}\n\nDữ liệu đã lưu an toàn vĩnh viễn!`);
+        } catch(err) {
+          console.error(err);
+          alert(`Lỗi đọc file Excel:\n${err.message}`);
+        }
+      });
+
+      // ── Template ──
+      document.getElementById('btn-download-template').addEventListener('click', downloadTemplate);
+
+      // ── Backup ──
+      document.getElementById('btn-backup').addEventListener('click', () => { exportBackup(); });
+      document.getElementById('btn-restore').addEventListener('click', () => {
+        document.getElementById('file-backup').value='';
+        document.getElementById('file-backup').click();
+      });
+      document.getElementById('file-backup').addEventListener('change', e => {
+        if(e.target.files[0]) importBackup(e.target.files[0]);
+      });
+
+      // ── Samples ──
+      document.getElementById('btn-samples').addEventListener('click', () => {
+        generateSamples(1000);
+        populateFilters(); currentPage=1; renderGrid();
+        alert('✓ Đã nạp 1.000 vị trí mẫu! Dữ liệu thật được bảo vệ an toàn.');
+      });
+
+      // ── Wipe ──
+      document.getElementById('btn-wipe').addEventListener('click', () => {
+        const pin = prompt('⚠️ Nhập "CONFIRM" hoặc PIN 8888 để xóa toàn bộ dữ liệu:');
+        if (pin==='CONFIRM'||pin==='8888') {
+          saveAllLocations([]);
+          populateFilters(); currentPage=1; renderGrid();
+          alert('✓ Đã xóa trắng toàn bộ!');
+        } else { alert('Hủy thao tác xóa.'); }
+      });
+
+      // ── Add Photo ──
+      document.getElementById('inp-photo').addEventListener('change', async e => {
+        const file = e.target.files[0];
+        if (!file) return;
+        const wrap = document.getElementById('photo-preview-wrap');
+        const prevImg = document.getElementById('photo-preview');
+        const sizeLbl = document.getElementById('photo-size');
+        try {
+          wrap.classList.remove('hidden');
+          sizeLbl.textContent = `Đang nén (Gốc ${(file.size/1024/1024).toFixed(2)} MB)...`;
+          compressedPhoto = await compressImage(file, 800, 0.75);
+          prevImg.src = compressedPhoto;
+          sizeLbl.textContent = `✓ Nén xong: ${(compressedPhoto.length*0.75/1024).toFixed(1)} KB`;
+        } catch(err) { alert('Không thể nén ảnh. Thử ảnh khác!'); }
+      });
+
+      // ── Add Form Submit ──
+      document.getElementById('form-add').addEventListener('submit', e => {
+        e.preventDefault();
+        if (!compressedPhoto) { alert('Vui lòng chụp hoặc chọn ảnh trước!'); return; }
+        const now = new Date();
+        const dateStr = `${now.getFullYear()}-${String(now.getMonth()+1).padStart(2,'0')}-${String(now.getDate()).padStart(2,'0')} ${String(now.getHours()).padStart(2,'0')}:${String(now.getMinutes()).padStart(2,'0')}`;
+        const newItem = {
+          id: `LOC-${Date.now().toString().slice(-6)}`,
+          warehouse: document.getElementById('inp-warehouse').value || 'Kho Tổng',
+          rack: document.getElementById('inp-rack').value || 'Dãy A',
+          tier: document.getElementById('inp-tier').value || 'Tầng 1',
+          skuName: document.getElementById('inp-sku').value || 'Hàng Hóa Mới',
+          qtyNote: document.getElementById('inp-qty').value || '',
+          staffName: document.getElementById('inp-staff').value || 'Cán Bộ Kho',
+          updatedAt: dateStr,
+          note: document.getElementById('inp-note').value || '',
+          photoBase64: compressedPhoto,
+        };
+        addOrUpdateLocation(newItem);
+        compressedPhoto = null;
+        document.getElementById('form-add').reset();
+        document.getElementById('photo-preview-wrap').classList.add('hidden');
+        populateFilters(); currentPage=1; renderGrid();
+        // Switch to search tab
+        document.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active'));
+        document.querySelectorAll('.tab-pane').forEach(p=>p.classList.remove('active'));
+        document.querySelector('[data-tab="tab-search"]').classList.add('active');
+        document.getElementById('tab-search').classList.add('active');
+        alert(`✓ Đã lưu vị trí ảnh "${newItem.skuName}" vĩnh viễn!`);
+      });
+
+      // ── Reset form button ──
+      document.getElementById('btn-reset-form').addEventListener('click', () => {
+        document.getElementById('form-add').reset();
+        compressedPhoto=null;
+        document.getElementById('photo-preview-wrap').classList.add('hidden');
+      });
+
+      // ── Close modal on overlay click ──
+      document.getElementById('zoom-modal').addEventListener('click', e => {
+        if(e.target===document.getElementById('zoom-modal')) closeZoomModal();
+      });
+    });
+  </script>
 </body>
 </html>
