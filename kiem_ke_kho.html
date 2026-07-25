@@ -253,39 +253,40 @@
 
   /* HIGH-REACH FORKLIFT DRIVE & LIFT ANIMATION */
   .reach-truck {
-    animation: truckDrive var(--T, 16s) ease-in-out infinite;
+    animation: truckDrive var(--T, 16s) linear infinite;
+    transform-origin: center;
   }
   @keyframes truckDrive {
-    0% { transform: translate(10px, 0) scaleX(1); }
-    48% { transform: translate(560px, 0) scaleX(1); }
-    50% { transform: translate(560px, 0) scaleX(-1); }
-    98% { transform: translate(10px, 0) scaleX(-1); }
-    100% { transform: translate(10px, 0) scaleX(1); }
+    0% { transform: translateX(0px); }
+    48% { transform: translateX(340px); }
+    50% { transform: translateX(340px) scaleX(-1); }
+    98% { transform: translateX(0px) scaleX(-1); }
+    100% { transform: translateX(0px) scaleX(1); }
   }
 
   .fork-carriage {
-    animation: forkLiftUp 3.5s ease-in-out infinite alternate;
+    animation: forkLiftUp 3s ease-in-out infinite alternate;
   }
   @keyframes forkLiftUp {
-    0% { transform: translateY(6px); }
-    50% { transform: translateY(-8px); }
-    100% { transform: translateY(-20px); }
+    0% { transform: translateY(8px); }
+    50% { transform: translateY(-6px); }
+    100% { transform: translateY(-18px); }
   }
 
   .beacon-light {
-    animation: beaconFlash 0.6s ease-in-out infinite alternate;
+    animation: beaconFlash 0.5s ease-in-out infinite alternate;
   }
   @keyframes beaconFlash {
-    0% { fill: #EF4444; opacity: 0.3; }
-    100% { fill: #F59E0B; opacity: 1; filter: drop-shadow(0 0 6px #F59E0B); }
+    0% { fill: #EF4444; opacity: 0.3; filter: drop-shadow(0 0 2px #EF4444); }
+    100% { fill: #F59E0B; opacity: 1; filter: drop-shadow(0 0 8px #F59E0B); }
   }
 
   .laser-scanner-beam {
-    animation: laserScanPulse 0.8s ease-in-out infinite alternate;
+    animation: laserScanPulse 0.6s ease-in-out infinite alternate;
   }
   @keyframes laserScanPulse {
-    0% { opacity: 0.3; stroke-width: 1.2; }
-    100% { opacity: 1; stroke-width: 2.2; stroke: #F59E0B; filter: drop-shadow(0 0 4px #F59E0B); }
+    0% { opacity: 0.4; stroke: #EF4444; stroke-width: 1.5px; }
+    100% { opacity: 1; stroke: #F59E0B; stroke-width: 3px; filter: drop-shadow(0 0 6px #F59E0B); }
   }
 
   .buf-ghost{ animation: ghostFade 16s ease-in-out infinite; }
@@ -1079,31 +1080,43 @@ function renderSVGSimulation(targetEl) {
     // Render Animated High-Reach Forklift / Equipment graphic
     svgHtml += `
         <g transform="translate(20, 52)">
-          <rect x="0" y="0" width="${panelWidth - 40}" height="44" rx="8" fill="#FFF8EC" stroke="#EAD3A6" stroke-width="1.2"/>
-          <text x="12" y="16" font-size="11" fill="#8A5A12" font-weight="700"><i class="fa-solid fa-truck-ramp-box"></i> THIẾT BỊ XE NÂNG CAO TẦNG VNA (HIGH-REACH TRUCK)</text>
-          <text x="12" y="32" font-size="10" fill="#8A5A12">Tự động nâng vươn cao quét QRcode vị trí rack & đối chiếu WMS realtime</text>
+          <rect x="0" y="0" width="${panelWidth - 40}" height="48" rx="8" fill="#FEF3C7" stroke="#F59E0B" stroke-width="1.8"/>
+          <text x="12" y="18" font-size="11.5" fill="#78350F" font-weight="800">🚜 THIẾT BỊ XE NÂNG CAO TẦNG VNA (HIGH-REACH TRUCK)</text>
+          <text x="12" y="34" font-size="10.5" fill="#92400E" font-weight="600">Quét QRcode tự động 100% vị trí ô kệ cao tầng & đối chiếu WMS realtime</text>
           
           <!-- ANIMATED REACH TRUCK GRAPHIC -->
-          <g class="reach-truck-track" transform="translate(320, 4)">
+          <g class="reach-truck-track" transform="translate(300, 4)">
             <g class="reach-truck">
               <!-- Truck Chassis Body -->
-              <rect x="0" y="14" width="34" height="16" rx="4" fill="#D97706" stroke="#78350F" stroke-width="1.2"/>
-              <rect x="5" y="7" width="16" height="11" fill="#1E293B" rx="2"/>
+              <rect x="0" y="10" width="40" height="20" rx="5" fill="#F59E0B" stroke="#78350F" stroke-width="1.8"/>
+              <rect x="6" y="2" width="20" height="14" fill="#0F172A" rx="3" stroke="#38BDF8" stroke-width="1"/>
+              <circle cx="12" cy="8" r="3" fill="#60A5FA"/>
+              
               <!-- Wheels -->
-              <circle cx="7" cy="30" r="4" fill="#0F172A" stroke="#475569" stroke-width="1.5"/>
-              <circle cx="26" cy="30" r="4" fill="#0F172A" stroke="#475569" stroke-width="1.5"/>
-              <!-- Flashing Warning Beacon -->
-              <circle class="beacon-light" cx="13" cy="5" r="3" fill="#EF4444"/>
+              <circle cx="9" cy="30" r="5" fill="#1E293B" stroke="#F59E0B" stroke-width="1.5"/>
+              <circle cx="31" cy="30" r="5" fill="#1E293B" stroke="#F59E0B" stroke-width="1.5"/>
+              <circle cx="9" cy="30" r="2" fill="#94A3B8"/>
+              <circle cx="31" cy="30" r="2" fill="#94A3B8"/>
+              
+              <!-- Flashing Siren Beacon -->
+              <circle class="beacon-light" cx="16" cy="0" r="4" fill="#EF4444"/>
+              
               <!-- High Mast Steel Rails -->
-              <rect x="28" y="-18" width="3" height="32" fill="#475569" rx="1"/>
-              <rect x="33" y="-18" width="3" height="32" fill="#64748B" rx="1"/>
-              <!-- Elevating Fork Carriage & Pallet -->
+              <rect x="34" y="-24" width="4" height="38" fill="#334155" rx="1"/>
+              <rect x="40" y="-24" width="4" height="38" fill="#475569" rx="1"/>
+              <line x1="34" y1="-14" x2="44" y2="-14" stroke="#94A3B8" stroke-width="1"/>
+              <line x1="34" y1="-4" x2="44" y2="-4" stroke="#94A3B8" stroke-width="1"/>
+              
+              <!-- Fork Carriage & Pallet Box -->
               <g class="fork-carriage">
-                <path d="M 35 -10 L 46 -10 L 46 -6 L 35 -6 Z" fill="#94A3B8"/>
-                <rect x="39" y="-18" width="12" height="9" fill="#B45309" rx="1"/>
-                <line x1="39" y1="-9" x2="51" y2="-9" stroke="#FEF3C7" stroke-width="1.2"/>
+                <path d="M 42 -12 L 56 -12 L 56 -8 L 42 -8 Z" fill="#94A3B8" stroke="#334155" stroke-width="1"/>
+                <rect x="45" y="-22" width="14" height="10" fill="#D97706" rx="2" stroke="#78350F" stroke-width="1"/>
+                <line x1="45" y1="-12" x2="59" y2="-12" stroke="#FEF3C7" stroke-width="1.5"/>
+                <text x="52" y="-14" font-size="7" font-weight="900" fill="#FFF" text-anchor="middle">QR</text>
+                
                 <!-- Laser QR Beam -->
-                <line class="laser-scanner-beam" x1="51" y1="-14" x2="95" y2="35" stroke="#F59E0B" stroke-dasharray="3,2"/>
+                <line class="laser-scanner-beam" x1="56" y1="-17" x2="110" y2="35" stroke="#EF4444" stroke-width="2" stroke-dasharray="4,2"/>
+                <circle cx="56" cy="-17" r="2.5" fill="#EF4444"/>
               </g>
             </g>
           </g>
