@@ -82,33 +82,58 @@
 
     <!-- Pane 1: Photo Grid Search -->
     <div class="tab-pane active" id="pane-grid">
-      
-      <!-- Multi-Dimensional Dynamic Filter & Excel/Backup Toolbar -->
-      <div class="glass-card p-4.5 rounded-2xl mb-6 space-y-3">
-        <!-- Search bar & Excel/Backup Action Buttons -->
-        <div class="flex flex-col lg:flex-row gap-2 justify-between">
-          <div class="flex flex-1 gap-2">
-            <input type="text" id="search-input" placeholder="Gõ tên bao bì, mã hàng, dãy A, kệ K01, ô tầng..." class="flex-1 bg-white border-2 border-slate-300 rounded-xl px-4 py-2.5 text-xs text-slate-950 outline-none focus:border-blue-600 font-bold shadow-xs">
-            <button id="btn-reset-filters" class="bg-slate-200 hover:bg-slate-300 text-slate-900 text-xs font-black px-4 py-2.5 rounded-xl border border-slate-300">
-              Xóa Bộ Lọc
-            </button>
+
+      <!-- DEDICATED EXCEL & DATA IMPORT BANNER TOOLBAR -->
+      <div class="p-4 sm:p-5 rounded-2xl mb-6 bg-gradient-to-r from-emerald-950 via-teal-900 to-slate-900 text-white shadow-xl border-2 border-emerald-500">
+        <div class="flex flex-col lg:flex-row items-center justify-between gap-4">
+          <div class="flex items-center gap-3.5">
+            <div class="w-12 h-12 bg-emerald-400 text-slate-950 rounded-2xl flex items-center justify-center text-2xl font-black shadow-lg flex-shrink-0">
+              📊
+            </div>
+            <div>
+              <div class="flex items-center gap-2">
+                <h2 class="text-base sm:text-lg font-black font-heading text-white">Nạp Hàng Ngàn Vị Trí Từ File Excel Có Ảnh</h2>
+                <span class="bg-emerald-400 text-slate-950 text-[10px] font-black px-2 py-0.5 rounded-full">Siêu Tốc 1-Click</span>
+              </div>
+              <p class="text-xs text-emerald-200 font-bold mt-0.5">Tự động bóc tách thông tin & trích xuất ảnh đính kèm từ file .XLSX!</p>
+            </div>
           </div>
 
-          <!-- Excel Upload & Permanent Backup Tools -->
-          <div class="flex flex-wrap gap-2 justify-end">
-            <button class="bg-emerald-700 hover:bg-emerald-800 text-white font-black text-xs px-3.5 py-2.5 rounded-xl shadow-sm flex items-center gap-1.5" id="btn-trigger-import-excel" title="Upload file Excel đính kèm hình ảnh để nạp dữ liệu siêu nhanh">
-              📊 Nạp Excel Có Ảnh (.xlsx)
+          <div class="flex flex-wrap gap-2.5 w-full lg:w-auto justify-start lg:justify-end">
+            <button id="btn-trigger-import-excel" class="bg-emerald-400 hover:bg-emerald-300 text-slate-950 font-black text-xs px-4 py-3 rounded-xl shadow-lg transition flex items-center gap-2 border-2 border-white cursor-pointer">
+              <i class="fa-solid fa-file-excel text-base text-emerald-950"></i>
+              <span>📊 UPLOAD FILE EXCEL CÓ ẢNH (.XLSX)</span>
             </button>
-            <button class="bg-slate-700 hover:bg-slate-800 text-white font-black text-xs px-3 py-2.5 rounded-xl shadow-sm flex items-center gap-1" id="btn-download-excel-template" title="Tải mẫu File Excel chuẩn để điền dữ liệu">
-              📥 Mẫu Excel
+
+            <button id="btn-download-excel-template" class="bg-blue-600 hover:bg-blue-500 text-white font-black text-xs px-3.5 py-3 rounded-xl shadow-md transition flex items-center gap-1.5 border border-blue-400 cursor-pointer">
+              <i class="fa-solid fa-download"></i>
+              <span>📥 Tải Mẫu File Excel</span>
             </button>
-            <button class="bg-blue-700 hover:bg-blue-800 text-white font-black text-xs px-3.5 py-2.5 rounded-xl shadow-sm flex items-center gap-1.5" id="btn-export-backup" title="Tải file Sao Lưu Backup về cất giữ vĩnh viễn trên Google Drive/USB/Zalo">
-              💾 Backup (.json)
+
+            <button id="btn-export-backup" class="bg-slate-800 hover:bg-slate-700 text-amber-300 font-black text-xs px-3 py-3 rounded-xl transition flex items-center gap-1 border border-slate-600 cursor-pointer">
+              <i class="fa-solid fa-box-archive"></i>
+              <span>💾 Backup JSON</span>
             </button>
-            <button class="bg-indigo-700 hover:bg-indigo-800 text-white font-black text-xs px-3.5 py-2.5 rounded-xl shadow-sm flex items-center gap-1.5" id="btn-trigger-import-backup" title="Nạp lại file Sao Lưu Backup">
-              📤 Phục Hồi
+
+            <button id="btn-trigger-import-backup" class="bg-indigo-800 hover:bg-indigo-700 text-white font-black text-xs px-3 py-3 rounded-xl transition flex items-center gap-1 border border-indigo-500 cursor-pointer">
+              <i class="fa-solid fa-upload"></i>
+              <span>📤 Phục Hồi</span>
             </button>
           </div>
+        </div>
+
+        <!-- Hidden File Inputs -->
+        <input type="file" id="file-excel-input" accept=".xlsx, .xls" style="display:none;" />
+        <input type="file" id="file-backup-input" accept=".json" style="display:none;" />
+      </div>
+
+      <!-- Multi-Dimensional Dynamic Filter Toolbar -->
+      <div class="glass-card p-4.5 rounded-2xl mb-6 space-y-3">
+        <div class="flex gap-2">
+          <input type="text" id="search-input" placeholder="Gõ tên bao bì, mã hàng, dãy A, kệ K01, ô tầng..." class="flex-1 bg-white border-2 border-slate-300 rounded-xl px-4 py-2.5 text-xs text-slate-950 outline-none focus:border-blue-600 font-bold shadow-xs">
+          <button id="btn-reset-filters" class="bg-slate-200 hover:bg-slate-300 text-slate-900 text-xs font-black px-4 py-2.5 rounded-xl border border-slate-300">
+            Xóa Bộ Lọc
+          </button>
         </div>
 
         <!-- Cascading Multi-Level Filters -->
@@ -138,10 +163,6 @@
             🗑️ Xóa Trắng
           </button>
         </div>
-
-        <!-- Hidden File Inputs -->
-        <input type="file" id="file-excel-input" accept=".xlsx, .xls" style="display:none;" />
-        <input type="file" id="file-backup-input" accept=".json" style="display:none;" />
       </div>
 
       <!-- Location Cards Grid (Paginated 24/page) -->
@@ -258,7 +279,7 @@
             <div class="flex gap-3 items-start">
               <div class="step-number">1</div>
               <div>
-                <strong class="text-slate-950 text-sm">Bước 1: Bấm nút "📥 Mẫu Excel" để tải file mẫu chuẩn</strong>
+                <strong class="text-slate-950 text-sm">Bước 1: Bấm nút "📥 Tải Mẫu File Excel" để lấy file mẫu chuẩn</strong>
                 <p class="text-slate-600 font-semibold mt-0.5">File Excel mẫu đã có sẵn các cột chuẩn: Mã Vị Trí, Tên Hàng Hóa, Kho, Dãy/Kệ, Tầng/Ô, Tồn Kho, Ghi Chú.</p>
               </div>
             </div>
@@ -274,7 +295,7 @@
             <div class="flex gap-3 items-start">
               <div class="step-number">3</div>
               <div>
-                <strong class="text-slate-950 text-sm">Bước 3: Bấm nút "📊 Nạp Excel Có Ảnh (.xlsx)" để Upload</strong>
+                <strong class="text-slate-950 text-sm">Bước 3: Bấm nút "📊 UPLOAD FILE EXCEL CÓ ẢNH (.XLSX)" để Nạp</strong>
                 <p class="text-slate-600 font-semibold mt-0.5">Hệ thống sẽ tự động bóc tách toàn bộ dữ liệu & trích xuất hình ảnh nén đưa vào ứng dụng trong 1 giây!</p>
               </div>
             </div>
@@ -301,7 +322,7 @@
     © 2026 📷 **Visual Photo Bin Finder & Warehouse Location Manager** • Excel Import with Embedded Photos & Permanent Storage
   </footer>
 
-  <script src="js/storage.js"></script>
-  <script src="js/app.js"></script>
+  <script src="js/storage.js?v=20260725_v3"></script>
+  <script src="js/app.js?v=20260725_v3"></script>
 </body>
 </html>
