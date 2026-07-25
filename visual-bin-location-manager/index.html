@@ -26,7 +26,7 @@
       </div>
       <div>
         <h1 class="text-base sm:text-lg font-black text-slate-950 font-heading leading-tight">Visual Photo Bin Finder & Location Manager</h1>
-        <p class="text-[11px] text-blue-700 font-extrabold">Hệ Thống Tra Cứu Vị Trí Kho Bằng Hình Ảnh Trực Quan - Dàn Trang 3.000+ Vị Trí 0ms Lag</p>
+        <p class="text-[11px] text-blue-700 font-extrabold">Hệ Thống Tra Cứu Vị Trí Kho Bằng Hình Ảnh - Bảo Vệ Dữ Liệu Vĩnh Viễn & Nạp Backup 1-Click</p>
       </div>
     </div>
 
@@ -50,7 +50,7 @@
       <div class="glass-card p-4 rounded-2xl border-l-4 border-blue-700 flex items-center gap-3">
         <div class="text-blue-700 text-2xl">📦</div>
         <div>
-          <span class="text-[11px] text-slate-600 font-extrabold block uppercase">Tổng Vị Trí Đã Lưu</span>
+          <span class="text-[11px] text-slate-600 font-extrabold block uppercase">Tổng Vị Trí Đã Lưu Vĩnh Viễn</span>
           <span class="text-xl font-black text-slate-950 font-heading" id="kpi-total-locations">0</span>
         </div>
       </div>
@@ -79,14 +79,26 @@
     <!-- Pane 1: Photo Grid Search -->
     <div class="tab-pane active" id="pane-grid">
       
-      <!-- Multi-Dimensional Dynamic Filter Toolbar -->
+      <!-- Multi-Dimensional Dynamic Filter & Backup Toolbar -->
       <div class="glass-card p-4.5 rounded-2xl mb-6 space-y-3">
-        <!-- Search bar -->
-        <div class="flex gap-2">
-          <input type="text" id="search-input" placeholder="Gõ tên bao bì, mã hàng, dãy A, kệ K01, ô tầng..." class="flex-1 bg-white border-2 border-slate-300 rounded-xl px-4 py-2.5 text-xs text-slate-950 outline-none focus:border-blue-600 font-bold shadow-xs">
-          <button id="btn-reset-filters" class="bg-slate-200 hover:bg-slate-300 text-slate-900 text-xs font-black px-4 py-2.5 rounded-xl border border-slate-300">
-            Xóa Bộ Lọc
-          </button>
+        <!-- Search bar & Backup Action Buttons -->
+        <div class="flex flex-col sm:flex-row gap-2 justify-between">
+          <div class="flex flex-1 gap-2">
+            <input type="text" id="search-input" placeholder="Gõ tên bao bì, mã hàng, dãy A, kệ K01, ô tầng..." class="flex-1 bg-white border-2 border-slate-300 rounded-xl px-4 py-2.5 text-xs text-slate-950 outline-none focus:border-blue-600 font-bold shadow-xs">
+            <button id="btn-reset-filters" class="bg-slate-200 hover:bg-slate-300 text-slate-900 text-xs font-black px-4 py-2.5 rounded-xl border border-slate-300">
+              Xóa Bộ Lọc
+            </button>
+          </div>
+
+          <!-- Permanent Backup Tools -->
+          <div class="flex gap-2 justify-end">
+            <button class="bg-emerald-700 hover:bg-emerald-800 text-white font-black text-xs px-3.5 py-2.5 rounded-xl shadow-sm flex items-center gap-1.5" id="btn-export-backup" title="Tải file Sao Lưu Backup về cất giữ vĩnh viễn trên Google Drive/USB/Zalo">
+              📥 Xuất File Backup (.json)
+            </button>
+            <button class="bg-blue-700 hover:bg-blue-800 text-white font-black text-xs px-3.5 py-2.5 rounded-xl shadow-sm flex items-center gap-1.5" id="btn-trigger-import-backup" title="Nạp lại file Sao Lưu Backup để khôi phục dữ liệu">
+              📤 Nạp Phục Hồi
+            </button>
+          </div>
         </div>
 
         <!-- Cascading Multi-Level Filters -->
@@ -109,13 +121,16 @@
         </div>
 
         <div class="flex justify-end gap-2 pt-2 border-t border-slate-200">
-          <button class="bg-amber-500 hover:bg-amber-600 text-white font-black text-xs px-4 py-2 rounded-xl transition shadow-sm flex items-center gap-1.5" id="btn-load-samples" title="Nạp nhanh 1.000 vị trí mẫu thử nghiệm dàn trang">
+          <button class="bg-amber-500 hover:bg-amber-600 text-white font-black text-xs px-4 py-2 rounded-xl transition shadow-sm flex items-center gap-1.5" id="btn-load-samples" title="Nạp nối tiếp 1.000 vị trí mẫu thử nghiệm dàn trang (Không xóa dữ liệu thật)">
             ⚡ Nạp Mẫu 1.000 Vị Trí
           </button>
           <button class="bg-rose-100 hover:bg-rose-200 text-rose-800 border border-rose-300 font-black text-xs px-3.5 py-2 rounded-xl transition flex items-center gap-1" id="btn-wipe-data">
             🗑️ Xóa Trắng
           </button>
         </div>
+
+        <!-- Hidden Backup File Input -->
+        <input type="file" id="file-backup-input" accept=".json" style="display:none;" />
       </div>
 
       <!-- Location Cards Grid (Paginated 24/page) -->
@@ -139,7 +154,7 @@
       <div class="max-w-2xl mx-auto">
         <div class="glass-card p-6 sm:p-8 rounded-3xl">
           <h2 class="text-xl font-black text-slate-950 font-heading mb-1">📷 Chụp Ảnh & Gán Vị Trí Hàng Hóa Mới</h2>
-          <p class="text-xs text-slate-600 font-bold mb-6">Chụp hình trực tiếp bằng Camera điện thoại. Hệ thống sẽ tự động nén ảnh siêu nhẹ (~30KB) để lưu mượt mà!</p>
+          <p class="text-xs text-slate-600 font-bold mb-6">Chụp hình trực tiếp bằng Camera điện thoại. Hệ thống sẽ tự động nén ảnh siêu nhẹ (~30KB) để lưu mượt mà vĩnh viễn!</p>
 
           <form id="form-add-location" class="space-y-4 text-xs font-bold">
             
@@ -213,17 +228,45 @@
     <div class="tab-pane hidden" id="pane-guide">
       <div class="max-w-4xl mx-auto space-y-6">
         <div class="bg-gradient-to-r from-blue-700 to-indigo-900 rounded-3xl p-6 text-white shadow-xl">
-          <h2 class="text-2xl font-black font-heading mb-2">📖 Hướng Dẫn Sử Dụng Hệ Thống Tra Cứu Vị Trí Ảnh Kho</h2>
+          <h2 class="text-2xl font-black font-heading mb-2">📖 Hướng Dẫn Sử Dụng & Bảo Vệ Dữ Liệu Vĩnh Viễn</h2>
           <p class="text-xs text-blue-100 font-bold leading-relaxed">
-            Áp dụng cho bao bì, nguyên liệu khô, cuộn nilon, thùng phụ gia chưa kịp dán mã QR. Giúp nhân viên đi nhặt hàng tìm thấy vị trí ngay lập tức thông qua ảnh chụp thực tế!
+            Áp dụng cho bao bì, nguyên liệu khô, cuộn nilon, thùng phụ gia chưa kịp dán mã QR. Hệ thống hỗ trợ sao lưu file Backup .JSON để bảo vệ dữ liệu vĩnh viễn không bao giờ sợ mất!
           </p>
+        </div>
+
+        <div class="glass-card p-6 rounded-3xl space-y-4">
+          <div class="flex items-center gap-3 border-b border-slate-200 pb-3">
+            <span class="text-2xl">📥</span>
+            <div>
+              <h3 class="text-base font-black text-slate-950 font-heading">PHẦN 1: Sao Lưu Backup Dữ Liệu Vĩnh Viễn Về Máy Tính / Điện Thoại</h3>
+              <p class="text-xs text-slate-600 font-bold">Giúp bảo vệ 100% hình ảnh và vị trí kho khỏi bị mất khi đổi máy hoặc xóa lịch sử duyệt web</p>
+            </div>
+          </div>
+
+          <div class="space-y-3 text-xs text-slate-800 font-bold">
+            <div class="flex gap-3 items-start">
+              <div class="step-number">1</div>
+              <div>
+                <strong class="text-slate-950 text-sm">Bước 1: Bấm nút "📥 Xuất File Backup (.json)"</strong>
+                <p class="text-slate-600 font-semibold mt-0.5">Bấm nút màu xanh lá trên thanh công cụ. Một file backup chứa toàn bộ ảnh và vị trí sẽ được tải về máy.</p>
+              </div>
+            </div>
+
+            <div class="flex gap-3 items-start">
+              <div class="step-number">2</div>
+              <div>
+                <strong class="text-slate-950 text-sm">Bước 2: Cất giữ file Backup trên Google Drive, USB hoặc Zalo</strong>
+                <p class="text-slate-600 font-semibold mt-0.5">Khi sang thiết bị mới hoặc máy tính khác, bấm <span class="bg-blue-700 text-white px-2 py-0.5 rounded font-bold">📤 Nạp Phục Hồi</span> để nạp lại 100% dữ liệu cũ trong 1 giây!</p>
+              </div>
+            </div>
+          </div>
         </div>
 
         <div class="glass-card p-6 rounded-3xl space-y-4">
           <div class="flex items-center gap-3 border-b border-slate-200 pb-3">
             <span class="text-2xl">📷</span>
             <div>
-              <h3 class="text-base font-black text-slate-950 font-heading">PHẦN 1: Chụp Ảnh & Gán Vị Trí Kệ Bằng Điện Thoại</h3>
+              <h3 class="text-base font-black text-slate-950 font-heading">PHẦN 2: Chụp Ảnh & Gán Vị Trí Kệ Bằng Điện Thoại</h3>
               <p class="text-xs text-slate-600 font-bold">Nhân viên kho khi xếp hàng lên kệ chỉ mất 10 giây để ghi nhận</p>
             </div>
           </div>
@@ -255,34 +298,6 @@
           </div>
         </div>
 
-        <div class="glass-card p-6 rounded-3xl space-y-4">
-          <div class="flex items-center gap-3 border-b border-slate-200 pb-3">
-            <span class="text-2xl">🔍</span>
-            <div>
-              <h3 class="text-base font-black text-slate-950 font-heading">PHẦN 2: Tra Cứu Hình Ảnh Khi Đi Nhặt Hàng / Soạn Đơn</h3>
-              <p class="text-xs text-slate-600 font-bold">Giúp nhân viên đi soạn hàng tìm đúng ngay góc kệ mà không mất công tìm kiếm khắp kho</p>
-            </div>
-          </div>
-
-          <div class="space-y-3 text-xs text-slate-800 font-bold">
-            <div class="flex gap-3 items-start">
-              <div class="step-number">1</div>
-              <div>
-                <strong class="text-slate-950 text-sm">Bước 1: Chọn bộ lọc Kho, Dãy/Kệ, Tầng/Ô hoặc Gõ ô tìm kiếm</strong>
-                <p class="text-slate-600 font-semibold mt-0.5">Chọn dropdown Kho hoặc Dãy/Kệ để lọc danh sách tức thì.</p>
-              </div>
-            </div>
-
-            <div class="flex gap-3 items-start">
-              <div class="step-number">2</div>
-              <div>
-                <strong class="text-slate-950 text-sm">Bước 2: Bấm vào ảnh để Phóng To quan sát góc kệ</strong>
-                <p class="text-slate-600 font-semibold mt-0.5">Ảnh chụp thực tế góc kệ sắc nét sẽ hiện ra giúp nhân viên đi thẳng đến đúng ô vị trí để nhặt hàng 100% chuẩn xác!</p>
-              </div>
-            </div>
-          </div>
-        </div>
-
       </div>
     </div>
 
@@ -300,7 +315,7 @@
 
   <!-- Footer -->
   <footer class="text-center text-xs text-slate-600 font-bold py-6 border-t border-slate-300 max-w-7xl mx-auto w-full mt-8">
-    © 2026 📷 **Visual Photo Bin Finder & Warehouse Location Manager** • Dynamic Multi-Level Filters & Outdoor Sunlight Responsive
+    © 2026 📷 **Visual Photo Bin Finder & Warehouse Location Manager** • Permanent Multi-Layer Storage & JSON Backup Engine
   </footer>
 
   <script src="js/storage.js"></script>

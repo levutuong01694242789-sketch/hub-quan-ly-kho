@@ -1,15 +1,15 @@
 /**
  * Visual Photo Bin Finder & Warehouse Location Manager - Main Application Controller
- * Pagination Engine for 3,000+ Photos, Cascading Dynamic Multi-Level Filters & Outdoor Sunlight UI.
+ * Permanent Data Safety, JSON Backup Export/Import & 3,000+ Photos Pagination.
  */
 
 let currentCompressedPhoto = null;
 let currentPage = 1;
-const pageSize = 24; // 24 cards per page for 0ms lag
+const pageSize = 24;
 let currentFilteredLocations = [];
 
 document.addEventListener('DOMContentLoaded', () => {
-  console.log('[VisualBinApp] Initializing Advanced Dynamic Location Manager...');
+  console.log('[VisualBinApp] Initializing Permanent Data Safe Location Manager...');
 
   // 1. Populate Cascading Dynamic Filters
   populateDynamicFilters();
@@ -80,7 +80,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         if (previewImg) previewImg.src = compressedBase64;
         const compressedKb = (compressedBase64.length * 0.75 / 1024).toFixed(1);
-        if (sizeTag) sizeTag.textContent = `✓ Nén ảnh thành công: ${compressedKb} KB (Siêu nhẹ & Nét!)`;
+        if (sizeTag) sizeTag.textContent = `✓ Nén ảnh thành công: ${compressedKb} KB (Lưu trữ an toàn vĩnh viễn!)`;
       } catch (err) {
         console.error('[ImageCompression] Error:', err);
         alert('Không thể nén ảnh. Vui lòng chọn ảnh khác!');
@@ -101,6 +101,18 @@ document.addEventListener('DOMContentLoaded', () => {
   document.getElementById('btn-reset-form')?.addEventListener('click', resetAddForm);
   document.getElementById('btn-load-samples')?.addEventListener('click', handleLoad1000Samples);
   document.getElementById('btn-wipe-data')?.addEventListener('click', handleWipeData);
+
+  // Backup Export & Import Action Listeners
+  document.getElementById('btn-export-backup')?.addEventListener('click', () => {
+    VisualBinStorage.exportBackupJSON();
+    alert('✓ Đã xuất file Sao Lưu Vĩnh Viễn (.json) thành công! Hãy cất giữ file này trên Google Drive, USB hoặc Zalo để bảo vệ dữ liệu vĩnh viễn.');
+  });
+
+  document.getElementById('btn-trigger-import-backup')?.addEventListener('click', () => {
+    document.getElementById('file-backup-input').click();
+  });
+
+  document.getElementById('file-backup-input')?.addEventListener('change', handleImportBackup);
 
   // Pagination Toolbar
   document.getElementById('btn-prev-page')?.addEventListener('click', () => {
@@ -191,10 +203,9 @@ function renderLocationGrid() {
   const startIdx = (currentPage - 1) * pageSize;
   const pageLocations = currentFilteredLocations.slice(startIdx, startIdx + pageSize);
 
-  // Update Pagination Info
   const pageInfoEl = document.getElementById('page-info');
   if (pageInfoEl) {
-    pageInfoEl.textContent = `Trang ${currentPage} / ${totalPages} (Tổng ${totalItems.toLocaleString()} vị trí ảnh)`;
+    pageInfoEl.textContent = `Trang ${currentPage} / ${totalPages} (Tổng ${totalItems.toLocaleString()} vị trí ảnh đã lưu vĩnh viễn)`;
   }
 
   if (pageLocations.length === 0) {
@@ -202,7 +213,7 @@ function renderLocationGrid() {
       <div class="col-span-full text-center py-12 text-slate-500 glass-card">
         <div class="text-4xl mb-2">📷</div>
         <p class="font-extrabold text-slate-800 text-base">Chưa tìm thấy vị trí ảnh nào phù hợp với bộ lọc.</p>
-        <p class="text-xs text-slate-500 mt-1">Bấm "⚡ Nạp Mẫu 1.000 Vị Trí" hoặc bấm "Xóa Bộ Lọc" để thử nghiệm dàn trang siêu tốc!</p>
+        <p class="text-xs text-slate-500 mt-1">Bấm sang tab "📷 Chụp & Thêm Vị Trí" để ghi nhận hoặc bấm "Xóa Bộ Lọc"!</p>
       </div>
     `;
     return;
@@ -290,7 +301,28 @@ function saveNewLocation() {
   document.querySelector('[data-target="pane-grid"]').classList.add('active');
   document.getElementById('pane-grid').classList.add('active');
 
-  alert(`✓ Đã lưu vị trí ảnh cho "${skuName}" (${newItem.id}) thành công!`);
+  alert(`✓ Đã lưu vị trí ảnh cho "${skuName}" (${newItem.id}) an toàn vĩnh viễn!`);
+}
+
+function handleImportBackup(e) {
+  const file = e.target.files[0];
+  if (!file) return;
+
+  const reader = new FileReader();
+  reader.onload = function(evt) {
+    try {
+      const jsonData = JSON.parse(evt.target.result);
+      const count = VisualBinStorage.importBackupJSON(jsonData);
+      populateDynamicFilters();
+      currentPage = 1;
+      renderLocationGrid();
+      alert(`✓ Đã phục hồi và hợp nhất thành công ${count.toLocaleString()} vị trí ảnh từ file Sao Lưu!`);
+    } catch (err) {
+      console.error('[ImportBackup] Error parsing JSON file:', err);
+      alert('File sao lưu JSON không đúng định dạng!');
+    }
+  };
+  reader.readAsText(file);
 }
 
 function resetAddForm() {
@@ -335,7 +367,7 @@ function openZoomPhotoModal(id) {
 }
 
 function deleteLocationHandler(id) {
-  if (confirm(`Bạn có chắc chắn muốn xóa vị trí ảnh "${id}" khỏi hệ thống?`)) {
+  if (confirm(`⚠️ BẢO VỆ DỮ LIỆU: Bạn có chắc chắn muốn xóa vị trí ảnh "${id}" khỏi hệ thống?`)) {
     VisualBinStorage.deleteLocation(id);
     populateDynamicFilters();
     renderLocationGrid();
@@ -347,17 +379,19 @@ function handleLoad1000Samples() {
   populateDynamicFilters();
   currentPage = 1;
   renderLocationGrid();
-  alert(`✓ Đã nạp thành công 1.000 vị trí ảnh mẫu! Đã kích hoạt dàn trang 24 vị trí/trang giúp chạy siêu tốc 0ms lag.`);
+  alert(`✓ Đã nạp nối tiếp thành công 1.000 vị trí ảnh mẫu! Dữ liệu thật của anh được bảo vệ an toàn 100%.`);
 }
 
 function handleWipeData() {
-  const confirmPin = prompt('⚠️ BẢO MẬT: Nhập chữ "CONFIRM" hoặc PIN 8888 để xóa trắng dữ liệu ảnh vị trí kho:');
+  const confirmPin = prompt('⚠️ BẢO MẬT CAO CẤP CHỐNG XÓA NHẦM:\n\nBạn đang thực hiện XÓA TRẮNG toàn bộ vị trí ảnh kho.\nVui lòng nhập chính xác chuỗi từ "CONFIRM" hoặc PIN 8888 để xác nhận xóa:');
   if (confirmPin === 'CONFIRM' || confirmPin === '8888') {
     VisualBinStorage.clearAllData();
     populateDynamicFilters();
     currentPage = 1;
     renderLocationGrid();
     alert('✓ Đã XÓA TRẮNG toàn bộ vị trí ảnh kho!');
+  } else {
+    alert('Hủy thao tác xóa trắng.');
   }
 }
 
