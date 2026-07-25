@@ -1063,19 +1063,29 @@ function printSingleQR(locId){
 function printAllQR(){
   const locs=getLocs();
   if(!locs.length){ alert('Chưa có địa điểm nào để in QR!'); return; }
+  const baseUrl=getAppUrl();
+  const items=locs.map(loc=>{
+    const url=`${baseUrl}?location=${encodeURIComponent(loc.id)}`;
+    const src=qrImgSrc(url,150);
+    return `<div class="item">
+      <img src="${src}" width="150" height="150" alt="QR ${loc.name}" style="border-radius:8px;border:1px solid #e2e8f0;">
+      <h4>${loc.name}</h4>
+      <p>${loc.zone}${loc.floor?' • '+loc.floor:''}</p>
+      <p style="font-size:9px;color:#94a3b8;">${loc.id}</p>
+    </div>`;
+  }).join('');
   const printWin=window.open('','_blank','width=900,height=700');
-  const qrScripts=locs.map(loc=>`QRCode.toCanvas(document.getElementById('qr-${loc.id}'),'${getAppUrl()}?location=${encodeURIComponent(loc.id)}',{width:150,margin:2},function(){});`).join('\n');
   printWin.document.write(`<!DOCTYPE html><html><head><meta charset="UTF-8"><title>QR Tất Cả Địa Điểm</title>
-  <script src="https://cdn.jsdelivr.net/npm/qrcode@1.5.3/build/qrcode.min.js"><\/script>
   <style>body{font-family:sans-serif;background:#fff;padding:16px;}
-  .grid{display:flex;flex-wrap:wrap;gap:16px;}
+  .grid{display:flex;flex-wrap:wrap;gap:12px;}
   .item{border:2px solid #1e3a8a;border-radius:12px;padding:12px;text-align:center;width:180px;}
   h4{font-size:12px;font-weight:900;color:#0f172a;margin:6px 0 2px;line-height:1.3;}
-  p{font-size:10px;color:#475569;font-weight:700;}
+  p{font-size:10px;color:#475569;font-weight:700;margin:1px 0;}
+  h2{font-family:sans-serif;font-size:16px;font-weight:900;margin-bottom:12px;color:#1e3a8a;}
   @media print{body{margin:0;padding:8px;}.item{break-inside:avoid;}}</style></head>
-  <body><h2 style="font-family:sans-serif;font-size:16px;font-weight:900;margin-bottom:12px;color:#1e3a8a;">🏭 QR Code Tất Cả Địa Điểm - Visual Factory Guide</h2>
-  <div class="grid">${locs.map(loc=>`<div class="item"><canvas id="qr-${loc.id}"></canvas><h4>${loc.name}</h4><p>${loc.id}</p></div>`).join('')}</div>
-  <script>window.onload=function(){${qrScripts} setTimeout(()=>window.print(),1500);};<\/script>
+  <body><h2>🏭 QR Code Tất Cả Địa Điểm - Visual Factory Guide</h2>
+  <div class="grid">${items}</div>
+  <script>window.onload=function(){ setTimeout(()=>window.print(),1200); };<\/script>
   </body></html>`);
   printWin.document.close();
 }
