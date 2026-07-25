@@ -1,0 +1,633 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Quan_Ly_Vi_Tri_Hinh_Anh_Kho_Offline - App 1 File HTML Độc Lập</title>
+  
+  <!-- Tailwind CSS & FontAwesome Icons -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Outfit:wght@600;700;800&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --bg-main: #f8fafc;
+      --bg-card: #ffffff;
+      --border-color: #e2e8f0;
+      --primary: #2563eb;
+      --text-main: #0f172a;
+    }
+
+    body {
+      font-family: 'Inter', system-ui, -apple-system, sans-serif;
+      background-color: var(--bg-main);
+      color: var(--text-main);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .glass-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-radius: 20px;
+      box-shadow: 0 4px 20px rgba(15, 23, 42, 0.05);
+      transition: all 0.2s ease;
+    }
+
+    .photo-card {
+      background: #ffffff;
+      border: 1px solid #e2e8f0;
+      border-radius: 16px;
+      overflow: hidden;
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    .photo-card:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 10px 25px rgba(37, 99, 235, 0.12);
+      border-color: #93c5fd;
+    }
+
+    .photo-container {
+      width: 100%;
+      height: 200px;
+      object-fit: cover;
+      background: #f1f5f9;
+    }
+
+    .tag-badge {
+      padding: 0.25rem 0.65rem;
+      border-radius: 12px;
+      font-size: 0.75rem;
+      font-weight: 700;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.25rem;
+    }
+
+    .tag-warehouse { background: #eff6ff; color: #1d4ed8; border: 1px solid #bfdbfe; }
+    .tag-rack { background: #f0fdf4; color: #15803d; border: 1px solid #bbf7d0; }
+
+    .tab-btn.active {
+      background: #2563eb;
+      color: #ffffff;
+      box-shadow: 0 4px 12px rgba(37, 99, 235, 0.3);
+    }
+
+    .modal-overlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(15, 23, 42, 0.75);
+      backdrop-filter: blur(12px);
+      z-index: 1000;
+      align-items: center;
+      justify-content: center;
+      padding: 1rem;
+    }
+    .modal-overlay.active { display: flex; }
+
+    .step-number {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      background: #2563eb;
+      color: #fff;
+      font-weight: 800;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.9rem;
+      flex-shrink: 0;
+    }
+  </style>
+</head>
+<body class="bg-[#f8fafc] text-slate-900 selection:bg-blue-500 selection:text-white min-h-screen flex flex-col justify-between">
+
+  <!-- Header -->
+  <header class="bg-white border-b border-slate-200 px-4 sm:px-8 py-3.5 flex items-center justify-between sticky top-0 z-50 shadow-sm">
+    <div class="flex items-center gap-3">
+      <div class="w-10 h-10 bg-gradient-to-br from-blue-600 to-indigo-700 rounded-xl flex items-center justify-center text-white text-xl font-black shadow-md shadow-blue-500/20">
+        📷
+      </div>
+      <div>
+        <div class="flex items-center gap-2">
+          <h1 class="text-base sm:text-lg font-bold text-slate-900 font-heading leading-tight">Visual Photo Bin Finder & Location Manager</h1>
+          <span class="bg-emerald-100 text-emerald-800 text-[10px] font-black px-2 py-0.5 rounded-full border border-emerald-300">File HTML Offline 1-Chạm</span>
+        </div>
+        <p class="text-[11px] text-blue-600 font-semibold">Tra Cứu Vị Trí Kho Bằng Hình Ảnh Trực Quan - Nén Ảnh Siêu Nhẹ ~30KB</p>
+      </div>
+    </div>
+
+    <!-- Navigation Tabs -->
+    <div class="flex gap-1.5 bg-slate-100 p-1 rounded-xl border border-slate-200">
+      <button class="tab-btn active px-3 sm:px-4 py-1.5 rounded-lg text-xs font-bold text-slate-600 hover:text-slate-900 transition flex items-center gap-1.5" data-target="pane-grid">
+        🔍 Tra Cứu Vị Trí
+      </button>
+      <button class="tab-btn px-3 sm:px-4 py-1.5 rounded-lg text-xs font-bold text-slate-600 hover:text-slate-900 transition flex items-center gap-1.5" data-target="pane-add">
+        📷 Chụp & Thêm Vị Trí
+      </button>
+      <button class="tab-btn px-3 sm:px-4 py-1.5 rounded-lg text-xs font-bold text-slate-600 hover:text-slate-900 transition flex items-center gap-1.5 bg-amber-50 text-amber-700 border border-amber-200" data-target="pane-guide">
+        📖 Hướng Dẫn Sử Dụng
+      </button>
+    </div>
+  </header>
+
+  <!-- Metric KPI Bar -->
+  <div class="max-w-7xl mx-auto w-full px-4 sm:px-8 pt-6">
+    <div class="grid grid-cols-2 md:grid-cols-3 gap-4">
+      <div class="glass-card p-4 rounded-2xl border-l-4 border-blue-600 flex items-center gap-3">
+        <div class="text-blue-600 text-2xl">📦</div>
+        <div>
+          <span class="text-[11px] text-slate-500 font-semibold block uppercase">Tổng Vị Trí Đã Lưu</span>
+          <span class="text-xl font-extrabold text-slate-900 font-heading" id="kpi-total-locations">0</span>
+        </div>
+      </div>
+
+      <div class="glass-card p-4 rounded-2xl border-l-4 border-emerald-600 flex items-center gap-3">
+        <div class="text-emerald-600 text-2xl">🏢</div>
+        <div>
+          <span class="text-[11px] text-slate-500 font-semibold block uppercase">Tổng Số Kho / Khu Vực</span>
+          <span class="text-xl font-extrabold text-slate-900 font-heading" id="kpi-total-warehouses">0</span>
+        </div>
+      </div>
+
+      <div class="glass-card p-4 rounded-2xl border-l-4 border-amber-500 flex items-center gap-3">
+        <div class="text-amber-500 text-2xl">📷</div>
+        <div>
+          <span class="text-[11px] text-slate-500 font-semibold block uppercase">Hình Ảnh Chụp Nén (~30KB)</span>
+          <span class="text-xl font-extrabold text-slate-900 font-heading" id="kpi-photos-count">0</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Main Content Layout -->
+  <main class="max-w-7xl mx-auto w-full p-4 sm:p-8 flex-1">
+
+    <!-- Pane 1: Photo Grid Search -->
+    <div class="tab-pane active" id="pane-grid">
+      
+      <!-- Filter Toolbar -->
+      <div class="glass-card p-4 rounded-2xl mb-6 flex flex-col md:flex-row gap-3 justify-between items-center">
+        <div class="flex flex-1 gap-3 w-full md:w-auto">
+          <input type="text" id="search-input" placeholder="Gõ tên bao bì, mã hàng, dãy A, kệ K01, ô tầng..." class="flex-1 bg-slate-50 border border-slate-300 rounded-xl px-4 py-2 text-xs text-slate-900 outline-none focus:border-blue-500 font-medium">
+          
+          <select id="filter-warehouse" class="bg-slate-50 border border-slate-300 rounded-xl px-3 py-2 text-xs font-semibold text-slate-700 outline-none">
+            <option value="ALL">Tất cả Kho Vị Trí</option>
+          </select>
+        </div>
+
+        <div class="flex items-center gap-2 w-full md:w-auto justify-end">
+          <button class="bg-amber-500 hover:bg-amber-600 text-white font-bold text-xs px-3.5 py-2 rounded-xl transition shadow-sm flex items-center gap-1.5" id="btn-load-samples">
+            ⚡ Nạp Mẫu
+          </button>
+          <button class="bg-rose-50 hover:bg-rose-100 text-rose-700 border border-rose-300 font-bold text-xs px-3 py-2 rounded-xl transition flex items-center gap-1" id="btn-wipe-data">
+            🗑️ Xóa Trắng
+          </button>
+        </div>
+      </div>
+
+      <!-- Location Cards Grid -->
+      <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-5" id="location-grid-container">
+        <!-- Dynamic cards -->
+      </div>
+
+    </div>
+
+    <!-- Pane 2: Snap Camera / Add Location Form -->
+    <div class="tab-pane hidden" id="pane-add">
+      <div class="max-w-2xl mx-auto">
+        <div class="glass-card p-6 sm:p-8 rounded-3xl">
+          <h2 class="text-xl font-bold text-slate-900 font-heading mb-1">📷 Chụp Ảnh & Gán Vị Trí Hàng Hóa Mới</h2>
+          <p class="text-xs text-slate-500 mb-6">Chụp hình trực tiếp bằng Camera điện thoại. Hệ thống sẽ tự động nén ảnh siêu nhẹ (~30KB) để lưu mượt mà!</p>
+
+          <form id="form-add-location" class="space-y-4 text-xs">
+            
+            <div>
+              <label class="block font-bold text-slate-700 mb-1">1. Chụp Ảnh Hoặc Tải Ảnh Vị Trí Kho (*):</label>
+              <div class="border-2 border-dashed border-blue-300 bg-blue-50/50 hover:bg-blue-50 rounded-2xl p-6 text-center cursor-pointer transition relative" onclick="document.getElementById('new-photo-input').click()">
+                <div class="text-3xl mb-1">📷</div>
+                <p class="font-bold text-blue-900">Bấm để Chụp Camera hoặc Chọn Ảnh Từ Thư Viện</p>
+                <p class="text-[11px] text-slate-500 mt-0.5">Tự động nén ảnh 800px WebP siêu nhẹ 0ms lag</p>
+                <input type="file" id="new-photo-input" accept="image/*" capture="environment" class="hidden" />
+              </div>
+
+              <div id="photo-preview-container" class="hidden mt-3 text-center bg-slate-900 p-3 rounded-2xl border border-slate-700">
+                <img id="photo-preview-img" class="max-h-48 mx-auto rounded-xl object-contain mb-2" />
+                <span id="photo-size-tag" class="text-[11px] font-bold text-emerald-400"></span>
+              </div>
+            </div>
+
+            <div>
+              <label class="block font-bold text-slate-700 mb-1">2. Tên Bao Bì / Hàng Hóa / Mã Vật Tư (*):</label>
+              <input type="text" id="new-sku-name" required placeholder="Ví dụ: Cuộn Màng Co PE 50cm, Bao Bột Mì 25kg, Thùng Gia Vị..." class="w-full bg-slate-50 border border-slate-300 rounded-xl px-4 py-2.5 text-xs text-slate-900 outline-none focus:border-blue-500 font-semibold" />
+            </div>
+
+            <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
+              <div>
+                <label class="block font-bold text-slate-700 mb-1">Kho / Khu Vực (*):</label>
+                <input type="text" id="new-warehouse" required placeholder="Kho Bao Bì, Kho Nguyên Liệu..." class="w-full bg-slate-50 border border-slate-300 rounded-xl px-3 py-2 text-xs text-slate-900 outline-none focus:border-blue-500 font-medium" />
+              </div>
+
+              <div>
+                <label class="block font-bold text-slate-700 mb-1">Dãy / Kệ (*):</label>
+                <input type="text" id="new-rack" required placeholder="Dãy A, Kệ K01, Giàn B2..." class="w-full bg-slate-50 border border-slate-300 rounded-xl px-3 py-2 text-xs text-slate-900 outline-none focus:border-blue-500 font-medium" />
+              </div>
+
+              <div>
+                <label class="block font-bold text-slate-700 mb-1">Tầng / Ô Vị Trí (*):</label>
+                <input type="text" id="new-tier" required placeholder="Tầng 2 - Ô 04, Tầng Sàn..." class="w-full bg-slate-50 border border-slate-300 rounded-xl px-3 py-2 text-xs text-slate-900 outline-none focus:border-blue-500 font-medium" />
+              </div>
+            </div>
+
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+              <div>
+                <label class="block font-bold text-slate-700 mb-1">Số Lượng / Tồn Kho Hiện Tại:</label>
+                <input type="text" id="new-qty-note" placeholder="Ví dụ: Tồn 120 cuộn, 85 bao, 15 thùng..." class="w-full bg-slate-50 border border-slate-300 rounded-xl px-3 py-2 text-xs text-slate-900 outline-none focus:border-blue-500 font-medium" />
+              </div>
+
+              <div>
+                <label class="block font-bold text-slate-700 mb-1">Họ Tên Nhân Viên Chụp Ảnh:</label>
+                <input type="text" id="new-staff-name" placeholder="Ví dụ: Lê Vũ Tường, Nguyễn Văn Hùng..." class="w-full bg-slate-50 border border-slate-300 rounded-xl px-3 py-2 text-xs text-slate-900 outline-none focus:border-blue-500 font-medium" />
+              </div>
+            </div>
+
+            <div>
+              <label class="block font-bold text-slate-700 mb-1">Ghi Chú Nhận Dạng Thêm:</label>
+              <textarea id="new-note" rows="2" placeholder="Nhập ghi chú đặc điểm nhận dạng (VD: nằm ở góc kệ cạnh lối đi chính, dán băng dính vàng...)" class="w-full bg-slate-50 border border-slate-300 rounded-xl p-3 text-xs text-slate-900 outline-none focus:border-blue-500 font-medium"></textarea>
+            </div>
+
+            <div class="flex justify-end gap-3 pt-3 border-t border-slate-200">
+              <button type="button" id="btn-reset-form" class="bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold text-xs px-4 py-2.5 rounded-xl transition border border-slate-300">Nhập Lại</button>
+              <button type="submit" class="bg-blue-600 hover:bg-blue-700 text-white font-bold text-xs px-6 py-2.5 rounded-xl transition shadow-md flex items-center gap-1.5">
+                💾 LƯU VỊ TRÍ HÌNH ẢNH KHO
+              </button>
+            </div>
+
+          </form>
+        </div>
+      </div>
+    </div>
+
+    <!-- Pane 3: Step-by-Step User Guide -->
+    <div class="tab-pane hidden" id="pane-guide">
+      <div class="max-w-4xl mx-auto space-y-6">
+        <div class="bg-gradient-to-r from-blue-600 to-indigo-700 rounded-3xl p-6 text-white shadow-xl">
+          <h2 class="text-2xl font-black font-heading mb-2">📖 Hướng Dẫn Sử Dụng Hệ Thống Tra Cứu Vị Trí Ảnh Kho</h2>
+          <p class="text-xs text-blue-100 leading-relaxed">
+            Áp dụng cho bao bì, nguyên liệu khô, cuộn nilon, thùng phụ gia chưa kịp dán mã QR. Giúp nhân viên đi nhặt hàng tìm thấy vị trí ngay lập tức thông qua ảnh chụp thực tế!
+          </p>
+        </div>
+
+        <div class="glass-card p-6 rounded-3xl space-y-4">
+          <div class="flex items-center gap-3 border-b border-slate-200 pb-3">
+            <span class="text-2xl">📷</span>
+            <div>
+              <h3 class="text-base font-bold text-slate-900 font-heading">PHẦN 1: Chụp Ảnh & Gán Vị Trí Kệ Bằng Điện Thoại</h3>
+              <p class="text-xs text-slate-500">Nhân viên kho khi xếp hàng lên kệ chỉ mất 10 giây để ghi nhận</p>
+            </div>
+          </div>
+
+          <div class="space-y-3 text-xs text-slate-700">
+            <div class="flex gap-3 items-start">
+              <div class="step-number">1</div>
+              <div>
+                <strong class="text-slate-900 text-sm">Bước 1: Bấm tab "📷 Chụp & Thêm Vị Trí"</strong>
+                <p class="text-slate-500 mt-0.5">Bấm vào khung ảnh màu xanh để mở trực tiếp Camera trên điện thoại.</p>
+              </div>
+            </div>
+
+            <div class="flex gap-3 items-start">
+              <div class="step-number">2</div>
+              <div>
+                <strong class="text-slate-900 text-sm">Bước 2: Hướng Camera vào góc kệ & chụp ảnh</strong>
+                <p class="text-slate-500 mt-0.5">Bấm chụp ảnh góc kệ chứa bao bì/nguyên liệu. Ứng dụng tự động nén dung lượng xuống còn 30KB siêu nhẹ!</p>
+              </div>
+            </div>
+
+            <div class="flex gap-3 items-start">
+              <div class="step-number">3</div>
+              <div>
+                <strong class="text-slate-900 text-sm">Bước 3: Gõ tên bao bì & Tên Dãy/Kệ -> Bấm Lưu</strong>
+                <p class="text-slate-500 mt-0.5">Điền tên hàng (VD: <em>Cuộn màng co PE</em>), chọn Dãy/Kệ (VD: <em>Dãy A - Kệ K01 - Tầng 2</em>) -> Bấm <span class="bg-blue-600 text-white px-2 py-0.5 rounded font-bold">LƯU VỊ TRÍ HÌNH ẢNH</span>.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="glass-card p-6 rounded-3xl space-y-4">
+          <div class="flex items-center gap-3 border-b border-slate-200 pb-3">
+            <span class="text-2xl">🔍</span>
+            <div>
+              <h3 class="text-base font-bold text-slate-900 font-heading">PHẦN 2: Tra Cứu Hình Ảnh Khi Đi Nhặt Hàng / Soạn Đơn</h3>
+              <p class="text-xs text-slate-500">Giúp nhân viên đi soạn hàng tìm đúng ngay góc kệ mà không mất công tìm kiếm khắp kho</p>
+            </div>
+          </div>
+
+          <div class="space-y-3 text-xs text-slate-700">
+            <div class="flex gap-3 items-start">
+              <div class="step-number">1</div>
+              <div>
+                <strong class="text-slate-900 text-sm">Bước 1: Gõ tên bao bì hoặc tên kệ vào ô tìm kiếm</strong>
+                <p class="text-slate-500 mt-0.5">Gõ từ khóa như <em>"PE"</em>, <em>"Bột mì"</em>, hoặc <em>"Dãy A"</em> vào ô tìm kiếm.</p>
+              </div>
+            </div>
+
+            <div class="flex gap-3 items-start">
+              <div class="step-number">2</div>
+              <div>
+                <strong class="text-slate-900 text-sm">Bước 2: Bấm vào ảnh để Phóng To quan sát góc kệ</strong>
+                <p class="text-slate-500 mt-0.5">Ảnh chụp thực tế góc kệ sắc nét sẽ hiện ra giúp nhân viên đi thẳng đến đúng ô vị trí để nhặt hàng 100% chuẩn xác!</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+  </main>
+
+  <!-- ZOOM PHOTO MODAL -->
+  <div class="modal-overlay" id="zoom-photo-modal">
+    <div class="bg-white p-6 rounded-3xl max-w-xl w-full relative max-h-[90vh] overflow-y-auto border border-slate-300 shadow-2xl">
+      <button onclick="closeModal('zoom-photo-modal')" class="absolute top-4 right-4 text-slate-400 hover:text-slate-900 text-lg">✕</button>
+      <div id="zoom-modal-content">
+        <!-- Dynamic content -->
+      </div>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <footer class="text-center text-xs text-slate-500 py-6 border-t border-slate-200 max-w-7xl mx-auto w-full mt-8">
+    © 2026 📷 **Visual Photo Bin Finder & Warehouse Location Manager** • Standalone 1-File HTML Offline App
+  </footer>
+
+  <!-- Embedded Single-File Application Logic -->
+  <script>
+    const STORAGE_KEY = 'visual_bin_locations_v1';
+
+    const samplePhotoBaoBi = 'data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="600" height="400" viewBox="0 0 600 400"><rect width="600" height="400" fill="%231e293b"/><rect x="50" y="80" width="500" height="240" fill="%23334155" rx="16"/><text x="300" y="150" font-family="sans-serif" font-size="22" font-weight="bold" fill="%2338bdf8" text-anchor="middle">KHO BAO BÌ - KỆ A1-03</text><text x="300" y="190" font-family="sans-serif" font-size="16" fill="%23f8fafc" text-anchor="middle">MÀNG CO PE & CUỘN NILON NHẬP KHẨU</text><rect x="150" y="220" width="300" height="60" fill="%230284c7" rx="10"/><text x="300" y="258" font-family="sans-serif" font-size="16" font-weight="bold" fill="%23ffffff" text-anchor="middle">TẦNG 2 - Ô SỐ 04</text></svg>';
+    const samplePhotoNguyenLieu = 'data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="600" height="400" viewBox="0 0 600 400"><rect width="600" height="400" fill="%230f172a"/><rect x="50" y="80" width="500" height="240" fill="%231e293b" rx="16"/><text x="300" y="150" font-family="sans-serif" font-size="22" font-weight="bold" fill="%234ade80" text-anchor="middle">KHO NGUYÊN LIỆU KHÔ - DÃY B</text><text x="300" y="190" font-family="sans-serif" font-size="16" fill="%23f8fafc" text-anchor="middle">BAO BỘT MÌ & BỘT NĂNG 25KG</text><rect x="150" y="220" width="300" height="60" fill="%2316a34a" rx="10"/><text x="300" y="258" font-family="sans-serif" font-size="16" font-weight="bold" fill="%23ffffff" text-anchor="middle">KỆ K05 - TẦNG SÀN</text></svg>';
+    const samplePhotoPhuGia = 'data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="600" height="400" viewBox="0 0 600 400"><rect width="600" height="400" fill="%2331135e"/><rect x="50" y="80" width="500" height="240" fill="%234c1d95" rx="16"/><text x="300" y="150" font-family="sans-serif" font-size="22" font-weight="bold" fill="%23c084fc" text-anchor="middle">KHO PHỤ GIA - KỆ C02</text><text x="300" y="190" font-family="sans-serif" font-size="16" fill="%23f8fafc" text-anchor="middle">THÙNG GIA VỊ & HƯƠNG LIỆU THỰC PHẨM</text><rect x="150" y="220" width="300" height="60" fill="%239333ea" rx="10"/><text x="300" y="258" font-family="sans-serif" font-size="16" font-weight="bold" fill="%23ffffff" text-anchor="middle">TẦNG 3 - VỊ TRÍ 01</text></svg>';
+
+    const defaultLocations = [
+      { id: 'LOC-2026-001', warehouse: 'Kho Bao Bì LC01', rack: 'Dãy A - Kệ 01', tier: 'Tầng 2 - Ô 04', skuName: 'Cuộn Màng Co PE 50cm (Bao Bì Khai Thư)', qtyNote: 'Tồn 120 cuộn nguyên đai', staffName: 'Lê Vũ Tường', updatedAt: '2026-01-20 14:30', photoBase64: samplePhotoBaoBi, note: 'Hàng mới nhập kho sáng nay chưa dán mã QR.' },
+      { id: 'LOC-2026-002', warehouse: 'Kho Nguyên Liệu Khô', rack: 'Dãy B - Kệ K05', tier: 'Tầng Sàn - Vị Trí 02', skuName: 'Bao Bột Mì Táo Đỏ 25kg', qtyNote: 'Tồn 85 bao (2.125 kg)', staffName: 'Nguyễn Văn Hùng', updatedAt: '2026-01-22 09:15', photoBase64: samplePhotoNguyenLieu, note: 'Xếp ngay đầu kệ K05 cạnh lối đi chính.' },
+      { id: 'LOC-2026-003', warehouse: 'Kho Phụ Gia & Hương Liệu', rack: 'Dãy C - Kệ C02', tier: 'Tầng 3 - Vị Trí 01', skuName: 'Thùng Hương Liệu Bò Nướng (20Kg/Thùng)', qtyNote: 'Tồn 15 thùng', staffName: 'Phạm Minh Đức', updatedAt: '2026-01-24 16:45', photoBase64: samplePhotoPhuGia, note: 'Dán băng dính niêm phong vàng.' }
+    ];
+
+    function initStorage() {
+      if (!localStorage.getItem(STORAGE_KEY)) localStorage.setItem(STORAGE_KEY, JSON.stringify(defaultLocations));
+    }
+
+    function getLocations() {
+      initStorage();
+      try { return JSON.parse(localStorage.getItem(STORAGE_KEY)) || defaultLocations; } catch { return defaultLocations; }
+    }
+
+    function saveLocation(locItem) {
+      const list = getLocations();
+      const idx = list.findIndex(item => item.id === locItem.id);
+      if (idx >= 0) list[idx] = locItem; else list.unshift(locItem);
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(list));
+    }
+
+    function deleteLocation(id) {
+      const list = getLocations().filter(item => item.id !== id);
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(list));
+    }
+
+    function clearAllData() {
+      localStorage.removeItem(STORAGE_KEY);
+      localStorage.setItem(STORAGE_KEY, JSON.stringify([]));
+    }
+
+    function compressImage(imageSource, maxWidth = 800, quality = 0.75) {
+      return new Promise((resolve, reject) => {
+        const img = new Image();
+        img.onload = () => {
+          let width = img.width, height = img.height;
+          if (width > maxWidth) { height = Math.round((height * maxWidth) / width); width = maxWidth; }
+          const canvas = document.createElement('canvas');
+          canvas.width = width; canvas.height = height;
+          const ctx = canvas.getContext('2d');
+          ctx.fillStyle = '#ffffff'; ctx.fillRect(0, 0, width, height);
+          ctx.drawImage(img, 0, 0, width, height);
+          resolve(canvas.toDataURL('image/jpeg', quality));
+        };
+        img.onerror = (err) => reject(err);
+        if (typeof imageSource === 'string') img.src = imageSource;
+        else if (imageSource instanceof File || imageSource instanceof Blob) {
+          const reader = new FileReader(); reader.onload = (e) => { img.src = e.target.result; }; reader.readAsDataURL(imageSource);
+        } else reject('Invalid image');
+      });
+    }
+
+    function searchLocations(query, warehouseFilter = 'ALL') {
+      let list = getLocations();
+      if (warehouseFilter !== 'ALL') list = list.filter(item => item.warehouse === warehouseFilter);
+      if (!query) return list;
+      const q = query.toLowerCase().trim();
+      return list.filter(item => (
+        (item.skuName && item.skuName.toLowerCase().includes(q)) ||
+        (item.warehouse && item.warehouse.toLowerCase().includes(q)) ||
+        (item.rack && item.rack.toLowerCase().includes(q)) ||
+        (item.tier && item.tier.toLowerCase().includes(q))
+      ));
+    }
+
+    let currentCompressedPhoto = null;
+
+    document.addEventListener('DOMContentLoaded', () => {
+      populateWarehouseOptions();
+      renderLocationGrid();
+      updateKPIs();
+
+      document.querySelectorAll('.tab-btn').forEach(btn => {
+        btn.addEventListener('click', (e) => {
+          document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+          document.querySelectorAll('.tab-pane').forEach(p => p.classList.add('hidden'));
+          e.currentTarget.classList.add('active');
+          const targetId = e.currentTarget.getAttribute('data-target');
+          const pane = document.getElementById(targetId);
+          if (pane) pane.classList.remove('hidden');
+        });
+      });
+
+      document.getElementById('search-input')?.addEventListener('input', renderLocationGrid);
+      document.getElementById('filter-warehouse')?.addEventListener('change', renderLocationGrid);
+
+      document.getElementById('new-photo-input')?.addEventListener('change', async (e) => {
+        const file = e.target.files[0];
+        if (!file) return;
+        try {
+          document.getElementById('photo-preview-container').classList.remove('hidden');
+          document.getElementById('photo-size-tag').textContent = `Đang nén ảnh...`;
+          const compressed = await compressImage(file, 800, 0.75);
+          currentCompressedPhoto = compressed;
+          document.getElementById('photo-preview-img').src = compressed;
+          const compressedKb = (compressed.length * 0.75 / 1024).toFixed(1);
+          document.getElementById('photo-size-tag').textContent = `✓ Nén ảnh thành công: ${compressedKb} KB (Siêu nhẹ & Nét!)`;
+        } catch (err) { alert('Lỗi nén ảnh!'); }
+      });
+
+      document.getElementById('form-add-location')?.addEventListener('submit', (e) => {
+        e.preventDefault();
+        saveNewLocation();
+      });
+
+      document.getElementById('btn-load-samples')?.addEventListener('click', () => {
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(defaultLocations));
+        populateWarehouseOptions();
+        renderLocationGrid();
+        alert('✓ Đã nạp 3 vị trí kho mẫu!');
+      });
+
+      document.getElementById('btn-wipe-data')?.addEventListener('click', () => {
+        const confirmPin = prompt('Nhập "CONFIRM" hoặc PIN 8888 để xóa trắng:');
+        if (confirmPin === 'CONFIRM' || confirmPin === '8888') {
+          clearAllData();
+          populateWarehouseOptions();
+          renderLocationGrid();
+          alert('✓ Đã xóa trắng dữ liệu!');
+        }
+      });
+    });
+
+    function populateWarehouseOptions() {
+      const locations = getLocations();
+      const warehouses = Array.from(new Set(locations.map(l => l.warehouse).filter(Boolean)));
+      const select = document.getElementById('filter-warehouse');
+      if (!select) return;
+      select.innerHTML = '<option value="ALL">Tất cả Kho Vị Trí</option>';
+      warehouses.forEach(wh => select.innerHTML += `<option value="${wh}">${wh}</option>`);
+    }
+
+    function updateKPIs() {
+      const locations = getLocations();
+      document.getElementById('kpi-total-locations').textContent = locations.length.toLocaleString();
+      document.getElementById('kpi-total-warehouses').textContent = new Set(locations.map(l => l.warehouse)).size.toLocaleString();
+      document.getElementById('kpi-photos-count').textContent = locations.filter(l => l.photoBase64).length.toLocaleString();
+    }
+
+    function renderLocationGrid() {
+      const container = document.getElementById('location-grid-container');
+      if (!container) return;
+      const query = document.getElementById('search-input')?.value || '';
+      const warehouseFilter = document.getElementById('filter-warehouse')?.value || 'ALL';
+
+      const filtered = searchLocations(query, warehouseFilter);
+      updateKPIs();
+
+      if (filtered.length === 0) {
+        container.innerHTML = `<div class="col-span-full text-center py-12 text-slate-400 glass-card"><p class="font-bold">Chưa có vị trí ảnh nào.</p></div>`;
+        return;
+      }
+
+      container.innerHTML = filtered.map(item => `
+        <div class="photo-card flex flex-col justify-between">
+          <div>
+            <div class="relative cursor-pointer overflow-hidden group" onclick="openZoomPhotoModal('${item.id}')">
+              <img src="${item.photoBase64}" alt="${item.skuName}" class="photo-container group-hover:scale-105 transition duration-300" />
+              <div class="absolute inset-0 bg-slate-900/40 opacity-0 group-hover:opacity-100 transition flex items-center justify-center text-white text-xs font-bold">Bấm Phóng To Ảnh</div>
+            </div>
+
+            <div class="p-4 space-y-2">
+              <div class="flex items-center gap-1.5 flex-wrap">
+                <span class="tag-badge tag-warehouse">${item.warehouse}</span>
+                <span class="tag-badge tag-rack">${item.rack}</span>
+              </div>
+              <h3 class="font-extrabold text-slate-900 text-sm hover:text-blue-600 cursor-pointer" onclick="openZoomPhotoModal('${item.id}')">${item.skuName}</h3>
+              <div class="text-xs text-slate-600 space-y-1">
+                <div>📍 <strong>Vị Trí:</strong> ${item.tier}</div>
+                <div>📦 <strong>Số Lượng:</strong> ${item.qtyNote || 'Chưa ghi chú'}</div>
+                ${item.note ? `<div class="text-[11px] text-slate-500 bg-slate-50 p-2 rounded-lg border border-slate-200 mt-1">📝 ${item.note}</div>` : ''}
+              </div>
+            </div>
+          </div>
+
+          <div class="p-3 border-t border-slate-100 bg-slate-50 flex items-center justify-between text-[11px] text-slate-500">
+            <span>👤 ${item.staffName || 'Kho'} • ${item.updatedAt || ''}</span>
+            <button onclick="deleteLocationHandler('${item.id}')" class="text-rose-600 hover:text-rose-800 font-bold px-2 py-1 rounded hover:bg-rose-50">🗑️ Xóa</button>
+          </div>
+        </div>
+      `).join('');
+    }
+
+    function saveNewLocation() {
+      const warehouse = document.getElementById('new-warehouse')?.value || 'Kho Tổng';
+      const rack = document.getElementById('new-rack')?.value || 'Dãy A';
+      const tier = document.getElementById('new-tier')?.value || 'Tầng 1';
+      const skuName = document.getElementById('new-sku-name')?.value || 'Mặt hàng mới';
+      const qtyNote = document.getElementById('new-qty-note')?.value || '';
+      const staffName = document.getElementById('new-staff-name')?.value || 'Kho';
+      const note = document.getElementById('new-note')?.value || '';
+
+      if (!currentCompressedPhoto) return alert('Vui lòng chụp ảnh hoặc chọn ảnh!');
+
+      const now = new Date();
+      const dateStr = `${now.getFullYear()}-${String(now.getMonth()+1).padStart(2,'0')}-${String(now.getDate()).padStart(2,'0')} ${String(now.getHours()).padStart(2,'0')}:${String(now.getMinutes()).padStart(2,'0')}`;
+
+      const newItem = { id: `LOC-${Date.now().toString().slice(-4)}`, warehouse, rack, tier, skuName, qtyNote, staffName, updatedAt: dateStr, photoBase64: currentCompressedPhoto, note };
+      saveLocation(newItem);
+      currentCompressedPhoto = null;
+      document.getElementById('form-add-location')?.reset();
+      document.getElementById('photo-preview-container')?.classList.add('hidden');
+      populateWarehouseOptions();
+      renderLocationGrid();
+
+      document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+      document.querySelectorAll('.tab-pane').forEach(p => p.classList.add('hidden'));
+      document.querySelector('[data-target="pane-grid"]').classList.add('active');
+      document.getElementById('pane-grid').classList.remove('hidden');
+
+      alert(`✓ Đã lưu vị trí ảnh cho "${skuName}"!`);
+    }
+
+    function openZoomPhotoModal(id) {
+      const item = getLocations().find(l => l.id === id);
+      if (!item) return;
+      const modal = document.getElementById('zoom-photo-modal');
+      document.getElementById('zoom-modal-content').innerHTML = `
+        <div class="text-center pb-3 border-b border-slate-200 mb-4">
+          <span class="bg-blue-100 text-blue-800 text-[10px] font-black px-2.5 py-0.5 rounded-full">MÃ: ${item.id}</span>
+          <h3 class="text-lg font-bold text-slate-900 mt-1">${item.skuName}</h3>
+          <p class="text-xs text-slate-500">${item.warehouse} • ${item.rack} • ${item.tier}</p>
+        </div>
+        <div class="bg-slate-900 rounded-2xl overflow-hidden mb-4 border border-slate-700 flex items-center justify-center">
+          <img src="${item.photoBase64}" class="w-full max-h-[60vh] object-contain" />
+        </div>
+        <div class="grid grid-cols-2 gap-3 text-xs bg-slate-50 p-4 rounded-xl border border-slate-200 mb-4">
+          <div><span class="text-slate-500">Số Lượng:</span> <strong class="text-slate-900 block">${item.qtyNote || 'Chưa ghi chú'}</strong></div>
+          <div><span class="text-slate-500">Nhân Viên:</span> <strong class="text-slate-900 block">${item.staffName} (${item.updatedAt})</strong></div>
+          <div class="col-span-2"><span class="text-slate-500">Ghi Chú Vị Trí:</span> <p class="text-slate-800 font-medium mt-0.5">${item.note || 'Không có.'}</p></div>
+        </div>
+        <div class="flex justify-end gap-2">
+          <button onclick="closeModal('zoom-photo-modal')" class="bg-slate-200 text-slate-800 font-bold text-xs px-5 py-2.5 rounded-xl">Đóng</button>
+        </div>
+      `;
+      modal.classList.add('active');
+    }
+
+    function deleteLocationHandler(id) {
+      if (confirm(`Bạn có chắc muốn xóa vị trí "${id}"?`)) {
+        deleteLocation(id);
+        populateWarehouseOptions();
+        renderLocationGrid();
+      }
+    }
+
+    function closeModal(modalId) {
+      document.getElementById(modalId)?.classList.remove('active');
+    }
+  </script>
+</body>
+</html>
