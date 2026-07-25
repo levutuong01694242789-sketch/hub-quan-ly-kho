@@ -1,0 +1,862 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Quan_Ly_Tai_San_Doanh_Nghiep_QR_Offline - App 1 File HTML Độc Lập</title>
+  
+  <!-- Tailwind CSS & FontAwesome Icons -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Outfit:wght@600;700;800&display=swap" rel="stylesheet">
+
+  <!-- SheetJS (Excel Parser), HTML5 QR Code & QRCode.js Libraries -->
+  <script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html5-qrcode/2.3.8/html5-qrcode.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+
+  <style>
+    :root {
+      --bg-main: #f8fafc;
+      --bg-card: #ffffff;
+      --border-color: #e2e8f0;
+      --primary: #2563eb;
+      --text-main: #0f172a;
+    }
+
+    body {
+      font-family: 'Inter', system-ui, -apple-system, sans-serif;
+      background-color: var(--bg-main);
+      color: var(--text-main);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .glass-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-radius: 16px;
+      box-shadow: 0 4px 16px rgba(15, 23, 42, 0.05);
+    }
+
+    .badge {
+      padding: 0.3rem 0.7rem;
+      border-radius: 20px;
+      font-size: 0.75rem;
+      font-weight: 700;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
+    }
+
+    .badge-active { background: #dcfce7; color: #15803d; border: 1px solid #86efac; }
+    .badge-spare { background: #e0f2fe; color: #0369a1; border: 1px solid #7dd3fc; }
+    .badge-loaned { background: #fef3c7; color: #b45309; border: 1px solid #fde68a; }
+    .badge-repair { background: #fee2e2; color: #b91c1c; border: 1px solid #fca5a5; }
+    .badge-disposed { background: #f1f5f9; color: #64748b; border: 1px solid #cbd5e1; }
+
+    .label-preview-container {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      justify-content: center;
+      padding: 1.5rem;
+      background: #cbd5e1;
+      border-radius: 12px;
+    }
+
+    .label-sticker-50x30 {
+      width: 50mm;
+      height: 30mm;
+      background: #ffffff;
+      border: 1.5px solid #000000;
+      border-radius: 2mm;
+      padding: 1.5mm 2mm;
+      box-sizing: border-box;
+      display: flex;
+      align-items: center;
+      gap: 2mm;
+      color: #000000;
+      font-family: Arial, sans-serif;
+      overflow: hidden;
+      page-break-inside: avoid;
+    }
+
+    .label-sticker-70x40 {
+      width: 70mm;
+      height: 40mm;
+      background: #ffffff;
+      border: 1.5px solid #000000;
+      border-radius: 2.5mm;
+      padding: 2mm 3mm;
+      box-sizing: border-box;
+      display: flex;
+      align-items: center;
+      gap: 3mm;
+      color: #000000;
+      font-family: Arial, sans-serif;
+      overflow: hidden;
+      page-break-inside: avoid;
+    }
+
+    .label-sticker-100x50 {
+      width: 100mm;
+      height: 50mm;
+      background: #ffffff;
+      border: 2px solid #000000;
+      border-radius: 3mm;
+      padding: 3mm 4mm;
+      box-sizing: border-box;
+      display: flex;
+      align-items: center;
+      gap: 4mm;
+      color: #000000;
+      font-family: Arial, sans-serif;
+      overflow: hidden;
+      page-break-inside: avoid;
+    }
+
+    @media print {
+      @page { margin: 0; }
+      body { background: #ffffff !important; margin: 0 !important; }
+      body * { visibility: hidden; }
+      #print-area, #print-area * { visibility: visible; }
+      #print-area { position: absolute; left: 0; top: 0; width: 100%; padding: 2mm !important; }
+      .label-preview-container { background: transparent !important; padding: 0 !important; gap: 3mm !important; }
+    }
+
+    .modal-overlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(15, 23, 42, 0.6);
+      backdrop-filter: blur(12px);
+      z-index: 1000;
+      align-items: center;
+      justify-content: center;
+      padding: 1rem;
+    }
+    .modal-overlay.active { display: flex; }
+
+    .tab-btn.active {
+      background: #2563eb;
+      color: #ffffff;
+      box-shadow: 0 4px 12px rgba(37, 99, 235, 0.3);
+    }
+
+    .step-number {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      background: #2563eb;
+      color: #fff;
+      font-weight: 800;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.9rem;
+      flex-shrink: 0;
+    }
+  </style>
+</head>
+<body class="bg-[#f8fafc] text-slate-900 selection:bg-blue-500 selection:text-white min-h-screen flex flex-col justify-between">
+
+  <!-- Top Navbar Header -->
+  <header class="bg-white border-b border-slate-200 px-4 sm:px-8 py-3.5 flex items-center justify-between sticky top-0 z-50 shadow-sm">
+    <div class="flex items-center gap-3">
+      <div class="w-10 h-10 bg-gradient-to-br from-blue-600 to-indigo-700 rounded-xl flex items-center justify-center text-white text-xl font-black shadow-md shadow-blue-500/20">
+        🏢
+      </div>
+      <div>
+        <div class="flex items-center gap-2">
+          <h1 class="text-base sm:text-lg font-bold text-slate-900 font-heading leading-tight">Quản Lý Tài Sản Doanh Nghiệp & Tem QR</h1>
+          <span class="bg-emerald-100 text-emerald-800 text-[10px] font-black px-2 py-0.5 rounded-full border border-emerald-300">File HTML Offline 1-Chạm</span>
+        </div>
+        <p class="text-[11px] text-blue-600 font-semibold">Tự Động Hóa Quản Lý Pallet, Thiết Bị & Studio In Tem Nhãn Nhiệt 50x30mm</p>
+      </div>
+    </div>
+
+    <!-- Navigation Tabs -->
+    <div class="flex gap-1.5 bg-slate-100 p-1 rounded-xl border border-slate-200">
+      <button class="tab-btn active px-3 sm:px-4 py-1.5 rounded-lg text-xs font-bold text-slate-600 hover:text-slate-900 transition flex items-center gap-1.5" data-target="pane-directory">
+        📋 Danh Sách Tài Sản
+      </button>
+      <button class="tab-btn px-3 sm:px-4 py-1.5 rounded-lg text-xs font-bold text-slate-600 hover:text-slate-900 transition flex items-center gap-1.5" data-target="pane-printer">
+        🖨️ Studio In Tem Nhãn QR
+      </button>
+      <button class="tab-btn px-3 sm:px-4 py-1.5 rounded-lg text-xs font-bold text-slate-600 hover:text-slate-900 transition flex items-center gap-1.5" data-target="pane-scan">
+        📷 Quét QR Camera
+      </button>
+      <button class="tab-btn px-3 sm:px-4 py-1.5 rounded-lg text-xs font-bold text-slate-600 hover:text-slate-900 transition flex items-center gap-1.5 bg-amber-50 text-amber-700 border border-amber-200" data-target="pane-guide">
+        📖 Hướng Dẫn Sử Dụng
+      </button>
+    </div>
+  </header>
+
+  <!-- Metric KPI Bar -->
+  <div class="max-w-7xl mx-auto w-full px-4 sm:px-8 pt-6">
+    <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+      <div class="glass-card p-4 rounded-2xl border-l-4 border-blue-600 flex items-center gap-3">
+        <div class="text-blue-600 text-2xl">📦</div>
+        <div>
+          <span class="text-[11px] text-slate-500 font-semibold block uppercase">Tổng Tài Sản Cố Định</span>
+          <span class="text-xl font-extrabold text-slate-900 font-heading" id="kpi-total-assets">0</span>
+        </div>
+      </div>
+
+      <div class="glass-card p-4 rounded-2xl border-l-4 border-emerald-600 flex items-center gap-3">
+        <div class="text-emerald-600 text-2xl">💰</div>
+        <div>
+          <span class="text-[11px] text-slate-500 font-semibold block uppercase">Tổng Nguyên Giá (VNĐ)</span>
+          <span class="text-xl font-extrabold text-slate-900 font-heading" id="kpi-total-valuation">0 Tỷ đ</span>
+        </div>
+      </div>
+
+      <div class="glass-card p-4 rounded-2xl border-l-4 border-cyan-600 flex items-center gap-3">
+        <div class="text-cyan-600 text-2xl">🔵</div>
+        <div>
+          <span class="text-[11px] text-slate-500 font-semibold block uppercase">Dự Phòng Trong Kho</span>
+          <span class="text-xl font-extrabold text-slate-900 font-heading" id="kpi-spare-count">0</span>
+        </div>
+      </div>
+
+      <div class="glass-card p-4 rounded-2xl border-l-4 border-rose-600 flex items-center gap-3">
+        <div class="text-rose-600 text-2xl">🔴</div>
+        <div>
+          <span class="text-[11px] text-slate-500 font-semibold block uppercase">Bảo Trì / Sửa Chữa</span>
+          <span class="text-xl font-extrabold text-slate-900 font-heading" id="kpi-repair-count">0</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Main Content Layout -->
+  <main class="max-w-7xl mx-auto w-full p-4 sm:p-8 flex-1">
+
+    <!-- Pane 1: Asset Directory -->
+    <div class="tab-pane active" id="pane-directory">
+      
+      <!-- Top Action Toolbar -->
+      <div class="glass-card p-4 rounded-2xl mb-4 flex flex-col md:flex-row gap-3 justify-between items-center">
+        <div class="flex flex-1 gap-3 w-full md:w-auto">
+          <input type="text" id="search-input" placeholder="Gõ tên tài sản, mã AST, số serial, người quản lý..." class="flex-1 bg-slate-50 border border-slate-300 rounded-xl px-4 py-2 text-xs text-slate-900 outline-none focus:border-blue-500 font-medium">
+          
+          <select id="filter-dept" class="bg-slate-50 border border-slate-300 rounded-xl px-3 py-2 text-xs font-semibold text-slate-700 outline-none">
+            <option value="ALL">Tất cả phòng ban</option>
+          </select>
+
+          <select id="filter-status" class="bg-slate-50 border border-slate-300 rounded-xl px-3 py-2 text-xs font-semibold text-slate-700 outline-none">
+            <option value="ALL">Tất cả trạng thái</option>
+            <option value="ACTIVE">🟢 Đang sử dụng</option>
+            <option value="SPARE">🔵 Dự phòng trong kho</option>
+            <option value="LOANED">🟡 Cho mượn / Luân chuyển</option>
+            <option value="REPAIR">🔴 Đang bảo trì</option>
+            <option value="DISPOSED">⚪ Đã thanh lý</option>
+          </select>
+        </div>
+
+        <div class="flex flex-wrap gap-2 w-full md:w-auto justify-end">
+          <button class="bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-xs px-3.5 py-2 rounded-xl transition shadow-sm flex items-center gap-1.5" id="btn-trigger-import">
+            📥 Nạp Excel
+          </button>
+          <button class="bg-amber-500 hover:bg-amber-600 text-white font-bold text-xs px-3.5 py-2 rounded-xl transition shadow-sm flex items-center gap-1.5" id="btn-load-1000" title="Nạp nhanh 1.000 mã tài sản mẫu">
+            ⚡ Nạp Mẫu 1.000 Mã
+          </button>
+          <button class="bg-slate-100 hover:bg-slate-200 text-slate-700 border border-slate-300 font-bold text-xs px-3 py-2 rounded-xl transition flex items-center gap-1" id="btn-download-template">
+            📄 File Mẫu
+          </button>
+          <button class="bg-blue-600 hover:bg-blue-700 text-white font-bold text-xs px-3.5 py-2 rounded-xl transition shadow-sm flex items-center gap-1.5" id="btn-export-csv">
+            📊 Xuất Excel
+          </button>
+          <button class="bg-blue-700 hover:bg-blue-800 text-white font-bold text-xs px-3.5 py-2 rounded-xl transition shadow-sm flex items-center gap-1.5" id="btn-add-asset">
+            + Thêm Mới
+          </button>
+          <button class="bg-rose-50 hover:bg-rose-100 text-rose-700 border border-rose-300 font-bold text-xs px-3 py-2 rounded-xl transition flex items-center gap-1" id="btn-wipe-data" title="Xóa toàn bộ dữ liệu để bàn giao công ty mới">
+            🗑️ Xóa Trắng
+          </button>
+        </div>
+
+        <input type="file" id="file-excel-input" accept=".xlsx, .xls, .csv" style="display:none;" />
+      </div>
+
+      <!-- Selection Banner Bar -->
+      <div id="selection-action-bar" class="hidden bg-blue-50 border border-blue-200 p-3.5 rounded-2xl mb-4 flex flex-col sm:flex-row items-center justify-between gap-3 shadow-sm">
+        <div class="flex items-center gap-2 text-xs text-blue-900 font-bold">
+          <span class="bg-blue-600 text-white px-2.5 py-1 rounded-lg text-xs" id="selected-count-label">0</span>
+          <span>tài sản đang được tích chọn</span>
+        </div>
+
+        <div class="flex items-center gap-2 flex-wrap">
+          <button class="bg-white border border-blue-300 hover:bg-blue-100 text-blue-900 text-xs font-bold px-3 py-1.5 rounded-xl shadow-xs" id="btn-select-page">
+            ☑️ Chọn Tất Cả Trang Này (50)
+          </button>
+          <button class="bg-white border border-blue-300 hover:bg-blue-100 text-blue-900 text-xs font-bold px-3 py-1.5 rounded-xl shadow-xs" id="btn-select-all-filtered">
+            ☑️ Chọn Tất Cả Dữ Liệu (1.000+)
+          </button>
+          <button class="bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-bold px-3 py-1.5 rounded-xl border border-slate-300" id="btn-clear-selection">
+            ☒ Bỏ Chọn
+          </button>
+          <button class="bg-blue-600 hover:bg-blue-700 text-white text-xs font-bold px-4 py-1.5 rounded-xl shadow-md flex items-center gap-1.5" id="btn-print-selected">
+            🖨️ IN TEM HÀNG LOẠT CÁC MÓN ĐÃ CHỌN →
+          </button>
+        </div>
+      </div>
+
+      <!-- Assets Data Table -->
+      <div class="glass-card rounded-2xl overflow-hidden mb-4">
+        <div class="overflow-x-auto">
+          <table class="w-full text-left text-xs">
+            <thead>
+              <tr class="bg-slate-100 border-b border-slate-200 text-slate-600 font-bold uppercase tracking-wider">
+                <th style="padding: 0.85rem 0.5rem; text-align: center;">
+                  <input type="checkbox" id="master-checkbox" class="w-4 h-4 rounded border-slate-300 text-blue-600 focus:ring-blue-500 cursor-pointer" />
+                </th>
+                <th style="padding: 0.85rem 0.75rem;">Mã Tài Sản</th>
+                <th style="padding: 0.85rem 0.75rem;">Tên Thiết Bị & Model</th>
+                <th style="padding: 0.85rem 0.75rem;">Phòng Ban & Vị Trí</th>
+                <th style="padding: 0.85rem 0.75rem;">Người Quản Lý</th>
+                <th style="padding: 0.85rem 0.75rem;">Trạng Thái</th>
+                <th style="padding: 0.85rem 0.75rem; text-align: right;">Nguyên Giá (VNĐ)</th>
+                <th style="padding: 0.85rem 0.75rem; text-align: center;">In Tem QR</th>
+              </tr>
+            </thead>
+            <tbody id="assets-table-body">
+              <!-- Dynamic rows -->
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- Pagination Toolbar -->
+      <div class="glass-card p-3 rounded-2xl flex justify-between items-center text-xs">
+        <span class="text-slate-600 font-semibold" id="page-info">Trang 1 / 1</span>
+        <div class="flex gap-2">
+          <button class="px-3 py-1.5 bg-slate-100 border border-slate-300 rounded-lg hover:bg-slate-200 font-bold text-slate-700" id="btn-prev-page">← Trang Trước</button>
+          <button class="px-3 py-1.5 bg-slate-100 border border-slate-300 rounded-lg hover:bg-slate-200 font-bold text-slate-700" id="btn-next-page">Trang Sau →</button>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Pane 2: Label Printer Studio -->
+    <div class="tab-pane hidden" id="pane-printer">
+      <div class="glass-card p-6 rounded-2xl mb-6 flex flex-col md:flex-row justify-between items-center gap-4">
+        <div>
+          <h2 class="text-xl font-bold text-slate-900 font-heading">Studio In Tem Nhãn Máy In Nhiệt (Label Printer)</h2>
+          <p class="text-xs text-slate-500" id="print-batch-info">Tương thích các dòng máy in tem nhãn Xprinter, TSC, Zebra, Brother, Godex...</p>
+        </div>
+
+        <div class="flex items-center gap-3">
+          <label class="text-xs font-bold text-slate-700">Chọn Khổ Tem In Nhãn:</label>
+          <select id="printer-size-select" class="bg-slate-50 border border-slate-300 rounded-xl px-4 py-2 text-xs font-bold text-slate-800 outline-none">
+            <option value="50x30">Tem Nhãn 50x30 mm (Chuẩn Máy In Tem Nhiệt)</option>
+            <option value="70x40">Tem Nhãn 70x40 mm (Trung Bình)</option>
+            <option value="100x50">Tem Nhãn 100x50 mm (Khổ Lớn)</option>
+          </select>
+
+          <button class="bg-blue-600 hover:bg-blue-700 text-white font-bold text-xs px-5 py-2.5 rounded-xl transition shadow-md flex items-center gap-2" id="btn-trigger-print">
+            🖨️ In Tem Ngay (Print Studio)
+          </button>
+        </div>
+      </div>
+
+      <div id="print-area">
+        <div id="print-area-preview">
+          <!-- Dynamic label previews -->
+        </div>
+      </div>
+    </div>
+
+    <!-- Pane 3: Camera QR Scanner -->
+    <div class="tab-pane hidden" id="pane-scan">
+      <div class="max-w-xl mx-auto">
+        <div class="glass-card p-6 rounded-3xl text-center">
+          <h2 class="text-xl font-bold text-slate-900 font-heading mb-1">Quét Tem Nhãn QR Mã Tài Sản</h2>
+          <p class="text-xs text-slate-500 mb-6">Hướng Camera máy tính/điện thoại vào tem nhãn QR dán trên thiết bị để kiểm tra lịch sử</p>
+
+          <div id="camera-viewport" class="overflow-hidden rounded-2xl border-2 border-dashed border-blue-400 bg-slate-100 min-h-[300px] flex items-center justify-center">
+            <p class="text-xs text-slate-500">Đang khởi động Camera...</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Pane 4: Step-by-Step User Guide -->
+    <div class="tab-pane hidden" id="pane-guide">
+      <div class="max-w-4xl mx-auto space-y-6">
+        <div class="bg-gradient-to-r from-blue-600 to-indigo-700 rounded-3xl p-6 text-white shadow-xl">
+          <h2 class="text-2xl font-black font-heading mb-2">📖 Hướng Dẫn Sử Dụng Hệ Thống Từ A Đến Z</h2>
+          <p class="text-xs text-blue-100 leading-relaxed">
+            Dành cho người dùng phổ thông, cán bộ kho và nhân viên văn phòng. Hãy làm theo từng bước cực kỳ đơn giản dưới đây để quản lý tài sản, chọn tích hàng loạt & in tem nhãn QR thành thạo!
+          </p>
+        </div>
+
+        <div class="glass-card p-6 rounded-3xl space-y-4">
+          <div class="flex items-center gap-3 border-b border-slate-200 pb-3">
+            <span class="text-2xl">📥</span>
+            <div>
+              <h3 class="text-base font-bold text-slate-900 font-heading">PHẦN 1: Nạp Danh Sách Tài Sản / Pallet Từ Excel Vào Hệ Thống</h3>
+              <p class="text-xs text-slate-500">Áp dụng khi anh có sẵn file Excel chứa hàng trăm hoặc hàng ngàn tài sản (ví dụ: 11.000 Pallet nhựa)</p>
+            </div>
+          </div>
+
+          <div class="space-y-3 text-xs text-slate-700">
+            <div class="flex gap-3 items-start">
+              <div class="step-number">1</div>
+              <div>
+                <strong class="text-slate-900 text-sm">Bước 1: Tải File Excel Mẫu về máy</strong>
+                <p class="text-slate-500 mt-0.5">Bấm vào nút màu xám <span class="bg-slate-200 px-2 py-0.5 rounded font-bold">📄 File Mẫu</span> trên thanh công cụ để tải file mẫu chuẩn về máy tính.</p>
+              </div>
+            </div>
+
+            <div class="flex gap-3 items-start">
+              <div class="step-number">2</div>
+              <div>
+                <strong class="text-slate-900 text-sm">Bước 2: Điền thông tin đồ đạc / Pallet vào Excel</strong>
+                <p class="text-slate-500 mt-0.5">Mở file vừa tải bằng Excel, điền tên tài sản (VD: <em>Pallet Nhựa Đen</em>), mã tài sản, số serial, kho cất giữ, nguyên giá.</p>
+              </div>
+            </div>
+
+            <div class="flex gap-3 items-start">
+              <div class="step-number">3</div>
+              <div>
+                <strong class="text-slate-900 text-sm">Bước 3: Nạp file Excel lên hệ thống</strong>
+                <p class="text-slate-500 mt-0.5">Bấm nút màu xanh lá <span class="bg-emerald-600 text-white px-2 py-0.5 rounded font-bold">📥 Nạp Excel</span> -> Chọn file vừa điền. Hệ thống sẽ tự động nạp toàn bộ danh sách trong 1-2 giây!</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="glass-card p-6 rounded-3xl space-y-4">
+          <div class="flex items-center gap-3 border-b border-slate-200 pb-3">
+            <span class="text-2xl">🖨️</span>
+            <div>
+              <h3 class="text-base font-bold text-slate-900 font-heading">PHẦN 2: Tích Chọn Hàng Loạt & In Tem Nhãn QR Code</h3>
+              <p class="text-xs text-slate-500">In cùng lúc hàng chục hoặc hàng ngàn tem nhãn mà không cần bấm từng cái một</p>
+            </div>
+          </div>
+
+          <div class="space-y-3 text-xs text-slate-700">
+            <div class="flex gap-3 items-start">
+              <div class="step-number">1</div>
+              <div>
+                <strong class="text-slate-900 text-sm">Bước 1: Tích chọn các món cần in tem</strong>
+                <p class="text-slate-500 mt-0.5">Tích vào ô vuông ở đầu mỗi dòng tài sản, hoặc bấm <span class="bg-blue-100 text-blue-900 px-2 py-0.5 rounded font-bold">☑️ Chọn Tất Cả Trang Này</span> hoặc <span class="bg-blue-100 text-blue-900 px-2 py-0.5 rounded font-bold">☑️ Chọn Tất Cả Dữ Liệu (1.000+)</span>.</p>
+              </div>
+            </div>
+
+            <div class="flex gap-3 items-start">
+              <div class="step-number">2</div>
+              <div>
+                <strong class="text-slate-900 text-sm">Bước 2: Bấm nút "🖨️ IN TEM HÀNG LOẠT CÁC MÓN ĐÃ CHỌN"</strong>
+                <p class="text-slate-500 mt-0.5">Thanh màu xanh dương xuất hiện báo số lượng đã chọn. Bấm nút màu xanh dương đậm để chuyển sang màn hình in tem hàng loạt.</p>
+              </div>
+            </div>
+
+            <div class="flex gap-3 items-start">
+              <div class="step-number">3</div>
+              <div>
+                <strong class="text-slate-900 text-sm">Bước 3: Chọn khổ tem & Thực hiện in</strong>
+                <p class="text-slate-500 mt-0.5">Chọn khổ tem phù hợp với máy in (VD: <em>50x30 mm</em>) -> Bấm <span class="bg-blue-600 text-white px-2 py-0.5 rounded font-bold">🖨️ In Tem Ngay</span> để gửi lệnh đến máy in tem nhãn nhiệt!</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="glass-card p-6 rounded-3xl space-y-4">
+          <div class="flex items-center gap-3 border-b border-slate-200 pb-3">
+            <span class="text-2xl">🗑️</span>
+            <div>
+              <h3 class="text-base font-bold text-slate-900 font-heading">PHẦN 4: Xóa Trắng Dữ Liệu Khi Bàn Giao Cho Công Ty Khác</h3>
+              <p class="text-xs text-slate-500">Khi chuyển giao máy tính/ứng dụng cho đơn vị khác sử dụng ở nơi khác</p>
+            </div>
+          </div>
+
+          <div class="space-y-3 text-xs text-slate-700">
+            <div class="flex gap-3 items-start">
+              <div class="step-number">1</div>
+              <div>
+                <strong class="text-slate-900 text-sm">Bước 1: Bấm nút "🗑️ Xóa Trắng"</strong>
+                <p class="text-slate-500 mt-0.5">Nút màu đỏ nằm góc phải thanh công cụ <span class="bg-rose-100 text-rose-700 px-2 py-0.5 rounded font-bold">🗑️ Xóa Trắng</span>.</p>
+              </div>
+            </div>
+
+            <div class="flex gap-3 items-start">
+              <div class="step-number">2</div>
+              <div>
+                <strong class="text-slate-900 text-sm">Bước 2: Nhập mã xác nhận bảo mật</strong>
+                <p class="text-slate-500 mt-0.5">Nhập chữ <code class="bg-slate-200 px-1 py-0.5 rounded font-mono text-slate-900">CONFIRM</code> hoặc nhập PIN <code class="bg-slate-200 px-1 py-0.5 rounded font-mono text-slate-900">8888</code> -> Bấm OK. Toàn bộ dữ liệu cũ sẽ được làm sạch 100% để sẵn sàng nạp cho công ty mới!</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+  </main>
+
+  <!-- ASSET DETAIL MODAL -->
+  <div class="modal-overlay" id="asset-detail-modal">
+    <div class="bg-white p-6 rounded-3xl max-w-lg w-full relative max-h-[90vh] overflow-y-auto border border-slate-300 shadow-2xl">
+      <button onclick="closeModal('asset-detail-modal')" class="absolute top-4 right-4 text-slate-400 hover:text-slate-900 text-lg">✕</button>
+      <div id="asset-detail-content">
+        <!-- Dynamic content -->
+      </div>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <footer class="text-center text-xs text-slate-500 py-6 border-t border-slate-200 max-w-7xl mx-auto w-full mt-8">
+    © 2026 🏢 **Enterprise Fixed Asset & Label Printer QR Manager** • Standalone 1-File HTML Offline App
+  </footer>
+
+  <!-- Embedded Single-File Application Logic -->
+  <script>
+    const STORAGE_KEY_ASSETS = 'enterprise_assets_v2';
+    const STORAGE_KEY_DEPTS = 'enterprise_depts_v2';
+
+    const defaultDepts = [
+      { id: 'DEPT-OFFICE', name: 'Khối Văn Phòng & Ban Giám Đốc', manager: 'Trần Văn Nam', location: 'Tầng 5 - Tòa Nhà Văn Phòng' },
+      { id: 'DEPT-IT', name: 'Khối Công Nghệ Thông Tin & Telecom', manager: 'Lê Vũ Tường', location: 'Tầng 4 - Phòng Server Central' },
+      { id: 'DEPT-FACTORY', name: 'Nhà Máy Sản Xuất & Xưởng Cơ Khí', manager: 'Nguyễn Văn Hùng', location: 'Khu Công Nghiệp - Xưởng A1' },
+      { id: 'DEPT-WAREHOUSE', name: 'Kho Thiết Bị & Vật Tư Tổng', manager: 'Phạm Minh Đức', location: 'Khu C - Kho Vật Tư Tổng' }
+    ];
+
+    const defaultAssets = [
+      { id: 'AST-2026-0101', deptId: 'DEPT-IT', name: 'Máy Chủ Server Dell PowerEdge R750', category: 'Thiết Bị IT / Server', brandModel: 'Dell PowerEdge R750 Xeon 6330', serialNo: 'SN-DELL-8891234', location: 'Phòng Server Central - Tủ Rack #02', custodian: 'Lê Vũ Tường', status: 'ACTIVE', costVnd: 185000000, purchaseDate: '2025-06-15', note: 'Máy chủ ERP & WMS.' },
+      { id: 'AST-2026-0102', deptId: 'DEPT-IT', name: 'Laptop Dell XPS 15 9530 i9 32GB', category: 'Thiết Bị IT / Laptop', brandModel: 'Dell XPS 15 9530', serialNo: 'SN-XPS-9921827', location: 'Khối Kế Hoạch - Bàn 12', custodian: 'Nguyễn Thị Hoa', status: 'ACTIVE', costVnd: 52000000, purchaseDate: '2026-01-10', note: 'Trưởng phòng Kế hoạch.' },
+      { id: 'AST-PLT-00001', deptId: 'DEPT-WAREHOUSE', name: 'Pallet Nhựa Đen Chân Cốc 1200x1000mm', category: 'Pallet & Khay Chứa', brandModel: '1200x1000x150mm', serialNo: 'PLT-BATCH-2026-01', location: 'Kho Vật Tư Tổng - Dãy A', custodian: 'Phạm Minh Đức', status: 'ACTIVE', costVnd: 450000, purchaseDate: '2026-01-05', note: 'Tải trọng 3000kg. Lô 11.000 pallet.' }
+    ];
+
+    function initStorage() {
+      if (!localStorage.getItem(STORAGE_KEY_DEPTS)) localStorage.setItem(STORAGE_KEY_DEPTS, JSON.stringify(defaultDepts));
+      if (!localStorage.getItem(STORAGE_KEY_ASSETS)) localStorage.setItem(STORAGE_KEY_ASSETS, JSON.stringify(defaultAssets));
+    }
+
+    function getDepts() { initStorage(); return JSON.parse(localStorage.getItem(STORAGE_KEY_DEPTS)) || defaultDepts; }
+    function getAssets() { initStorage(); return JSON.parse(localStorage.getItem(STORAGE_KEY_ASSETS)) || defaultAssets; }
+
+    function saveAsset(asset) {
+      const assets = getAssets();
+      const idx = assets.findIndex(a => a.id === asset.id);
+      if (idx >= 0) assets[idx] = asset; else assets.push(asset);
+      localStorage.setItem(STORAGE_KEY_ASSETS, JSON.stringify(assets));
+    }
+
+    function bulkImportAssets(importedArray) {
+      const currentAssets = getAssets();
+      const map = new Map(currentAssets.map(a => [a.id, a]));
+      importedArray.forEach((row, idx) => {
+        const id = row.id || row['Mã Tài Sản'] || row['MaTaiSan'] || `AST-${Date.now().toString().slice(-4)}-${idx+1}`;
+        const name = row.name || row['Tên Thiết Bị'] || row['TenThietBi'] || 'Tài sản mới';
+        const category = row.category || row['Danh Mục'] || 'Vật Tư';
+        const brandModel = row.brandModel || row['Model/Kích Thước'] || row['Model'] || '';
+        const serialNo = row.serialNo || row['Số Serial/Mã Lô'] || row['Serial'] || '';
+        const location = row.location || row['Vị Trí'] || 'Trong kho';
+        const custodian = row.custodian || row['Người Quản Lý'] || '';
+        const status = row.status || row['Trạng Thái'] || 'ACTIVE';
+        const costVnd = parseFloat(row.costVnd || row['Nguyên Giá (VNĐ)'] || 0) || 0;
+        const purchaseDate = row.purchaseDate || row['Ngày Mua'] || new Date().toISOString().split('T')[0];
+        const note = row.note || row['Ghi Chú'] || '';
+        const deptId = row.deptId || row['Phòng Ban'] || 'DEPT-WAREHOUSE';
+        map.set(id, { id, deptId, name, category, brandModel, serialNo, location, custodian, status, costVnd, purchaseDate, note });
+      });
+      const finalAssets = Array.from(map.values());
+      localStorage.setItem(STORAGE_KEY_ASSETS, JSON.stringify(finalAssets));
+      return importedArray.length;
+    }
+
+    function generate1000SampleAssets() {
+      const list = [];
+      const depts = ['DEPT-OFFICE', 'DEPT-IT', 'DEPT-FACTORY', 'DEPT-WAREHOUSE'];
+      const names = ['Pallet Nhựa Đen 1200x1000mm', 'Pallet Nhựa Xanh Lót Sàn', 'Laptop Dell Latitude i7', 'Màn Hình Dell 27 inch 4K', 'Máy In QR Xprinter', 'Xe Nâng Điện Toyota 2.5T'];
+      for (let i = 1; i <= 1000; i++) {
+        list.push({
+          id: `AST-PLT-${String(i).padStart(5, '0')}`,
+          deptId: depts[i % depts.length],
+          name: `${names[i % names.length]} #${i}`,
+          category: 'Pallet & Thiết Bị',
+          brandModel: 'Model 2026',
+          serialNo: `PLT-BATCH-2026-${Math.floor(i / 100) + 1}`,
+          location: `Kho A - Dãy ${(i % 20) + 1} - Ô ${i}`,
+          custodian: 'Cán bộ kho',
+          status: 'ACTIVE',
+          costVnd: 450000 + (i * 1000),
+          purchaseDate: '2026-01-10',
+          note: `Tài sản mẫu thử thứ ${i}`
+        });
+      }
+      localStorage.setItem(STORAGE_KEY_ASSETS, JSON.stringify(list));
+      return list.length;
+    }
+
+    function clearAllData() {
+      localStorage.removeItem(STORAGE_KEY_ASSETS);
+      localStorage.setItem(STORAGE_KEY_ASSETS, JSON.stringify([]));
+    }
+
+    function deleteAsset(id) {
+      const assets = getAssets().filter(a => a.id !== id);
+      localStorage.setItem(STORAGE_KEY_ASSETS, JSON.stringify(assets));
+    }
+
+    function searchAssets(query, deptFilter = 'ALL', statusFilter = 'ALL') {
+      let list = getAssets();
+      if (deptFilter !== 'ALL') list = list.filter(a => a.deptId === deptFilter);
+      if (statusFilter !== 'ALL') list = list.filter(a => a.status === statusFilter);
+      if (!query) return list;
+      const q = query.toLowerCase().trim();
+      return list.filter(a => a.id.toLowerCase().includes(q) || a.name.toLowerCase().includes(q) || a.category.toLowerCase().includes(q) || (a.custodian && a.custodian.toLowerCase().includes(q)));
+    }
+
+    // App Controller & UI logic
+    let currentPage = 1;
+    const pageSize = 50;
+    let currentFilteredAssets = [];
+    let selectedAssetIds = new Set();
+
+    document.addEventListener('DOMContentLoaded', () => {
+      populateDepartmentOptions();
+      renderAssetsDirectory();
+      updateKPIs();
+
+      document.querySelectorAll('.tab-btn').forEach(btn => {
+        btn.addEventListener('click', (e) => {
+          document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+          document.querySelectorAll('.tab-pane').forEach(p => p.classList.add('hidden'));
+          e.currentTarget.classList.add('active');
+          const targetId = e.currentTarget.getAttribute('data-target');
+          const pane = document.getElementById(targetId);
+          if (pane) pane.classList.remove('hidden');
+          if (targetId === 'pane-printer') renderPrinterStudio();
+        });
+      });
+
+      document.getElementById('search-input')?.addEventListener('input', () => { currentPage = 1; renderAssetsDirectory(); });
+      document.getElementById('filter-dept')?.addEventListener('change', () => { currentPage = 1; renderAssetsDirectory(); });
+      document.getElementById('filter-status')?.addEventListener('change', () => { currentPage = 1; renderAssetsDirectory(); });
+      document.getElementById('printer-size-select')?.addEventListener('change', () => renderPrinterStudio());
+
+      document.getElementById('master-checkbox')?.addEventListener('change', (e) => {
+        const isChecked = e.target.checked;
+        const startIdx = (currentPage - 1) * pageSize;
+        const pageAssets = currentFilteredAssets.slice(startIdx, startIdx + pageSize);
+        pageAssets.forEach(a => isChecked ? selectedAssetIds.add(a.id) : selectedAssetIds.delete(a.id));
+        renderAssetsDirectory();
+      });
+
+      document.getElementById('btn-select-page')?.addEventListener('click', () => {
+        const startIdx = (currentPage - 1) * pageSize;
+        currentFilteredAssets.slice(startIdx, startIdx + pageSize).forEach(a => selectedAssetIds.add(a.id));
+        renderAssetsDirectory();
+      });
+
+      document.getElementById('btn-select-all-filtered')?.addEventListener('click', () => {
+        currentFilteredAssets.forEach(a => selectedAssetIds.add(a.id));
+        renderAssetsDirectory();
+      });
+
+      document.getElementById('btn-clear-selection')?.addEventListener('click', () => {
+        selectedAssetIds.clear();
+        renderAssetsDirectory();
+      });
+
+      document.getElementById('btn-print-selected')?.addEventListener('click', () => {
+        if (selectedAssetIds.size === 0) return alert('Vui lòng tích chọn ít nhất 1 tài sản!');
+        document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+        document.querySelectorAll('.tab-pane').forEach(p => p.classList.add('hidden'));
+        document.querySelector('[data-target="pane-printer"]').classList.add('active');
+        document.getElementById('pane-printer').classList.remove('hidden');
+        renderPrinterStudio();
+      });
+
+      document.getElementById('btn-load-1000')?.addEventListener('click', () => {
+        generate1000SampleAssets();
+        currentPage = 1;
+        selectedAssetIds.clear();
+        renderAssetsDirectory();
+        updateKPIs();
+        alert('✓ Đã nạp 1.000 mã tài sản mẫu thử nghiệm!');
+      });
+
+      document.getElementById('btn-wipe-data')?.addEventListener('click', () => {
+        const confirmPin = prompt('Nhập "CONFIRM" hoặc PIN 8888 để xóa trắng dữ liệu:');
+        if (confirmPin === 'CONFIRM' || confirmPin === '8888') {
+          clearAllData();
+          currentPage = 1;
+          selectedAssetIds.clear();
+          renderAssetsDirectory();
+          updateKPIs();
+          alert('✓ Đã xóa trắng toàn bộ dữ liệu!');
+        }
+      });
+
+      document.getElementById('btn-trigger-import')?.addEventListener('click', () => document.getElementById('file-excel-input').click());
+      document.getElementById('file-excel-input')?.addEventListener('change', handleExcelUpload);
+      document.getElementById('btn-trigger-print')?.addEventListener('click', () => window.print());
+
+      document.getElementById('btn-prev-page')?.addEventListener('click', () => { if (currentPage > 1) { currentPage--; renderAssetsDirectory(); } });
+      document.getElementById('btn-next-page')?.addEventListener('click', () => { const totalPages = Math.ceil(currentFilteredAssets.length / pageSize) || 1; if (currentPage < totalPages) { currentPage++; renderAssetsDirectory(); } });
+    });
+
+    function populateDepartmentOptions() {
+      const depts = getDepts();
+      const sel = document.getElementById('filter-dept');
+      if (!sel) return;
+      sel.innerHTML = '<option value="ALL">Tất cả phòng ban</option>';
+      depts.forEach(d => sel.innerHTML += `<option value="${d.id}">${d.name}</option>`);
+    }
+
+    function updateKPIs() {
+      const assets = getAssets();
+      document.getElementById('kpi-total-assets').textContent = assets.length.toLocaleString();
+      const totalVnd = assets.reduce((sum, a) => sum + (a.costVnd || 0), 0);
+      document.getElementById('kpi-total-valuation').textContent = `${(totalVnd / 1000000000).toFixed(2)} Tỷ đ`;
+      document.getElementById('kpi-spare-count').textContent = assets.filter(a => a.status === 'SPARE').length;
+      document.getElementById('kpi-repair-count').textContent = assets.filter(a => a.status === 'REPAIR').length;
+    }
+
+    function renderAssetsDirectory() {
+      const container = document.getElementById('assets-table-body');
+      if (!container) return;
+      const query = document.getElementById('search-input')?.value || '';
+      const deptFilter = document.getElementById('filter-dept')?.value || 'ALL';
+      const statusFilter = document.getElementById('filter-status')?.value || 'ALL';
+
+      currentFilteredAssets = searchAssets(query, deptFilter, statusFilter);
+      const totalItems = currentFilteredAssets.length;
+      const totalPages = Math.ceil(totalItems / pageSize) || 1;
+      if (currentPage > totalPages) currentPage = totalPages;
+
+      const startIdx = (currentPage - 1) * pageSize;
+      const pageAssets = currentFilteredAssets.slice(startIdx, startIdx + pageSize);
+
+      document.getElementById('page-info').textContent = `Trang ${currentPage} / ${totalPages} (Tổng ${totalItems.toLocaleString()} tài sản)`;
+      document.getElementById('selected-count-label').textContent = selectedAssetIds.size.toLocaleString();
+      document.getElementById('selection-action-bar').classList.toggle('hidden', selectedAssetIds.size === 0);
+
+      const depts = getDepts();
+
+      if (pageAssets.length === 0) {
+        container.innerHTML = `<tr><td colspan="8" class="text-center p-6 text-slate-500">Chưa có dữ liệu. Bấm "📥 Nạp Excel" hoặc "⚡ Nạp Mẫu 1.000 Mã" để bắt đầu!</td></tr>`;
+        return;
+      }
+
+      container.innerHTML = pageAssets.map(a => {
+        const dept = depts.find(d => d.id === a.deptId);
+        const deptName = dept ? dept.name : 'N/A';
+        const isChecked = selectedAssetIds.has(a.id);
+        let statusBadge = '<span class="badge badge-active">🟢 Đang Sử Dụng</span>';
+        if (a.status === 'SPARE') statusBadge = '<span class="badge badge-spare">🔵 Dự Phòng</span>';
+        if (a.status === 'REPAIR') statusBadge = '<span class="badge badge-repair">🔴 Bảo Trì</span>';
+
+        return `
+          <tr class="border-b border-slate-100 ${isChecked ? 'bg-blue-50' : ''} cursor-pointer" onclick="toggleSelectRow('${a.id}')">
+            <td class="p-3 text-center" onclick="event.stopPropagation();">
+              <input type="checkbox" class="w-4 h-4 rounded border-slate-300 text-blue-600" ${isChecked ? 'checked' : ''} onchange="toggleAssetSelection('${a.id}', this.checked)" />
+            </td>
+            <td class="p-3 font-bold text-blue-600">${a.id}</td>
+            <td class="p-3">
+              <div class="font-bold text-slate-900">${a.name}</div>
+              <div class="text-[11px] text-slate-500">S/N: ${a.serialNo || 'N/A'} | Model: ${a.brandModel || 'N/A'}</div>
+            </td>
+            <td class="p-3 text-slate-700">${deptName}<br><small class="text-slate-400">${a.location}</small></td>
+            <td class="p-3">${a.custodian || 'Chưa gán'}</td>
+            <td class="p-3">${statusBadge}</td>
+            <td class="p-3 text-right font-bold text-slate-900">${a.costVnd ? a.costVnd.toLocaleString() + ' đ' : '0 đ'}</td>
+            <td class="p-3 text-center" onclick="event.stopPropagation();">
+              <button class="px-2.5 py-1 text-xs border border-slate-300 rounded-lg hover:bg-slate-100" onclick="printSingleLabel('${a.id}')">🖨️ Tem QR</button>
+            </td>
+          </tr>
+        `;
+      }).join('');
+    }
+
+    function toggleAssetSelection(id, isChecked) {
+      if (isChecked) selectedAssetIds.add(id); else selectedAssetIds.delete(id);
+      renderAssetsDirectory();
+    }
+
+    function toggleSelectRow(id) {
+      toggleAssetSelection(id, !selectedAssetIds.has(id));
+    }
+
+    function handleExcelUpload(e) {
+      const file = e.target.files[0];
+      if (!file) return;
+      const reader = new FileReader();
+      reader.onload = function(evt) {
+        try {
+          const data = new Uint8Array(evt.target.result);
+          const workbook = XLSX.read(data, { type: 'array' });
+          const firstSheet = workbook.SheetNames[0];
+          const jsonData = XLSX.utils.sheet_to_json(workbook.Sheets[firstSheet]);
+          bulkImportAssets(jsonData);
+          currentPage = 1;
+          renderAssetsDirectory();
+          updateKPIs();
+          alert(`✓ Đã nạp thành công ${jsonData.length.toLocaleString()} tài sản từ file Excel!`);
+        } catch (err) { alert('Không thể đọc file Excel!'); }
+      };
+      reader.readAsArrayBuffer(file);
+    }
+
+    function renderPrinterStudio() {
+      const sizeSelect = document.getElementById('printer-size-select');
+      const labelSize = sizeSelect ? sizeSelect.value : '50x30';
+      const allAssets = getAssets();
+      let assetsToPrint = selectedAssetIds.size > 0 ? allAssets.filter(a => selectedAssetIds.has(a.id)) : currentFilteredAssets.slice(0, 100);
+
+      document.getElementById('print-batch-info').textContent = `Đang chuẩn bị in ${assetsToPrint.length.toLocaleString()} tem nhãn QR (${labelSize}mm)...`;
+
+      let cssClass = 'label-sticker-50x30';
+      let qrPx = 54;
+      if (labelSize === '70x40') { cssClass = 'label-sticker-70x40'; qrPx = 76; }
+      else if (labelSize === '100x50') { cssClass = 'label-sticker-100x50'; qrPx = 98; }
+
+      const container = document.getElementById('print-area-preview');
+      container.innerHTML = `<div class="label-preview-container">${assetsToPrint.map(a => `
+        <div class="${cssClass}">
+          <div id="label-qr-${a.id}" style="width:${qrPx}px; height:${qrPx}px; flex-shrink:0;"></div>
+          <div style="flex:1; height:100%; display:flex; flex-direction:column; justify-content:space-between; overflow:hidden;">
+            <div>
+              <div style="font-size:7.5px; font-weight:800; text-transform:uppercase; border-bottom:1px solid #000; margin-bottom:2px; white-space:nowrap; overflow:hidden;">TÀI SẢN CÔNG TY</div>
+              <div style="font-size:9px; font-weight:800; color:#000; line-height:1.15; max-height:22px; overflow:hidden;">${a.name}</div>
+            </div>
+            <div>
+              <div style="font-size:8px; font-weight:800; color:#000;">MÃ TS: <strong>${a.id}</strong></div>
+              <div style="font-size:7px; color:#333; white-space:nowrap; overflow:hidden;">S/N: ${a.serialNo || 'N/A'}</div>
+            </div>
+          </div>
+        </div>
+      `).join('')}</div>`;
+
+      setTimeout(() => {
+        assetsToPrint.forEach(a => {
+          const el = document.getElementById(`label-qr-${a.id}`);
+          if (el) {
+            el.innerHTML = '';
+            new QRCode(el, { text: a.id, width: qrPx, height: qrPx, colorDark: "#000000", colorLight: "#ffffff" });
+          }
+        });
+      }, 50);
+    }
+
+    function printSingleLabel(id) {
+      selectedAssetIds.clear();
+      selectedAssetIds.add(id);
+      document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+      document.querySelectorAll('.tab-pane').forEach(p => p.classList.add('hidden'));
+      document.querySelector('[data-target="pane-printer"]').classList.add('active');
+      document.getElementById('pane-printer').classList.remove('hidden');
+      renderPrinterStudio();
+    }
+  </script>
+</body>
+</html>
