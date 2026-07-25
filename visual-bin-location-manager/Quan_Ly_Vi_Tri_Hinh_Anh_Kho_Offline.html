@@ -54,13 +54,6 @@
       border-color: #2563eb;
     }
 
-    .photo-container {
-      width: 100%;
-      height: 210px;
-      object-fit: cover;
-      background: #0f172a;
-    }
-
     .tag-badge {
       padding: 0.35rem 0.75rem;
       border-radius: 12px;
@@ -371,7 +364,7 @@
 
   <!-- Footer -->
   <footer class="text-center text-xs text-slate-600 font-bold py-6 border-t border-slate-300 max-w-7xl mx-auto w-full mt-8">
-    © 2026 📷 **Visual Photo Bin Finder & Warehouse Location Manager** • Permanent Multi-Layer Storage & JSON Backup Engine
+    © 2026 📷 **Visual Photo Bin Finder & Warehouse Location Manager** • Standalone 1-File HTML Offline App
   </footer>
 
   <!-- Embedded Single-File Application Logic -->
@@ -692,29 +685,30 @@
       container.innerHTML = pageLocations.map(item => `
         <div class="photo-card flex flex-col justify-between">
           <div>
-            <div class="relative cursor-pointer overflow-hidden group" onclick="openZoomPhotoModal('${item.id}')">
-              <img src="${item.photoBase64}" alt="${item.skuName}" class="photo-container group-hover:scale-105 transition duration-300" />
-              <div class="absolute inset-0 bg-slate-950/60 opacity-0 group-hover:opacity-100 transition flex items-center justify-center text-white text-xs font-black">BẤM PHÓNG TO ÁNH KỆ</div>
-              <span class="absolute top-3 right-3 bg-slate-950 text-amber-400 text-[11px] font-black px-3 py-1 rounded-full border border-amber-500 shadow-md">${item.id}</span>
+            <!-- Clean photo box without overlay text -->
+            <div class="relative cursor-pointer overflow-hidden group" onclick="openZoomPhotoModal('${item.id}')" title="Bấm để phóng to hình ảnh">
+              <img src="${item.photoBase64}" alt="${item.skuName}" class="w-full h-[200px] object-cover bg-slate-900 group-hover:scale-105 transition duration-300" />
+              <span class="absolute top-2.5 right-2.5 bg-slate-950/90 text-amber-400 text-[10px] font-black px-2.5 py-0.5 rounded-full border border-amber-500 shadow-md">${item.id}</span>
             </div>
 
-            <div class="p-4 space-y-2.5">
+            <!-- Compact Bold Typography -->
+            <div class="p-3 space-y-2">
               <div class="flex items-center gap-1.5 flex-wrap">
                 <span class="tag-badge tag-warehouse">${item.warehouse}</span>
                 <span class="tag-badge tag-rack">${item.rack}</span>
               </div>
-              <h3 class="font-black text-slate-900 text-sm hover:text-blue-700 cursor-pointer" onclick="openZoomPhotoModal('${item.id}')">${item.skuName}</h3>
-              <div class="text-xs text-slate-800 space-y-1.5 bg-slate-50 p-2.5 rounded-xl border border-slate-200">
-                <div class="font-bold">📍 Vị Trí: <span class="text-blue-700">${item.tier}</span></div>
-                <div class="font-bold">📦 Tồn Kho: <span class="text-slate-900">${item.qtyNote || 'Chưa ghi chú'}</span></div>
-                ${item.note ? `<div class="text-[11px] text-slate-700 font-semibold border-t border-slate-200 pt-1.5 mt-1">📝 ${item.note}</div>` : ''}
+              <h3 class="font-black text-slate-950 text-xs leading-snug hover:text-blue-700 cursor-pointer" onclick="openZoomPhotoModal('${item.id}')">${item.skuName}</h3>
+              <div class="text-[11px] text-slate-900 font-extrabold space-y-1 bg-slate-100 p-2 rounded-xl border border-slate-300">
+                <div>📍 <span class="text-slate-600 font-bold">Vị Trí:</span> <span class="text-blue-700 font-black">${item.tier}</span></div>
+                <div>📦 <span class="text-slate-600 font-bold">Tồn Kho:</span> <span class="text-slate-950 font-black">${item.qtyNote || 'Chưa ghi chú'}</span></div>
+                ${item.note ? `<div class="text-[10px] text-slate-800 font-bold border-t border-slate-200 pt-1 mt-1">📝 ${item.note}</div>` : ''}
               </div>
             </div>
           </div>
 
-          <div class="p-3 border-t border-slate-200 bg-slate-100 flex items-center justify-between text-[11px] text-slate-700 font-bold">
+          <div class="px-3 py-2 border-t border-slate-200 bg-slate-100 flex items-center justify-between text-[10px] text-slate-700 font-extrabold">
             <span>👤 ${item.staffName || 'Kho'} • ${item.updatedAt || ''}</span>
-            <button onclick="deleteLocationHandler('${item.id}')" class="bg-rose-100 text-rose-800 border border-rose-300 font-black px-2.5 py-1 rounded-lg">🗑️ Xóa</button>
+            <button onclick="deleteLocationHandler('${item.id}')" class="bg-rose-100 text-rose-800 border border-rose-300 font-black px-2 py-0.5 rounded">🗑️ Xóa</button>
           </div>
         </div>
       `).join('');

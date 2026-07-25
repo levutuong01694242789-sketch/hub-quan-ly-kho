@@ -1,6 +1,6 @@
 /**
  * Visual Photo Bin Finder & Warehouse Location Manager - Main Application Controller
- * Permanent Data Safety, JSON Backup Export/Import & 3,000+ Photos Pagination.
+ * Clean Photo Cards (No Text Overlay), Compact Bold Typography, 3,000+ Photos Pagination.
  */
 
 let currentCompressedPhoto = null;
@@ -9,7 +9,7 @@ const pageSize = 24;
 let currentFilteredLocations = [];
 
 document.addEventListener('DOMContentLoaded', () => {
-  console.log('[VisualBinApp] Initializing Permanent Data Safe Location Manager...');
+  console.log('[VisualBinApp] Initializing Clean Typography Location Manager...');
 
   // 1. Populate Cascading Dynamic Filters
   populateDynamicFilters();
@@ -80,7 +80,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         if (previewImg) previewImg.src = compressedBase64;
         const compressedKb = (compressedBase64.length * 0.75 / 1024).toFixed(1);
-        if (sizeTag) sizeTag.textContent = `✓ Nén ảnh thành công: ${compressedKb} KB (Lưu trữ an toàn vĩnh viễn!)`;
+        if (sizeTag) sizeTag.textContent = `✓ Nén ảnh thành công: ${compressedKb} KB (Lưu vĩnh viễn!)`;
       } catch (err) {
         console.error('[ImageCompression] Error:', err);
         alert('Không thể nén ảnh. Vui lòng chọn ảnh khác!');
@@ -105,7 +105,7 @@ document.addEventListener('DOMContentLoaded', () => {
   // Backup Export & Import Action Listeners
   document.getElementById('btn-export-backup')?.addEventListener('click', () => {
     VisualBinStorage.exportBackupJSON();
-    alert('✓ Đã xuất file Sao Lưu Vĩnh Viễn (.json) thành công! Hãy cất giữ file này trên Google Drive, USB hoặc Zalo để bảo vệ dữ liệu vĩnh viễn.');
+    alert('✓ Đã xuất file Sao Lưu Vĩnh Viễn (.json) thành công!');
   });
 
   document.getElementById('btn-trigger-import-backup')?.addEventListener('click', () => {
@@ -205,7 +205,7 @@ function renderLocationGrid() {
 
   const pageInfoEl = document.getElementById('page-info');
   if (pageInfoEl) {
-    pageInfoEl.textContent = `Trang ${currentPage} / ${totalPages} (Tổng ${totalItems.toLocaleString()} vị trí ảnh đã lưu vĩnh viễn)`;
+    pageInfoEl.textContent = `Trang ${currentPage} / ${totalPages} (Tổng ${totalItems.toLocaleString()} vị trí ảnh)`;
   }
 
   if (pageLocations.length === 0) {
@@ -222,37 +222,36 @@ function renderLocationGrid() {
   container.innerHTML = pageLocations.map(item => `
     <div class="photo-card flex flex-col justify-between">
       <div>
-        <div class="relative cursor-pointer overflow-hidden group" onclick="openZoomPhotoModal('${item.id}')">
-          <img src="${item.photoBase64}" alt="${item.skuName}" class="photo-container group-hover:scale-105 transition duration-300" />
-          <div class="absolute inset-0 bg-slate-950/60 opacity-0 group-hover:opacity-100 transition flex items-center justify-center text-white text-xs font-black gap-1.5">
-            <i class="fa-solid fa-magnifying-glass-plus text-base"></i> BẤM PHÓNG TO ÁNH KỆ
-          </div>
-          <span class="absolute top-3 right-3 bg-slate-950 text-amber-400 text-[11px] font-black px-3 py-1 rounded-full border border-amber-500 shadow-md">
+        <!-- Clean photo box without overlay text -->
+        <div class="relative cursor-pointer overflow-hidden group" onclick="openZoomPhotoModal('${item.id}')" title="Bấm để phóng to hình ảnh góc kệ">
+          <img src="${item.photoBase64}" alt="${item.skuName}" class="w-full h-[200px] object-cover bg-slate-900 group-hover:scale-105 transition duration-300" />
+          <span class="absolute top-2.5 right-2.5 bg-slate-950/90 text-amber-400 text-[10px] font-black px-2.5 py-0.5 rounded-full border border-amber-500 shadow-md">
             ${item.id}
           </span>
         </div>
 
-        <div class="p-4 space-y-2.5">
+        <!-- Clean compact bold text content -->
+        <div class="p-3 space-y-2">
           <div class="flex items-center gap-1.5 flex-wrap">
-            <span class="tag-badge tag-warehouse"><i class="fa-solid fa-warehouse text-[10px]"></i> ${item.warehouse}</span>
-            <span class="tag-badge tag-rack"><i class="fa-solid fa-layer-group text-[10px]"></i> ${item.rack}</span>
+            <span class="tag-badge tag-warehouse"><i class="fa-solid fa-warehouse text-[9px]"></i> ${item.warehouse}</span>
+            <span class="tag-badge tag-rack"><i class="fa-solid fa-layer-group text-[9px]"></i> ${item.rack}</span>
           </div>
 
-          <h3 class="font-black text-slate-900 text-sm leading-snug hover:text-blue-700 transition cursor-pointer" onclick="openZoomPhotoModal('${item.id}')">
+          <h3 class="font-black text-slate-950 text-xs leading-snug hover:text-blue-700 transition cursor-pointer" onclick="openZoomPhotoModal('${item.id}')">
             ${item.skuName}
           </h3>
 
-          <div class="text-xs text-slate-800 space-y-1.5 bg-slate-50 p-2.5 rounded-xl border border-slate-200">
-            <div class="flex items-center gap-1.5 font-bold"><i class="fa-solid fa-location-dot text-rose-600"></i> <span>Vị Trí:</span> <span class="text-blue-700">${item.tier}</span></div>
-            <div class="flex items-center gap-1.5 font-bold"><i class="fa-solid fa-boxes-stacked text-amber-600"></i> <span>Tồn Kho:</span> <span class="text-slate-900">${item.qtyNote || 'Chưa ghi chú'}</span></div>
-            ${item.note ? `<div class="text-[11px] text-slate-700 font-semibold border-t border-slate-200 pt-1.5 mt-1">📝 ${item.note}</div>` : ''}
+          <div class="text-[11px] text-slate-900 font-extrabold space-y-1 bg-slate-100 p-2 rounded-xl border border-slate-300">
+            <div>📍 <span class="text-slate-600 font-bold">Vị Trí:</span> <span class="text-blue-700 font-black">${item.tier}</span></div>
+            <div>📦 <span class="text-slate-600 font-bold">Tồn Kho:</span> <span class="text-slate-950 font-black">${item.qtyNote || 'Chưa ghi chú'}</span></div>
+            ${item.note ? `<div class="text-[10px] text-slate-800 font-bold border-t border-slate-200 pt-1 mt-1">📝 ${item.note}</div>` : ''}
           </div>
         </div>
       </div>
 
-      <div class="p-3 border-t border-slate-200 bg-slate-100 flex items-center justify-between text-[11px] text-slate-700 font-bold">
+      <div class="px-3 py-2 border-t border-slate-200 bg-slate-100 flex items-center justify-between text-[10px] text-slate-700 font-extrabold">
         <span>👤 ${item.staffName || 'Kho'} • ${item.updatedAt || ''}</span>
-        <button onclick="deleteLocationHandler('${item.id}')" class="bg-rose-100 hover:bg-rose-200 text-rose-800 border border-rose-300 font-black px-2.5 py-1 rounded-lg transition">
+        <button onclick="deleteLocationHandler('${item.id}')" class="bg-rose-100 hover:bg-rose-200 text-rose-800 border border-rose-300 font-black px-2 py-0.5 rounded transition">
           🗑️ Xóa
         </button>
       </div>
