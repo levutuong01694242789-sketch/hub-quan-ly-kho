@@ -1,6 +1,6 @@
 /**
- * Visual Photo Bin Finder & Warehouse Location Manager - Data Safety & Storage Engine
- * Multi-layer storage protection, Auto-Save, JSON Backup Export/Import & Data Loss Prevention.
+ * Visual Photo Bin Finder & Warehouse Location Manager - Data Safety & Excel Engine
+ * Multi-layer storage protection, Excel Import with Embedded Images & Excel Template Export.
  */
 
 window.VisualBinStorage = (function () {
@@ -93,7 +93,7 @@ window.VisualBinStorage = (function () {
     link.click();
   }
 
-  // Backup Import from JSON File (Appends & Merges Without Overwriting Real Data)
+  // Backup Import from JSON File
   function importBackupJSON(jsonData) {
     if (!Array.isArray(jsonData)) throw new Error('File sao lưu không đúng định dạng!');
     const currentList = getLocations();
@@ -110,6 +110,146 @@ window.VisualBinStorage = (function () {
     const mergedList = Array.from(existingMap.values());
     localStorage.setItem(STORAGE_KEY, JSON.stringify(mergedList));
     return importedCount;
+  }
+
+  // Export Sample Excel Template File
+  function downloadExcelTemplate() {
+    if (typeof XLSX === 'undefined') {
+      alert('Đang tải thư viện Excel... Vui lòng thử lại sau 3 giây!');
+      return;
+    }
+
+    const templateData = [
+      {
+        'Mã Vị Trí (*)': 'LOC-2026-0001',
+        'Tên Bao Bì / Hàng Hóa (*)': 'Cuộn Màng Co PE 50cm',
+        'Kho / Khu Vực (*)': 'Kho Bao Bì LC01',
+        'Dãy / Kệ (*)': 'Dãy A - Kệ 01',
+        'Tầng / Ô Vị Trí (*)': 'Tầng 2 - Ô 04',
+        'Số Lượng / Tồn Kho': 'Tồn 120 cuộn',
+        'Nhân Viên Chụp Ảnh': 'Lê Vũ Tường',
+        'Ghi Chú Vị Trí': 'Nằm ở đầu kệ A1 dán niêm phong',
+        'Link Ảnh Hoặc Base64': ''
+      },
+      {
+        'Mã Vị Trí (*)': 'LOC-2026-0002',
+        'Tên Bao Bì / Hàng Hóa (*)': 'Bao Bột Mì Táo Đỏ 25kg',
+        'Kho / Khu Vực (*)': 'Kho Nguyên Liệu Khô',
+        'Dãy / Kệ (*)': 'Dãy B - Kệ K05',
+        'Tầng / Ô Vị Trí (*)': 'Tầng Sàn - Vị Trí 02',
+        'Số Lượng / Tồn Kho': 'Tồn 85 bao',
+        'Nhân Viên Chụp Ảnh': 'Nguyễn Văn Hùng',
+        'Ghi Chú Vị Trí': 'Góc lối đi chính',
+        'Link Ảnh Hoặc Base64': ''
+      }
+    ];
+
+    const worksheet = XLSX.utils.json_to_sheet(templateData);
+    const workbook = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(workbook, worksheet, 'ViTriKho');
+    XLSX.writeFile(workbook, 'Mau_Nhap_Vi_Tri_Kho_Hinh_Anh.xlsx');
+  }
+
+  // Process Excel File with Embedded Images (JSZip + SheetJS)
+  async function parseAndImportExcelFile(file) {
+    if (typeof XLSX === 'undefined' || typeof JSZip === 'undefined') {
+      throw new Error('Thư viện Excel / JSZip chưa sẵn sàng. Vui lòng kiểm tra kết nối mạng!');
+    }
+
+    const arrayBuffer = await file.arrayBuffer();
+
+    // 1. Read SheetJS Workbook
+    const workbook = XLSX.read(arrayBuffer, { type: 'array' });
+    const firstSheetName = workbook.SheetNames[0];
+    const worksheet = workbook.Sheets[firstSheetName];
+    const rawRows = XLSX.utils.sheet_to_json(worksheet, { defval: '' });
+
+    if (rawRows.length === 0) {
+      throw new Error('File Excel rỗng hoặc không có dữ liệu hàng!');
+    }
+
+    // 2. Extract Embedded Images from XLSX Zip Package via JSZip
+    const extractedPhotos = [];
+    try {
+      const zip = await JSZip.loadAsync(arrayBuffer);
+      const mediaFiles = Object.keys(zip.files).filter(fileName => fileName.startsWith('xl/media/'));
+
+      // Sort media files numerically image1.png, image2.jpeg...
+      mediaFiles.sort((a, b) => {
+        const numA = parseInt(a.replace(/[^0-9]/g, '')) || 0;
+        const numB = parseInt(b.replace(/[^0-9]/g, '')) || 0;
+        return numA - numB;
+      });
+
+      for (const fileName of mediaFiles) {
+        const zipFile = zip.files[fileName];
+        const base64Data = await zipFile.async('base64');
+        const mimeType = fileName.endsWith('.png') ? 'image/png' : 'image/jpeg';
+        const fullDataUrl = `data:${mimeType};base64,${base64Data}`;
+        
+        // Auto compress image
+        const compressed = await compressImage(fullDataUrl, 800, 0.75);
+        extractedPhotos.push(compressed);
+      }
+    } catch (zipErr) {
+      console.warn('[ExcelZip] No embedded images found or zip extraction warning:', zipErr);
+    }
+
+    // 3. Map Rows to Location Items
+    const now = new Date();
+    const dateStr = `${now.getFullYear()}-${String(now.getMonth()+1).padStart(2,'0')}-${String(now.getDate()).padStart(2,'0')} ${String(now.getHours()).padStart(2,'0')}:${String(now.getMinutes()).padStart(2,'0')}`;
+    
+    const defaultPhotos = [samplePhotoBaoBi, samplePhotoNguyenLieu, samplePhotoPhuGia];
+    const newItems = [];
+
+    rawRows.forEach((row, index) => {
+      // Find matching keys flexible
+      const skuName = row['Tên Bao Bì / Hàng Hóa (*)'] || row['Tên Hàng Hóa'] || row['Tên Bao Bì'] || row['SKU'] || row['Item'] || `Hàng Hóa #${index + 1}`;
+      const warehouse = row['Kho / Khu Vực (*)'] || row['Kho'] || row['Warehouse'] || 'Kho Tổng';
+      const rack = row['Dãy / Kệ (*)'] || row['Dãy Kệ'] || row['Kệ'] || row['Rack'] || 'Dãy A';
+      const tier = row['Tầng / Ô Vị Trí (*)'] || row['Tầng Ô'] || row['Tầng'] || row['Tier'] || 'Tầng 1';
+      const qtyNote = row['Số Lượng / Tồn Kho'] || row['Tồn Kho'] || row['Số Lượng'] || '';
+      const staffName = row['Nhân Viên Chụp Ảnh'] || row['Nhân Viên'] || row['Staff'] || 'Cán Bộ Kho';
+      const note = row['Ghi Chú Vị Trí'] || row['Ghi Chú'] || row['Note'] || '';
+      let photoBase64 = row['Link Ảnh Hoặc Base64'] || row['Image'] || row['Photo'] || '';
+
+      // If no photo URL in cell, fallback to extracted embedded zip photo or sample photo
+      if (!photoBase64 || !photoBase64.startsWith('data:image')) {
+        if (extractedPhotos[index]) {
+          photoBase64 = extractedPhotos[index];
+        } else {
+          photoBase64 = defaultPhotos[index % defaultPhotos.length];
+        }
+      }
+
+      const id = row['Mã Vị Trí (*)'] || row['Mã Vị Trí'] || `LOC-XL-${Date.now().toString().slice(-4)}-${index + 1}`;
+
+      newItems.push({
+        id: String(id).trim(),
+        warehouse: String(warehouse).trim(),
+        rack: String(rack).trim(),
+        tier: String(tier).trim(),
+        skuName: String(skuName).trim(),
+        qtyNote: String(qtyNote).trim(),
+        staffName: String(staffName).trim(),
+        updatedAt: dateStr,
+        photoBase64,
+        note: String(note).trim()
+      });
+    });
+
+    // Merge and save safely
+    const currentList = getLocations();
+    const existingMap = new Map(currentList.map(item => [item.id, item]));
+    newItems.forEach(item => existingMap.set(item.id, item));
+
+    const mergedList = Array.from(existingMap.values());
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(mergedList));
+
+    return {
+      totalRows: newItems.length,
+      extractedPhotosCount: extractedPhotos.length
+    };
   }
 
   function getUniqueWarehouses() {
@@ -156,7 +296,6 @@ window.VisualBinStorage = (function () {
     ));
   }
 
-  // Appends 1,000 sample records to existing user data without deleting real photos
   function generate1000SampleRecords() {
     const currentList = getLocations();
     const warehouses = ['Kho Bao Bì LC01', 'Kho Nguyên Liệu Khô', 'Kho Phụ Gia & Hương Liệu', 'Kho Vật Tư Tổng A'];
@@ -195,6 +334,8 @@ window.VisualBinStorage = (function () {
     compressImage,
     exportBackupJSON,
     importBackupJSON,
+    downloadExcelTemplate,
+    parseAndImportExcelFile,
     getUniqueWarehouses,
     getUniqueRacks,
     getUniqueTiers,

@@ -9,6 +9,10 @@
   <script src="https://cdn.tailwindcss.com"></script>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   
+  <!-- SheetJS & JSZip for Excel Import with Embedded Photos -->
+  <script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/jszip@3.10.1/dist/jszip.min.js"></script>
+
   <!-- Google Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -115,7 +119,7 @@
           <h1 class="text-base sm:text-lg font-black text-slate-950 font-heading leading-tight">Visual Photo Bin Finder & Location Manager</h1>
           <span class="bg-emerald-100 text-emerald-900 text-[10px] font-black px-2 py-0.5 rounded-full border border-emerald-300">File HTML Offline 1-Chạm</span>
         </div>
-        <p class="text-[11px] text-blue-700 font-extrabold">Tra Cứu Vị Trí Kho Bằng Hình Ảnh - Bảo Vệ Dữ Liệu Vĩnh Viễn & Nạp Backup 1-Click</p>
+        <p class="text-[11px] text-blue-700 font-extrabold">Tra Cứu Vị Trí Kho Bằng Hình Ảnh - Nạp Excel Có Ảnh 1-Click & Sao Lưu Vĩnh Viễn</p>
       </div>
     </div>
 
@@ -168,9 +172,9 @@
     <!-- Pane 1: Photo Grid Search -->
     <div class="tab-pane active" id="pane-grid">
       
-      <!-- Multi-Dimensional Dynamic Filter & Backup Toolbar -->
+      <!-- Multi-Dimensional Dynamic Filter & Excel/Backup Toolbar -->
       <div class="glass-card p-4.5 rounded-2xl mb-6 space-y-3">
-        <div class="flex flex-col sm:flex-row gap-2 justify-between">
+        <div class="flex flex-col lg:flex-row gap-2 justify-between">
           <div class="flex flex-1 gap-2">
             <input type="text" id="search-input" placeholder="Gõ tên bao bì, mã hàng, dãy A, kệ K01, ô tầng..." class="flex-1 bg-white border-2 border-slate-300 rounded-xl px-4 py-2.5 text-xs text-slate-950 outline-none focus:border-blue-600 font-bold shadow-xs">
             <button id="btn-reset-filters" class="bg-slate-200 hover:bg-slate-300 text-slate-900 text-xs font-black px-4 py-2.5 rounded-xl border border-slate-300">
@@ -178,12 +182,18 @@
             </button>
           </div>
 
-          <div class="flex gap-2 justify-end">
-            <button class="bg-emerald-700 hover:bg-emerald-800 text-white font-black text-xs px-3.5 py-2.5 rounded-xl shadow-sm flex items-center gap-1.5" id="btn-export-backup" title="Tải file Sao Lưu Backup về cất giữ vĩnh viễn">
-              📥 Xuất File Backup (.json)
+          <div class="flex flex-wrap gap-2 justify-end">
+            <button class="bg-emerald-700 hover:bg-emerald-800 text-white font-black text-xs px-3.5 py-2.5 rounded-xl shadow-sm flex items-center gap-1.5" id="btn-trigger-import-excel" title="Upload file Excel đính kèm hình ảnh để nạp dữ liệu siêu nhanh">
+              📊 Nạp Excel Có Ảnh (.xlsx)
             </button>
-            <button class="bg-blue-700 hover:bg-blue-800 text-white font-black text-xs px-3.5 py-2.5 rounded-xl shadow-sm flex items-center gap-1.5" id="btn-trigger-import-backup" title="Nạp lại file Sao Lưu Backup">
-              📤 Nạp Phục Hồi
+            <button class="bg-slate-700 hover:bg-slate-800 text-white font-black text-xs px-3 py-2.5 rounded-xl shadow-sm flex items-center gap-1" id="btn-download-excel-template" title="Tải mẫu File Excel chuẩn">
+              📥 Mẫu Excel
+            </button>
+            <button class="bg-blue-700 hover:bg-blue-800 text-white font-black text-xs px-3.5 py-2.5 rounded-xl shadow-sm flex items-center gap-1.5" id="btn-export-backup" title="Tải file Sao Lưu Backup về cất giữ vĩnh viễn">
+              💾 Backup (.json)
+            </button>
+            <button class="bg-indigo-700 hover:bg-indigo-800 text-white font-black text-xs px-3.5 py-2.5 rounded-xl shadow-sm flex items-center gap-1.5" id="btn-trigger-import-backup" title="Nạp lại file Sao Lưu Backup">
+              📤 Phục Hồi
             </button>
           </div>
         </div>
@@ -215,6 +225,7 @@
           </button>
         </div>
 
+        <input type="file" id="file-excel-input" accept=".xlsx, .xls" style="display:none;" />
         <input type="file" id="file-backup-input" accept=".json" style="display:none;" />
       </div>
 
@@ -313,18 +324,18 @@
     <div class="tab-pane hidden" id="pane-guide">
       <div class="max-w-4xl mx-auto space-y-6">
         <div class="bg-gradient-to-r from-blue-700 to-indigo-900 rounded-3xl p-6 text-white shadow-xl">
-          <h2 class="text-2xl font-black font-heading mb-2">📖 Hướng Dẫn Sử Dụng & Bảo Vệ Dữ Liệu Vĩnh Viễn</h2>
+          <h2 class="text-2xl font-black font-heading mb-2">📖 Hướng Dẫn Nạp File Excel Có Ảnh Đính Kèm</h2>
           <p class="text-xs text-blue-100 font-bold leading-relaxed">
-            Áp dụng cho bao bì, nguyên liệu khô, cuộn nilon, thùng phụ gia chưa kịp dán mã QR. Hệ thống hỗ trợ sao lưu file Backup .JSON để bảo vệ dữ liệu vĩnh viễn không bao giờ sợ mất!
+            Hỗ trợ nạp hàng trăm tới hàng ngàn vị trí bao bì / nguyên liệu trực tiếp từ File Excel (.xlsx) có chèn hình ảnh 1-Click!
           </p>
         </div>
 
         <div class="glass-card p-6 rounded-3xl space-y-4">
           <div class="flex items-center gap-3 border-b border-slate-200 pb-3">
-            <span class="text-2xl">📥</span>
+            <span class="text-2xl">📊</span>
             <div>
-              <h3 class="text-base font-black text-slate-950 font-heading">PHẦN 1: Sao Lưu Backup Dữ Liệu Vĩnh Viễn Về Máy Tính / Điện Thoại</h3>
-              <p class="text-xs text-slate-600 font-bold">Giúp bảo vệ 100% hình ảnh và vị trí kho khỏi bị mất khi đổi máy hoặc xóa lịch sử duyệt web</p>
+              <h3 class="text-base font-black text-slate-950 font-heading">PHẦN 1: Hướng Dẫn Upload File Excel Nạp Vị Trí Siêu Tốc</h3>
+              <p class="text-xs text-slate-600 font-bold">Tiết kiệm 99% thời gian nhập liệu thủ công bằng cách import từ Excel</p>
             </div>
           </div>
 
@@ -332,16 +343,24 @@
             <div class="flex gap-3 items-start">
               <div class="step-number">1</div>
               <div>
-                <strong class="text-slate-950 text-sm">Bước 1: Bấm nút "📥 Xuất File Backup (.json)"</strong>
-                <p class="text-slate-600 font-semibold mt-0.5">Bấm nút màu xanh lá trên thanh công cụ. Một file backup chứa toàn bộ ảnh và vị trí sẽ được tải về máy.</p>
+                <strong class="text-slate-950 text-sm">Bước 1: Bấm nút "📥 Mẫu Excel" để tải file mẫu chuẩn</strong>
+                <p class="text-slate-600 font-semibold mt-0.5">File Excel mẫu đã có sẵn các cột chuẩn: Mã Vị Trí, Tên Hàng Hóa, Kho, Dãy/Kệ, Tầng/Ô, Tồn Kho, Ghi Chú.</p>
               </div>
             </div>
 
             <div class="flex gap-3 items-start">
               <div class="step-number">2</div>
               <div>
-                <strong class="text-slate-950 text-sm">Bước 2: Cất giữ file Backup trên Google Drive, USB hoặc Zalo</strong>
-                <p class="text-slate-600 font-semibold mt-0.5">Khi sang thiết bị mới hoặc máy tính khác, bấm <span class="bg-blue-700 text-white px-2 py-0.5 rounded font-bold">📤 Nạp Phục Hồi</span> để nạp lại 100% dữ liệu cũ trong 1 giây!</p>
+                <strong class="text-slate-950 text-sm">Bước 2: Điền dữ liệu & Chèn hình ảnh trực tiếp vào dòng Excel</strong>
+                <p class="text-slate-600 font-semibold mt-0.5">Bạn có thể chèn ảnh vào file Excel hoặc dán đường dẫn/DataURL ảnh vào cột hình ảnh.</p>
+              </div>
+            </div>
+
+            <div class="flex gap-3 items-start">
+              <div class="step-number">3</div>
+              <div>
+                <strong class="text-slate-950 text-sm">Bước 3: Bấm nút "📊 Nạp Excel Có Ảnh (.xlsx)" để Upload</strong>
+                <p class="text-slate-600 font-semibold mt-0.5">Hệ thống sẽ tự động bóc tách toàn bộ dữ liệu & trích xuất hình ảnh nén đưa vào ứng dụng trong 1 giây!</p>
               </div>
             </div>
           </div>
@@ -450,6 +469,74 @@
       const mergedList = Array.from(existingMap.values());
       localStorage.setItem(STORAGE_KEY, JSON.stringify(mergedList));
       return importedCount;
+    }
+
+    function downloadExcelTemplate() {
+      if (typeof XLSX === 'undefined') return alert('Đang tải thư viện Excel...');
+      const templateData = [{
+        'Mã Vị Trí (*)': 'LOC-2026-0001',
+        'Tên Bao Bì / Hàng Hóa (*)': 'Cuộn Màng Co PE 50cm',
+        'Kho / Khu Vực (*)': 'Kho Bao Bì LC01',
+        'Dãy / Kệ (*)': 'Dãy A - Kệ 01',
+        'Tầng / Ô Vị Trí (*)': 'Tầng 2 - Ô 04',
+        'Số Lượng / Tồn Kho': 'Tồn 120 cuộn',
+        'Nhân Viên Chụp Ảnh': 'Lê Vũ Tường',
+        'Ghi Chú Vị Trí': 'Nằm ở đầu kệ A1 dán niêm phong',
+        'Link Ảnh Hoặc Base64': ''
+      }];
+      const worksheet = XLSX.utils.json_to_sheet(templateData);
+      const workbook = XLSX.utils.book_new();
+      XLSX.utils.book_append_sheet(workbook, worksheet, 'ViTriKho');
+      XLSX.writeFile(workbook, 'Mau_Nhap_Vi_Tri_Kho_Hinh_Anh.xlsx');
+    }
+
+    async function parseAndImportExcelFile(file) {
+      if (typeof XLSX === 'undefined' || typeof JSZip === 'undefined') throw new Error('Thư viện Excel / JSZip chưa sẵn sàng!');
+      const arrayBuffer = await file.arrayBuffer();
+      const workbook = XLSX.read(arrayBuffer, { type: 'array' });
+      const worksheet = workbook.Sheets[workbook.SheetNames[0]];
+      const rawRows = XLSX.utils.sheet_to_json(worksheet, { defval: '' });
+      if (rawRows.length === 0) throw new Error('File Excel rỗng!');
+
+      const extractedPhotos = [];
+      try {
+        const zip = await JSZip.loadAsync(arrayBuffer);
+        const mediaFiles = Object.keys(zip.files).filter(f => f.startsWith('xl/media/'));
+        mediaFiles.sort((a, b) => (parseInt(a.replace(/[^0-9]/g, '')) || 0) - (parseInt(b.replace(/[^0-9]/g, '')) || 0));
+        for (const fileName of mediaFiles) {
+          const base64Data = await zip.files[fileName].async('base64');
+          const mime = fileName.endsWith('.png') ? 'image/png' : 'image/jpeg';
+          const compressed = await compressImage(`data:${mime};base64,${base64Data}`, 800, 0.75);
+          extractedPhotos.push(compressed);
+        }
+      } catch (err) {}
+
+      const now = new Date();
+      const dateStr = `${now.getFullYear()}-${String(now.getMonth()+1).padStart(2,'0')}-${String(now.getDate()).padStart(2,'0')} ${String(now.getHours()).padStart(2,'0')}:${String(now.getMinutes()).padStart(2,'0')}`;
+      const defaultPhotos = [samplePhotoBaoBi, samplePhotoNguyenLieu, samplePhotoPhuGia];
+      const newItems = [];
+
+      rawRows.forEach((row, idx) => {
+        const skuName = row['Tên Bao Bì / Hàng Hóa (*)'] || row['Tên Hàng Hóa'] || `Hàng Hóa #${idx + 1}`;
+        const warehouse = row['Kho / Khu Vực (*)'] || row['Kho'] || 'Kho Tổng';
+        const rack = row['Dãy / Kệ (*)'] || row['Kệ'] || 'Dãy A';
+        const tier = row['Tầng / Ô Vị Trí (*)'] || row['Tầng'] || 'Tầng 1';
+        const qtyNote = row['Số Lượng / Tồn Kho'] || row['Tồn Kho'] || '';
+        const staffName = row['Nhân Viên Chụp Ảnh'] || row['Nhân Viên'] || 'Kho';
+        const note = row['Ghi Chú Vị Trí'] || row['Ghi Chú'] || '';
+        let photoBase64 = row['Link Ảnh Hoặc Base64'] || '';
+        if (!photoBase64 || !photoBase64.startsWith('data:image')) {
+          photoBase64 = extractedPhotos[idx] || defaultPhotos[idx % defaultPhotos.length];
+        }
+        const id = row['Mã Vị Trí (*)'] || row['Mã Vị Trí'] || `LOC-XL-${Date.now().toString().slice(-4)}-${idx + 1}`;
+        newItems.push({ id, warehouse, rack, tier, skuName, qtyNote, staffName, updatedAt: dateStr, photoBase64, note });
+      });
+
+      const currentList = getLocations();
+      const existingMap = new Map(currentList.map(item => [item.id, item]));
+      newItems.forEach(item => existingMap.set(item.id, item));
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(Array.from(existingMap.values())));
+      return { totalRows: newItems.length, extractedPhotosCount: extractedPhotos.length };
     }
 
     function getUniqueWarehouses() { return Array.from(new Set(getLocations().map(l => l.warehouse).filter(Boolean))).sort(); }
@@ -562,6 +649,24 @@
         saveNewLocation();
       });
 
+      document.getElementById('btn-download-excel-template')?.addEventListener('click', downloadExcelTemplate);
+
+      document.getElementById('btn-trigger-import-excel')?.addEventListener('click', () => {
+        document.getElementById('file-excel-input').click();
+      });
+
+      document.getElementById('file-excel-input')?.addEventListener('change', async (e) => {
+        const file = e.target.files[0];
+        if (!file) return;
+        try {
+          const res = await parseAndImportExcelFile(file);
+          populateDynamicFilters();
+          currentPage = 1;
+          renderLocationGrid();
+          alert(`⚡ NẠP EXCEL THÀNH CÔNG!\n\n• Tổng số vị trí nạp: ${res.totalRows} món\n• Trích xuất ảnh đính kèm: ${res.extractedPhotosCount} bức ảnh`);
+        } catch (err) { alert(`Lỗi đọc Excel: ${err.message}`); }
+      });
+
       document.getElementById('btn-export-backup')?.addEventListener('click', () => {
         exportBackupJSON();
         alert('✓ Đã xuất file Sao Lưu Vĩnh Viễn (.json) thành công!');
@@ -593,7 +698,7 @@
         populateDynamicFilters();
         currentPage = 1;
         renderLocationGrid();
-        alert('✓ Đã nạp nối tiếp 1.000 vị trí mẫu (Dữ liệu thật của anh được bảo vệ 100%)!');
+        alert('✓ Đã nạp nối tiếp 1.000 vị trí mẫu!');
       });
 
       document.getElementById('btn-wipe-data')?.addEventListener('click', () => {
@@ -685,13 +790,11 @@
       container.innerHTML = pageLocations.map(item => `
         <div class="photo-card flex flex-col justify-between">
           <div>
-            <!-- Clean photo box without overlay text -->
             <div class="relative cursor-pointer overflow-hidden group" onclick="openZoomPhotoModal('${item.id}')" title="Bấm để phóng to hình ảnh">
               <img src="${item.photoBase64}" alt="${item.skuName}" class="w-full h-[200px] object-cover bg-slate-900 group-hover:scale-105 transition duration-300" />
               <span class="absolute top-2.5 right-2.5 bg-slate-950/90 text-amber-400 text-[10px] font-black px-2.5 py-0.5 rounded-full border border-amber-500 shadow-md">${item.id}</span>
             </div>
 
-            <!-- Compact Bold Typography -->
             <div class="p-3 space-y-2">
               <div class="flex items-center gap-1.5 flex-wrap">
                 <span class="tag-badge tag-warehouse">${item.warehouse}</span>

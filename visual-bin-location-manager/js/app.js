@@ -1,6 +1,7 @@
 /**
  * Visual Photo Bin Finder & Warehouse Location Manager - Main Application Controller
- * Clean Photo Cards (No Text Overlay), Compact Bold Typography, 3,000+ Photos Pagination.
+ * Clean Photo Cards (No Text Overlay), Compact Bold Typography, 3,000+ Photos Pagination,
+ * Fast Excel Import with Embedded Photos & 1-Click Excel Template.
  */
 
 let currentCompressedPhoto = null;
@@ -9,7 +10,7 @@ const pageSize = 24;
 let currentFilteredLocations = [];
 
 document.addEventListener('DOMContentLoaded', () => {
-  console.log('[VisualBinApp] Initializing Clean Typography Location Manager...');
+  console.log('[VisualBinApp] Initializing Excel & Data Safe Location Manager...');
 
   // 1. Populate Cascading Dynamic Filters
   populateDynamicFilters();
@@ -113,6 +114,17 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 
   document.getElementById('file-backup-input')?.addEventListener('change', handleImportBackup);
+
+  // Excel Upload & Template Listeners
+  document.getElementById('btn-download-excel-template')?.addEventListener('click', () => {
+    VisualBinStorage.downloadExcelTemplate();
+  });
+
+  document.getElementById('btn-trigger-import-excel')?.addEventListener('click', () => {
+    document.getElementById('file-excel-input').click();
+  });
+
+  document.getElementById('file-excel-input')?.addEventListener('change', handleImportExcel);
 
   // Pagination Toolbar
   document.getElementById('btn-prev-page')?.addEventListener('click', () => {
@@ -301,6 +313,22 @@ function saveNewLocation() {
   document.getElementById('pane-grid').classList.add('active');
 
   alert(`✓ Đã lưu vị trí ảnh cho "${skuName}" (${newItem.id}) an toàn vĩnh viễn!`);
+}
+
+async function handleImportExcel(e) {
+  const file = e.target.files[0];
+  if (!file) return;
+
+  try {
+    const result = await VisualBinStorage.parseAndImportExcelFile(file);
+    populateDynamicFilters();
+    currentPage = 1;
+    renderLocationGrid();
+    alert(`⚡ NẠP EXCEL THÀNH CÔNG!\n\n• Tổng số dòng vị trí nạp: ${result.totalRows.toLocaleString()} món\n• Trích xuất ảnh đính kèm: ${result.extractedPhotosCount.toLocaleString()} bức ảnh\n\nToàn bộ dữ liệu đã được bảo lưu an toàn 100%!`);
+  } catch (err) {
+    console.error('[ExcelImport] Error:', err);
+    alert(`Lỗi đọc file Excel: ${err.message}`);
+  }
 }
 
 function handleImportBackup(e) {
