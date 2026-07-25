@@ -1,0 +1,1322 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+  <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+  <meta http-equiv="Pragma" content="no-cache">
+  <meta http-equiv="Expires" content="0">
+  <meta name="description" content="Bản đồ ảnh nhà máy - Hướng dẫn đường đi bằng hình ảnh thực tế cho công nhân và khách tham quan">
+  <title>🏭 Visual Factory Guide - Bản Đồ Ảnh Nhà Máy</title>
+
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" crossorigin="anonymous">
+  <script src="https://cdn.jsdelivr.net/npm/qrcode@1.5.3/build/qrcode.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/jszip@3.10.1/dist/jszip.min.js"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800;900&family=Outfit:wght@700;800;900&display=swap" rel="stylesheet">
+
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: 'Inter', system-ui, sans-serif;
+      background: #f0f4f8;
+      color: #0f172a;
+      min-height: 100vh;
+    }
+    .font-heading { font-family: 'Outfit', sans-serif; }
+
+    /* ── Tabs ── */
+    .tab-pane { display: none !important; }
+    .tab-pane.active { display: block !important; }
+    .tab-btn { transition: all 0.2s; white-space: nowrap; }
+    .tab-btn.active { background: #1e3a8a !important; color: #fff !important; box-shadow: 0 4px 14px rgba(30,58,138,0.4); }
+
+    /* ── Cards ── */
+    .glass-card { background:#fff; border:1.5px solid #cbd5e1; border-radius:18px; box-shadow:0 3px 16px rgba(15,23,42,0.07); }
+    .loc-card { background:#fff; border:2px solid #e2e8f0; border-radius:16px; overflow:hidden; transition:transform 0.2s,box-shadow 0.2s,border-color 0.2s; }
+    .loc-card:hover { transform:translateY(-3px); box-shadow:0 12px 28px rgba(30,58,138,0.14); border-color:#3b82f6; }
+
+    /* ── Badges ── */
+    .badge { display:inline-flex; align-items:center; gap:3px; padding:3px 10px; border-radius:10px; font-size:11px; font-weight:800; }
+    .badge-blue   { background:#1e40af; color:#fff; }
+    .badge-orange { background:#c2410c; color:#fff; }
+    .badge-green  { background:#15803d; color:#fff; }
+    .badge-slate  { background:#334155; color:#fff; }
+
+    /* ── Location Type Pills ── */
+    .type-pill { display:inline-flex; align-items:center; gap:4px; padding:4px 12px; border-radius:20px; font-size:11px; font-weight:800; border:2px solid; }
+    .type-workshop  { background:#eff6ff; color:#1d4ed8; border-color:#bfdbfe; }
+    .type-office    { background:#f0fdf4; color:#15803d; border-color:#bbf7d0; }
+    .type-canteen   { background:#fff7ed; color:#c2410c; border-color:#fed7aa; }
+    .type-restroom  { background:#fdf4ff; color:#7e22ce; border-color:#e9d5ff; }
+    .type-parking   { background:#f8fafc; color:#475569; border-color:#cbd5e1; }
+    .type-gate      { background:#fef2f2; color:#dc2626; border-color:#fecaca; }
+    .type-medical   { background:#fff1f2; color:#be123c; border-color:#fecdd3; }
+    .type-other     { background:#fafaf9; color:#57534e; border-color:#d6d3d1; }
+
+    /* ── Modal ── */
+    .modal-overlay { display:none; position:fixed; inset:0; background:rgba(2,6,23,0.88); backdrop-filter:blur(10px); z-index:9999; align-items:center; justify-content:center; padding:1rem; }
+    .modal-overlay.active { display:flex; }
+
+    /* ── Route Step Navigator ── */
+    .step-photo { width:100%; height:260px; object-fit:cover; border-radius:16px; background:#1e293b; }
+    .step-nav-btn { width:52px; height:52px; border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:1.3rem; font-weight:900; border:none; cursor:pointer; transition:all 0.2s; flex-shrink:0; }
+
+    /* ── QR Print ── */
+    @media print {
+      body * { visibility:hidden; }
+      #print-zone, #print-zone * { visibility:visible; }
+      #print-zone { position:fixed; inset:0; display:flex; flex-wrap:wrap; align-content:flex-start; gap:16px; padding:16px; background:#fff; }
+    }
+
+    /* ── Pulse animation ── */
+    @keyframes pulse-glow { 0%,100%{box-shadow:0 0 0 0 rgba(234,88,12,0.45);} 50%{box-shadow:0 0 0 10px rgba(234,88,12,0);} }
+    .pulse-orange { animation:pulse-glow 2s infinite; }
+
+    /* ── Step circle ── */
+    .step-circle { width:32px; height:32px; border-radius:50%; background:#1e3a8a; color:#fff; display:flex; align-items:center; justify-content:center; font-weight:900; font-size:15px; flex-shrink:0; }
+
+    /* ── Progress bar ── */
+    .progress-bar { height:6px; background:#e2e8f0; border-radius:6px; overflow:hidden; }
+    .progress-fill { height:100%; background:linear-gradient(90deg,#1e3a8a,#ea580c); border-radius:6px; transition:width 0.4s ease; }
+
+    ::-webkit-scrollbar { width:5px; } ::-webkit-scrollbar-track { background:#f1f5f9; } ::-webkit-scrollbar-thumb { background:#94a3b8; border-radius:4px; }
+  </style>
+</head>
+<body>
+
+<!-- ═══════════════════════════════════════════════════════
+     HEADER
+═══════════════════════════════════════════════════════ -->
+<header class="sticky top-0 z-50 shadow-md" style="background:linear-gradient(135deg,#1e3a8a 0%,#1e40af 60%,#1d4ed8 100%);">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 py-3 flex items-center justify-between gap-3">
+    <div class="flex items-center gap-3">
+      <div class="w-10 h-10 bg-orange-500 rounded-xl flex items-center justify-center text-white text-xl font-black shadow-lg flex-shrink-0">🏭</div>
+      <div>
+        <h1 class="font-heading text-base sm:text-lg font-black text-white leading-tight">Visual Factory Guide</h1>
+        <p class="text-[10px] text-blue-200 font-bold">Bản Đồ Ảnh Nhà Máy • Hướng Dẫn Đường Đi • QR Code</p>
+      </div>
+    </div>
+    <!-- KPIs -->
+    <div class="hidden sm:flex items-center gap-4 text-white text-[11px] font-black">
+      <div class="text-center"><div class="text-lg font-black" id="hdr-loc-count">0</div><div class="text-blue-300 uppercase">Địa Điểm</div></div>
+      <div class="w-px h-8 bg-blue-500"></div>
+      <div class="text-center"><div class="text-lg font-black" id="hdr-route-count">0</div><div class="text-blue-300 uppercase">Lộ Trình</div></div>
+    </div>
+  </div>
+
+  <!-- Tab bar -->
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 pb-3">
+    <div class="flex gap-1.5 overflow-x-auto pb-0.5" style="scrollbar-width:none">
+      <button class="tab-btn active px-3 py-2 rounded-xl text-[11px] font-black text-blue-200 bg-white/10 flex items-center gap-1.5 flex-shrink-0" data-tab="tab-explore">🗺️ Khám Phá</button>
+      <button class="tab-btn px-3 py-2 rounded-xl text-[11px] font-black text-blue-200 bg-white/10 flex items-center gap-1.5 flex-shrink-0" data-tab="tab-route">🧭 Tìm Đường</button>
+      <button class="tab-btn px-3 py-2 rounded-xl text-[11px] font-black text-blue-200 bg-white/10 flex items-center gap-1.5 flex-shrink-0" data-tab="tab-add-loc">➕ Thêm Địa Điểm</button>
+      <button class="tab-btn px-3 py-2 rounded-xl text-[11px] font-black text-blue-200 bg-white/10 flex items-center gap-1.5 flex-shrink-0" data-tab="tab-add-route">🛣️ Tạo Lộ Trình</button>
+      <button class="tab-btn px-3 py-2 rounded-xl text-[11px] font-black text-blue-200 bg-white/10 flex items-center gap-1.5 flex-shrink-0 pulse-orange" data-tab="tab-qr">📱 QR Code</button>
+    </div>
+  </div>
+</header>
+
+<!-- ═══════════════════════════════════════════════════════
+     MAIN
+═══════════════════════════════════════════════════════ -->
+<main class="max-w-7xl mx-auto px-4 sm:px-6 py-5 flex-1">
+
+  <!-- ══════════════════════════════════
+       TAB 1: KHÁM PHÁ ĐỊA ĐIỂM
+  ══════════════════════════════════ -->
+  <div id="tab-explore" class="tab-pane active space-y-4">
+
+    <!-- Excel Import Banner -->
+    <div class="p-4 rounded-2xl text-white shadow-lg border-2 border-orange-400" style="background:linear-gradient(135deg,#7c2d12,#9a3412,#1e3a8a)">
+      <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
+        <div class="flex items-center gap-3">
+          <div class="w-10 h-10 bg-orange-400 rounded-xl flex items-center justify-center text-xl font-black text-slate-900 flex-shrink-0">📊</div>
+          <div>
+            <div class="font-heading font-black text-sm text-white">Nạp Địa Điểm Từ Excel + Ảnh Siêu Tốc</div>
+            <div class="text-[11px] text-orange-200 font-bold">Upload file .xlsx có ảnh đính kèm — tự động bóc tách 1-Click!</div>
+          </div>
+        </div>
+        <div class="flex flex-wrap gap-2">
+          <button id="btn-upload-excel" class="bg-orange-400 hover:bg-orange-300 text-slate-900 font-black text-[11px] px-3 py-2.5 rounded-xl flex items-center gap-1.5 transition">
+            <i class="fa-solid fa-file-excel"></i> UPLOAD EXCEL
+          </button>
+          <button id="btn-excel-template" class="bg-blue-600 hover:bg-blue-500 text-white font-black text-[11px] px-3 py-2.5 rounded-xl flex items-center gap-1.5 transition">
+            <i class="fa-solid fa-download"></i> Tải Mẫu Excel
+          </button>
+          <button id="btn-backup-loc" class="bg-slate-700 hover:bg-slate-600 text-amber-300 font-black text-[11px] px-3 py-2.5 rounded-xl flex items-center gap-1.5 transition">
+            <i class="fa-solid fa-box-archive"></i> Backup
+          </button>
+          <button id="btn-restore-loc" class="bg-indigo-700 hover:bg-indigo-600 text-white font-black text-[11px] px-3 py-2.5 rounded-xl flex items-center gap-1.5 transition">
+            <i class="fa-solid fa-upload"></i> Phục Hồi
+          </button>
+        </div>
+      </div>
+      <input type="file" id="file-excel" accept=".xlsx,.xls" class="hidden">
+      <input type="file" id="file-backup-loc" accept=".json" class="hidden">
+    </div>
+
+    <!-- Filters -->
+    <div class="glass-card p-4 space-y-3">
+      <div class="flex gap-2">
+        <input type="text" id="search-loc" placeholder="🔍 Tìm tên địa điểm, phân xưởng, khu vực..." class="flex-1 border-2 border-slate-300 rounded-xl px-4 py-2.5 text-[12px] font-bold outline-none focus:border-blue-600 bg-white">
+        <button id="btn-clear-loc" class="bg-slate-200 hover:bg-slate-300 text-slate-900 font-black text-[11px] px-4 py-2.5 rounded-xl border border-slate-300 transition">Xóa Lọc</button>
+      </div>
+      <div class="grid grid-cols-2 sm:grid-cols-4 gap-2">
+        <select id="f-zone" class="border-2 border-slate-300 rounded-xl px-3 py-2 text-[11px] font-black text-blue-900 outline-none focus:border-blue-600 bg-white">
+          <option value="ALL">🏢 Tất Cả Khu</option>
+        </select>
+        <select id="f-building" class="border-2 border-slate-300 rounded-xl px-3 py-2 text-[11px] font-black text-emerald-900 outline-none focus:border-blue-600 bg-white">
+          <option value="ALL">🏗️ Tất Cả Tòa Nhà</option>
+        </select>
+        <select id="f-type" class="border-2 border-slate-300 rounded-xl px-3 py-2 text-[11px] font-black text-orange-900 outline-none focus:border-blue-600 bg-white">
+          <option value="ALL">📌 Tất Cả Loại</option>
+          <option value="workshop">🔧 Phân Xưởng</option>
+          <option value="office">🏢 Văn Phòng</option>
+          <option value="canteen">🍽️ Nhà Ăn / Căng Tin</option>
+          <option value="restroom">🚻 Nhà Vệ Sinh</option>
+          <option value="parking">🅿️ Bãi Đỗ Xe</option>
+          <option value="gate">🚪 Cổng Ra Vào</option>
+          <option value="medical">🏥 Y Tế / Sơ Cứu</option>
+          <option value="other">📍 Khác</option>
+        </select>
+        <select id="f-floor" class="border-2 border-slate-300 rounded-xl px-3 py-2 text-[11px] font-black text-slate-900 outline-none focus:border-blue-600 bg-white">
+          <option value="ALL">📐 Tất Cả Tầng</option>
+        </select>
+      </div>
+    </div>
+
+    <!-- Grid -->
+    <div id="loc-grid" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4"></div>
+
+    <!-- Pagination -->
+    <div class="glass-card p-3 flex justify-between items-center text-[11px] font-bold text-slate-700">
+      <span id="loc-page-info">Trang 1 / 1 (0 địa điểm)</span>
+      <div class="flex gap-2">
+        <button id="btn-loc-prev" class="px-4 py-2 bg-slate-100 border-2 border-slate-300 rounded-xl hover:bg-slate-200 font-black text-slate-900 transition">← Trước</button>
+        <button id="btn-loc-next" class="px-4 py-2 bg-slate-100 border-2 border-slate-300 rounded-xl hover:bg-slate-200 font-black text-slate-900 transition">Tiếp →</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════
+       TAB 2: TÌM ĐƯỜNG ĐI
+  ══════════════════════════════════ -->
+  <div id="tab-route" class="tab-pane space-y-4">
+
+    <!-- Route Selector -->
+    <div class="glass-card p-5 space-y-4">
+      <h2 class="font-heading text-lg font-black text-slate-950 flex items-center gap-2">🧭 Chọn Điểm Đi & Điểm Đến</h2>
+
+      <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+        <div>
+          <label class="block font-black text-slate-700 text-[11px] mb-1.5 uppercase tracking-wide">📍 Bắt Đầu Từ:</label>
+          <select id="route-from" class="w-full border-2 border-blue-300 rounded-xl px-4 py-3 text-[12px] font-black text-blue-900 outline-none focus:border-blue-600 bg-blue-50">
+            <option value="">-- Chọn điểm xuất phát --</option>
+          </select>
+        </div>
+        <div>
+          <label class="block font-black text-slate-700 text-[11px] mb-1.5 uppercase tracking-wide">🎯 Đến Nơi:</label>
+          <select id="route-to" class="w-full border-2 border-orange-300 rounded-xl px-4 py-3 text-[12px] font-black text-orange-900 outline-none focus:border-orange-500 bg-orange-50">
+            <option value="">-- Chọn điểm đến --</option>
+          </select>
+        </div>
+      </div>
+
+      <button id="btn-find-route" class="w-full py-3.5 rounded-xl font-heading font-black text-base text-white shadow-lg transition flex items-center justify-center gap-2" style="background:linear-gradient(135deg,#1e3a8a,#ea580c)">
+        <i class="fa-solid fa-route"></i> TÌM ĐƯỜNG ĐI NGAY
+      </button>
+    </div>
+
+    <!-- Route Results (saved routes) -->
+    <div id="route-results-container">
+      <div id="route-list-view" class="space-y-3">
+        <div class="flex items-center justify-between">
+          <h3 class="font-heading font-black text-slate-700 text-sm">📋 Các Lộ Trình Đã Tạo:</h3>
+          <span id="route-count-badge" class="badge badge-blue">0 lộ trình</span>
+        </div>
+        <div id="route-cards-container" class="grid grid-cols-1 sm:grid-cols-2 gap-4"></div>
+      </div>
+
+      <!-- Step Navigator (shown when route selected) -->
+      <div id="step-navigator" class="hidden space-y-4">
+        <button id="btn-back-routes" class="flex items-center gap-2 text-blue-700 font-black text-[12px] hover:text-blue-900 transition">
+          ← Quay Lại Danh Sách Lộ Trình
+        </button>
+
+        <div class="glass-card p-5 space-y-4">
+          <div class="flex justify-between items-start">
+            <div>
+              <h2 id="step-route-name" class="font-heading text-lg font-black text-slate-950"></h2>
+              <p id="step-route-meta" class="text-[11px] text-slate-500 font-bold mt-0.5"></p>
+            </div>
+            <span id="step-counter" class="bg-blue-900 text-white font-black text-sm px-3 py-1.5 rounded-xl">1 / 1</span>
+          </div>
+
+          <!-- Progress Bar -->
+          <div class="progress-bar"><div id="step-progress" class="progress-fill" style="width:0%"></div></div>
+
+          <!-- Step Photo -->
+          <div class="relative bg-slate-900 rounded-2xl overflow-hidden" style="min-height:240px">
+            <img id="step-photo-img" class="step-photo" alt="Hình ảnh bước đường đi">
+            <div class="absolute bottom-0 left-0 right-0 p-3 bg-gradient-to-t from-slate-950 to-transparent">
+              <div id="step-direction" class="text-white font-black text-sm"></div>
+              <div id="step-landmark" class="text-orange-300 font-bold text-[11px] mt-0.5"></div>
+            </div>
+          </div>
+
+          <!-- Step Navigation Buttons -->
+          <div class="flex items-center justify-between gap-3">
+            <button id="btn-step-prev" class="step-nav-btn bg-slate-200 hover:bg-slate-300 text-slate-900">
+              <i class="fa-solid fa-arrow-left"></i>
+            </button>
+            <div class="text-center flex-1">
+              <div id="step-instruction" class="font-black text-slate-950 text-sm leading-snug"></div>
+            </div>
+            <button id="btn-step-next" class="step-nav-btn text-white" style="background:linear-gradient(135deg,#1e3a8a,#ea580c)">
+              <i class="fa-solid fa-arrow-right"></i>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════
+       TAB 3: THÊM ĐỊA ĐIỂM
+  ══════════════════════════════════ -->
+  <div id="tab-add-loc" class="tab-pane">
+    <div class="max-w-2xl mx-auto space-y-4">
+      <div class="glass-card p-6 sm:p-8">
+        <h2 class="font-heading text-xl font-black text-slate-950 mb-1">➕ Thêm Địa Điểm Mới</h2>
+        <p class="text-[11px] text-slate-500 font-bold mb-5">Chụp ảnh thực tế tại nhà máy. Bất kỳ ai cũng có thể thêm!</p>
+
+        <form id="form-add-loc" class="space-y-4">
+
+          <!-- Photo -->
+          <div>
+            <label class="block font-black text-slate-900 text-[12px] mb-1.5">1. Chụp / Tải Ảnh Địa Điểm (*):</label>
+            <div class="border-2 border-dashed border-blue-400 bg-blue-50 rounded-2xl p-5 text-center cursor-pointer hover:bg-blue-100 transition" onclick="document.getElementById('inp-loc-photo').click()">
+              <div class="text-3xl mb-1">📸</div>
+              <p class="font-black text-blue-900 text-sm">Bấm để Chụp Camera hoặc Chọn Ảnh</p>
+              <p class="text-[10px] text-slate-500 font-bold mt-0.5">Tự động nén ~30KB, lưu vĩnh viễn</p>
+            </div>
+            <input type="file" id="inp-loc-photo" accept="image/*" capture="environment" class="hidden">
+            <div id="loc-photo-preview-wrap" class="hidden mt-3 bg-slate-900 p-3 rounded-2xl text-center">
+              <img id="loc-photo-preview" class="max-h-48 mx-auto rounded-xl object-contain mb-2">
+              <span id="loc-photo-size" class="text-[11px] font-black text-emerald-400"></span>
+            </div>
+          </div>
+
+          <!-- Name -->
+          <div>
+            <label class="block font-black text-slate-900 text-[12px] mb-1.5">2. Tên Địa Điểm / Phân Xưởng (*):</label>
+            <input type="text" id="inp-loc-name" required placeholder="VD: Phân Xưởng Đóng Gói, Phòng Y Tế, Nhà Ăn Khu A..." class="w-full border-2 border-slate-300 rounded-xl px-4 py-2.5 text-[12px] font-extrabold outline-none focus:border-blue-600 bg-white">
+          </div>
+
+          <!-- Type -->
+          <div>
+            <label class="block font-black text-slate-900 text-[12px] mb-1.5">3. Loại Địa Điểm (*):</label>
+            <select id="inp-loc-type" class="w-full border-2 border-slate-300 rounded-xl px-4 py-2.5 text-[12px] font-black outline-none focus:border-blue-600 bg-white">
+              <option value="workshop">🔧 Phân Xưởng Sản Xuất</option>
+              <option value="office">🏢 Văn Phòng / Hành Chính</option>
+              <option value="canteen">🍽️ Nhà Ăn / Căng Tin</option>
+              <option value="restroom">🚻 Nhà Vệ Sinh</option>
+              <option value="parking">🅿️ Bãi Đỗ Xe</option>
+              <option value="gate">🚪 Cổng Ra Vào / Bảo Vệ</option>
+              <option value="medical">🏥 Trạm Y Tế / Sơ Cứu</option>
+              <option value="other">📍 Địa Điểm Khác</option>
+            </select>
+          </div>
+
+          <!-- Zone / Building / Floor -->
+          <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
+            <div>
+              <label class="block font-black text-slate-900 text-[12px] mb-1.5">Khu / Khu Vực (*):</label>
+              <input type="text" id="inp-loc-zone" required placeholder="Khu A, Khu B Sản Xuất..." class="w-full border-2 border-slate-300 rounded-xl px-3 py-2 text-[12px] font-bold outline-none focus:border-blue-600 bg-white">
+            </div>
+            <div>
+              <label class="block font-black text-slate-900 text-[12px] mb-1.5">Tòa Nhà:</label>
+              <input type="text" id="inp-loc-building" placeholder="Tòa A1, Nhà Máy Chính..." class="w-full border-2 border-slate-300 rounded-xl px-3 py-2 text-[12px] font-bold outline-none focus:border-blue-600 bg-white">
+            </div>
+            <div>
+              <label class="block font-black text-slate-900 text-[12px] mb-1.5">Tầng:</label>
+              <input type="text" id="inp-loc-floor" placeholder="Tầng 1, Tầng Trệt..." class="w-full border-2 border-slate-300 rounded-xl px-3 py-2 text-[12px] font-bold outline-none focus:border-blue-600 bg-white">
+            </div>
+          </div>
+
+          <!-- Hours & Contact -->
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+            <div>
+              <label class="block font-black text-slate-900 text-[12px] mb-1.5">⏰ Giờ Hoạt Động:</label>
+              <input type="text" id="inp-loc-hours" placeholder="07:00 - 17:00 / Cả ngày 24/7..." class="w-full border-2 border-slate-300 rounded-xl px-3 py-2 text-[12px] font-bold outline-none focus:border-blue-600 bg-white">
+            </div>
+            <div>
+              <label class="block font-black text-slate-900 text-[12px] mb-1.5">📞 Liên Hệ / Số Nội Bộ:</label>
+              <input type="text" id="inp-loc-contact" placeholder="0901234567 / máy nhánh 101..." class="w-full border-2 border-slate-300 rounded-xl px-3 py-2 text-[12px] font-bold outline-none focus:border-blue-600 bg-white">
+            </div>
+          </div>
+
+          <!-- Description -->
+          <div>
+            <label class="block font-black text-slate-900 text-[12px] mb-1.5">📝 Mô Tả / Hướng Dẫn Nhận Dạng:</label>
+            <textarea id="inp-loc-desc" rows="2" placeholder="VD: Cổng màu xanh, biển hiệu đỏ, nằm cạnh hồ cá trung tâm..." class="w-full border-2 border-slate-300 rounded-xl px-3 py-2.5 text-[12px] font-bold outline-none focus:border-blue-600 bg-white"></textarea>
+          </div>
+
+          <!-- Added By -->
+          <div>
+            <label class="block font-black text-slate-900 text-[12px] mb-1.5">👤 Người Thêm:</label>
+            <input type="text" id="inp-loc-addedby" placeholder="Tên bạn hoặc bộ phận..." class="w-full border-2 border-slate-300 rounded-xl px-3 py-2 text-[12px] font-bold outline-none focus:border-blue-600 bg-white">
+          </div>
+
+          <div class="flex gap-3 pt-3 border-t border-slate-200 justify-end">
+            <button type="button" id="btn-reset-loc-form" class="bg-slate-200 text-slate-900 font-black text-[12px] px-4 py-2.5 rounded-xl border border-slate-300 transition hover:bg-slate-300">Nhập Lại</button>
+            <button type="submit" class="text-white font-black text-[12px] px-6 py-2.5 rounded-xl shadow flex items-center gap-2 transition" style="background:linear-gradient(135deg,#1e3a8a,#1d4ed8)">
+              💾 LƯU ĐỊA ĐIỂM
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════
+       TAB 4: TẠO LỘ TRÌNH
+  ══════════════════════════════════ -->
+  <div id="tab-add-route" class="tab-pane">
+    <div class="max-w-3xl mx-auto space-y-4">
+      <div class="glass-card p-6 sm:p-8 space-y-4">
+        <h2 class="font-heading text-xl font-black text-slate-950 mb-1">🛣️ Tạo Lộ Trình Hướng Dẫn Đường Đi</h2>
+        <p class="text-[11px] text-slate-500 font-bold">Tạo chuỗi ảnh tuần tự hướng dẫn từng bước như Google Maps!</p>
+
+        <!-- Route Info -->
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+          <div>
+            <label class="block font-black text-slate-900 text-[12px] mb-1.5">🚩 Tên Lộ Trình (*):</label>
+            <input type="text" id="inp-route-name" placeholder="VD: Từ Cổng Chính → Xưởng Đóng Gói" class="w-full border-2 border-slate-300 rounded-xl px-3 py-2 text-[12px] font-bold outline-none focus:border-blue-600 bg-white">
+          </div>
+          <div class="grid grid-cols-2 gap-2">
+            <div>
+              <label class="block font-black text-slate-900 text-[12px] mb-1.5">📍 Từ:</label>
+              <input type="text" id="inp-route-from" placeholder="Điểm xuất phát..." class="w-full border-2 border-blue-200 rounded-xl px-3 py-2 text-[12px] font-bold outline-none focus:border-blue-600 bg-blue-50">
+            </div>
+            <div>
+              <label class="block font-black text-slate-900 text-[12px] mb-1.5">🎯 Đến:</label>
+              <input type="text" id="inp-route-to" placeholder="Điểm đến..." class="w-full border-2 border-orange-200 rounded-xl px-3 py-2 text-[12px] font-bold outline-none focus:border-orange-500 bg-orange-50">
+            </div>
+          </div>
+        </div>
+        <div class="grid grid-cols-2 gap-3">
+          <div>
+            <label class="block font-black text-slate-900 text-[12px] mb-1.5">⏱️ Thời Gian Ước Tính:</label>
+            <input type="text" id="inp-route-time" placeholder="VD: 3 phút đi bộ" class="w-full border-2 border-slate-300 rounded-xl px-3 py-2 text-[12px] font-bold outline-none focus:border-blue-600 bg-white">
+          </div>
+          <div>
+            <label class="block font-black text-slate-900 text-[12px] mb-1.5">📏 Khoảng Cách:</label>
+            <input type="text" id="inp-route-dist" placeholder="VD: ~200m" class="w-full border-2 border-slate-300 rounded-xl px-3 py-2 text-[12px] font-bold outline-none focus:border-blue-600 bg-white">
+          </div>
+        </div>
+
+        <!-- Steps Builder -->
+        <div class="border-t border-slate-200 pt-4">
+          <div class="flex items-center justify-between mb-3">
+            <h3 class="font-heading font-black text-slate-900 text-sm">📸 Các Bước Đường Đi (có ảnh):</h3>
+            <button id="btn-add-step" type="button" class="bg-blue-600 hover:bg-blue-700 text-white font-black text-[11px] px-4 py-2 rounded-xl flex items-center gap-1.5 transition">
+              <i class="fa-solid fa-plus"></i> Thêm Bước
+            </button>
+          </div>
+          <div id="steps-builder" class="space-y-3">
+            <!-- Steps added dynamically -->
+          </div>
+          <div id="steps-empty" class="text-center py-6 text-slate-400 text-[12px] font-bold border-2 border-dashed border-slate-300 rounded-xl">
+            Bấm "+ Thêm Bước" để thêm ảnh hướng dẫn từng bước
+          </div>
+        </div>
+
+        <div class="flex gap-3 pt-3 border-t border-slate-200 justify-end">
+          <button id="btn-reset-route-form" type="button" class="bg-slate-200 text-slate-900 font-black text-[12px] px-4 py-2.5 rounded-xl border border-slate-300 transition hover:bg-slate-300">Nhập Lại</button>
+          <button id="btn-save-route" type="button" class="text-white font-black text-[12px] px-6 py-2.5 rounded-xl shadow flex items-center gap-2 transition" style="background:linear-gradient(135deg,#ea580c,#dc2626)">
+            🛣️ LƯU LỘ TRÌNH
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════
+       TAB 5: QR CODE
+  ══════════════════════════════════ -->
+  <div id="tab-qr" class="tab-pane space-y-4">
+    <div class="glass-card p-5 space-y-4">
+      <h2 class="font-heading text-lg font-black text-slate-950 flex items-center gap-2">📱 Tạo & In QR Code Địa Điểm</h2>
+      <p class="text-[12px] text-slate-500 font-bold">Tạo QR code để dán lên tường / cổng vào từng địa điểm. Công nhân & khách quét điện thoại là mở ngay hướng dẫn!</p>
+
+      <!-- QR Generator -->
+      <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+        <div class="space-y-3">
+          <div>
+            <label class="block font-black text-slate-700 text-[11px] mb-1.5 uppercase">Chọn Địa Điểm:</label>
+            <select id="qr-loc-select" class="w-full border-2 border-slate-300 rounded-xl px-4 py-3 text-[12px] font-black outline-none focus:border-blue-600 bg-white">
+              <option value="">-- Chọn địa điểm cần tạo QR --</option>
+            </select>
+          </div>
+          <div>
+            <label class="block font-black text-slate-700 text-[11px] mb-1.5 uppercase">Kích Cỡ QR:</label>
+            <select id="qr-size" class="w-full border-2 border-slate-300 rounded-xl px-4 py-2.5 text-[12px] font-black outline-none focus:border-blue-600 bg-white">
+              <option value="150">Nhỏ (150px - In nhiều / tờ A4)</option>
+              <option value="200" selected>Vừa (200px - Dán cổng vào)</option>
+              <option value="300">Lớn (300px - Dán xa nhìn rõ)</option>
+            </select>
+          </div>
+          <button id="btn-gen-qr" class="w-full py-3 rounded-xl font-heading font-black text-white text-sm transition shadow flex items-center justify-center gap-2" style="background:linear-gradient(135deg,#1e3a8a,#ea580c)">
+            <i class="fa-solid fa-qrcode"></i> TẠO QR CODE NGAY
+          </button>
+          <button id="btn-print-all-qr" class="w-full py-2.5 rounded-xl font-black text-white text-[12px] transition shadow bg-emerald-700 hover:bg-emerald-600 flex items-center justify-center gap-2">
+            <i class="fa-solid fa-print"></i> In Tất Cả QR (Khổ A4)
+          </button>
+        </div>
+
+        <!-- QR Preview -->
+        <div class="glass-card p-5 text-center border-2 border-dashed border-slate-300 rounded-2xl flex flex-col items-center justify-center min-h-[240px]" id="qr-preview-box">
+          <div class="text-slate-300 text-5xl mb-2">📱</div>
+          <p class="text-slate-400 font-bold text-[12px]">QR code sẽ hiển thị tại đây</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- All QR Grid -->
+    <div class="space-y-3">
+      <div class="flex items-center justify-between">
+        <h3 class="font-heading font-black text-slate-700 text-sm">🖨️ Tất Cả QR Code Địa Điểm (In Hàng Loạt):</h3>
+      </div>
+      <div id="all-qr-grid" class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4"></div>
+    </div>
+
+    <!-- Hidden print zone -->
+    <div id="print-zone" class="hidden"></div>
+  </div>
+
+</main>
+
+<!-- ═══════════════════════════════════════════════════════
+     LOCATION DETAIL MODAL
+═══════════════════════════════════════════════════════ -->
+<div id="loc-modal" class="modal-overlay">
+  <div class="bg-white p-5 rounded-3xl max-w-xl w-full relative max-h-[93vh] overflow-y-auto border-2 border-slate-200 shadow-2xl">
+    <button onclick="document.getElementById('loc-modal').classList.remove('active')" class="absolute top-3 right-4 text-slate-400 hover:text-slate-900 text-2xl font-black">✕</button>
+    <div id="loc-modal-content"></div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════
+     FOOTER
+═══════════════════════════════════════════════════════ -->
+<footer class="text-center text-[11px] text-slate-400 font-bold py-5 border-t border-slate-200 max-w-7xl mx-auto mt-6 px-4">
+  © 2026 🏭 Visual Factory Guide • Bản Đồ Ảnh Nhà Máy • Hướng Dẫn Đường Đi • QR Code Dán Tường
+</footer>
+
+<!-- ═══════════════════════════════════════════════════════
+     JAVASCRIPT ENGINE
+═══════════════════════════════════════════════════════ -->
+<script>
+'use strict';
+
+// ─────────────────────────────────────────────────────────────────
+// STORAGE KEYS
+// ─────────────────────────────────────────────────────────────────
+const LOC_KEY   = 'factory_guide_v1_locations';
+const ROUTE_KEY = 'factory_guide_v1_routes';
+
+// ─────────────────────────────────────────────────────────────────
+// TYPE LABELS
+// ─────────────────────────────────────────────────────────────────
+const TYPE_LABELS = {
+  workshop:'🔧 Phân Xưởng', office:'🏢 Văn Phòng', canteen:'🍽️ Nhà Ăn',
+  restroom:'🚻 Nhà Vệ Sinh', parking:'🅿️ Bãi Đỗ Xe', gate:'🚪 Cổng Ra Vào',
+  medical:'🏥 Y Tế', other:'📍 Khác'
+};
+
+// ─────────────────────────────────────────────────────────────────
+// SAMPLE PHOTO SVGs
+// ─────────────────────────────────────────────────────────────────
+const IMG = {
+  gate:`data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="600" height="400"><rect width="600" height="400" fill="%23052e16"/><rect x="30" y="50" width="540" height="300" fill="%23064e3b" rx="14" stroke="%234ade80" stroke-width="4"/><text x="300" y="140" font-family="sans-serif" font-size="28" font-weight="900" fill="%234ade80" text-anchor="middle">CỔNG CHÍNH NHÀ MÁY</text><text x="300" y="185" font-family="sans-serif" font-size="16" fill="%23fff" text-anchor="middle">Cổng Bảo Vệ - Kiểm Soát Vào Ra</text><rect x="110" y="220" width="380" height="55" fill="%2315803d" rx="10"/><text x="300" y="255" font-family="sans-serif" font-size="15" font-weight="900" fill="%23fff" text-anchor="middle">24/7 - Liên hệ Bảo Vệ: 0901000001</text></svg>`,
+  workshop:`data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="600" height="400"><rect width="600" height="400" fill="%231e1b4b"/><rect x="30" y="50" width="540" height="300" fill="%23312e81" rx="14" stroke="%23818cf8" stroke-width="4"/><text x="300" y="140" font-family="sans-serif" font-size="24" font-weight="900" fill="%23818cf8" text-anchor="middle">PHÂN XƯỞNG ĐÓNG GÓI</text><text x="300" y="185" font-family="sans-serif" font-size="16" fill="%23fff" text-anchor="middle">Khu A - Tầng 1 - Cổng Màu Xanh</text><rect x="110" y="220" width="380" height="55" fill="%234338ca" rx="10"/><text x="300" y="255" font-family="sans-serif" font-size="15" font-weight="900" fill="%23fff" text-anchor="middle">07:00 - 17:00 | Nhánh 102</text></svg>`,
+  canteen:`data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="600" height="400"><rect width="600" height="400" fill="%23431407"/><rect x="30" y="50" width="540" height="300" fill="%237c2d12" rx="14" stroke="%23fb923c" stroke-width="4"/><text x="300" y="140" font-family="sans-serif" font-size="24" font-weight="900" fill="%23fb923c" text-anchor="middle">NHÀ ĂN CÔNG TY</text><text x="300" y="185" font-family="sans-serif" font-size="16" fill="%23fff" text-anchor="middle">Khu B - Tầng Trệt - Gần Hồ Cá</text><rect x="110" y="220" width="380" height="55" fill="%23c2410c" rx="10"/><text x="300" y="255" font-family="sans-serif" font-size="15" font-weight="900" fill="%23fff" text-anchor="middle">11:00-13:00 | 17:00-18:30</text></svg>`,
+};
+const SAMPLE_PHOTOS = [IMG.gate, IMG.workshop, IMG.canteen];
+
+// ─────────────────────────────────────────────────────────────────
+// INITIAL SAMPLE DATA
+// ─────────────────────────────────────────────────────────────────
+const INIT_LOCS = [
+  {id:'FAC-001',name:'Cổng Chính Nhà Máy',type:'gate',zone:'Khu Cổng Vào',building:'Cổng Bảo Vệ',floor:'Tầng Trệt',hours:'24/7',contact:'0901000001',description:'Cổng sắt màu xanh lá. Bảo vệ trực 24/7. Tất cả khách phải đăng ký tại đây.',addedBy:'Admin',createdAt:'2026-01-15 08:00',photo:IMG.gate},
+  {id:'FAC-002',name:'Phân Xưởng Đóng Gói',type:'workshop',zone:'Khu A Sản Xuất',building:'Nhà Máy A1',floor:'Tầng 1',hours:'07:00-17:00',contact:'Nhánh 102',description:'Cổng màu xanh dương. Biển hiệu đỏ trước cửa. Nằm bên phải sau khi qua cổng chính 100m.',addedBy:'Admin',createdAt:'2026-01-15 08:05',photo:IMG.workshop},
+  {id:'FAC-003',name:'Nhà Ăn Công Ty',type:'canteen',zone:'Khu B Dịch Vụ',building:'Tòa Nhà B',floor:'Tầng Trệt',hours:'11:00-13:00 | 17:00-18:30',contact:'Nhánh 201',description:'Mái ngói đỏ. Nằm cạnh hồ cá trung tâm. Sức chứa 300 người.',addedBy:'Admin',createdAt:'2026-01-15 08:10',photo:IMG.canteen},
+];
+
+const INIT_ROUTES = [
+  {
+    id:'ROUTE-001',name:'Cổng Chính → Phân Xưởng Đóng Gói',from:'Cổng Chính',to:'Phân Xưởng Đóng Gói',time:'3 phút đi bộ',distance:'~150m',
+    steps:[
+      {stepNum:1,direction:'Từ Cổng Chính, đi thẳng vào trong theo đường chính',landmark:'Đường nhựa thẳng, có cây xanh hai bên',photo:IMG.gate},
+      {stepNum:2,direction:'Đi thẳng ~80m, thấy bảng chỉ dẫn màu xanh',landmark:'Bảng chỉ dẫn tại ngã tư nhỏ bên phải',photo:IMG.workshop},
+      {stepNum:3,direction:'Rẽ phải theo biển "Khu A Sản Xuất", đi thêm ~70m',landmark:'Phân xưởng có cổng xanh dương và biển hiệu đỏ trước cửa',photo:IMG.workshop},
+    ]
+  }
+];
+
+// ─────────────────────────────────────────────────────────────────
+// DATA LAYER
+// ─────────────────────────────────────────────────────────────────
+function getLocs() {
+  try { const d=JSON.parse(localStorage.getItem(LOC_KEY)); return Array.isArray(d)?d:INIT_LOCS; }
+  catch { return INIT_LOCS; }
+}
+function saveLocs(list){ localStorage.setItem(LOC_KEY,JSON.stringify(list)); }
+function initLocs(){ if(!localStorage.getItem(LOC_KEY)) saveLocs(INIT_LOCS); }
+
+function getRoutes() {
+  try { const d=JSON.parse(localStorage.getItem(ROUTE_KEY)); return Array.isArray(d)?d:INIT_ROUTES; }
+  catch { return INIT_ROUTES; }
+}
+function saveRoutes(list){ localStorage.setItem(ROUTE_KEY,JSON.stringify(list)); }
+function initRoutes(){ if(!localStorage.getItem(ROUTE_KEY)) saveRoutes(INIT_ROUTES); }
+
+function addOrUpdateLoc(item){ const list=getLocs(); const i=list.findIndex(l=>l.id===item.id); if(i>=0)list[i]=item; else list.unshift(item); saveLocs(list); }
+function deleteLoc(id){ saveLocs(getLocs().filter(l=>l.id!==id)); }
+function addRoute(r){ const list=getRoutes(); list.unshift(r); saveRoutes(list); }
+function deleteRoute(id){ saveRoutes(getRoutes().filter(r=>r.id!==id)); }
+
+// ─────────────────────────────────────────────────────────────────
+// UTILS
+// ─────────────────────────────────────────────────────────────────
+function esc(s){ return String(s||'').replace(/&/g,'&amp;').replace(/"/g,'&quot;').replace(/'/g,'&#39;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
+function nowStr(){ const n=new Date(); return `${n.getFullYear()}-${String(n.getMonth()+1).padStart(2,'0')}-${String(n.getDate()).padStart(2,'0')} ${String(n.getHours()).padStart(2,'0')}:${String(n.getMinutes()).padStart(2,'0')}`; }
+
+function compressImage(src, maxW=800, q=0.75){
+  return new Promise((res,rej)=>{
+    const img=new Image();
+    img.onload=()=>{
+      let w=img.width,h=img.height;
+      if(w>maxW){h=Math.round(h*maxW/w);w=maxW;}
+      const c=document.createElement('canvas'); c.width=w; c.height=h;
+      const ctx=c.getContext('2d'); ctx.fillStyle='#fff'; ctx.fillRect(0,0,w,h); ctx.drawImage(img,0,0,w,h);
+      res(c.toDataURL('image/jpeg',q));
+    };
+    img.onerror=rej;
+    if(typeof src==='string') img.src=src;
+    else { const fr=new FileReader(); fr.onload=e=>{img.src=e.target.result;}; fr.readAsDataURL(src); }
+  });
+}
+
+// ─────────────────────────────────────────────────────────────────
+// STATE
+// ─────────────────────────────────────────────────────────────────
+const PAGE_SIZE=12;
+let locPage=1, filteredLocs=[];
+let currentRouteSteps=[], currentStepIdx=0;
+let routeStepBuilderList=[];
+let newLocPhoto=null;
+
+// ─────────────────────────────────────────────────────────────────
+// HEADER KPIs
+// ─────────────────────────────────────────────────────────────────
+function updateHeaderKPIs(){
+  document.getElementById('hdr-loc-count').textContent = getLocs().length;
+  document.getElementById('hdr-route-count').textContent = getRoutes().length;
+}
+
+// ─────────────────────────────────────────────────────────────────
+// FILTERS POPULATE
+// ─────────────────────────────────────────────────────────────────
+function populateLocFilters(){
+  const locs=getLocs();
+  const zones=[...new Set(locs.map(l=>l.zone).filter(Boolean))].sort();
+  const buildings=[...new Set(locs.map(l=>l.building).filter(Boolean))].sort();
+  const floors=[...new Set(locs.map(l=>l.floor).filter(Boolean))].sort();
+  const fz=document.getElementById('f-zone'), fb=document.getElementById('f-building'), ff=document.getElementById('f-floor');
+  const zv=fz.value, bv=fb.value, ffv=ff.value;
+  fz.innerHTML='<option value="ALL">🏢 Tất Cả Khu</option>'+zones.map(z=>`<option${z===zv?' selected':''}>${esc(z)}</option>`).join('');
+  fb.innerHTML='<option value="ALL">🏗️ Tất Cả Tòa Nhà</option>'+buildings.map(b=>`<option${b===bv?' selected':''}>${esc(b)}</option>`).join('');
+  ff.innerHTML='<option value="ALL">📐 Tất Cả Tầng</option>'+floors.map(f=>`<option${f===ffv?' selected':''}>${esc(f)}</option>`).join('');
+}
+
+function populateRouteSelects(){
+  const locs=getLocs();
+  const opts='<option value="">-- Chọn địa điểm --</option>'+locs.map(l=>`<option value="${esc(l.id)}">${esc(l.name)}</option>`).join('');
+  document.getElementById('route-from').innerHTML=opts;
+  document.getElementById('route-to').innerHTML=opts;
+  const qrSel=document.getElementById('qr-loc-select');
+  if(qrSel) qrSel.innerHTML='<option value="">-- Chọn địa điểm --</option>'+locs.map(l=>`<option value="${esc(l.id)}">${esc(l.name)}</option>`).join('');
+}
+
+// ─────────────────────────────────────────────────────────────────
+// RENDER LOCATION GRID
+// ─────────────────────────────────────────────────────────────────
+function filterLocs(){
+  const q=(document.getElementById('search-loc').value||'').toLowerCase().trim();
+  const zone=document.getElementById('f-zone').value;
+  const bld=document.getElementById('f-building').value;
+  const type=document.getElementById('f-type').value;
+  const floor=document.getElementById('f-floor').value;
+  let list=getLocs();
+  if(zone!=='ALL') list=list.filter(l=>l.zone===zone);
+  if(bld!=='ALL') list=list.filter(l=>l.building===bld);
+  if(type!=='ALL') list=list.filter(l=>l.type===type);
+  if(floor!=='ALL') list=list.filter(l=>l.floor===floor);
+  if(q) list=list.filter(l=>[l.name,l.zone,l.building,l.floor,l.description,l.id].some(v=>v&&v.toLowerCase().includes(q)));
+  return list;
+}
+
+function renderLocGrid(){
+  filteredLocs=filterLocs();
+  const total=filteredLocs.length;
+  const totalPages=Math.ceil(total/PAGE_SIZE)||1;
+  if(locPage>totalPages) locPage=totalPages;
+  const start=(locPage-1)*PAGE_SIZE;
+  const page=filteredLocs.slice(start,start+PAGE_SIZE);
+  document.getElementById('loc-page-info').textContent=`Trang ${locPage} / ${totalPages} (${total.toLocaleString()} địa điểm)`;
+  const container=document.getElementById('loc-grid');
+  if(!page.length){
+    container.innerHTML=`<div class="col-span-full text-center py-14 glass-card"><div class="text-5xl mb-3">🗺️</div><p class="font-extrabold text-slate-700 text-base">Chưa có địa điểm nào phù hợp.</p><p class="text-[11px] text-slate-400 mt-1">Bấm tab "➕ Thêm Địa Điểm" để thêm địa điểm mới!</p></div>`;
+    return;
+  }
+  container.innerHTML=page.map(loc=>`
+    <div class="loc-card flex flex-col justify-between">
+      <div>
+        <div class="relative cursor-pointer overflow-hidden" onclick="openLocModal('${esc(loc.id)}')">
+          <img data-locid="${esc(loc.id)}" alt="${esc(loc.name)}" class="w-full h-[180px] object-cover bg-slate-800">
+          <span class="absolute top-2 left-2 type-pill type-${esc(loc.type)}">${TYPE_LABELS[loc.type]||'📍 Khác'}</span>
+          <span class="absolute top-2 right-2 bg-slate-900/90 text-amber-300 text-[10px] font-black px-2 py-0.5 rounded-full border border-amber-500">${esc(loc.id)}</span>
+        </div>
+        <div class="p-3 space-y-1.5">
+          <div class="flex flex-wrap gap-1">
+            <span class="badge badge-blue"><i class="fa-solid fa-location-dot text-[9px]"></i> ${esc(loc.zone)}</span>
+            ${loc.building?`<span class="badge badge-slate">${esc(loc.building)}</span>`:''}
+          </div>
+          <h3 class="font-black text-slate-950 text-[13px] leading-snug cursor-pointer hover:text-blue-700" onclick="openLocModal('${esc(loc.id)}')">${esc(loc.name)}</h3>
+          <div class="text-[11px] bg-slate-50 p-2 rounded-xl border border-slate-200 space-y-0.5">
+            ${loc.floor?`<div>📐 <span class="text-slate-500 font-bold">Tầng:</span> <span class="font-extrabold text-blue-700">${esc(loc.floor)}</span></div>`:''}
+            ${loc.hours?`<div>⏰ <span class="text-slate-500 font-bold">Giờ:</span> <span class="font-extrabold text-slate-900">${esc(loc.hours)}</span></div>`:''}
+            ${loc.description?`<div class="text-[10px] text-slate-600 font-bold border-t pt-0.5 mt-0.5">📝 ${esc(loc.description.substring(0,60))}${loc.description.length>60?'...':''}</div>`:''}
+          </div>
+        </div>
+      </div>
+      <div class="px-3 py-2 bg-slate-50 border-t border-slate-200 flex items-center justify-between text-[10px] font-extrabold text-slate-600">
+        <span>👤 ${esc(loc.addedBy||'')} • ${esc(loc.createdAt||'')}</span>
+        <div class="flex gap-1">
+          <button onclick="openQRForLoc('${esc(loc.id)}')" class="bg-blue-100 hover:bg-blue-200 text-blue-800 border border-blue-300 px-2 py-0.5 rounded font-black transition">📱 QR</button>
+          <button onclick="handleDeleteLoc('${esc(loc.id)}')" class="bg-rose-100 hover:bg-rose-200 text-rose-800 border border-rose-300 px-2 py-0.5 rounded font-black transition">🗑️</button>
+        </div>
+      </div>
+    </div>
+  `).join('');
+
+  // Set photos safely via JS
+  const locMap=new Map(page.map(l=>[l.id,l]));
+  container.querySelectorAll('img[data-locid]').forEach(img=>{
+    const loc=locMap.get(img.getAttribute('data-locid'));
+    if(loc&&loc.photo){ img.src=loc.photo; img.onerror=()=>{img.style.display='none';}; }
+  });
+}
+
+// ─────────────────────────────────────────────────────────────────
+// LOCATION DETAIL MODAL
+// ─────────────────────────────────────────────────────────────────
+function openLocModal(id){
+  const loc=getLocs().find(l=>l.id===id);
+  if(!loc) return;
+  const modal=document.getElementById('loc-modal');
+  const content=document.getElementById('loc-modal-content');
+  content.innerHTML=`
+    <div class="text-center pb-3 border-b border-slate-200 mb-4">
+      <span class="type-pill type-${esc(loc.type)}">${TYPE_LABELS[loc.type]||'📍 Khác'}</span>
+      <h3 class="font-heading text-xl font-black text-slate-950 mt-2">${esc(loc.name)}</h3>
+      <p class="text-[12px] text-blue-700 font-bold mt-0.5">${esc(loc.zone)} ${loc.building?'• '+esc(loc.building):''} ${loc.floor?'• '+esc(loc.floor):''}</p>
+    </div>
+    <div id="modal-photo-wrap" class="bg-slate-900 rounded-2xl overflow-hidden mb-4 min-h-[200px] flex items-center justify-center border-2 border-slate-700">
+      <img id="modal-photo-img" alt="${esc(loc.name)}" class="w-full max-h-[55vh] object-contain">
+    </div>
+    <div class="grid grid-cols-2 gap-3 text-[12px] bg-slate-50 p-4 rounded-xl border border-slate-200 font-bold mb-4">
+      <div><span class="text-slate-500">Giờ HĐ:</span><strong class="block text-slate-900">${esc(loc.hours||'Chưa cập nhật')}</strong></div>
+      <div><span class="text-slate-500">Liên Hệ:</span><strong class="block text-slate-900">${esc(loc.contact||'N/A')}</strong></div>
+      <div class="col-span-2 border-t pt-2"><span class="text-slate-500">Mô Tả:</span><p class="text-slate-900 font-bold mt-0.5">${esc(loc.description||'Không có.')}</p></div>
+    </div>
+    <div class="flex gap-2 flex-wrap">
+      <button onclick="openQRForLoc('${esc(loc.id)}'); document.getElementById('loc-modal').classList.remove('active');" class="flex-1 bg-blue-700 hover:bg-blue-800 text-white font-black text-[12px] py-2.5 rounded-xl transition flex items-center justify-center gap-1.5">📱 Tạo QR Dán Tường</button>
+      <button onclick="navigateToLoc('${esc(loc.id)}'); document.getElementById('loc-modal').classList.remove('active');" class="flex-1 bg-orange-600 hover:bg-orange-700 text-white font-black text-[12px] py-2.5 rounded-xl transition flex items-center justify-center gap-1.5">🧭 Tìm Đường Đến Đây</button>
+      <button onclick="handleDeleteLoc('${esc(loc.id)}'); document.getElementById('loc-modal').classList.remove('active');" class="bg-rose-100 hover:bg-rose-200 text-rose-800 border border-rose-300 font-black text-[12px] px-3 py-2.5 rounded-xl transition">🗑️</button>
+    </div>`;
+  modal.classList.add('active');
+  // Set photo safely
+  const img=document.getElementById('modal-photo-img');
+  if(img && loc.photo) img.src=loc.photo;
+}
+
+function handleDeleteLoc(id){
+  if(confirm('Xóa địa điểm này khỏi hệ thống?')){ deleteLoc(id); populateLocFilters(); populateRouteSelects(); renderLocGrid(); updateHeaderKPIs(); renderQRGrid(); }
+}
+
+function navigateToLoc(id){
+  const loc=getLocs().find(l=>l.id===id); if(!loc) return;
+  document.getElementById('route-to').value=id;
+  switchTab('tab-route');
+}
+
+// ─────────────────────────────────────────────────────────────────
+// ROUTE DISPLAY
+// ─────────────────────────────────────────────────────────────────
+function renderRouteCards(){
+  const routes=getRoutes();
+  const container=document.getElementById('route-cards-container');
+  document.getElementById('route-count-badge').textContent=`${routes.length} lộ trình`;
+  if(!routes.length){
+    container.innerHTML=`<div class="col-span-full text-center py-10 glass-card"><div class="text-5xl mb-2">🛣️</div><p class="font-bold text-slate-600">Chưa có lộ trình nào.</p><p class="text-[11px] text-slate-400 mt-1">Bấm tab "🛣️ Tạo Lộ Trình" để tạo đường đi từng bước!</p></div>`;
+    return;
+  }
+  container.innerHTML=routes.map(r=>`
+    <div class="glass-card p-4 space-y-2 hover:border-blue-400 transition border-2 border-transparent cursor-pointer" onclick="startRouteNavigation('${esc(r.id)}')">
+      <div class="flex items-start justify-between gap-2">
+        <h3 class="font-heading font-black text-slate-950 text-sm leading-snug">${esc(r.name)}</h3>
+        <button onclick="event.stopPropagation();handleDeleteRoute('${esc(r.id)}')" class="bg-rose-100 text-rose-800 border border-rose-300 px-2 py-0.5 rounded font-black text-[10px] hover:bg-rose-200 transition flex-shrink-0">🗑️</button>
+      </div>
+      <div class="flex flex-wrap gap-1.5 text-[11px]">
+        <span class="badge badge-blue">📍 ${esc(r.from)}</span>
+        <span class="text-slate-400 font-black">→</span>
+        <span class="badge badge-orange">🎯 ${esc(r.to)}</span>
+      </div>
+      <div class="text-[11px] text-slate-600 font-bold flex items-center gap-3">
+        ${r.time?`<span>⏱️ ${esc(r.time)}</span>`:''}
+        ${r.distance?`<span>📏 ${esc(r.distance)}</span>`:''}
+        <span>📸 ${r.steps?r.steps.length:0} bước</span>
+      </div>
+      <button class="w-full py-2 bg-blue-700 hover:bg-blue-800 text-white font-black text-[11px] rounded-xl transition flex items-center justify-center gap-1.5">
+        🧭 Bắt Đầu Đi Theo Lộ Trình
+      </button>
+    </div>
+  `).join('');
+}
+
+function handleDeleteRoute(id){
+  if(confirm('Xóa lộ trình này?')){ deleteRoute(id); renderRouteCards(); updateHeaderKPIs(); }
+}
+
+function startRouteNavigation(routeId){
+  const route=getRoutes().find(r=>r.id===routeId);
+  if(!route||!route.steps||!route.steps.length){ alert('Lộ trình này chưa có bước đường đi!'); return; }
+  currentRouteSteps=route.steps;
+  currentStepIdx=0;
+  document.getElementById('step-route-name').textContent=route.name;
+  document.getElementById('step-route-meta').textContent=`${route.from} → ${route.to}${route.time?' • '+route.time:''}${route.distance?' • '+route.distance:''}`;
+  document.getElementById('route-list-view').classList.add('hidden');
+  document.getElementById('step-navigator').classList.remove('hidden');
+  renderCurrentStep();
+}
+
+function renderCurrentStep(){
+  const step=currentRouteSteps[currentStepIdx];
+  if(!step) return;
+  const total=currentRouteSteps.length;
+  document.getElementById('step-counter').textContent=`${currentStepIdx+1} / ${total}`;
+  document.getElementById('step-progress').style.width=`${((currentStepIdx+1)/total)*100}%`;
+  document.getElementById('step-direction').textContent=step.direction||'';
+  document.getElementById('step-landmark').textContent=step.landmark?`🏁 ${step.landmark}`:'';
+  document.getElementById('step-instruction').textContent=step.direction||'';
+  const img=document.getElementById('step-photo-img');
+  if(img){ img.src=''; if(step.photo){ img.src=step.photo; img.style.display=''; } else { img.style.display='none'; } }
+  document.getElementById('btn-step-prev').style.opacity=currentStepIdx===0?'0.3':'1';
+  document.getElementById('btn-step-next').textContent='';
+  const nextBtn=document.getElementById('btn-step-next');
+  if(currentStepIdx===total-1){
+    nextBtn.innerHTML='✅'; nextBtn.title='Đã đến nơi!';
+  } else {
+    nextBtn.innerHTML='<i class="fa-solid fa-arrow-right"></i>';
+  }
+}
+
+// Find matching routes by from/to
+function findRoutes(){
+  const fromId=document.getElementById('route-from').value;
+  const toId=document.getElementById('route-to').value;
+  if(!fromId&&!toId){ alert('Vui lòng chọn ít nhất điểm đi hoặc điểm đến!'); return; }
+  const locs=getLocs();
+  const fromLoc=locs.find(l=>l.id===fromId);
+  const toLoc=locs.find(l=>l.id===toId);
+  const fromName=fromLoc?fromLoc.name:'';
+  const toName=toLoc?toLoc.name:'';
+  const routes=getRoutes().filter(r=>{
+    const matchFrom=!fromId||(r.from&&(r.from===fromName||r.from.includes(fromName)||fromName.includes(r.from)));
+    const matchTo=!toId||(r.to&&(r.to===toName||r.to.includes(toName)||toName.includes(r.to)));
+    return matchFrom&&matchTo;
+  });
+  if(!routes.length){
+    alert(`Chưa có lộ trình từ "${fromName||'điểm bạn chọn'}" đến "${toName||'điểm bạn chọn'}".\n\nBấm tab "🛣️ Tạo Lộ Trình" để tạo lộ trình này!`);
+    return;
+  }
+  if(routes.length===1){ startRouteNavigation(routes[0].id); }
+  else {
+    const idx=0; // Just start first matching
+    startRouteNavigation(routes[idx].id);
+  }
+}
+
+// ─────────────────────────────────────────────────────────────────
+// ROUTE BUILDER (Add Steps)
+// ─────────────────────────────────────────────────────────────────
+function addStepToBuilder(){
+  const stepNum=routeStepBuilderList.length+1;
+  const stepObj={stepNum, direction:'', landmark:'', photo:null};
+  routeStepBuilderList.push(stepObj);
+  renderStepsBuilder();
+}
+
+function renderStepsBuilder(){
+  const container=document.getElementById('steps-builder');
+  const empty=document.getElementById('steps-empty');
+  if(!routeStepBuilderList.length){ container.innerHTML=''; empty.classList.remove('hidden'); return; }
+  empty.classList.add('hidden');
+  container.innerHTML=routeStepBuilderList.map((s,i)=>`
+    <div class="glass-card p-4 space-y-3 border-l-4 border-blue-500" id="step-item-${i}">
+      <div class="flex items-center justify-between">
+        <span class="font-heading font-black text-blue-700 text-sm">Bước ${i+1}</span>
+        <button onclick="removeStep(${i})" class="text-rose-600 hover:text-rose-800 font-black text-[11px] transition">✕ Xóa</button>
+      </div>
+      <div class="grid grid-cols-1 sm:grid-cols-2 gap-2">
+        <div>
+          <label class="block text-[11px] font-black text-slate-700 mb-1">Hướng Dẫn Đi (*):</label>
+          <input type="text" id="step-dir-${i}" placeholder="VD: Rẽ phải tại cột điện đỏ..." class="w-full border-2 border-slate-300 rounded-xl px-3 py-2 text-[11px] font-bold outline-none focus:border-blue-600 bg-white" onchange="routeStepBuilderList[${i}].direction=this.value">
+        </div>
+        <div>
+          <label class="block text-[11px] font-black text-slate-700 mb-1">Điểm Mốc Nhận Biết:</label>
+          <input type="text" id="step-lmk-${i}" placeholder="VD: Cột điện màu đỏ, nhà kho..." class="w-full border-2 border-slate-300 rounded-xl px-3 py-2 text-[11px] font-bold outline-none focus:border-blue-600 bg-white" onchange="routeStepBuilderList[${i}].landmark=this.value">
+        </div>
+      </div>
+      <div>
+        <label class="block text-[11px] font-black text-slate-700 mb-1">📸 Ảnh Bước ${i+1}:</label>
+        <div class="flex items-center gap-2">
+          <button onclick="document.getElementById('step-photo-input-${i}').click()" class="bg-blue-100 hover:bg-blue-200 text-blue-800 border border-blue-300 font-black text-[11px] px-3 py-2 rounded-xl transition flex items-center gap-1">
+            📷 ${s.photo?'Đổi Ảnh':'Chụp / Chọn Ảnh'}
+          </button>
+          <input type="file" id="step-photo-input-${i}" accept="image/*" capture="environment" class="hidden" onchange="handleStepPhoto(${i}, this)">
+          ${s.photo?`<span class="text-emerald-600 font-black text-[11px]">✓ Đã có ảnh</span>`:`<span class="text-slate-400 font-bold text-[11px]">Chưa có ảnh</span>`}
+        </div>
+        ${s.photo?`<div id="step-thumb-${i}" class="mt-2"><img class="h-20 rounded-xl object-cover border border-slate-300 cursor-pointer" id="step-thumb-img-${i}" alt="Bước ${i+1}"></div>`:''}
+      </div>
+    </div>
+  `).join('');
+
+  // Set step photo thumbnails
+  routeStepBuilderList.forEach((s,i)=>{
+    if(s.photo){
+      const thumb=document.getElementById(`step-thumb-img-${i}`);
+      if(thumb) thumb.src=s.photo;
+    }
+  });
+}
+
+function removeStep(i){
+  routeStepBuilderList.splice(i,1);
+  routeStepBuilderList.forEach((s,idx)=>s.stepNum=idx+1);
+  renderStepsBuilder();
+}
+
+async function handleStepPhoto(i, input){
+  const file=input.files[0]; if(!file) return;
+  try {
+    const compressed=await compressImage(file,800,0.75);
+    routeStepBuilderList[i].photo=compressed;
+    renderStepsBuilder();
+  } catch(e){ alert('Không thể nén ảnh. Thử ảnh khác!'); }
+}
+
+function saveRoute(){
+  const name=(document.getElementById('inp-route-name').value||'').trim();
+  const from=(document.getElementById('inp-route-from').value||'').trim();
+  const to=(document.getElementById('inp-route-to').value||'').trim();
+  if(!name){ alert('Vui lòng nhập tên lộ trình!'); return; }
+  if(!from||!to){ alert('Vui lòng nhập điểm đi và điểm đến!'); return; }
+  if(!routeStepBuilderList.length){ alert('Vui lòng thêm ít nhất 1 bước đường đi!'); return; }
+
+  // Sync current input values
+  routeStepBuilderList.forEach((s,i)=>{
+    const dir=document.getElementById(`step-dir-${i}`);
+    const lmk=document.getElementById(`step-lmk-${i}`);
+    if(dir) s.direction=dir.value;
+    if(lmk) s.landmark=lmk.value;
+  });
+
+  const route={
+    id:`ROUTE-${Date.now().toString().slice(-6)}`,
+    name, from, to,
+    time:document.getElementById('inp-route-time').value||'',
+    distance:document.getElementById('inp-route-dist').value||'',
+    steps:[...routeStepBuilderList]
+  };
+  addRoute(route);
+  routeStepBuilderList=[];
+  document.getElementById('inp-route-name').value='';
+  document.getElementById('inp-route-from').value='';
+  document.getElementById('inp-route-to').value='';
+  document.getElementById('inp-route-time').value='';
+  document.getElementById('inp-route-dist').value='';
+  renderStepsBuilder();
+  renderRouteCards();
+  updateHeaderKPIs();
+  switchTab('tab-route');
+  alert(`✓ Lộ trình "${name}" đã được lưu với ${route.steps.length} bước đường đi!`);
+}
+
+// ─────────────────────────────────────────────────────────────────
+// QR CODE
+// ─────────────────────────────────────────────────────────────────
+function getAppUrl(){ return window.location.href.split('?')[0]; }
+
+function generateQRForLoc(locId, canvasId, size=200){
+  const loc=getLocs().find(l=>l.id===locId); if(!loc) return;
+  const url=`${getAppUrl()}?location=${encodeURIComponent(locId)}`;
+  const canvas=document.getElementById(canvasId);
+  if(!canvas) return;
+  if(typeof QRCode==='undefined'){ canvas.parentElement.innerHTML='<p class="text-red-600 font-bold text-xs">QRCode.js chưa tải. Kiểm tra mạng!</p>'; return; }
+  QRCode.toCanvas(canvas, url, {width:size,margin:2,color:{dark:'#0f172a',light:'#ffffff'}}, err=>{ if(err) console.error(err); });
+}
+
+function openQRForLoc(id){
+  const sel=document.getElementById('qr-loc-select');
+  if(sel) sel.value=id;
+  switchTab('tab-qr');
+  setTimeout(()=>{ generatePreviewQR(id); },300);
+}
+
+function generatePreviewQR(locId){
+  if(!locId) locId=document.getElementById('qr-loc-select').value;
+  if(!locId){ alert('Vui lòng chọn địa điểm!'); return; }
+  const loc=getLocs().find(l=>l.id===locId); if(!loc) return;
+  const size=parseInt(document.getElementById('qr-size').value)||200;
+  const box=document.getElementById('qr-preview-box');
+  box.innerHTML=`
+    <div class="text-center">
+      <canvas id="qr-preview-canvas"></canvas>
+      <div class="mt-3 font-heading font-black text-slate-950 text-sm">${esc(loc.name)}</div>
+      <div class="text-[11px] text-slate-500 font-bold">${esc(loc.zone)} ${loc.floor?'• '+esc(loc.floor):''}</div>
+      <button onclick="printSingleQR('${esc(locId)}')" class="mt-3 bg-emerald-700 hover:bg-emerald-600 text-white font-black text-[11px] px-4 py-2 rounded-xl transition flex items-center gap-1.5 mx-auto">
+        <i class="fa-solid fa-print"></i> In QR Này
+      </button>
+    </div>`;
+  setTimeout(()=>generateQRForLoc(locId,'qr-preview-canvas',size),100);
+}
+
+function renderQRGrid(){
+  const locs=getLocs();
+  const container=document.getElementById('all-qr-grid');
+  if(!locs.length){ container.innerHTML='<div class="col-span-full text-center py-8 text-slate-400 text-[12px] font-bold">Chưa có địa điểm nào. Thêm địa điểm trước!</div>'; return; }
+  container.innerHTML=locs.map(loc=>`
+    <div class="glass-card p-3 text-center space-y-2 border hover:border-blue-400 transition">
+      <canvas id="qr-grid-${esc(loc.id)}" class="mx-auto"></canvas>
+      <div class="font-black text-slate-950 text-[11px] leading-tight">${esc(loc.name)}</div>
+      <div class="text-[10px] text-slate-500 font-bold">${esc(loc.id)}</div>
+      <div class="flex gap-1 justify-center">
+        <button onclick="printSingleQR('${esc(loc.id)}')" class="bg-emerald-100 hover:bg-emerald-200 text-emerald-800 border border-emerald-300 font-black text-[10px] px-2.5 py-1 rounded-lg transition"><i class="fa-solid fa-print text-[9px]"></i> In</button>
+        <button onclick="openLocModal('${esc(loc.id)}')" class="bg-blue-100 hover:bg-blue-200 text-blue-800 border border-blue-300 font-black text-[10px] px-2.5 py-1 rounded-lg transition"><i class="fa-solid fa-eye text-[9px]"></i> Xem</button>
+      </div>
+    </div>
+  `).join('');
+  locs.forEach(loc=>{ setTimeout(()=>generateQRForLoc(loc.id,`qr-grid-${loc.id}`,120),100); });
+}
+
+function printSingleQR(locId){
+  const loc=getLocs().find(l=>l.id===locId); if(!loc) return;
+  const url=`${getAppUrl()}?location=${encodeURIComponent(locId)}`;
+  const printWin=window.open('','_blank','width=600,height=700');
+  printWin.document.write(`<!DOCTYPE html><html><head><meta charset="UTF-8"><title>QR - ${loc.name}</title>
+  <script src="https://cdn.jsdelivr.net/npm/qrcode@1.5.3/build/qrcode.min.js"><\/script>
+  <style>body{font-family:sans-serif;display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:100vh;background:#fff;padding:20px;}
+  .sticker{border:3px solid #1e3a8a;border-radius:20px;padding:24px;text-align:center;max-width:320px;box-shadow:0 4px 20px rgba(0,0,0,0.15);}
+  h2{font-size:18px;font-weight:900;color:#0f172a;margin:12px 0 4px;}
+  p{font-size:12px;color:#475569;font-weight:700;margin:2px 0;}
+  .zone{background:#eff6ff;color:#1d4ed8;padding:4px 12px;border-radius:20px;font-size:11px;font-weight:800;display:inline-block;margin-top:6px;}
+  .scan-hint{margin-top:12px;font-size:11px;color:#64748b;font-weight:700;}
+  @media print{body{margin:0;}}</style></head>
+  <body><div class="sticker">
+  <p style="font-size:11px;color:#64748b;font-weight:800;text-transform:uppercase;">🏭 Visual Factory Guide</p>
+  <canvas id="qrc"></canvas>
+  <h2>${loc.name}</h2>
+  <p>${loc.zone}${loc.floor?' • '+loc.floor:''}</p>
+  ${loc.hours?`<p>⏰ ${loc.hours}</p>`:''}
+  ${loc.contact?`<p>📞 ${loc.contact}</p>`:''}
+  <div class="zone">${loc.id}</div>
+  <p class="scan-hint">📱 Quét QR để xem hướng dẫn & đường đi</p>
+  </div>
+  <script>QRCode.toCanvas(document.getElementById('qrc'),'${url}',{width:200,margin:2,color:{dark:'#0f172a',light:'#ffffff'}},function(){setTimeout(()=>window.print(),500)});<\/script>
+  </body></html>`);
+  printWin.document.close();
+}
+
+function printAllQR(){
+  const locs=getLocs();
+  if(!locs.length){ alert('Chưa có địa điểm nào để in QR!'); return; }
+  const printWin=window.open('','_blank','width=900,height=700');
+  const qrScripts=locs.map(loc=>`QRCode.toCanvas(document.getElementById('qr-${loc.id}'),'${getAppUrl()}?location=${encodeURIComponent(loc.id)}',{width:150,margin:2},function(){});`).join('\n');
+  printWin.document.write(`<!DOCTYPE html><html><head><meta charset="UTF-8"><title>QR Tất Cả Địa Điểm</title>
+  <script src="https://cdn.jsdelivr.net/npm/qrcode@1.5.3/build/qrcode.min.js"><\/script>
+  <style>body{font-family:sans-serif;background:#fff;padding:16px;}
+  .grid{display:flex;flex-wrap:wrap;gap:16px;}
+  .item{border:2px solid #1e3a8a;border-radius:12px;padding:12px;text-align:center;width:180px;}
+  h4{font-size:12px;font-weight:900;color:#0f172a;margin:6px 0 2px;line-height:1.3;}
+  p{font-size:10px;color:#475569;font-weight:700;}
+  @media print{body{margin:0;padding:8px;}.item{break-inside:avoid;}}</style></head>
+  <body><h2 style="font-family:sans-serif;font-size:16px;font-weight:900;margin-bottom:12px;color:#1e3a8a;">🏭 QR Code Tất Cả Địa Điểm - Visual Factory Guide</h2>
+  <div class="grid">${locs.map(loc=>`<div class="item"><canvas id="qr-${loc.id}"></canvas><h4>${loc.name}</h4><p>${loc.id}</p></div>`).join('')}</div>
+  <script>window.onload=function(){${qrScripts} setTimeout(()=>window.print(),1500);};<\/script>
+  </body></html>`);
+  printWin.document.close();
+}
+
+// ─────────────────────────────────────────────────────────────────
+// ADD LOCATION FORM
+// ─────────────────────────────────────────────────────────────────
+async function handleLocPhotoChange(input){
+  const file=input.files[0]; if(!file) return;
+  const wrap=document.getElementById('loc-photo-preview-wrap');
+  const prev=document.getElementById('loc-photo-preview');
+  const lbl=document.getElementById('loc-photo-size');
+  try {
+    wrap.classList.remove('hidden');
+    lbl.textContent=`Đang nén (${(file.size/1024/1024).toFixed(2)} MB)...`;
+    newLocPhoto=await compressImage(file,800,0.75);
+    prev.src=newLocPhoto;
+    lbl.textContent=`✓ Nén xong: ${(newLocPhoto.length*0.75/1024).toFixed(1)} KB`;
+  } catch { alert('Không thể nén ảnh!'); }
+}
+
+function saveNewLoc(e){
+  e.preventDefault();
+  const name=(document.getElementById('inp-loc-name').value||'').trim();
+  const zone=(document.getElementById('inp-loc-zone').value||'').trim();
+  if(!name){ alert('Vui lòng nhập tên địa điểm!'); return; }
+  if(!zone){ alert('Vui lòng nhập khu / khu vực!'); return; }
+  const item={
+    id:`FAC-${Date.now().toString().slice(-6)}`,
+    name,
+    type:document.getElementById('inp-loc-type').value||'other',
+    zone,
+    building:document.getElementById('inp-loc-building').value||'',
+    floor:document.getElementById('inp-loc-floor').value||'',
+    hours:document.getElementById('inp-loc-hours').value||'',
+    contact:document.getElementById('inp-loc-contact').value||'',
+    description:document.getElementById('inp-loc-desc').value||'',
+    addedBy:document.getElementById('inp-loc-addedby').value||'Nhân Viên',
+    createdAt:nowStr(),
+    photo:newLocPhoto||SAMPLE_PHOTOS[Math.floor(Math.random()*3)]
+  };
+  addOrUpdateLoc(item);
+  newLocPhoto=null;
+  document.getElementById('form-add-loc').reset();
+  document.getElementById('loc-photo-preview-wrap').classList.add('hidden');
+  populateLocFilters(); populateRouteSelects(); renderLocGrid(); updateHeaderKPIs(); renderQRGrid();
+  switchTab('tab-explore');
+  alert(`✓ Đã lưu địa điểm "${item.name}" thành công!`);
+}
+
+// ─────────────────────────────────────────────────────────────────
+// EXCEL IMPORT
+// ─────────────────────────────────────────────────────────────────
+async function importExcelFile(file){
+  if(typeof XLSX==='undefined') throw new Error('SheetJS chưa tải. Kiểm tra kết nối mạng!');
+  const buf=await file.arrayBuffer();
+  const wb=XLSX.read(buf,{type:'array'});
+  const ws=wb.Sheets[wb.SheetNames[0]];
+  const rows=XLSX.utils.sheet_to_json(ws,{defval:''});
+  if(!rows.length) throw new Error('File Excel rỗng!');
+
+  // Extract embedded images
+  const photos=[];
+  try {
+    const zip=await JSZip.loadAsync(buf);
+    const mf=Object.keys(zip.files).filter(n=>n.startsWith('xl/media/'));
+    mf.sort((a,b)=>(parseInt(a.replace(/\D/g,''))||0)-(parseInt(b.replace(/\D/g,''))||0));
+    for(const fn of mf){
+      const b64=await zip.files[fn].async('base64');
+      const mime=fn.endsWith('.png')?'image/png':'image/jpeg';
+      photos.push(await compressImage(`data:${mime};base64,${b64}`,800,0.75));
+    }
+  } catch(e){ console.warn('No embedded images:',e); }
+
+  const dt=nowStr();
+  const items=rows.map((r,i)=>({
+    id:String(r['Mã Địa Điểm']||r['ID']||`FAC-XL-${Date.now().toString().slice(-4)}-${i+1}`).trim(),
+    name:String(r['Tên Địa Điểm (*)']||r['Tên']||`Địa Điểm #${i+1}`).trim(),
+    type:String(r['Loại']||'other').trim(),
+    zone:String(r['Khu / Khu Vực (*)']||r['Khu']||'Khu Chung').trim(),
+    building:String(r['Tòa Nhà']||'').trim(),
+    floor:String(r['Tầng']||'').trim(),
+    hours:String(r['Giờ Hoạt Động']||'').trim(),
+    contact:String(r['Liên Hệ']||'').trim(),
+    description:String(r['Mô Tả']||'').trim(),
+    addedBy:String(r['Người Thêm']||'Import Excel').trim(),
+    createdAt:dt,
+    photo:photos[i]||SAMPLE_PHOTOS[i%3]
+  }));
+
+  const map=new Map(getLocs().map(l=>[l.id,l]));
+  items.forEach(item=>map.set(item.id,item));
+  saveLocs([...map.values()]);
+  return{totalRows:items.length,photos:photos.length};
+}
+
+function downloadExcelTemplate(){
+  if(typeof XLSX==='undefined'){ alert('Thư viện Excel chưa tải!'); return; }
+  const data=[
+    {'Mã Địa Điểm':'FAC-001','Tên Địa Điểm (*)':'Cổng Chính','Loại':'gate','Khu / Khu Vực (*)':'Khu Cổng Vào','Tòa Nhà':'Cổng BV','Tầng':'Tầng Trệt','Giờ Hoạt Động':'24/7','Liên Hệ':'0901000001','Mô Tả':'Cổng sắt màu xanh lá, bảo vệ trực 24/7','Người Thêm':'Admin'},
+    {'Mã Địa Điểm':'FAC-002','Tên Địa Điểm (*)':'Phân Xưởng Đóng Gói','Loại':'workshop','Khu / Khu Vực (*)':'Khu A Sản Xuất','Tòa Nhà':'Nhà Máy A1','Tầng':'Tầng 1','Giờ Hoạt Động':'07:00-17:00','Liên Hệ':'Nhánh 102','Mô Tả':'Cổng màu xanh dương, biển hiệu đỏ','Người Thêm':'Admin'},
+  ];
+  const ws=XLSX.utils.json_to_sheet(data);
+  const wb=XLSX.utils.book_new();
+  XLSX.utils.book_append_sheet(wb,ws,'DiaDiem');
+  XLSX.writeFile(wb,'Mau_Nhap_Dia_Diem_Nha_May.xlsx');
+}
+
+function exportBackupLocs(){
+  const all=getLocs();
+  const blob=new Blob([JSON.stringify(all,null,2)],{type:'application/json'});
+  const a=document.createElement('a'); a.href=URL.createObjectURL(blob);
+  a.download=`Sao_Luu_Dia_Diem_${new Date().toISOString().split('T')[0]}_${all.length}diadem.json`; a.click();
+}
+
+function importBackupLocs(file){
+  const fr=new FileReader();
+  fr.onload=e=>{
+    try {
+      const data=JSON.parse(e.target.result);
+      if(!Array.isArray(data)) throw new Error();
+      const map=new Map(getLocs().map(l=>[l.id,l]));
+      data.forEach(item=>{if(item&&item.id&&item.name)map.set(item.id,item);});
+      saveLocs([...map.values()]);
+      populateLocFilters(); populateRouteSelects(); renderLocGrid(); updateHeaderKPIs(); renderQRGrid();
+      alert(`✓ Phục hồi ${data.length} địa điểm thành công!`);
+    } catch { alert('File sao lưu không đúng định dạng!'); }
+  };
+  fr.readAsText(file);
+}
+
+// ─────────────────────────────────────────────────────────────────
+// TAB SWITCHER
+// ─────────────────────────────────────────────────────────────────
+function switchTab(tabId){
+  document.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active'));
+  document.querySelectorAll('.tab-pane').forEach(p=>p.classList.remove('active'));
+  const btn=document.querySelector(`[data-tab="${tabId}"]`);
+  if(btn) btn.classList.add('active');
+  const pane=document.getElementById(tabId);
+  if(pane) pane.classList.add('active');
+  if(tabId==='tab-qr') renderQRGrid();
+  if(tabId==='tab-route') renderRouteCards();
+}
+
+// ─────────────────────────────────────────────────────────────────
+// DEEP LINK HANDLER
+// ─────────────────────────────────────────────────────────────────
+function handleDeepLink(){
+  const params=new URLSearchParams(window.location.search);
+  const locId=params.get('location');
+  if(locId){
+    setTimeout(()=>{ openLocModal(locId); },500);
+  }
+}
+
+// ─────────────────────────────────────────────────────────────────
+// INIT
+// ─────────────────────────────────────────────────────────────────
+document.addEventListener('DOMContentLoaded', ()=>{
+  initLocs(); initRoutes();
+
+  populateLocFilters();
+  populateRouteSelects();
+  renderLocGrid();
+  renderRouteCards();
+  updateHeaderKPIs();
+  handleDeepLink();
+
+  // Tab switching
+  document.querySelectorAll('.tab-btn').forEach(btn=>{
+    btn.addEventListener('click',()=>switchTab(btn.getAttribute('data-tab')));
+  });
+
+  // Loc Filters
+  ['search-loc','f-zone','f-building','f-type','f-floor'].forEach(id=>{
+    document.getElementById(id)?.addEventListener(id==='search-loc'?'input':'change',()=>{locPage=1;renderLocGrid();});
+  });
+  document.getElementById('btn-clear-loc').addEventListener('click',()=>{
+    document.getElementById('search-loc').value='';
+    ['f-zone','f-building','f-type','f-floor'].forEach(id=>document.getElementById(id).value=id==='f-type'?'ALL':'ALL');
+    locPage=1; renderLocGrid();
+  });
+
+  // Pagination
+  document.getElementById('btn-loc-prev').addEventListener('click',()=>{if(locPage>1){locPage--;renderLocGrid();}});
+  document.getElementById('btn-loc-next').addEventListener('click',()=>{
+    const total=Math.ceil(filteredLocs.length/PAGE_SIZE)||1;
+    if(locPage<total){locPage++;renderLocGrid();}
+  });
+
+  // Excel
+  document.getElementById('btn-upload-excel').addEventListener('click',()=>{document.getElementById('file-excel').value='';document.getElementById('file-excel').click();});
+  document.getElementById('file-excel').addEventListener('change',async e=>{
+    const f=e.target.files[0]; if(!f) return;
+    try {
+      const r=await importExcelFile(f);
+      populateLocFilters(); populateRouteSelects(); renderLocGrid(); updateHeaderKPIs(); renderQRGrid();
+      alert(`⚡ Nạp Excel thành công!\n• ${r.totalRows} địa điểm\n• ${r.photos} ảnh trích xuất`);
+    } catch(err){ alert(`Lỗi: ${err.message}`); }
+  });
+  document.getElementById('btn-excel-template').addEventListener('click',downloadExcelTemplate);
+  document.getElementById('btn-backup-loc').addEventListener('click',exportBackupLocs);
+  document.getElementById('btn-restore-loc').addEventListener('click',()=>{document.getElementById('file-backup-loc').value='';document.getElementById('file-backup-loc').click();});
+  document.getElementById('file-backup-loc').addEventListener('change',e=>{if(e.target.files[0])importBackupLocs(e.target.files[0]);});
+
+  // Route finder
+  document.getElementById('btn-find-route').addEventListener('click',findRoutes);
+  document.getElementById('btn-back-routes').addEventListener('click',()=>{
+    document.getElementById('route-list-view').classList.remove('hidden');
+    document.getElementById('step-navigator').classList.add('hidden');
+  });
+  document.getElementById('btn-step-prev').addEventListener('click',()=>{if(currentStepIdx>0){currentStepIdx--;renderCurrentStep();}});
+  document.getElementById('btn-step-next').addEventListener('click',()=>{
+    if(currentStepIdx<currentRouteSteps.length-1){currentStepIdx++;renderCurrentStep();}
+    else alert('🎉 Đã đến nơi! Chúc mừng bạn tìm được đường đi thành công!');
+  });
+
+  // Add Location form
+  document.getElementById('inp-loc-photo').addEventListener('change',e=>handleLocPhotoChange(e.target));
+  document.getElementById('form-add-loc').addEventListener('submit',saveNewLoc);
+  document.getElementById('btn-reset-loc-form').addEventListener('click',()=>{
+    document.getElementById('form-add-loc').reset(); newLocPhoto=null;
+    document.getElementById('loc-photo-preview-wrap').classList.add('hidden');
+  });
+
+  // Route builder
+  document.getElementById('btn-add-step').addEventListener('click',addStepToBuilder);
+  document.getElementById('btn-save-route').addEventListener('click',saveRoute);
+  document.getElementById('btn-reset-route-form').addEventListener('click',()=>{
+    document.getElementById('inp-route-name').value='';
+    document.getElementById('inp-route-from').value='';
+    document.getElementById('inp-route-to').value='';
+    document.getElementById('inp-route-time').value='';
+    document.getElementById('inp-route-dist').value='';
+    routeStepBuilderList=[];
+    renderStepsBuilder();
+  });
+
+  // QR
+  document.getElementById('btn-gen-qr').addEventListener('click',()=>generatePreviewQR());
+  document.getElementById('btn-print-all-qr').addEventListener('click',printAllQR);
+
+  // Close modal on bg click
+  document.getElementById('loc-modal').addEventListener('click',e=>{
+    if(e.target===document.getElementById('loc-modal')) document.getElementById('loc-modal').classList.remove('active');
+  });
+});
+</script>
+</body>
+</html>
