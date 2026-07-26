@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="vi" data-theme="light">
 <head>
     <meta charset="UTF-8">
@@ -17,6 +17,22 @@
     <script src="data.js"></script>
 
     <link rel="stylesheet" href="styles.css">
+<style>
+        /* ====== UNIVERSAL SCROLLABLE NAV ====== */
+        .nav-root { position: sticky; top: 0; z-index: 9999; background: #020617; border-bottom: 1px solid #1e293b; box-shadow: 0 2px 16px rgba(0,0,0,.5); }
+        .nav-inner { display: flex; align-items: center; height: 40px; position: relative; }
+        .nav-track { flex: 1; overflow-x: auto; overflow-y: hidden; display: flex; align-items: center; gap: 4px; padding: 0 6px; scrollbar-width: none; -ms-overflow-style: none; scroll-behavior: smooth; }
+        .nav-track::-webkit-scrollbar { display: none; }
+        .nav-fade-l, .nav-fade-r { position: absolute; top: 0; bottom: 0; width: 36px; pointer-events: none; z-index: 2; transition: opacity .2s; }
+        .nav-fade-l { left: 32px; background: linear-gradient(to right, #020617 0%, transparent 100%); }
+        .nav-fade-r { right: 32px; background: linear-gradient(to left, #020617 0%, transparent 100%); }
+        .nav-arr { flex-shrink: 0; width: 30px; height: 40px; background: #020617; border: none; color: #475569; font-size: 16px; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: color .15s; z-index: 3; }
+        .nav-arr:hover { color: #e2e8f0; }
+        .nav-arr:disabled { opacity: .2; cursor: default; }
+        .nav-track a { flex-shrink: 0; display: inline-flex; align-items: center; gap: 4px; padding: 3px 9px; border-radius: 7px; border: 1px solid transparent; font-size: 11px; font-weight: 600; text-decoration: none; white-space: nowrap; transition: background .15s, border-color .15s, transform .1s; }
+        .nav-track a:hover { transform: translateY(-1px); filter: brightness(1.15); }
+        .nav-track .nav-label { flex-shrink: 0; font-size: 9px; font-weight: 800; text-transform: uppercase; letter-spacing: .07em; color: #334155; white-space: nowrap; padding: 0 2px; }
+</style>
 </head>
 <body>
     <!-- PRIVATE SECURITY LOCK MODAL GATE -->
@@ -46,21 +62,32 @@
     <!-- MAIN SYSTEM INTERFACE (LOCKED UNTIL PIN ENTERED) -->
     <div id="main-app-content" style="display: none;">
     <!-- UNIVERSAL TOP NAVIGATION BAR FOR INSTANT SWITCHING -->
-    <nav style="background: #0b132b; border-bottom: 1px solid #1e293b; padding: 10px 24px; display: flex; align-items: center; justify-content: space-between; font-size: 12px; font-weight: 700; color: #fff; position: sticky; top: 0; z-index: 9999; box-shadow: 0 4px 15px rgba(0,0,0,0.4);">
-        <div style="display: flex; gap: 8px; align-items: center; flex-wrap: wrap;">
-            <span style="color: #94a3b8; font-size: 10px; font-weight: 900; text-transform: uppercase; letter-spacing: 1px;">Chuyển Ứng Dụng:</span>
-            <a href="../index.html" style="color: #38bdf8; text-decoration: none; padding: 5px 12px; border-radius: 8px; background: rgba(56, 189, 248, 0.15); display: flex; align-items: center; gap: 6px;"><i class="fa-solid fa-house"></i> 🏠 Trang Chủ Hub</a>
-            <a href="https://github.com/levutuong01694242789-sketch/hub-quan-ly-kho#readme" target="_blank" style="color: #4ade80; text-decoration: none; padding: 5px 12px; border-radius: 8px; background: rgba(74, 222, 128, 0.15); display: flex; align-items: center; gap: 6px;"><i class="fa-solid fa-book-open"></i> 📖 Trang Giới Thiệu Master</a>
-            <a href="../he_thong_hop_nhat_fifo_sap/index.html" style="color: #a855f7; text-decoration: none; padding: 5px 12px; border-radius: 8px; background: rgba(168, 85, 247, 0.15); display: flex; align-items: center; gap: 6px;"><i class="fa-solid fa-wand-magic-sparkles"></i> 🌟 Hợp Nhất 1-Chạm</a>
-            <a href="../procurement_supplier_system/index.html" style="color: #2dd4bf; text-decoration: none; padding: 5px 12px; border-radius: 8px; background: rgba(45, 212, 191, 0.15); display: flex; align-items: center; gap: 6px;"><i class="fa-solid fa-truck-field"></i> 🛒 Thu Mua & Báo Giá NCC</a>
-            <a href="../warehouse_financial_system/index.html" style="color: #22c55e; text-decoration: none; padding: 5px 12px; border-radius: 8px; background: rgba(34, 197, 94, 0.15); display: flex; align-items: center; gap: 6px;"><i class="fa-solid fa-sack-dollar"></i> 💰 Tài Chính & Chi Phí Kho</a>
-            <a href="../wms_vdt_sap4hana/index.html" style="color: #38bdf8; text-decoration: none; padding: 5px 12px; border-radius: 8px; background: rgba(56, 189, 248, 0.3); border: 1px solid #38bdf8; display: flex; align-items: center; gap: 6px;"><i class="fa-solid fa-table-cells-large"></i> 🏢 Kho Động 2D SAP</a>
-            <a href="../mo_app_tru_kho.html" style="color: #60a5fa; text-decoration: none; padding: 5px 12px; border-radius: 8px; background: rgba(96, 165, 250, 0.15); display: flex; align-items: center; gap: 6px;"><i class="fa-solid fa-chart-line"></i> 📊 Trữ Kho 3 Ngày & PO</a>
-            <a href="../it_asset.html" style="color: #c084fc; text-decoration: none; padding: 5px 12px; border-radius: 8px; background: rgba(192, 132, 252, 0.15); display: flex; align-items: center; gap: 6px;"><i class="fa-solid fa-laptop-code"></i> 💻 IT Asset QR</a>
+        <!-- UNIVERSAL NAV: Scrollable horizontal, scales to unlimited repos -->
+    <nav class="nav-root" id="nav-root">
+      <div class="nav-inner">
+        <button class="nav-arr" id="nav-l" onclick="navScroll(-1)" title="Trước">&#8249;</button>
+        <div class="nav-fade-l" id="nav-fl"></div>
+        <div class="nav-track" id="nav-track">
+          <span class="nav-label">Chuyển:</span>
+          <a href="../index.html" style="color:#38bdf8;background:rgba(56,189,248,.15);border-color:rgba(56,189,248,.3);">🏠 Hub</a>
+          <a href="https://github.com/levutuong01694242789-sketch/hub-quan-ly-kho#readme" target="_blank" style="color:#34d399;background:rgba(52,211,153,.12);">📖 Master</a>
+          <a href="../enterprise-qr-asset-manager/index.html" style="color:#93c5fd;background:rgba(59,130,246,.15);">1.🏢 Tài Sản QR</a>
+          <a href="../he_thong_hop_nhat_fifo_sap/index.html" style="color:#c4b5fd;background:rgba(139,92,246,.12);">2.🌟 Hợp Nhất</a>
+          <a href="../procurement_supplier_system/index.html" style="color:#5eead4;background:rgba(20,184,166,.12);">3.🛒 Thu Mua</a>
+          <a href="../wms_vdt_sap4hana/index.html" style="color:#7dd3fc;background:rgba(14,165,233,.12);">4.🏢 Kho 2D SAP</a>
+          <a href="../mo_app_tru_kho.html" style="color:#a5b4fc;background:rgba(99,102,241,.12);">5.📊 Trữ Kho PO</a>
+          <a href="../it_asset.html" style="color:#d8b4fe;background:rgba(168,85,247,.12);">6.💻 IT Asset</a>
+          <a href="../quan_ly_kho_fifo/README.md" style="color:#fcd34d;background:rgba(245,158,11,.12);">7.📦 Engine FIFO</a>
+          <a href="../warehouse_financial_system/index.html" style="color:#6ee7b7;background:rgba(16,185,129,.12);">8.💰 Tài Chính</a>
+          <a href="../kiem_ke_kho.html" style="color:#fca5a5;background:rgba(239,68,68,.12);">9.📋 Kiểm Kê Kho</a>
+          <a href="../visual-bin-location-manager/index.html" style="color:#67e8f9;background:rgba(6,182,212,.15);">10.📷 Vị Trí Ảnh</a>
+          <a href="../factory-photo-guide/index.html" style="color:#fdba74;background:rgba(234,88,12,.12);">11.🏭 Factory Guide</a>
+          <a href="../sap_s4hana_ebook/index.html" style="color:#fde68a;background:rgba(234,179,8,.15);">12.📘 SAP E-Book</a>
+          <a href="../knowledge-graph/index.html" style="color:#e879f9;background:rgba(217,70,239,.15);">13.🕸️ Knowledge Graph</a>
         </div>
-        <div style="font-size: 11px; color: #94a3b8;">
-            <i class="fa-solid fa-user-shield" style="color: #22c55e;"></i> Private Protected Suite
-        </div>
+        <div class="nav-fade-r" id="nav-fr"></div>
+        <button class="nav-arr" id="nav-r" onclick="navScroll(1)" title="Sau">&#8250;</button>
+      </div>
     </nav>
 
     <!-- Top Header Navigation -->

@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="vi">
 <head>
   <meta charset="UTF-8">
@@ -56,6 +56,22 @@
       flex-shrink: 0;
     }
   </style>
+<style>
+        /* ====== UNIVERSAL SCROLLABLE NAV ====== */
+        .nav-root { position: sticky; top: 0; z-index: 9999; background: #020617; border-bottom: 1px solid #1e293b; box-shadow: 0 2px 16px rgba(0,0,0,.5); }
+        .nav-inner { display: flex; align-items: center; height: 40px; position: relative; }
+        .nav-track { flex: 1; overflow-x: auto; overflow-y: hidden; display: flex; align-items: center; gap: 4px; padding: 0 6px; scrollbar-width: none; -ms-overflow-style: none; scroll-behavior: smooth; }
+        .nav-track::-webkit-scrollbar { display: none; }
+        .nav-fade-l, .nav-fade-r { position: absolute; top: 0; bottom: 0; width: 36px; pointer-events: none; z-index: 2; transition: opacity .2s; }
+        .nav-fade-l { left: 32px; background: linear-gradient(to right, #020617 0%, transparent 100%); }
+        .nav-fade-r { right: 32px; background: linear-gradient(to left, #020617 0%, transparent 100%); }
+        .nav-arr { flex-shrink: 0; width: 30px; height: 40px; background: #020617; border: none; color: #475569; font-size: 16px; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: color .15s; z-index: 3; }
+        .nav-arr:hover { color: #e2e8f0; }
+        .nav-arr:disabled { opacity: .2; cursor: default; }
+        .nav-track a { flex-shrink: 0; display: inline-flex; align-items: center; gap: 4px; padding: 3px 9px; border-radius: 7px; border: 1px solid transparent; font-size: 11px; font-weight: 600; text-decoration: none; white-space: nowrap; transition: background .15s, border-color .15s, transform .1s; }
+        .nav-track a:hover { transform: translateY(-1px); filter: brightness(1.15); }
+        .nav-track .nav-label { flex-shrink: 0; font-size: 9px; font-weight: 800; text-transform: uppercase; letter-spacing: .07em; color: #334155; white-space: nowrap; padding: 0 2px; }
+</style>
 </head>
 <body class="bg-[#f8fafc] text-slate-900 selection:bg-blue-500 selection:text-white min-h-screen flex flex-col justify-between">
 
@@ -448,5 +464,31 @@
   <script src="js/qr-label-printer.js"></script>
   <script src="js/qr-scanner.js"></script>
   <script src="js/app.js"></script>
+
+    <script>
+    function navScroll(dir) { const t = document.getElementById('nav-track'); if(t) t.scrollBy({ left: dir * 180, behavior: 'smooth' }); }
+    function updateNavFade() {
+      const t = document.getElementById('nav-track'); if(!t) return;
+      const fl = document.getElementById('nav-fl'), fr = document.getElementById('nav-fr');
+      const nl = document.getElementById('nav-l'), nr = document.getElementById('nav-r');
+      if(fl && fr && nl && nr) {
+        const atStart = t.scrollLeft < 8, atEnd = t.scrollLeft + t.clientWidth >= t.scrollWidth - 8;
+        fl.style.opacity = atStart ? '0' : '1'; fr.style.opacity = atEnd ? '0' : '1';
+        nl.disabled = atStart; nr.disabled = atEnd;
+      }
+    }
+    window.addEventListener('DOMContentLoaded', function() {
+      const t = document.getElementById('nav-track');
+      if(t) { t.addEventListener('scroll', updateNavFade); updateNavFade(); }
+      const cur = location.pathname.split('/').pop() || 'index.html';
+      document.querySelectorAll('.nav-track a').forEach(a => {
+        const href = a.getAttribute('href').split('/').pop();
+        if (href === cur || (cur === '' && href === 'index.html')) {
+          a.style.outline = '1.5px solid currentColor'; a.style.outlineOffset = '-1px'; a.style.fontWeight = '900';
+        }
+      });
+    });
+    </script>
+
 </body>
 </html>
