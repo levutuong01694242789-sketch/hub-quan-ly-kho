@@ -333,17 +333,30 @@
 
         const network = new vis.Network(container, data, options);
 
-        // Click Event Handler for Node Info Panel
-        network.on("selectNode", function (params) {
-            const nodeId = params.nodes[0];
-            const node = nodes.get(nodeId);
-            if (node) {
-                showNodeInfo(node);
+        // Click & Double Click Event Handlers
+        network.on("click", function (params) {
+            if (params.nodes.length > 0) {
+                const nodeId = params.nodes[0];
+                const node = nodes.get(nodeId);
+                if (node) {
+                    showNodeInfo(node);
+                    network.focus(nodeId, { scale: 1.1, animation: true });
+                }
+            } else {
+                closeInfoPanel();
             }
         });
 
-        network.on("deselectNode", function () {
-            closeInfoPanel();
+        network.on("doubleClick", function (params) {
+            if (params.nodes.length > 0) {
+                const nodeId = params.nodes[0];
+                const node = nodes.get(nodeId);
+                if (node && node.url) {
+                    window.location.href = node.url;
+                } else if (node && node.ebookCh) {
+                    window.location.href = "../sap_s4hana_ebook/index.html";
+                }
+            }
         });
 
         function showNodeInfo(node) {
