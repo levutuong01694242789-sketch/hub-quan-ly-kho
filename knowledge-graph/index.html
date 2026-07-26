@@ -1,4 +1,4 @@
-﻿﻿﻿﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="vi">
 <head>
     <meta charset="UTF-8">
@@ -109,36 +109,26 @@
             position: relative;
         }
 
-        /* Centered High-Contrast Modal Popup */
-        .info-panel-overlay {
-            position: fixed;
-            inset: 0;
-            background: rgba(2, 6, 23, 0.75);
-            backdrop-filter: blur(12px);
-            z-index: 1000;
-            display: none;
-            align-items: center;
-            justify-content: center;
-            padding: 1rem;
-        }
-        .info-panel-overlay.active {
-            display: flex !important;
-        }
+        /* Side Info Panel */
         .info-panel {
-            width: 100%;
-            max-width: 420px;
-            background: #0f172a;
-            border: 2px solid #e879f9;
-            border-radius: 24px;
-            padding: 24px;
-            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.9), 0 0 40px rgba(232, 121, 249, 0.4);
-            max-height: 85vh;
+            position: absolute;
+            top: 16px;
+            right: 16px;
+            width: 360px;
+            max-height: calc(100vh - 80px);
+            background: rgba(15, 23, 42, 0.92);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(51, 65, 85, 0.8);
+            border-radius: 20px;
+            padding: 20px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.6);
+            z-index: 40;
             overflow-y: auto;
-            animation: popIn 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            transform: translateX(400px);
+            transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
         }
-        @keyframes popIn {
-            from { opacity: 0; transform: scale(0.85); }
-            to { opacity: 1; transform: scale(1); }
+        .info-panel.active {
+            transform: translateX(0);
         }
 
         /* Glass Floating Control Bar */
@@ -162,10 +152,9 @@
     <script src="../components/universal-nav.js"></script>
 </head>
 <body>
-    <universal-nav></universal-nav>
 
     <!-- UNIVERSAL TOP NAV -->
-    
+    <universal-nav></universal-nav>
 
     <!-- GRAPH CANVAS -->
     <div id="network-container">
@@ -197,21 +186,244 @@
             </button>
         </div>
 
-        <!-- CENTER POPUP MODAL OVERLAY -->
-        <div class="info-panel-overlay" id="info-panel-overlay" onclick="if(event.target===this) closeInfoPanel()">
-            <div class="info-panel" id="info-panel">
-                <button onclick="closeInfoPanel()" class="text-slate-400 hover:text-white float-right text-sm"><i class="fa-solid fa-xmark"></i></button>
-                <div id="panel-content">
-                    <div class="text-center text-slate-500 py-10">
-                        <i class="fa-solid fa-mouse-pointer text-3xl mb-2"></i>
-                        <p class="text-xs">Nhấp vào một Nút trên mạng lưới để xem chi tiết liên kết & mở bài học / ứng dụng.</p>
-                    </div>
+        <!-- SIDE INFO PANEL -->
+        <div class="info-panel" id="info-panel">
+            <button onclick="closeInfoPanel()" class="text-slate-400 hover:text-white float-right text-sm"><i class="fa-solid fa-xmark"></i></button>
+            <div id="panel-content">
+                <div class="text-center text-slate-500 py-10">
+                    <i class="fa-solid fa-mouse-pointer text-3xl mb-2"></i>
+                    <p class="text-xs">Nhấp vào một Nút trên mạng lưới để xem chi tiết liên kết & mở bài học / ứng dụng.</p>
                 </div>
             </div>
         </div>
 
     </div>
 
-    
+    <script>
+        function navScroll(dir) {
+            document.getElementById('nav-track').scrollBy({ left: dir * 180, behavior: 'smooth' });
+        }
+
+        // Graph Data Initialization
+        const nodesData = [
+            // --- HUB MODULE NODES (Group: MODULE) ---
+            { id: 'm1', label: '1. Tài Sản QR', group: 'MODULE', shape: 'dot', size: 25, color: '#3b82f6', url: '../enterprise-qr-asset-manager/index.html', desc: 'Quản lý 11.000+ Pallet & Thiết bị, Quét QR Camera & Studio In Nhiệt.' },
+            { id: 'm2', label: '2. Hợp Nhất 1-Chạm', group: 'MODULE', shape: 'dot', size: 28, color: '#8b5cf6', url: '../he_thong_hop_nhat_fifo_sap/index.html', desc: 'Tự động ghép nối Phân bổ FIFO với Ma trận 4,032 ô kệ SAP 2D.' },
+            { id: 'm3', label: '3. Phân Hệ Thu Mua', group: 'MODULE', shape: 'dot', size: 25, color: '#14b8a6', url: '../procurement_supplier_system/index.html', desc: 'Tra cứu 366 mặt hàng, Báo giá NCC Việt Nam & Xu hướng giá Live.' },
+            { id: 'm4', label: '4. Kho Động SAP 2D', group: 'MODULE', shape: 'dot', size: 28, color: '#0ea5e9', url: '../wms_vdt_sap4hana/index.html', desc: 'Sơ đồ ma trận 4,032 ô kệ cao tầng (Dãy A-H) + 6 Vùng đệm sàn.' },
+            { id: 'm5', label: '5. Định Mức PO', group: 'MODULE', shape: 'dot', size: 22, color: '#6366f1', url: '../mo_app_tru_kho.html', desc: 'Định mức trữ kho 3 ngày & Tự động xuất Đơn mua hàng PO Excel.' },
+            { id: 'm6', label: '6. IT Asset QR', group: 'MODULE', shape: 'dot', size: 22, color: '#a855f7', url: '../it_asset.html', desc: 'Quản lý cấp phát thiết bị CNTT, Laptop, Máy in & Quét mã QR.' },
+            { id: 'm7', label: '7. Engine FIFO', group: 'MODULE', shape: 'dot', size: 24, color: '#f59e0b', url: '../quan_ly_kho_fifo/README.md', desc: 'Engine Python phân bổ xuất kho FIFO tự động ghép nối tồn thực tế.' },
+            { id: 'm8', label: '8. Tài Chính P&L', group: 'MODULE', shape: 'dot', size: 28, color: '#10b981', url: '../warehouse_financial_system/index.html', desc: 'Quản trị chi phí kho, P&L Bóc tách 5 nhóm, Khấu hao & Hao hụt Pallet.' },
+            { id: 'm9', label: '9. Kiểm Kê Kho', group: 'MODULE', shape: 'dot', size: 26, color: '#ef4444', url: '../kiem_ke_kho.html', desc: 'Kiểm kê tự động hóa & Mô phỏng sơ đồ chuyển động SVG 12 kho.' },
+            { id: 'm10', label: '10. Vị Trí Ảnh Kho', group: 'MODULE', shape: 'dot', size: 25, color: '#06b6d4', url: '../visual-bin-location-manager/index.html', desc: 'Quản lý vị trí kệ bằng ảnh trực quan, gán góc kệ cuộn PE, bao bì.' },
+            { id: 'm11', label: '11. Factory Guide', group: 'MODULE', shape: 'dot', size: 25, color: '#f97316', url: '../factory-photo-guide/index.html', desc: 'Bản đồ ảnh nhà máy + Hướng dẫn đường đi từng bước & QR dán tường.' },
+            { id: 'm12', label: '12. SAP E-Book', group: 'MODULE', shape: 'dot', size: 30, color: '#eab308', url: '../sap_s4hana_ebook/index.html', desc: 'E-Book 840 trang, 111 quy trình SAP WM/IM/MM/SD & 1,040 Screenshots.' },
+
+            // --- LOGISTICS FLOW NODES (Group: FLOW) ---
+            { id: 'f_inbound', label: '📦 NGUYÊN LIỆU NHẬP KHO', group: 'FLOW', shape: 'diamond', size: 22, color: '#38bdf8' },
+            { id: 'f_storage', label: '🏭 QUẢN LÝ TỒN KHO 2D', group: 'FLOW', shape: 'diamond', size: 22, color: '#818cf8' },
+            { id: 'f_fifo', label: '⚡ PHÂN BỔ XUẤT FIFO', group: 'FLOW', shape: 'diamond', size: 22, color: '#fbbf24' },
+            { id: 'f_audit', label: '📋 KIỂM KÊ & HAO HỤT', group: 'FLOW', shape: 'diamond', size: 22, color: '#f87171' },
+            { id: 'f_finance', label: '💰 BÁO CÁO P&L TÀI CHÍNH', group: 'FLOW', shape: 'diamond', size: 22, color: '#34d399' },
+
+            // --- SAP PROCESS T-CODES (Group: SAP_WM, SAP_MM, SAP_SD) ---
+            { id: 'sap_migo', label: 'T-Code: MIGO (Nhập Kho)', group: 'SAP_MM', shape: 'box', color: '#1e293b', font: { color: '#38bdf8' }, ebookCh: 15, desc: 'Quy trình Goods Receipt cho Đơn mua hàng PO hoặc Sản xuất.' },
+            { id: 'sap_me21n', label: 'T-Code: ME21N (Tạo PO)', group: 'SAP_MM', shape: 'box', color: '#1e293b', font: { color: '#38bdf8' }, ebookCh: 8, desc: 'Tạo Purchase Order đặt mua nguyên vật liệu từ Nhà cung cấp.' },
+            { id: 'sap_lt01', label: 'T-Code: LT01 (Tạo TO WM)', group: 'SAP_WM', shape: 'box', color: '#1e293b', font: { color: '#fde68a' }, ebookCh: 32, desc: 'Tạo Transfer Order cất hàng / xuất hàng theo ô kệ Kệ SAP WM.' },
+            { id: 'sap_ls01n', label: 'T-Code: LS01N (Tạo Master Bin)', group: 'SAP_WM', shape: 'box', color: '#1e293b', font: { color: '#fde68a' }, ebookCh: 28, desc: 'Khai báo mã vị trí ô kệ Storage Bin trong Ma trận 4,032 ô kệ.' },
+            { id: 'sap_lx02', label: 'T-Code: LX02 (Stock Overview WM)', group: 'SAP_WM', shape: 'box', color: '#1e293b', font: { color: '#fde68a' }, ebookCh: 45, desc: 'Tra cứu tồn kho chi tiết từng ô kệ, mã Batch và hạn sử dụng.' },
+            { id: 'sap_mi01', label: 'T-Code: MI01 (Tạo Phếu Kiểm Kê)', group: 'SAP_WM', shape: 'box', color: '#1e293b', font: { color: '#fca5a5' }, ebookCh: 72, desc: 'Khởi tạo đợt Physical Inventory Count cho Kho IM/WM.' },
+            { id: 'sap_va01', label: 'T-Code: VA01 (Tạo Sales Order)', group: 'SAP_SD', shape: 'box', color: '#1e293b', font: { color: '#c4b5fd' }, ebookCh: 90, desc: 'Lên đơn bán hàng SO xuất kho cho khách hàng/chuỗi siêu thị.' }
+        ];
+
+        const edgesData = [
+            // Flow Connections
+            { from: 'f_inbound', to: 'f_storage', label: 'Cất kệ SAP 2D', color: { color: '#38bdf8' } },
+            { from: 'f_storage', to: 'f_fifo', label: 'Nhặt hàng Lô cũ trước', color: { color: '#fbbf24' } },
+            { from: 'f_storage', to: 'f_audit', label: 'Đối soát định kỳ', color: { color: '#f87171' } },
+            { from: 'f_fifo', to: 'f_finance', label: 'Ghi nhận COGS / Giá vốn', color: { color: '#34d399' } },
+            { from: 'f_audit', to: 'f_finance', label: 'Hao hụt & Chênh lệch', color: { color: '#f87171' } },
+
+            // Module to Flow Mapping
+            { from: 'm3', to: 'f_inbound' },
+            { from: 'm5', to: 'm3', label: 'Định mức ROP -> Mua PO' },
+            { from: 'sap_me21n', to: 'm5' },
+            { from: 'sap_migo', to: 'f_inbound' },
+            { from: 'm4', to: 'f_storage' },
+            { from: 'm10', to: 'm4', label: 'Gán ảnh vị trí kệ' },
+            { from: 'm1', to: 'm4', label: 'In tem QR Pallet' },
+            { from: 'm7', to: 'f_fifo' },
+            { from: 'm2', to: 'm7', label: 'Tích hợp 1-Chạm' },
+            { from: 'm2', to: 'm4' },
+            { from: 'm9', to: 'f_audit' },
+            { from: 'm8', to: 'f_finance' },
+            { from: 'm6', to: 'm8', label: 'Khấu hao IT Asset' },
+
+            // SAP T-Code Mapping
+            { from: 'sap_ls01n', to: 'm4' },
+            { from: 'sap_lx02', to: 'm4' },
+            { from: 'sap_lt01', to: 'm2' },
+            { from: 'sap_mi01', to: 'm9' },
+            { from: 'sap_va01', to: 'm12' },
+            { from: 'm12', to: 'sap_migo' },
+            { from: 'm12', to: 'sap_lt01' },
+            { from: 'm11', to: 'm10', label: 'Dẫn đường đến Kệ Ảnh' }
+        ];
+
+        // VisNetwork Setup
+        const container = document.getElementById('network-container');
+        const nodes = new vis.DataSet(nodesData);
+        const edges = new vis.DataSet(edgesData);
+
+        const data = { nodes: nodes, edges: edges };
+        const options = {
+            nodes: {
+                font: { face: 'Inter', color: '#f8fafc', size: 12 },
+                borderWidth: 2,
+                shadow: true
+            },
+            edges: {
+                width: 1.5,
+                color: { color: 'rgba(100, 116, 139, 0.4)', highlight: '#e879f9' },
+                arrows: { to: { enabled: true, scaleFactor: 0.5 } },
+                smooth: { type: 'continuous' },
+                font: { face: 'Inter', size: 9, fill: '#070a12', color: '#94a3b8' }
+            },
+            physics: {
+                solver: 'forceAtlas2Based',
+                forceAtlas2Based: {
+                    gravitationalConstant: -50,
+                    centralGravity: 0.01,
+                    springLength: 100,
+                    springConstant: 0.08
+                },
+                maxVelocity: 50,
+                timestep: 0.35,
+                stabilization: { iterations: 150 }
+            },
+            interaction: {
+                hover: true,
+                tooltipDelay: 200,
+                zoomView: true
+            }
+        };
+
+        const network = new vis.Network(container, data, options);
+
+        // Click & Double Click Event Handlers
+        network.on("click", function (params) {
+            if (params.nodes.length > 0) {
+                const nodeId = params.nodes[0];
+                const node = nodes.get(nodeId);
+                if (node) {
+                    showNodeInfo(node);
+                    network.focus(nodeId, { scale: 1.1, animation: true });
+                }
+            } else {
+                closeInfoPanel();
+            }
+        });
+
+        network.on("doubleClick", function (params) {
+            if (params.nodes.length > 0) {
+                const nodeId = params.nodes[0];
+                const node = nodes.get(nodeId);
+                if (node && node.url) {
+                    window.location.href = node.url;
+                } else if (node && node.ebookCh) {
+                    window.location.href = "../sap_s4hana_ebook/index.html";
+                }
+            }
+        });
+
+        function showNodeInfo(node) {
+            const panel = document.getElementById('info-panel');
+            const content = document.getElementById('panel-content');
+
+            // Find connected nodes
+            const connectedNodeIds = network.getConnectedNodes(node.id);
+            const connectedNodes = nodes.get(connectedNodeIds);
+
+            let groupBadge = '';
+            if (node.group === 'MODULE') groupBadge = '<span class="bg-fuchsia-950 text-fuchsia-300 border border-fuchsia-500/30 text-[10px] font-bold px-2.5 py-0.5 rounded-full uppercase">12 Phân Hệ Hub</span>';
+            else if (node.group === 'FLOW') groupBadge = '<span class="bg-sky-950 text-sky-300 border border-sky-500/30 text-[10px] font-bold px-2.5 py-0.5 rounded-full uppercase">Luồng Vận Hành</span>';
+            else groupBadge = '<span class="bg-amber-950 text-amber-300 border border-amber-500/30 text-[10px] font-bold px-2.5 py-0.5 rounded-full uppercase">SAP T-Code</span>';
+
+            let actionBtn = '';
+            if (node.url) {
+                actionBtn = `<a href="${node.url}" class="mt-4 w-full bg-fuchsia-600 hover:bg-fuchsia-500 text-white font-bold text-xs py-2.5 rounded-xl transition flex items-center justify-center gap-2 shadow-lg shadow-fuchsia-600/30">
+                    Mở Ứng Dụng / Phân Hệ <i class="fa-solid fa-arrow-right text-[10px]"></i>
+                </a>`;
+            } else if (node.ebookCh) {
+                actionBtn = `<a href="../sap_s4hana_ebook/index.html" class="mt-4 w-full bg-yellow-500 hover:bg-yellow-400 text-slate-950 font-black text-xs py-2.5 rounded-xl transition flex items-center justify-center gap-2 shadow-lg shadow-yellow-500/30">
+                    Tra Cứu Trong SAP E-Book <i class="fa-solid fa-book-open text-[10px]"></i>
+                </a>`;
+            }
+
+            let linksHtml = connectedNodes.map(cn => `
+                <div onclick="focusOnNode('${cn.id}')" class="bg-slate-900/80 hover:bg-slate-800 border border-slate-800 p-2 rounded-lg cursor-pointer flex items-center justify-between text-xs text-slate-300 transition">
+                    <span>${cn.label}</span>
+                    <i class="fa-solid fa-chevron-right text-[10px] text-slate-500"></i>
+                </div>
+            `).join('');
+
+            content.innerHTML = `
+                <div class="space-y-3">
+                    <div class="flex justify-between items-center">${groupBadge}</div>
+                    <h3 class="text-base font-bold text-white font-heading">${node.label}</h3>
+                    <p class="text-xs text-slate-300 leading-relaxed">${node.desc || 'Thực thể liên kết trong luồng tri thức quản trị kho vận & SAP S/4HANA.'}</p>
+                    ${actionBtn}
+                    
+                    <div class="pt-4 border-t border-slate-800 mt-4">
+                        <span class="text-[10px] font-bold text-slate-400 uppercase tracking-wider block mb-2">Liên Kết Trực Tiếp (${connectedNodes.length}):</span>
+                        <div class="space-y-1.5 max-h-48 overflow-y-auto pr-1">
+                            ${linksHtml}
+                        </div>
+                    </div>
+                </div>
+            `;
+            panel.classList.add('active');
+        }
+
+        function closeInfoPanel() {
+            document.getElementById('info-panel').classList.remove('active');
+        }
+
+        function focusOnNode(nodeId) {
+            network.selectNodes([nodeId]);
+            network.focus(nodeId, { scale: 1.2, animation: true });
+            const node = nodes.get(nodeId);
+            if (node) showNodeInfo(node);
+        }
+
+        function resetZoom() {
+            network.fit({ animation: { duration: 500 } });
+        }
+
+        function filterGraphGroup(group) {
+            if (group === 'ALL') {
+                nodes.forEach(n => nodes.update({ id: n.id, hidden: false }));
+            } else {
+                nodes.forEach(n => {
+                    nodes.update({ id: n.id, hidden: n.group !== group });
+                });
+            }
+            network.fit();
+        }
+
+        // Live Search Input
+        document.getElementById('graph-search').addEventListener('input', function(e) {
+            const query = e.target.value.toLowerCase().trim();
+            if (!query) {
+                nodes.forEach(n => nodes.update({ id: n.id, hidden: false }));
+                return;
+            }
+            nodes.forEach(n => {
+                const match = n.label.toLowerCase().includes(query) || (n.desc && n.desc.toLowerCase().includes(query));
+                nodes.update({ id: n.id, hidden: !match });
+            });
+        });
+    </script>
 </body>
 </html>
