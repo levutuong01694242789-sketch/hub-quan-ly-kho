@@ -1,4 +1,4 @@
-﻿﻿﻿﻿<!DOCTYPE html>
+﻿﻿﻿﻿﻿<!DOCTYPE html>
 <html lang="vi">
 <head>
   <meta charset="UTF-8">
@@ -97,52 +97,12 @@
         .nav-track a:hover { transform: translateY(-1px); filter: brightness(1.15); }
         .nav-track .nav-label { flex-shrink: 0; font-size: 9px; font-weight: 800; text-transform: uppercase; letter-spacing: .07em; color: #334155; white-space: nowrap; padding: 0 2px; }
 </style>
+    <script src="../components/universal-nav.js"></script>
 </head>
 <body>
+    <universal-nav></universal-nav>
     <!-- UNIVERSAL NAV: Scrollable horizontal, scales to unlimited repos -->
-    <nav class="nav-root" id="nav-root">
-      <div class="nav-inner">
-        <button class="nav-arr" id="nav-l" onclick="navScroll(-1)" title="Trước">&#8249;</button>
-        <div class="nav-fade-l" id="nav-fl"></div>
-        <div class="nav-track" id="nav-track">
-          <span class="nav-label">Chuyển:</span>
-          <a href="../index.html" style="color:#38bdf8;background:rgba(56,189,248,.15);border-color:rgba(56,189,248,.3);">🏠 Hub</a>
-          <a href="https://github.com/levutuong01694242789-sketch/hub-quan-ly-kho#readme" target="_blank" style="color:#34d399;background:rgba(52,211,153,.12);">📖 Master</a>
-          <div class="nav-div"></div>
-          <a href="../enterprise-qr-asset-manager/index.html" style="color:#93c5fd;background:rgba(59,130,246,.15);">1.🏢 Tài Sản QR</a>
-          <a href="../he_thong_hop_nhat_fifo_sap/index.html" style="color:#c4b5fd;background:rgba(139,92,246,.12);">2.🌟 Hợp Nhất</a>
-          <a href="../procurement_supplier_system/index.html" style="color:#5eead4;background:rgba(20,184,166,.12);">3.🛒 Thu Mua</a>
-          <a href="../wms_vdt_sap4hana/index.html" style="color:#7dd3fc;background:rgba(14,165,233,.12);">4.🏢 Kho 2D SAP</a>
-          <a href="../mo_app_tru_kho.html" style="color:#a5b4fc;background:rgba(99,102,241,.12);">5.📊 Trữ Kho PO</a>
-          <a href="../it_asset.html" style="color:#d8b4fe;background:rgba(168,85,247,.12);">6.💻 IT Asset</a>
-          <a href="../quan_ly_kho_fifo/index.html" style="color:#fcd34d;background:rgba(245,158,11,.12);">7.📦 Engine FIFO</a>
-          <a href="../warehouse_financial_system/index.html" style="color:#6ee7b7;background:rgba(16,185,129,.12);">8.💰 Tài Chính</a>
-          <a href="../kiem_ke_kho.html" style="color:#fca5a5;background:rgba(239,68,68,.12);">9.📋 Kiểm Kê Kho</a>
-          <a href="../visual-bin-location-manager/index.html" style="color:#67e8f9;background:rgba(6,182,212,.15);">10.📷 Vị Trí Ảnh</a>
-          <a href="../factory-photo-guide/index.html" style="color:#fdba74;background:rgba(234,88,12,.12);">11.🏭 Factory Guide</a>
-          <a href="../sap_s4hana_ebook/index.html" style="color:#fde68a;background:rgba(234,179,8,.15);">12.📘 SAP E-Book</a>
-          <a href="../knowledge-graph/index.html" style="color:#e879f9;background:rgba(217,70,239,.15);">13.🕸️ Knowledge Graph</a>
-          <a href="../mobile-meeting-notetaker/index.html" style="color:#34d399;background:rgba(16,185,129,.15);">14.📱 Mobile Notetaker</a>
-        </div>
-          <a href="../enterprise-qr-asset-manager/index.html" style="color:#93c5fd;background:rgba(59,130,246,.15);">1.🏢 Tài Sản QR</a>
-          <a href="../he_thong_hop_nhat_fifo_sap/index.html" style="color:#c4b5fd;background:rgba(139,92,246,.12);">2.🌟 Hợp Nhất</a>
-          <a href="../procurement_supplier_system/index.html" style="color:#5eead4;background:rgba(20,184,166,.12);">3.🛒 Thu Mua</a>
-          <a href="../wms_vdt_sap4hana/index.html" style="color:#7dd3fc;background:rgba(14,165,233,.12);">4.🏢 Kho 2D SAP</a>
-          <a href="../mo_app_tru_kho.html" style="color:#a5b4fc;background:rgba(99,102,241,.12);">5.📊 Trữ Kho PO</a>
-          <a href="../it_asset.html" style="color:#d8b4fe;background:rgba(168,85,247,.12);">6.💻 IT Asset</a>
-          <a href="../quan_ly_kho_fifo/index.html" style="color:#fcd34d;background:rgba(245,158,11,.12);">7.📦 Engine FIFO</a>
-          <a href="../warehouse_financial_system/index.html" style="color:#6ee7b7;background:rgba(16,185,129,.12);">8.💰 Tài Chính</a>
-          <a href="../kiem_ke_kho.html" style="color:#fca5a5;background:rgba(239,68,68,.12);">9.📋 Kiểm Kê Kho</a>
-          <a href="../visual-bin-location-manager/index.html" style="color:#67e8f9;background:rgba(6,182,212,.15);">10.📷 Vị Trí Ảnh</a>
-          <a href="../factory-photo-guide/index.html" style="color:#fdba74;background:rgba(234,88,12,.12);">11.🏭 Factory Guide</a>
-          <a href="../sap_s4hana_ebook/index.html" style="color:#fde68a;background:rgba(234,179,8,.15);">12.📘 SAP E-Book</a>
-          <a href="../knowledge-graph/index.html" style="color:#e879f9;background:rgba(217,70,239,.15);">13.🕸️ Knowledge Graph</a>
-          <a href="../mobile-meeting-notetaker/index.html" style="color:#34d399;background:rgba(16,185,129,.15);">14.📱 Mobile Notetaker</a>
-        </div>
-        <div class="nav-fade-r" id="nav-fr"></div>
-        <button class="nav-arr" id="nav-r" onclick="navScroll(1)" title="Sau">&#8250;</button>
-      </div>
-    </nav>
+    
 
   <!-- ========== HEADER ========== -->
   <header class="bg-white border-b-2 border-slate-200 px-4 sm:px-8 py-3 flex items-center justify-between sticky top-0 z-50 shadow-sm">

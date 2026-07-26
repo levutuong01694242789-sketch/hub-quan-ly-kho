@@ -1,4 +1,4 @@
-﻿﻿<!DOCTYPE html>
+﻿﻿﻿<!DOCTYPE html>
 <html lang="vi">
 <head>
   <meta charset="UTF-8">
@@ -72,8 +72,10 @@
         .nav-track a:hover { transform: translateY(-1px); filter: brightness(1.15); }
         .nav-track .nav-label { flex-shrink: 0; font-size: 9px; font-weight: 800; text-transform: uppercase; letter-spacing: .07em; color: #334155; white-space: nowrap; padding: 0 2px; }
 </style>
+    <script src="../components/universal-nav.js"></script>
 </head>
 <body class="bg-[#f8fafc] text-slate-900 selection:bg-blue-500 selection:text-white min-h-screen flex flex-col justify-between">
+    <universal-nav></universal-nav>
 
   <!-- Top Navbar Header -->
   <header class="bg-white border-b border-slate-200 px-4 sm:px-8 py-3.5 flex items-center justify-between sticky top-0 z-50 shadow-sm">
@@ -465,30 +467,7 @@
   <script src="js/qr-scanner.js"></script>
   <script src="js/app.js"></script>
 
-    <script>
-    function navScroll(dir) { const t = document.getElementById('nav-track'); if(t) t.scrollBy({ left: dir * 180, behavior: 'smooth' }); }
-    function updateNavFade() {
-      const t = document.getElementById('nav-track'); if(!t) return;
-      const fl = document.getElementById('nav-fl'), fr = document.getElementById('nav-fr');
-      const nl = document.getElementById('nav-l'), nr = document.getElementById('nav-r');
-      if(fl && fr && nl && nr) {
-        const atStart = t.scrollLeft < 8, atEnd = t.scrollLeft + t.clientWidth >= t.scrollWidth - 8;
-        fl.style.opacity = atStart ? '0' : '1'; fr.style.opacity = atEnd ? '0' : '1';
-        nl.disabled = atStart; nr.disabled = atEnd;
-      }
-    }
-    window.addEventListener('DOMContentLoaded', function() {
-      const t = document.getElementById('nav-track');
-      if(t) { t.addEventListener('scroll', updateNavFade); updateNavFade(); }
-      const cur = location.pathname.split('/').pop() || 'index.html';
-      document.querySelectorAll('.nav-track a').forEach(a => {
-        const href = a.getAttribute('href').split('/').pop();
-        if (href === cur || (cur === '' && href === 'index.html')) {
-          a.style.outline = '1.5px solid currentColor'; a.style.outlineOffset = '-1px'; a.style.fontWeight = '900';
-        }
-      });
-    });
-    </script>
+    
 
 </body>
 </html>
