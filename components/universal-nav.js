@@ -9,8 +9,9 @@ class UniversalNav extends HTMLElement {
     }
 
     connectedCallback() {
-        const isSubfolder = location.pathname.includes('/') && !location.pathname.endsWith('/index.html') && location.pathname.split('/').filter(Boolean).length > 1;
-        const rel = isSubfolder ? '../' : '';
+        const parts = location.pathname.split('/').filter(Boolean);
+        const isRoot = parts.length <= 1 || (parts.length === 2 && parts[1].endsWith('.html'));
+        const rel = isRoot ? '' : '../';
 
         const style = `
             <style>
