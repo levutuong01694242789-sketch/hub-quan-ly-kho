@@ -109,28 +109,35 @@
             position: relative;
         }
 
-        /* Side Info Panel - Always On-Top Glass Card */
-        .info-panel {
-            position: absolute;
-            top: 16px;
-            right: 16px;
-            width: 360px;
-            max-height: calc(100vh - 80px);
-            background: #0f172a;
-            border: 2px solid #a855f7;
-            border-radius: 20px;
-            padding: 20px;
-            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.8), 0 0 30px rgba(168, 85, 247, 0.3);
-            z-index: 999;
-            overflow-y: auto;
+        /* Centered High-Contrast Modal Popup */
+        .info-panel-overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(2, 6, 23, 0.75);
+            backdrop-filter: blur(12px);
+            z-index: 1000;
             display: none;
+            align-items: center;
+            justify-content: center;
+            padding: 1rem;
         }
-        .info-panel.active {
-            display: block !important;
-            animation: fadeIn 0.2s ease-out;
+        .info-panel-overlay.active {
+            display: flex !important;
         }
-        @keyframes fadeIn {
-            from { opacity: 0; transform: scale(0.95); }
+        .info-panel {
+            width: 100%;
+            max-width: 420px;
+            background: #0f172a;
+            border: 2px solid #e879f9;
+            border-radius: 24px;
+            padding: 24px;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.9), 0 0 40px rgba(232, 121, 249, 0.4);
+            max-height: 85vh;
+            overflow-y: auto;
+            animation: popIn 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+        @keyframes popIn {
+            from { opacity: 0; transform: scale(0.85); }
             to { opacity: 1; transform: scale(1); }
         }
 
@@ -211,13 +218,15 @@
             </button>
         </div>
 
-        <!-- SIDE INFO PANEL -->
-        <div class="info-panel" id="info-panel">
-            <button onclick="closeInfoPanel()" class="text-slate-400 hover:text-white float-right text-sm"><i class="fa-solid fa-xmark"></i></button>
-            <div id="panel-content">
-                <div class="text-center text-slate-500 py-10">
-                    <i class="fa-solid fa-mouse-pointer text-3xl mb-2"></i>
-                    <p class="text-xs">Nhấp vào một Nút trên mạng lưới để xem chi tiết liên kết & mở bài học / ứng dụng.</p>
+        <!-- CENTER POPUP MODAL OVERLAY -->
+        <div class="info-panel-overlay" id="info-panel-overlay" onclick="if(event.target===this) closeInfoPanel()">
+            <div class="info-panel" id="info-panel">
+                <button onclick="closeInfoPanel()" class="text-slate-400 hover:text-white float-right text-sm"><i class="fa-solid fa-xmark"></i></button>
+                <div id="panel-content">
+                    <div class="text-center text-slate-500 py-10">
+                        <i class="fa-solid fa-mouse-pointer text-3xl mb-2"></i>
+                        <p class="text-xs">Nhấp vào một Nút trên mạng lưới để xem chi tiết liên kết & mở bài học / ứng dụng.</p>
+                    </div>
                 </div>
             </div>
         </div>
@@ -401,11 +410,11 @@
                     </div>
                 </div>
             `;
-            panel.classList.add('active');
+            document.getElementById('info-panel-overlay').classList.add('active');
         }
 
         function closeInfoPanel() {
-            document.getElementById('info-panel').classList.remove('active');
+            document.getElementById('info-panel-overlay').classList.remove('active');
         }
 
         function focusOnNode(nodeId) {
