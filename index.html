@@ -35,9 +35,7 @@
                 radial-gradient(at 100% 100%, rgba(16, 185, 129, 0.15) 0px, transparent 50%);
         }
 
-        .font-heading {
-            font-family: 'Outfit', sans-serif;
-        }
+        .font-heading { font-family: 'Outfit', sans-serif; }
 
         .glass-card {
             background: var(--bg-card);
@@ -45,26 +43,110 @@
             border: 1px solid var(--border-color);
             transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
         }
-
         .glass-card:hover {
             transform: translateY(-4px);
             box-shadow: 0 20px 40px -15px rgba(0, 0, 0, 0.5);
         }
+        .glow-cyan:hover  { border-color: rgba(6,182,212,0.5);  box-shadow: 0 0 30px rgba(6,182,212,0.25); }
+        .glow-indigo:hover{ border-color: rgba(99,102,241,0.5); box-shadow: 0 0 30px rgba(99,102,241,0.25); }
+        .glow-teal:hover  { border-color: rgba(20,184,166,0.5); box-shadow: 0 0 30px rgba(20,184,166,0.25); }
 
-        .glow-cyan:hover {
-            border-color: rgba(6, 182, 212, 0.5);
-            box-shadow: 0 0 30px rgba(6, 182, 212, 0.25);
+        /* ====== SCROLLABLE NAV ====== */
+        .nav-root {
+            position: sticky;
+            top: 0;
+            z-index: 50;
+            background: #020617;
+            border-bottom: 1px solid #1e293b;
+            box-shadow: 0 2px 16px rgba(0,0,0,.5);
+        }
+        .nav-inner {
+            display: flex;
+            align-items: center;
+            height: 40px;
+            position: relative;
+        }
+        /* Scroll track */
+        .nav-track {
+            flex: 1;
+            overflow-x: auto;
+            overflow-y: hidden;
+            display: flex;
+            align-items: center;
+            gap: 4px;
+            padding: 0 6px;
+            scrollbar-width: none;
+            -ms-overflow-style: none;
+            scroll-behavior: smooth;
+        }
+        .nav-track::-webkit-scrollbar { display: none; }
+
+        /* Fade gradients on left & right */
+        .nav-fade-l, .nav-fade-r {
+            position: absolute;
+            top: 0; bottom: 0;
+            width: 36px;
+            pointer-events: none;
+            z-index: 2;
+            transition: opacity .2s;
+        }
+        .nav-fade-l { left: 32px;  background: linear-gradient(to right, #020617 0%, transparent 100%); }
+        .nav-fade-r { right: 32px; background: linear-gradient(to left,  #020617 0%, transparent 100%); }
+
+        /* Arrow scroll buttons */
+        .nav-arr {
+            flex-shrink: 0;
+            width: 30px;
+            height: 40px;
+            background: #020617;
+            border: none;
+            color: #475569;
+            font-size: 16px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: color .15s;
+            z-index: 3;
+        }
+        .nav-arr:hover { color: #e2e8f0; }
+        .nav-arr:disabled { opacity: .2; cursor: default; }
+
+        /* Divider */
+        .nav-div {
+            width: 1px;
+            height: 18px;
+            background: #1e293b;
+            flex-shrink: 0;
         }
 
-        .glow-indigo:hover {
-            border-color: rgba(99, 102, 241, 0.5);
-            box-shadow: 0 0 30px rgba(99, 102, 241, 0.25);
+        /* Nav pills */
+        .nav-track a {
+            flex-shrink: 0;
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+            padding: 3px 9px;
+            border-radius: 7px;
+            border: 1px solid transparent;
+            font-size: 11px;
+            font-weight: 600;
+            text-decoration: none;
+            white-space: nowrap;
+            transition: background .15s, border-color .15s, transform .1s;
         }
-
-        .glow-teal:hover {
-            border-color: rgba(20, 184, 166, 0.5);
-            box-shadow: 0 0 30px rgba(20, 184, 166, 0.25);
+        .nav-track a:hover { transform: translateY(-1px); filter: brightness(1.15); }
+        .nav-track .nav-label {
+            flex-shrink: 0;
+            font-size: 9px;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: .07em;
+            color: #334155;
+            white-space: nowrap;
+            padding: 0 2px;
         }
+        /* ====== END SCROLLABLE NAV ====== */
 
         .pin-modal-overlay {
             display: none;
@@ -81,32 +163,121 @@
     </style>
 </head>
 <body class="selection:bg-indigo-500 selection:text-white min-h-screen flex flex-col justify-between">
-    
-    <!-- UNIVERSAL TOP NAVIGATION BAR FOR INSTANT SWITCHING (ALL 10 MODULES) -->
-    <nav class="bg-slate-950 border-b border-slate-800 px-4 sm:px-8 py-2.5 flex items-center justify-between text-xs font-semibold text-white sticky top-0 z-50 shadow-lg">
-        <div class="flex items-center gap-2 sm:gap-2 flex-wrap">
-            <span class="text-slate-400 text-[10px] font-black uppercase tracking-wider">Chuyển Ứng Dụng:</span>
-            <a href="index.html" class="text-sky-400 bg-sky-500/20 border border-sky-400/40 px-2.5 py-1 rounded-lg flex items-center gap-1"><i class="fa-solid fa-house"></i> 🏠 Hub</a>
-            <a href="https://github.com/levutuong01694242789-sketch/hub-quan-ly-kho#readme" target="_blank" class="text-emerald-400 bg-emerald-500/25 hover:bg-emerald-500/40 border border-emerald-400/50 px-2.5 py-1 rounded-lg flex items-center gap-1 transition font-bold"><i class="fa-solid fa-book-open"></i> 📖 Master</a>
-            
-            <!-- 12 Production App Modules -->
-            <a href="enterprise-qr-asset-manager/index.html" class="text-blue-300 bg-blue-500/25 border border-blue-400/50 px-2 py-1 rounded-lg flex items-center gap-1 transition font-bold"><i class="fa-solid fa-print"></i> 1. 🏢 Tài Sản QR</a>
-            <a href="he_thong_hop_nhat_fifo_sap/index.html" class="text-purple-300 bg-purple-500/20 border border-purple-400/40 px-2 py-1 rounded-lg flex items-center gap-1 transition"><i class="fa-solid fa-wand-magic-sparkles"></i> 2. 🌟 Hợp Nhất</a>
-            <a href="procurement_supplier_system/index.html" class="text-teal-300 bg-teal-500/20 border border-teal-400/40 px-2 py-1 rounded-lg flex items-center gap-1 transition font-bold"><i class="fa-solid fa-truck-field"></i> 3. 🛒 Thu Mua</a>
-            <a href="wms_vdt_sap4hana/index.html" class="text-sky-300 bg-sky-500/20 border border-sky-400/40 px-2 py-1 rounded-lg flex items-center gap-1 transition"><i class="fa-solid fa-table-cells-large"></i> 4. 🏢 Kho 2D SAP</a>
-            <a href="mo_app_tru_kho.html" class="text-indigo-300 bg-indigo-500/20 border border-indigo-400/40 px-2 py-1 rounded-lg flex items-center gap-1 transition"><i class="fa-solid fa-chart-line"></i> 5. 📊 Trữ Kho PO</a>
-            <a href="it_asset.html" class="text-purple-300 bg-purple-500/20 border border-purple-400/40 px-2 py-1 rounded-lg flex items-center gap-1 transition"><i class="fa-solid fa-laptop-code"></i> 6. 💻 IT Asset</a>
-            <a href="quan_ly_kho_fifo/README.md" class="text-amber-300 bg-amber-500/20 border border-amber-400/40 px-2 py-1 rounded-lg flex items-center gap-1 transition"><i class="fa-solid fa-boxes-packing"></i> 7. 📦 Engine FIFO</a>
-            <a href="warehouse_financial_system/index.html" class="text-emerald-300 bg-emerald-500/25 border border-emerald-400/50 px-2 py-1 rounded-lg flex items-center gap-1 transition font-bold"><i class="fa-solid fa-sack-dollar"></i> 8. 💰 Tài Chính</a>
-            <a href="kiem_ke_kho.html" class="text-rose-300 bg-rose-500/20 border border-rose-400/40 px-2 py-1 rounded-lg flex items-center gap-1 transition font-bold"><i class="fa-solid fa-clipboard-check"></i> 9. 📋 Kiểm Kê Kho</a>
-            <a href="visual-bin-location-manager/index.html" class="text-cyan-300 bg-cyan-500/25 border border-cyan-400/50 px-2 py-1 rounded-lg flex items-center gap-1 transition font-bold"><i class="fa-solid fa-camera"></i> 10. 📷 Vị Trí Ảnh Kho</a>
-            <a href="factory-photo-guide/index.html" class="text-orange-300 bg-orange-500/20 border border-orange-400/40 px-2 py-1 rounded-lg flex items-center gap-1 transition font-bold"><i class="fa-solid fa-map-location-dot"></i> 11. 🏭 Factory Guide</a>
-            <a href="sap_s4hana_ebook/index.html" class="text-yellow-300 bg-yellow-500/20 border border-yellow-400/50 px-2 py-1 rounded-lg flex items-center gap-1 transition font-bold"><i class="fa-solid fa-book-open"></i> 12. 📘 SAP E-Book</a>
+      <!-- UNIVERSAL NAV: Scrollable horizontal, scales to unlimited repos -->
+    <nav class="nav-root" id="nav-root">
+      <div class="nav-inner">
+        <!-- Left arrow -->
+        <button class="nav-arr" id="nav-l" onclick="navScroll(-1)" title="Trước">&#8249;</button>
+        <div class="nav-fade-l" id="nav-fl"></div>
+
+        <!-- Scrollable track -->
+        <div class="nav-track" id="nav-track">
+          <span class="nav-label">Chuyển:</span>
+
+          <!-- HOME -->
+          <a href="index.html" style="color:#38bdf8;background:rgba(56,189,248,.15);border-color:rgba(56,189,248,.3);">
+            <i class="fa-solid fa-house" style="font-size:10px"></i> 🏠 Hub
+          </a>
+          <a href="https://github.com/levutuong01694242789-sketch/hub-quan-ly-kho#readme" target="_blank"
+             style="color:#34d399;background:rgba(52,211,153,.12);border-color:rgba(52,211,153,.25);">
+            <i class="fa-solid fa-book-open" style="font-size:10px"></i> 📖 Master
+          </a>
+
+          <div class="nav-div"></div>
+
+          <!-- 12 MODULES -->
+          <a href="enterprise-qr-asset-manager/index.html"
+             style="color:#93c5fd;background:rgba(59,130,246,.15);border-color:rgba(59,130,246,.3);">
+            <i class="fa-solid fa-print" style="font-size:10px"></i> 1.🏢 Tài Sản QR
+          </a>
+          <a href="he_thong_hop_nhat_fifo_sap/index.html"
+             style="color:#c4b5fd;background:rgba(139,92,246,.12);border-color:rgba(139,92,246,.25);">
+            <i class="fa-solid fa-wand-magic-sparkles" style="font-size:10px"></i> 2.🌟 Hợp Nhất
+          </a>
+          <a href="procurement_supplier_system/index.html"
+             style="color:#5eead4;background:rgba(20,184,166,.12);border-color:rgba(20,184,166,.25);">
+            <i class="fa-solid fa-truck-field" style="font-size:10px"></i> 3.🛒 Thu Mua
+          </a>
+          <a href="wms_vdt_sap4hana/index.html"
+             style="color:#7dd3fc;background:rgba(14,165,233,.12);border-color:rgba(14,165,233,.25);">
+            <i class="fa-solid fa-table-cells-large" style="font-size:10px"></i> 4.🏢 Kho 2D SAP
+          </a>
+          <a href="mo_app_tru_kho.html"
+             style="color:#a5b4fc;background:rgba(99,102,241,.12);border-color:rgba(99,102,241,.25);">
+            <i class="fa-solid fa-chart-line" style="font-size:10px"></i> 5.📊 Trữ Kho PO
+          </a>
+          <a href="it_asset.html"
+             style="color:#d8b4fe;background:rgba(168,85,247,.12);border-color:rgba(168,85,247,.25);">
+            <i class="fa-solid fa-laptop-code" style="font-size:10px"></i> 6.💻 IT Asset
+          </a>
+          <a href="quan_ly_kho_fifo/README.md"
+             style="color:#fcd34d;background:rgba(245,158,11,.12);border-color:rgba(245,158,11,.25);">
+            <i class="fa-solid fa-boxes-packing" style="font-size:10px"></i> 7.📦 Engine FIFO
+          </a>
+          <a href="warehouse_financial_system/index.html"
+             style="color:#6ee7b7;background:rgba(16,185,129,.12);border-color:rgba(16,185,129,.25);">
+            <i class="fa-solid fa-sack-dollar" style="font-size:10px"></i> 8.💰 Tài Chính
+          </a>
+          <a href="kiem_ke_kho.html"
+             style="color:#fca5a5;background:rgba(239,68,68,.12);border-color:rgba(239,68,68,.25);">
+            <i class="fa-solid fa-clipboard-check" style="font-size:10px"></i> 9.📋 Kiểm Kê Kho
+          </a>
+          <a href="visual-bin-location-manager/index.html"
+             style="color:#67e8f9;background:rgba(6,182,212,.15);border-color:rgba(6,182,212,.3);">
+            <i class="fa-solid fa-camera" style="font-size:10px"></i> 10.📷 Vị Trí Ảnh
+          </a>
+          <a href="factory-photo-guide/index.html"
+             style="color:#fdba74;background:rgba(234,88,12,.12);border-color:rgba(234,88,12,.25);">
+            <i class="fa-solid fa-map-location-dot" style="font-size:10px"></i> 11.🏭 Factory Guide
+          </a>
+          <a href="sap_s4hana_ebook/index.html"
+             style="color:#fde68a;background:rgba(234,179,8,.15);border-color:rgba(234,179,8,.3);font-weight:800;">
+            <i class="fa-solid fa-book-open" style="font-size:10px"></i> 12.📘 SAP E-Book
+          </a>
         </div>
-        <div class="text-[11px] text-slate-400 hidden lg:block">
-            <i class="fa-solid fa-user-check text-emerald-400"></i> SUPPLY CHAIN & LOGISTICS ARCHITECT
-        </div>
+
+        <div class="nav-fade-r" id="nav-fr"></div>
+        <!-- Right arrow -->
+        <button class="nav-arr" id="nav-r" onclick="navScroll(1)" title="Sau">&#8250;</button>
+      </div>
     </nav>
+
+    <script>
+    // Scroll nav track with arrow buttons
+    function navScroll(dir) {
+      const t = document.getElementById('nav-track');
+      t.scrollBy({ left: dir * 180, behavior: 'smooth' });
+    }
+    // Update fade & arrows on scroll
+    function updateNavFade() {
+      const t  = document.getElementById('nav-track');
+      const fl = document.getElementById('nav-fl');
+      const fr = document.getElementById('nav-fr');
+      const nl = document.getElementById('nav-l');
+      const nr = document.getElementById('nav-r');
+      const atStart = t.scrollLeft < 8;
+      const atEnd   = t.scrollLeft + t.clientWidth >= t.scrollWidth - 8;
+      fl.style.opacity = atStart ? '0' : '1';
+      fr.style.opacity = atEnd   ? '0' : '1';
+      nl.disabled = atStart;
+      nr.disabled = atEnd;
+    }
+    document.getElementById('nav-track').addEventListener('scroll', updateNavFade);
+    window.addEventListener('resize', updateNavFade);
+    window.addEventListener('DOMContentLoaded', updateNavFade);
+    // Highlight current page link
+    window.addEventListener('DOMContentLoaded', function() {
+      const cur = location.pathname.split('/').pop() || 'index.html';
+      document.querySelectorAll('.nav-track a').forEach(a => {
+        const href = a.getAttribute('href').split('/').pop();
+        if (href === cur || (cur === '' && href === 'index.html')) {
+          a.style.outline = '1.5px solid currentColor';
+          a.style.outlineOffset = '-1px';
+          a.style.fontWeight = '900';
+        }
+      });
+    });
+    </script>
 
     <div class="max-w-7xl mx-auto w-full p-4 sm:p-8 space-y-8 flex-1">
         
