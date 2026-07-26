@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>📦 Engine Phân Bổ Xuất Kho FIFO - Chuỗi Cung Ứng</title>
+    <!-- Tailwind CSS & FontAwesome -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Outfit:wght@600;700;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-main: #070a12;
+            --bg-card: rgba(15, 23, 42, 0.85);
+            --border-color: rgba(30, 41, 59, 0.8);
+        }
+        body {
+            font-family: 'Inter', system-ui, sans-serif;
+            background-color: var(--bg-main);
+            color: #f8fafc;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+        .font-heading { font-family: 'Outfit', sans-serif; }
+        .glass-card {
+            background: var(--bg-card);
+            backdrop-filter: blur(16px);
+            border: 1px solid var(--border-color);
+        }
+    </style>
+</head>
+<body class="selection:bg-amber-500 selection:text-white flex flex-col justify-between min-h-screen">
+
+    <!-- UNIVERSAL NAV: Scrollable horizontal -->
+    <nav class="nav-root" id="nav-root">
+      <div class="nav-inner">
+        <button class="nav-arr" id="nav-l" onclick="navScroll(-1)" title="Trước">&#8249;</button>
+        <div class="nav-fade-l" id="nav-fl"></div>
+        <div class="nav-track" id="nav-track">
+          <span class="nav-label">Chuyển:</span>
+          <a href="../index.html" style="color:#38bdf8;background:rgba(56,189,248,.15);border-color:rgba(56,189,248,.3);">🏠 Hub</a>
+          <a href="https://github.com/levutuong01694242789-sketch/hub-quan-ly-kho#readme" target="_blank" style="color:#34d399;background:rgba(52,211,153,.12);">📖 Master</a>
+          <a href="../enterprise-qr-asset-manager/index.html" style="color:#93c5fd;background:rgba(59,130,246,.15);">1.🏢 Tài Sản QR</a>
+          <a href="../he_thong_hop_nhat_fifo_sap/index.html" style="color:#c4b5fd;background:rgba(139,92,246,.12);">2.🌟 Hợp Nhất</a>
+          <a href="../procurement_supplier_system/index.html" style="color:#5eead4;background:rgba(20,184,166,.12);">3.🛒 Thu Mua</a>
+          <a href="../wms_vdt_sap4hana/index.html" style="color:#7dd3fc;background:rgba(14,165,233,.12);">4.🏢 Kho 2D SAP</a>
+          <a href="../mo_app_tru_kho.html" style="color:#a5b4fc;background:rgba(99,102,241,.12);">5.📊 Trữ Kho PO</a>
+          <a href="../it_asset.html" style="color:#d8b4fe;background:rgba(168,85,247,.12);">6.💻 IT Asset</a>
+          <a href="index.html" style="color:#fcd34d;background:rgba(245,158,11,.2);border-color:rgba(245,158,11,.4);font-weight:800;">7.📦 Engine FIFO</a>
+          <a href="../warehouse_financial_system/index.html" style="color:#6ee7b7;background:rgba(16,185,129,.12);">8.💰 Tài Chính</a>
+          <a href="../kiem_ke_kho.html" style="color:#fca5a5;background:rgba(239,68,68,.12);">9.📋 Kiểm Kê Kho</a>
+          <a href="../visual-bin-location-manager/index.html" style="color:#67e8f9;background:rgba(6,182,212,.15);">10.📷 Vị Trí Ảnh</a>
+          <a href="../factory-photo-guide/index.html" style="color:#fdba74;background:rgba(234,88,12,.12);">11.🏭 Factory Guide</a>
+          <a href="../sap_s4hana_ebook/index.html" style="color:#fde68a;background:rgba(234,179,8,.15);">12.📘 SAP E-Book</a>
+          <a href="../knowledge-graph/index.html" style="color:#e879f9;background:rgba(217,70,239,.15);">13.🕸️ Knowledge Graph</a>
+        </div>
+        <div class="nav-fade-r" id="nav-fr"></div>
+        <button class="nav-arr" id="nav-r" onclick="navScroll(1)" title="Sau">&#8250;</button>
+      </div>
+    </nav>
+
+    <!-- CONTENT BODY -->
+    <div class="max-w-6xl mx-auto w-full p-4 sm:p-8 space-y-8 flex-1">
+        
+        <!-- Header Banner -->
+        <header class="glass-card p-6 sm:p-8 rounded-3xl shadow-2xl flex flex-col md:flex-row justify-between items-center gap-6 border-l-8 border-amber-500 relative overflow-hidden">
+            <div class="space-y-3 z-10">
+                <span class="bg-amber-500/20 text-amber-400 border border-amber-500/30 text-xs font-bold px-3 py-1 rounded-full uppercase inline-flex items-center gap-1.5">
+                    <i class="fa-solid fa-boxes-packing"></i> Core Inventory Engine
+                </span>
+                <h1 class="text-2xl sm:text-4xl font-extrabold text-white font-heading">
+                    HỆ THỐNG PHÂN BỔ XUẤT KHO FIFO TỰ ĐỘNG
+                </h1>
+                <p class="text-sm text-slate-300 max-w-2xl leading-relaxed">
+                    Engine Python xử lý độc lập ghép nối Nhu cầu Xuất hàng với Tồn kho thực tế theo nguyên tắc First-In, First-Out (Hạn sử dụng / Ngày nhập cũ nhất xuất trước).
+                </p>
+            </div>
+            <a href="https://github.com/levutuong01694242789-sketch/hub-quan-ly-kho/tree/main/quan_ly_kho_fifo" target="_blank" class="bg-amber-500 hover:bg-amber-400 text-slate-950 font-black text-xs px-5 py-3.5 rounded-2xl transition flex items-center justify-center gap-2 shadow-lg shadow-amber-500/25 shrink-0">
+                <i class="fa-brands fa-github text-base"></i> Xem Mã Nguồn Repo
+            </a>
+        </header>
+
+        <!-- Features Grid -->
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+            <div class="glass-card p-6 rounded-2xl border-t-4 border-amber-500 space-y-3">
+                <div class="w-10 h-10 bg-amber-500/20 text-amber-400 rounded-xl flex items-center justify-center font-bold text-lg">
+                    <i class="fa-solid fa-calculator"></i>
+                </div>
+                <h3 class="text-base font-bold text-white font-heading">Phân Bổ FIFO 100%</h3>
+                <p class="text-xs text-slate-300 leading-relaxed">Ưu tiên nhặt các Lô hàng có Hạn Sử Dụng (NSX/HSD) hoặc Ngày Nhập Kho cũ nhất trước, bảo đảm không tồn dư hàng quá hạn.</p>
+            </div>
+            <div class="glass-card p-6 rounded-2xl border-t-4 border-emerald-500 space-y-3">
+                <div class="w-10 h-10 bg-emerald-500/20 text-emerald-400 rounded-xl flex items-center justify-center font-bold text-lg">
+                    <i class="fa-solid fa-file-excel"></i>
+                </div>
+                <h3 class="text-base font-bold text-white font-heading">Xuất Báo Cáo Excel</h3>
+                <p class="text-xs text-slate-300 leading-relaxed">Tự động xuất Phiếu nhặt hàng chi tiết từng vị trí ô kệ và số dư tồn kho còn lại chính xác cho các đơn hàng tiếp theo.</p>
+            </div>
+            <div class="glass-card p-6 rounded-2xl border-t-4 border-sky-500 space-y-3">
+                <div class="w-10 h-10 bg-sky-500/20 text-sky-400 rounded-xl flex items-center justify-center font-bold text-lg">
+                    <i class="fa-solid fa-bolt"></i>
+                </div>
+                <h3 class="text-base font-bold text-white font-heading">Vận Hành 1-Click</h3>
+                <p class="text-xs text-slate-300 leading-relaxed">Thực thi quy trình tự động chỉ với 1 cú nhấp đúp qua file <code>CHAY_FIFO_1_CHAM.bat</code> tiện lợi trên máy tính.</p>
+            </div>
+        </div>
+
+        <!-- Directory Structure & Guide -->
+        <div class="glass-card p-6 sm:p-8 rounded-3xl space-y-6">
+            <h2 class="text-xl font-bold text-white font-heading flex items-center gap-3 border-b border-slate-800 pb-4">
+                <i class="fa-solid fa-folder-tree text-amber-400"></i> CẤU TRÚC THƯ MỤC & FILE VẬN HÀNH
+            </h2>
+            <div class="bg-slate-950 p-4 rounded-xl border border-slate-800 font-mono text-xs text-amber-300 space-y-2 overflow-x-auto">
+                <div>QUAN_LY_KHO_FIFO/</div>
+                <div>├── CHAY_FIFO_1_CHAM.bat       <span class="text-slate-500"># Script thực thi 1-chạm</span></div>
+                <div>├── CHUAN_BI_DU_LIEU.xlsx      <span class="text-slate-500"># File dữ liệu đầu vào (Nhu cầu xuất & Tồn kho)</span></div>
+                <div>├── scripts/</div>
+                <div>│   └── process_fifo_qr.py     <span class="text-slate-500"># Engine tính toán phân bổ FIFO</span></div>
+                <div>└── KET_QUA_XUAT_KHO/</div>
+                <div>    └── KET_QUA_MOI_NHAT.xlsx  <span class="text-slate-500"># File kết quả nhặt hàng & tồn kho còn lại</span></div>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- Footer -->
+    <footer class="text-center text-xs text-slate-500 py-6 border-t border-slate-800 max-w-6xl mx-auto w-full mt-10">
+        © 2026 Supply Chain & Logistics Architect • Engine FIFO Inventory Deduction System
+    </footer>
+
+</body>
+</html>
