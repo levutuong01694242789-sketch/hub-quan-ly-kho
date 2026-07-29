@@ -154,6 +154,7 @@ class UniversalNav extends HTMLElement {
                   <a href="${rel}sap_s4hana_ebook/index.html" class="nav-pill" style="color:#fde68a;background:rgba(234,179,8,.15);">12.📘 SAP E-Book</a>
                   <a href="${rel}knowledge-graph/index.html" class="nav-pill" style="color:#e879f9;background:rgba(217,70,239,.15);">13.🕸️ Knowledge Graph</a>
                   <a href="${rel}mobile-meeting-notetaker/index.html" class="nav-pill" style="color:#34d399;background:rgba(16,185,129,.15);">14.📱 Mobile Notetaker</a>
+                  <a href="${rel}so_do_kho_4_tang.html" class="nav-pill" style="color:#22d3ee;background:rgba(6,182,212,.2);border-color:rgba(6,182,212,.4);">15.📐 Sơ Đồ Kho 2D AutoCAD</a>
                 </div>
                 <div class="nav-fade-r" id="nav-fr"></div>
                 <button class="nav-arr" id="nav-r" title="Sau">&#8250;</button>
